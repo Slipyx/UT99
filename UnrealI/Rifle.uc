@@ -239,31 +239,32 @@ function PlayIdleAnim()
 
 defaultproperties
 {
-     AmmoName=Class'UnrealI.RifleAmmo'
-     PickupAmmoCount=8
-     bInstantHit=True
-     bAltInstantHit=True
-     FireOffset=(Y=-5.000000,Z=-2.000000)
-     shakemag=400.000000
-     shaketime=0.150000
-     shakevert=8.000000
-     AIRating=0.700000
-     RefireRate=0.600000
-     AltRefireRate=0.300000
-     FireSound=Sound'UnrealI.Rifle.RifleShot'
-     SelectSound=Sound'UnrealI.Rifle.RiflePickup'
-     DeathMessage="%k put a bullet through %o's head."
-     AutoSwitchPriority=9
-     InventoryGroup=9
-     PickupMessage="You got the Rifle"
-     ItemName="Sniper Rifle"
-     PlayerViewOffset=(X=3.200000,Y=-1.200000,Z=-1.700000)
-     PlayerViewMesh=LodMesh'UnrealI.RifleM'
-     PickupViewMesh=LodMesh'UnrealI.RiPick'
-     ThirdPersonMesh=LodMesh'UnrealI.Rifle3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealI.RiPick'
-     bNoSmooth=False
-     CollisionRadius=28.000000
-     CollisionHeight=8.000000
+      NumFire=0
+      AmmoName=Class'UnrealI.RifleAmmo'
+      PickupAmmoCount=8
+      bInstantHit=True
+      bAltInstantHit=True
+      FireOffset=(Y=-5.000000,Z=-2.000000)
+      shakemag=400.000000
+      shaketime=0.150000
+      shakevert=8.000000
+      AIRating=0.700000
+      RefireRate=0.600000
+      AltRefireRate=0.300000
+      FireSound=Sound'UnrealI.Rifle.RifleShot'
+      SelectSound=Sound'UnrealI.Rifle.RiflePickup'
+      DeathMessage="%k put a bullet through %o's head."
+      AutoSwitchPriority=9
+      InventoryGroup=9
+      PickupMessage="You got the Rifle"
+      ItemName="Sniper Rifle"
+      PlayerViewOffset=(X=3.200000,Y=-1.200000,Z=-1.700000)
+      PlayerViewMesh=LodMesh'UnrealI.RifleM'
+      PickupViewMesh=LodMesh'UnrealI.RiPick'
+      ThirdPersonMesh=LodMesh'UnrealI.Rifle3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealI.RiPick'
+      bNoSmooth=False
+      CollisionRadius=28.000000
+      CollisionHeight=8.000000
 }

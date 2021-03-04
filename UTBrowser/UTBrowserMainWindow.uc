@@ -9,5 +9,5 @@ function BeginPlay()
 
 defaultproperties
 {
-     WindowTitleString="Unreal Tournament Server Browser"
+      WindowTitleString="Unreal Tournament Server Browser"
 }

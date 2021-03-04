@@ -7,5 +7,5 @@ class NaliPriest extends Nali;
 
 defaultproperties
 {
-     Skin=Texture'UnrealShare.Skins.JNali2'
+      Skin=Texture'UnrealShare.Skins.JNali2'
 }

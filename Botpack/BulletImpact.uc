@@ -25,11 +25,11 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     AnimSequence=Hit
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Mesh=LodMesh'Botpack.BulletImpact'
-     DrawScale=0.280000
-     AmbientGlow=255
-     bUnlit=True
+      AnimSequence="Hit"
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Mesh=LodMesh'Botpack.BulletImpact'
+      DrawScale=0.280000
+      AmbientGlow=255
+      bUnlit=True
 }

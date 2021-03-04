@@ -8,4 +8,5 @@ function RightClickTab()
 
 defaultproperties
 {
+      OwnerTab=None
 }

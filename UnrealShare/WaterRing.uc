@@ -11,6 +11,6 @@ simulated function SpawnEffects()
 
 defaultproperties
 {
-     bNetOptional=True
-     Skin=FireTexture'UnrealShare.Effect56.fireeffect56'
+      bNetOptional=True
+      Skin=FireTexture'UnrealShare.Effect56.fireeffect56'
 }

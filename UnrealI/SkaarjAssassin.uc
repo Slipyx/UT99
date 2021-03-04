@@ -7,6 +7,6 @@ class SkaarjAssassin extends SkaarjWarrior;
 
 defaultproperties
 {
-     Health=220
-     Skin=Texture'UnrealI.Skins.Skaarjw5'
+      Health=220
+      Skin=Texture'UnrealI.Skins.Skaarjw5'
 }

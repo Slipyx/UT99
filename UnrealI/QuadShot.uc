@@ -21,18 +21,18 @@ class QuadShot extends Weapon;
 
 defaultproperties
 {
-     AmmoName=Class'UnrealI.FlakBox'
-     PickupAmmoCount=20
-     AutoSwitchPriority=2
-     InventoryGroup=3
-     PickupMessage="You got the QuadShot"
-     PlayerViewOffset=(X=5.000000,Y=-1.000000,Z=-3.000000)
-     PlayerViewMesh=LodMesh'UnrealI.QuadShotHeld'
-     PlayerViewScale=1.590000
-     PickupViewMesh=LodMesh'UnrealI.QuadShotPickup'
-     ThirdPersonMesh=LodMesh'UnrealI.Flak3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealI.QuadShotPickup'
-     bNoSmooth=False
-     Mass=10.000000
+      AmmoName=Class'UnrealI.FlakBox'
+      PickupAmmoCount=20
+      AutoSwitchPriority=2
+      InventoryGroup=3
+      PickupMessage="You got the QuadShot"
+      PlayerViewOffset=(X=5.000000,Y=-1.000000,Z=-3.000000)
+      PlayerViewMesh=LodMesh'UnrealI.QuadShotHeld'
+      PlayerViewScale=1.590000
+      PickupViewMesh=LodMesh'UnrealI.QuadShotPickup'
+      ThirdPersonMesh=LodMesh'UnrealI.Flak3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealI.QuadShotPickup'
+      bNoSmooth=False
+      Mass=10.000000
 }

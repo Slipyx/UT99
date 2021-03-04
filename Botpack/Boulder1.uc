@@ -13,9 +13,9 @@ class Boulder1 extends ut_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.boulder1M'
-     CollisionRadius=40.000000
-     bBlockActors=True
-     bBlockPlayers=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.boulder1M'
+      CollisionRadius=40.000000
+      bBlockActors=True
+      bBlockPlayers=True
 }

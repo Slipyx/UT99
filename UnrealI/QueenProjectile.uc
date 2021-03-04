@@ -23,5 +23,5 @@ auto state Flying
 
 defaultproperties
 {
-     MaxSpeed=2000.000000
+      MaxSpeed=2000.000000
 }

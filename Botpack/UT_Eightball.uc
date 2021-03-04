@@ -927,30 +927,39 @@ state FireRockets
 				if ( LockedTarget != None )
 				{
 					s = Spawn( class 'ut_SeekingRocket',, '', FireLocation,FireRot);
-					s.Seeking = LockedTarget;
-					s.NumExtraRockets = DupRockets;					
-					if ( Angle > 0 )
-						s.Velocity *= (0.9 + 0.2 * FRand());			
+					if (s != none)
+					{
+					    s.Seeking = LockedTarget;
+					    s.NumExtraRockets = DupRockets;					
+					    if ( Angle > 0 )
+						    s.Velocity *= (0.9 + 0.2 * FRand());
+					}
 				}
 				else 
 				{
 					r = Spawn( class'rocketmk2',, '', FireLocation,FireRot);
-					r.NumExtraRockets = DupRockets;
-					if (RocketsLoaded>4 && bTightWad) r.bRing=True;
-					if ( Angle > 0 )
-						r.Velocity *= (0.9 + 0.2 * FRand());			
+					if (r != none)
+					{
+					    r.NumExtraRockets = DupRockets;
+					    if (RocketsLoaded>4 && bTightWad) r.bRing=True;
+					    if ( Angle > 0 )
+						    r.Velocity *= (0.9 + 0.2 * FRand());
+					}
 				}
 			}
 			else 
 			{
 				g = Spawn( class 'ut_Grenade',, '', FireLocation,AdjustedAim);
-				g.NumExtraGrenades = DupRockets;
-				if ( DupRockets > 0 )
+				if (g != none)
 				{
-					RandRot.Pitch = FRand() * 1500 - 750;
-					RandRot.Yaw = FRand() * 1500 - 750;
-					RandRot.Roll = FRand() * 1500 - 750;
-					g.Velocity = g.Velocity >> RandRot;
+				    g.NumExtraGrenades = DupRockets;
+				    if ( DupRockets > 0 )
+				    {
+					    RandRot.Pitch = FRand() * 1500 - 750;
+					    RandRot.Yaw = FRand() * 1500 - 750;
+					    RandRot.Roll = FRand() * 1500 - 750;
+					    g.Velocity = g.Velocity >> RandRot;
+				    }
 				}
 			}
 
@@ -978,63 +987,75 @@ Begin:
 
 defaultproperties
 {
-     LoadAnim(0)=load1
-     LoadAnim(1)=Load2
-     LoadAnim(2)=Load3
-     LoadAnim(3)=Load4
-     LoadAnim(4)=Load5
-     LoadAnim(5)=Load6
-     RotateAnim(0)=Rotate1
-     RotateAnim(1)=Rotate2
-     RotateAnim(2)=Rotate3
-     RotateAnim(3)=Rotate4
-     RotateAnim(4)=Rotate5
-     RotateAnim(5)=Rotate3
-     FireAnim(0)=Fire1
-     FireAnim(1)=Fire2
-     FireAnim(2)=Fire3
-     FireAnim(3)=Fire4
-     FireAnim(4)=Fire2
-     FireAnim(5)=Fire3
-     WeaponDescription="Classification: Heavy Ballistic\n\nPrimary Fire: Slow moving but deadly rockets are fired at opponents. Trigger can be held down to load up to six rockets at a time, which can be fired at once.\n\nSecondary Fire: Grenades are lobbed from the barrel. Secondary trigger can be held as well to load up to six grenades.\n\nTechniques: Keeping this weapon pointed at an opponent will cause it to lock on, and while the gun is locked the next rocket fired will be a homing rocket.  Because the Rocket Launcher can load up multiple rockets, it fires when you release the fire button.  If you prefer, it can be configured to fire a rocket as soon as you press fire button down, at the expense of the multiple rocket load-up feature.  This is set in the Input Options menu."
-     AmmoName=Class'Botpack.RocketPack'
-     PickupAmmoCount=6
-     bWarnTarget=True
-     bAltWarnTarget=True
-     bSplashDamage=True
-     bRecommendSplashDamage=True
-     FiringSpeed=1.000000
-     FireOffset=(X=10.000000,Y=-5.000000,Z=-8.800000)
-     ProjectileClass=Class'Botpack.RocketMk2'
-     AltProjectileClass=Class'Botpack.UT_Grenade'
-     shakemag=350.000000
-     shaketime=0.200000
-     shakevert=7.500000
-     AIRating=0.750000
-     RefireRate=0.250000
-     AltRefireRate=0.250000
-     AltFireSound=Sound'UnrealShare.Eightball.EightAltFire'
-     CockingSound=Sound'UnrealShare.Eightball.Loading'
-     SelectSound=Sound'UnrealShare.Eightball.Selecting'
-     Misc1Sound=Sound'UnrealShare.Eightball.SeekLock'
-     Misc2Sound=Sound'UnrealShare.Eightball.SeekLost'
-     Misc3Sound=Sound'UnrealShare.Eightball.BarrelMove'
-     DeathMessage="%o was smacked down by %k's %w."
-     NameColor=(G=0,B=0)
-     AutoSwitchPriority=9
-     InventoryGroup=9
-     PickupMessage="You got the Rocket Launcher."
-     ItemName="Rocket Launcher"
-     PlayerViewOffset=(X=2.400000,Y=-1.000000,Z=-2.200000)
-     PlayerViewMesh=LodMesh'Botpack.Eightm'
-     PlayerViewScale=2.000000
-     BobDamping=0.975000
-     PickupViewMesh=LodMesh'Botpack.Eight2Pick'
-     ThirdPersonMesh=LodMesh'Botpack.EightHand'
-     StatusIcon=Texture'Botpack.Icons.Use8ball'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.Use8ball'
-     Mesh=LodMesh'Botpack.Eight2Pick'
-     bNoSmooth=False
-     CollisionHeight=10.000000
+      LoadAnim(0)="load1"
+      LoadAnim(1)="Load2"
+      LoadAnim(2)="Load3"
+      LoadAnim(3)="Load4"
+      LoadAnim(4)="Load5"
+      LoadAnim(5)="Load6"
+      RotateAnim(0)="Rotate1"
+      RotateAnim(1)="Rotate2"
+      RotateAnim(2)="Rotate3"
+      RotateAnim(3)="Rotate4"
+      RotateAnim(4)="Rotate5"
+      RotateAnim(5)="Rotate3"
+      FireAnim(0)="Fire1"
+      FireAnim(1)="Fire2"
+      FireAnim(2)="Fire3"
+      FireAnim(3)="Fire4"
+      FireAnim(4)="Fire2"
+      FireAnim(5)="Fire3"
+      RocketsLoaded=0
+      ClientRocketsLoaded=0
+      bFireLoad=False
+      bTightWad=False
+      bInstantRocket=False
+      bAlwaysInstant=False
+      bClientDone=False
+      bRotated=False
+      bPendingLock=False
+      LockedTarget=None
+      NewTarget=None
+      oldTarget=None
+      WeaponDescription="Classification: Heavy Ballistic\n\nPrimary Fire: Slow moving but deadly rockets are fired at opponents. Trigger can be held down to load up to six rockets at a time, which can be fired at once.\n\nSecondary Fire: Grenades are lobbed from the barrel. Secondary trigger can be held as well to load up to six grenades.\n\nTechniques: Keeping this weapon pointed at an opponent will cause it to lock on, and while the gun is locked the next rocket fired will be a homing rocket.  Because the Rocket Launcher can load up multiple rockets, it fires when you release the fire button.  If you prefer, it can be configured to fire a rocket as soon as you press fire button down, at the expense of the multiple rocket load-up feature.  This is set in the Input Options menu."
+      AmmoName=Class'Botpack.RocketPack'
+      PickupAmmoCount=6
+      bWarnTarget=True
+      bAltWarnTarget=True
+      bSplashDamage=True
+      bRecommendSplashDamage=True
+      FiringSpeed=1.000000
+      FireOffset=(X=10.000000,Y=-5.000000,Z=-8.800000)
+      ProjectileClass=Class'Botpack.RocketMk2'
+      AltProjectileClass=Class'Botpack.UT_Grenade'
+      shakemag=350.000000
+      shaketime=0.200000
+      shakevert=7.500000
+      AIRating=0.750000
+      RefireRate=0.250000
+      AltRefireRate=0.250000
+      AltFireSound=Sound'UnrealShare.Eightball.EightAltFire'
+      CockingSound=Sound'UnrealShare.Eightball.Loading'
+      SelectSound=Sound'UnrealShare.Eightball.Selecting'
+      Misc1Sound=Sound'UnrealShare.Eightball.SeekLock'
+      Misc2Sound=Sound'UnrealShare.Eightball.SeekLost'
+      Misc3Sound=Sound'UnrealShare.Eightball.BarrelMove'
+      DeathMessage="%o was smacked down by %k's %w."
+      NameColor=(G=0,B=0)
+      AutoSwitchPriority=9
+      InventoryGroup=9
+      PickupMessage="You got the Rocket Launcher."
+      ItemName="Rocket Launcher"
+      PlayerViewOffset=(X=2.400000,Y=-1.000000,Z=-2.200000)
+      PlayerViewMesh=LodMesh'Botpack.Eightm'
+      PlayerViewScale=2.000000
+      BobDamping=0.975000
+      PickupViewMesh=LodMesh'Botpack.Eight2Pick'
+      ThirdPersonMesh=LodMesh'Botpack.EightHand'
+      StatusIcon=Texture'Botpack.Icons.Use8ball'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.Use8ball'
+      Mesh=LodMesh'Botpack.Eight2Pick'
+      bNoSmooth=False
+      CollisionHeight=10.000000
 }

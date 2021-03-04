@@ -64,4 +64,9 @@ function Touch( actor Other )
 
 defaultproperties
 {
+      GotoKeyframe=0
+      MoveTime=0.000000
+      bTriggerOnceOnly=False
+      ClassProximityType=None
+      TriggerType=TT_PlayerProximity
 }

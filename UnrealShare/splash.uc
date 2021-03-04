@@ -36,9 +36,9 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     bNetOptional=True
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.WaterImpactM'
+      bNetOptional=True
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.WaterImpactM'
 }

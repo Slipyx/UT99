@@ -33,7 +33,8 @@ state() LoopMove
 	{
 		SavedTrigger = Other;
 		Instigator = EventInstigator;
-		SavedTrigger.BeginEvent();
+		if (SavedTrigger != None)
+		   SavedTrigger.BeginEvent();
 		GotoState( 'LoopMove', 'Open' );
 	}
 
@@ -72,4 +73,5 @@ InactiveState:
 
 defaultproperties
 {
+      NextKeyNum=0
 }

@@ -62,7 +62,8 @@ function bool Create()
 
 defaultproperties
 {
-     bDirectional=True
-     Texture=Texture'UnrealShare.S_SpawnP'
-     SoundVolume=128
+      Factory=None
+      bDirectional=True
+      Texture=Texture'UnrealShare.S_SpawnP'
+      SoundVolume=128
 }

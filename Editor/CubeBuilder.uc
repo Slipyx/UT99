@@ -65,11 +65,13 @@ event bool Build()
 
 defaultproperties
 {
-     Height=256.000000
-     Width=256.000000
-     Breadth=256.000000
-     WallThickness=16.000000
-     GroupName=Cube
-     BitmapFilename="BBCube"
-     ToolTip="Cube"
+      Height=256.000000
+      Width=256.000000
+      Breadth=256.000000
+      WallThickness=16.000000
+      GroupName="Cube"
+      Hollow=False
+      Tessellated=False
+      BitmapFilename="BBCube"
+      ToolTip="Cube"
 }

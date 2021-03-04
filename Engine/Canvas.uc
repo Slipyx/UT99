@@ -38,8 +38,18 @@ var font LargeFont;          // Large system font.
 
 // Internal.
 var const viewport Viewport; // Viewport that owns the canvas.
-var const int FramePtr;      // Scene frame pointer.
-var const int RenderPtr;	 // Render device pointer, only valid during UGameEngine::Draw
+var const pointer FramePtr;      // Scene frame pointer.
+var const pointer RenderPtr;	 // Render device pointer, only valid during UGameEngine::Draw
+
+// These font families should be available on all of the platforms we support
+enum FontFamily
+{
+	FF_Arial,       // sans-serif font. Windows will use Arial when requested. Linux/Mac use Helvetica.
+	FF_Times,		// serif font. Windows uses Times New Roman. Linux/Mac use times
+	FF_Courier,		// monospace font. Windows uses Courier New. Linux/Mac use courier
+	FF_Tahoma,		// sans-serif font. This is the standard UWindow font. Linux/Mac will use Verdana if requested.
+};
+
 
 // native functions.
 native(464) final function StrLen( coerce string String, out float XL, out float YL );
@@ -51,6 +61,15 @@ native(469) final function DrawTextClipped( coerce string Text, optional bool bC
 native(470) final function TextSize( coerce string String, out float XL, out float YL );
 native(471) final function DrawClippedActor( Actor A, bool WireFrame, int X, int Y, int XB, int YB, optional bool ClearZ );
 native(480) final function DrawPortal( int X, int Y, int Width, int Height, actor CamActor, vector CamLocation, rotator CamRotation, optional int FOV, optional bool ClearZ );
+
+//
+// v469 Run-time font creation support
+//
+
+// Note, this function may not be able to create the exact font that was 
+// requested, but it will usually be able to create a similar-looking font.
+native static final function Font CreateFont(FontFamily Font, int Size, bool Bold, bool Italic, bool Underlined, bool DPIScaled, bool AntiAliased);
+native static final function int GetDesktopDPI();
 
 // UnrealScript functions.
 event Reset()
@@ -100,11 +119,28 @@ final function DrawRect( texture Tex, float RectX, float RectY )
 
 defaultproperties
 {
-     Z=1.000000
-     Style=1
-     DrawColor=(R=127,G=127,B=127)
-     SmallFont=Font'Engine.SmallFont'
-     MedFont=Font'Engine.MedFont'
-     BigFont=Font'Engine.BigFont'
-     LargeFont=Font'Engine.LargeFont'
+      Font=None
+      SpaceX=0.000000
+      SpaceY=0.000000
+      OrgX=0.000000
+      OrgY=0.000000
+      ClipX=0.000000
+      ClipY=0.000000
+      CurX=0.000000
+      CurY=0.000000
+      Z=1.000000
+      Style=1
+      CurYL=0.000000
+      DrawColor=(R=127,G=127,B=127,A=0)
+      bCenter=False
+      bNoSmooth=False
+      SizeX=0
+      SizeY=0
+      SmallFont=Font'Engine.SmallFont'
+      MedFont=Font'Engine.MedFont'
+      BigFont=Font'Engine.BigFont'
+      LargeFont=Font'Engine.LargeFont'
+      Viewport=None
+      FramePtr=
+      RenderPtr=
 }

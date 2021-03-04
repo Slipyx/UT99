@@ -5,5 +5,5 @@ class UT_BigBloodPuff extends UT_BloodPuff;
 
 defaultproperties
 {
-     DrawScale=5.000000
+      DrawScale=5.000000
 }

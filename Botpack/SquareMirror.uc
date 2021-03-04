@@ -15,5 +15,5 @@ class SquareMirror extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.SquareMirror'
+      Mesh=LodMesh'Botpack.SquareMirror'
 }

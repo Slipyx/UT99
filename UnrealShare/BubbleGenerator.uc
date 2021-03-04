@@ -47,11 +47,12 @@ Begin:
 
 defaultproperties
 {
-     NumBubbles=15.000000
-     bStatic=False
-     Texture=Texture'UnrealShare.S_bubble1'
-     DrawScale=0.500000
-     CollisionRadius=64.000000
-     CollisionHeight=64.000000
-     bCollideActors=True
+      NumBubbles=15.000000
+      i=0
+      bStatic=False
+      Texture=Texture'UnrealShare.S_bubble1'
+      DrawScale=0.500000
+      CollisionRadius=64.000000
+      CollisionHeight=64.000000
+      bCollideActors=True
 }

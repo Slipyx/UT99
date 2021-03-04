@@ -71,7 +71,8 @@ function ZoneChange(ZoneInfo newZone)
 
 function Landed(vector HitNormal)
 {
-	GotoState('Flopping');
+	if ( !bDeleteMe )
+	    GotoState('Flopping');
 	Landed(HitNormal);
 }
 
@@ -102,10 +103,7 @@ function eAttitude AttitudeToCreature(Pawn Other)
 {
 	if ( Other.IsA('Devilfish') )
 		return ATTITUDE_Friendly;
-	else if ( Other.IsA('ScriptedPawn') )
-		return ATTITUDE_Hate;
-	else
-		return ATTITUDE_Ignore;
+	return ATTITUDE_Hate;
 }
 
 function PlayWaiting()
@@ -214,6 +212,12 @@ function PlayMeleeAttack()
 {
 	local vector adjust;
 	local float decision;
+
+	if ( Target == none || Target.bDeleteme )
+	{
+		PlayRunning();
+		return;
+	}
 	adjust = vect(0,0,0.5) * FRand() * Target.CollisionHeight;
 	Acceleration = AccelRate * Normal(Target.Location - Location + adjust);
 	bAttackBump = false;
@@ -254,7 +258,8 @@ state Waiting
 {
 	function Landed(vector HitNormal)
 	{
-		GotoState('Flopping');
+		if (!bDeleteMe)
+		    GotoState('Flopping');
 		Landed(HitNormal);
 	}
 }
@@ -265,7 +270,8 @@ ignores seeplayer, hearnoise, bump, hitwall;
 
 	function Landed(vector HitNormal)
 	{
-		GotoState('Flopping');
+		if (!bDeleteMe)
+		    GotoState('Flopping');
 		Landed(HitNormal);
 	}
 }
@@ -276,7 +282,8 @@ ignores Bump, Hitwall, HearNoise, WarnTarget;
 
 	function Landed(vector HitNormal)
 	{
-		GotoState('Flopping');
+		if (!bDeleteMe)
+		    GotoState('Flopping');
 		Landed(HitNormal);
 	}
 }
@@ -285,7 +292,8 @@ state Ambushing
 {
 	function Landed(vector HitNormal)
 	{
-		GotoState('Flopping');
+		if (!bDeleteMe)
+		    GotoState('Flopping');
 		Landed(HitNormal);
 	}
 }
@@ -298,7 +306,8 @@ ignores SeePlayer, HearNoise;
 	{
 		Disable('Bump');
 		if ( (AnimSequence == 'Bite1') || (AnimSequence == 'Bite2') || (AnimSequence == 'Bite3') )
-			MeleeDamageTarget(BiteDamage, (BiteDamage * 1000.0 * Normal(Target.Location - Location)));
+		    if (Target!=None)
+			    MeleeDamageTarget(BiteDamage, (BiteDamage * 1000.0 * Normal(Target.Location - Location)));
 		else 
 			return;
 		bAttackBump = true;
@@ -310,8 +319,7 @@ ignores SeePlayer, HearNoise;
 
 	function KeepAttacking()
 	{
-		if ( (Target == None) ||
-			((Pawn(Target) != None) && (Pawn(Target).Health == 0)) )
+		if (!HasAliveEnemy())
 			GotoState('Attacking');
 		else if ( bAttackBump && (FRand() < 0.5) )
 		{
@@ -346,6 +354,10 @@ ignores seeplayer, hearnoise, enemynotvisible, hitwall;
 	function ZoneChange( ZoneInfo NewZone )
 	{
 		local rotator newRotation;
+
+		if ( bDeleteme )
+			return;
+
 		if (NewZone.bWaterZone)
 		{
 			newRotation = Rotation;
@@ -398,6 +410,12 @@ state TacticalMove
 		local vector pick, pickdir, enemydir,Y, minDest;
 		local float Aggression, enemydist, minDist, strafeSize;
 		local bool success;
+
+		if (!HasAliveEnemy())
+		{
+			WhatToDoNext('','');
+			return;
+		}
 	
 		success = false;
 		enemyDist = VSize(Location - Enemy.Location);
@@ -458,40 +476,43 @@ state TacticalMove
 		else if (Other == Enemy)
 		{
 			bReadyToAttack = true;
-			Target = Enemy;
-			GotoState('MeleeAttack');
+			if ( (Enemy.Health <= 0) || (enemy.bDeleteme) )
+				gotoState('Attacking');
+			else
+				GotoState('MeleeAttack');
 		}
-		else if (Enemy.Health <= 0)
-			GotoState('Attacking');
 	}
 }
 
 defaultproperties
 {
-     BiteDamage=15
-     RipDamage=25
-     rip=Sound'UnrealShare.Razorfish.tear1fs'
-     CarcassType=Class'UnrealShare.DevilfishCarcass'
-     TimeBetweenAttacks=0.500000
-     Aggressiveness=1.000000
-     MeleeRange=40.000000
-     WaterSpeed=250.000000
-     Visibility=120
-     SightRadius=1250.000000
-     Health=70
-     UnderWaterTime=-1.000000
-     Intelligence=BRAINS_NONE
-     HitSound1=Sound'UnrealShare.Razorfish.chomp1fs'
-     HitSound2=Sound'UnrealShare.Razorfish.miss1fs'
-     Land=Sound'UnrealShare.Razorfish.flop1fs'
-     Die=Sound'UnrealShare.Razorfish.death1fs'
-     CombatStyle=1.000000
-     AmbientSound=Sound'UnrealShare.Razorfish.ambfs'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.fish'
-     CollisionRadius=35.000000
-     CollisionHeight=20.000000
-     Mass=60.000000
-     Buoyancy=60.000000
-     RotationRate=(Pitch=8192,Roll=8192)
+      BiteDamage=15
+      RipDamage=25
+      bAttackBump=False
+      Bite=None
+      rip=Sound'UnrealShare.Razorfish.tear1fs'
+      AirTime=0.000000
+      CarcassType=Class'UnrealShare.DevilfishCarcass'
+      TimeBetweenAttacks=0.500000
+      Aggressiveness=1.000000
+      MeleeRange=40.000000
+      WaterSpeed=250.000000
+      Visibility=120
+      SightRadius=1250.000000
+      Health=70
+      UnderWaterTime=-1.000000
+      Intelligence=BRAINS_NONE
+      HitSound1=Sound'UnrealShare.Razorfish.chomp1fs'
+      HitSound2=Sound'UnrealShare.Razorfish.miss1fs'
+      Land=Sound'UnrealShare.Razorfish.flop1fs'
+      Die=Sound'UnrealShare.Razorfish.death1fs'
+      CombatStyle=1.000000
+      AmbientSound=Sound'UnrealShare.Razorfish.ambfs'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.fish'
+      CollisionRadius=35.000000
+      CollisionHeight=20.000000
+      Mass=60.000000
+      Buoyancy=60.000000
+      RotationRate=(Pitch=8192,Roll=8192)
 }

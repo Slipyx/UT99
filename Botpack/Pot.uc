@@ -13,10 +13,10 @@ class Pot extends UT_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.potM'
-     DrawScale=0.200000
-     bCollideActors=True
-     bBlockActors=True
-     bBlockPlayers=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.potM'
+      DrawScale=0.200000
+      bCollideActors=True
+      bBlockActors=True
+      bBlockPlayers=True
 }

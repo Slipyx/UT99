@@ -13,5 +13,5 @@ class NaliStatue extends MonkStatue;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.NaliStatueM'
+      Mesh=LodMesh'UnrealShare.NaliStatueM'
 }

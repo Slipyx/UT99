@@ -73,6 +73,7 @@ function Notify(UWindowDialogControl C, byte E)
 
 defaultproperties
 {
-     RestartText="Restart"
-     RestartHelp="Press to restart the current level."
+      RestartButton=None
+      RestartText="Restart"
+      RestartHelp="Press to restart the current level."
 }

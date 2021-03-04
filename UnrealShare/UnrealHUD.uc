@@ -979,24 +979,34 @@ simulated function DrawMOTD(Canvas Canvas)
 
 defaultproperties
 {
-     TranslatorY=-128
-     CurTranY=-128
-     IdentifyName="Name"
-     IdentifyHealth="Health"
-     VersionMessage="Version"
-     TeamName(0)="Red Team: "
-     TeamName(1)="Blue Team: "
-     TeamName(2)="Green Team: "
-     TeamName(3)="Gold Team: "
-     TeamColor(0)=(R=255)
-     TeamColor(1)=(G=128,B=255)
-     TeamColor(2)=(G=255)
-     TeamColor(3)=(R=255,G=255)
-     AltTeamColor(0)=(R=200)
-     AltTeamColor(1)=(G=94,B=187)
-     AltTeamColor(2)=(G=128)
-     AltTeamColor(3)=(R=255,G=255,B=128)
-     RedColor=(R=255)
-     GreenColor=(G=255)
-     MainMenuType=Class'UnrealShare.UnrealMainMenu'
+      TranslatorTimer=0
+      TranslatorY=-128
+      CurTranY=-128
+      SizeY=0
+      Count=0
+      CurrentMessage=""
+      bDisplayTran=False
+      bFlashTranslator=False
+      MOTDFadeOutTime=0.000000
+      IdentifyFadeTime=0.000000
+      IdentifyTarget=None
+      IdentifyName="Name"
+      IdentifyHealth="Health"
+      VersionMessage="Version"
+      TeamName(0)="Red Team: "
+      TeamName(1)="Blue Team: "
+      TeamName(2)="Green Team: "
+      TeamName(3)="Gold Team: "
+      TeamColor(0)=(R=255,G=0,B=0,A=0)
+      TeamColor(1)=(R=0,G=128,B=255,A=0)
+      TeamColor(2)=(R=0,G=255,B=0,A=0)
+      TeamColor(3)=(R=255,G=255,B=0,A=0)
+      AltTeamColor(0)=(R=200,G=0,B=0,A=0)
+      AltTeamColor(1)=(R=0,G=94,B=187,A=0)
+      AltTeamColor(2)=(R=0,G=128,B=0,A=0)
+      AltTeamColor(3)=(R=255,G=255,B=128,A=0)
+      RedColor=(R=255,G=0,B=0,A=0)
+      GreenColor=(R=0,G=255,B=0,A=0)
+      ArmorOffset=0
+      MainMenuType=Class'UnrealShare.UnrealMainMenu'
 }

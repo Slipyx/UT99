@@ -707,7 +707,7 @@ function BackPressed()
 function EvaluateMatch(optional bool bTrophyVictory)
 {
 	local string SaveString;
-	local int Team, i;
+	local int Team, i, NumTeams;
 
 	// Save the game.
 	if (LadderObj != None)
@@ -715,16 +715,19 @@ function EvaluateMatch(optional bool bTrophyVictory)
 		SaveString = string(LadderObj.TournamentDifficulty);
 		if (!class'UTLadderStub'.Static.GetStubClass().Static.IsDemo())
 		{
-			for (i=0; i<class'Ladder'.Default.NumTeams; i++)
+			// (v469) Skaarj teams become playable after game is beaten.
+			NumTeams = class'Ladder'.default.NumTeams + int(class'Ladder'.default.HasBeatenGame) * 2;
+			for (i=0; i<NumTeams; i++)
 			{
 				if (class'Ladder'.Default.LadderTeams[i] == LadderObj.Team)
 					Team = i;
 			}
 		} else {
-			if (class'Ladder'.Default.LadderTeams[class'Ladder'.Default.NumTeams] == LadderObj.Team)
-				Team = class'Ladder'.Default.NumTeams;
+			NumTeams = class'Ladder'.default.NumTeams + 2;
+			if (class'Ladder'.Default.LadderTeams[NumTeams] == LadderObj.Team)
+				Team = NumTeams;
 			else
-				Team = class'Ladder'.Default.NumTeams+1;
+				Team = NumTeams+1;
 		}
 		SaveString = SaveString$"\\"$Team;
 		SaveString = SaveString$"\\"$LadderObj.DMRank;
@@ -867,24 +870,98 @@ function NextPressed()
 
 defaultproperties
 {
-     BGName1(0)="UTMenu.Ladr11"
-     BGName1(1)="UTMenu.Ladr12"
-     BGName1(2)="UTMenu.Ladr13"
-     BGName1(3)="UTMenu.Ladr14"
-     BGName2(0)="UTMenu.Ladr21"
-     BGName2(1)="UTMenu.Ladr22"
-     BGName2(2)="UTMenu.Ladr23"
-     BGName2(3)="UTMenu.Ladr24"
-     BGName3(0)="UTMenu.Ladr31"
-     BGName3(1)="UTMenu.Ladr32"
-     BGName3(2)="UTMenu.Ladr33"
-     BGName3(3)="UTMenu.Ladr34"
-     ArrowTex=Texture'LadrArrow.LadrArrow.arrow_a00'
-     StaticTex=Texture'Botpack.LadrStatic.Static.Static_A00'
-     MapText="Map:"
-     AuthorText="Author:"
-     FragText="Frag Limit:"
-     TeamScoreText="Team Score Limit:"
-     NotAvailableString="Not Available In Demo"
-     RequiredRungs=4
+      BG1(0)=None
+      BG1(1)=None
+      BG1(2)=None
+      BG1(3)=None
+      BG2(0)=None
+      BG2(1)=None
+      BG2(2)=None
+      BG2(3)=None
+      BG3(0)=None
+      BG3(1)=None
+      BG3(2)=None
+      BG3(3)=None
+      BGName1(0)="UTMenu.Ladr11"
+      BGName1(1)="UTMenu.Ladr12"
+      BGName1(2)="UTMenu.Ladr13"
+      BGName1(3)="UTMenu.Ladr14"
+      BGName2(0)="UTMenu.Ladr21"
+      BGName2(1)="UTMenu.Ladr22"
+      BGName2(2)="UTMenu.Ladr23"
+      BGName2(3)="UTMenu.Ladr24"
+      BGName3(0)="UTMenu.Ladr31"
+      BGName3(1)="UTMenu.Ladr32"
+      BGName3(2)="UTMenu.Ladr33"
+      BGName3(3)="UTMenu.Ladr34"
+      ArrowTex=Texture'LadrArrow.LadrArrow.arrow_a00'
+      PendingPos=0
+      ArrowPos=0.000000
+      StaticTex=Texture'Botpack.LadrStatic.Static.Static_A00'
+      GameType=""
+      MapText="Map:"
+      AuthorText="Author:"
+      FragText="Frag Limit:"
+      TeamScoreText="Team Score Limit:"
+      TrophyMap=""
+      LadderObj=None
+      Title1=None
+      LadderName=""
+      BackButton=None
+      NextButton=None
+      Matches(0)=None
+      Matches(1)=None
+      Matches(2)=None
+      Matches(3)=None
+      Matches(4)=None
+      Matches(5)=None
+      Matches(6)=None
+      Matches(7)=None
+      Matches(8)=None
+      Matches(9)=None
+      Matches(10)=None
+      Matches(11)=None
+      Matches(12)=None
+      Matches(13)=None
+      Matches(14)=None
+      Matches(15)=None
+      Matches(16)=None
+      Matches(17)=None
+      Matches(18)=None
+      Matches(19)=None
+      Matches(20)=None
+      Matches(21)=None
+      Matches(22)=None
+      Matches(23)=None
+      Matches(24)=None
+      Matches(25)=None
+      Matches(26)=None
+      Matches(27)=None
+      Matches(28)=None
+      Matches(29)=None
+      Matches(30)=None
+      Matches(31)=None
+      BaseMatch=0
+      MaxBaseMatch=0
+      Scrollup=None
+      Scrolldown=None
+      SelectedMatch=0
+      StaticScale=0.000000
+      MapShot=None
+      MapStatic=None
+      bMapStatic=False
+      MapInfoArea=None
+      InfoScrollup=None
+      InfoScrolldown=None
+      Ladder=None
+      DemoLadder=None
+      GOTYLadder=None
+      NotAvailableString="Not Available In Demo"
+      bTrophyTravelPending=False
+      LadderTrophy=None
+      LadderRank=0
+      LadderPos=0
+      RequiredRungs=4
+      bInitialized=False
+      bGOTY=True
 }

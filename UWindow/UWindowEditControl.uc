@@ -85,4 +85,8 @@ function SetDelayedNotify(bool bDelayedNotify)
 
 defaultproperties
 {
+      EditBoxWidth=0.000000
+      EditAreaDrawX=0.000000
+      EditAreaDrawY=0.000000
+      EditBox=None
 }

@@ -10,5 +10,5 @@ function Created()
 
 defaultproperties
 {
-     OKText="OK"
+      OKText="OK"
 }

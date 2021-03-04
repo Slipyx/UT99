@@ -21,6 +21,8 @@ auto state active
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteme)
+			return;	
 		Instigator = InstigatedBy;
 		if ( Instigator != None )
 			MakeNoise(1.0);
@@ -32,17 +34,17 @@ Begin:
 
 defaultproperties
 {
-     bStatic=False
-     Physics=PHYS_Rotating
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Fan2M'
-     CollisionRadius=44.000000
-     CollisionHeight=44.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bProjTarget=True
-     bFixedRotationDir=True
-     RotationRate=(Roll=20000)
-     DesiredRotation=(Roll=1)
+      bStatic=False
+      Physics=PHYS_Rotating
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Fan2M'
+      CollisionRadius=44.000000
+      CollisionHeight=44.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bProjTarget=True
+      bFixedRotationDir=True
+      RotationRate=(Roll=20000)
+      DesiredRotation=(Roll=1)
 }

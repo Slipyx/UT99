@@ -7,9 +7,9 @@ class MinigunArena expands Arena;
 
 defaultproperties
 {
-     WeaponName=minigun2
-     AmmoName=Miniammo
-     WeaponString="Botpack.Minigun2"
-     AmmoString="Botpack.MiniAmmo"
-     DefaultWeapon=Class'Botpack.minigun2'
+      WeaponName="minigun2"
+      AmmoName="Miniammo"
+      WeaponString="Botpack.Minigun2"
+      AmmoString="Botpack.MiniAmmo"
+      DefaultWeapon=Class'Botpack.minigun2'
 }

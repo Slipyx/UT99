@@ -177,9 +177,23 @@ auto state Startup
 
 	function SetHome()
 	{
+		local Weapon W;
 		Super.SetHome();
 		if ( myWeapon != None )
 			myWeapon.Touch(self);
+		else if ( WeaponType != None )
+		{
+			foreach RadiusActors(class'Weapon', myWeapon, CollisionRadius)
+				if (MyWeapon != None && myWeapon.IsInState('Pickup'))
+					W=myWeapon;
+			if (W != None)
+			{
+				W.ReSpawnTime = 0.0;
+				W.Touch(self);
+			}
+			else if ( AlarmTag == '' )
+				bIsPlayer = false;
+		}
 	}
 }
 
@@ -286,6 +300,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal,X,Y,Z, projStart, EnemyDir, EnemyUp;
 	local actor HitActor;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+		return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -323,7 +340,7 @@ function PlayCock()
 		if ( Weapon.CockingSound != None )
 			PlaySound(Weapon.CockingSound, SLOT_Interact,,,700);
 		else if ( Weapon.SelectSound != None )
-			PlaySound(Weapon.CockingSound, SLOT_Interact,,,700);
+			PlaySound(Weapon.SelectSound, SLOT_Interact,,,700);
 	}
 }
 
@@ -707,7 +724,7 @@ ignores SeePlayer, HearNoise;
 	{
 		if ( bFiringPaused )
 			return;
-		if ( (FRand() > ReFireRate) || (Enemy == None) || (Enemy.Health <= 0) || !CanFireAtEnemy() ) 
+		if ( (FRand() > ReFireRate) || !HasAliveEnemy() || !CanFireAtEnemy() )
 		{
 			if ( GetAnimGroup(AnimSequence) == 'Shielded' )
 			{
@@ -761,12 +778,18 @@ ShieldUp:
 	Goto('CheckDist');
 
 Begin:
+	if (!HasAliveEnemy())
+		GotoState('Attacking');
 	Acceleration = vect(0,0,0); //stop
 	DesiredRotation = Rotator(Enemy.Location - Location);
 	TweenToFighter(0.15);
 	
 FaceTarget:
 	Disable('AnimEnd');
+	Sleep(0.0);
+	if (HasAliveEnemy())
+		GotoState('Attacking');
+	Target = Enemy;
 	if (NeedToTurn(Enemy.Location))
 	{
 		PlayTurning();
@@ -780,35 +803,43 @@ CheckDist:
 		GotoState('MeleeAttack', 'ReadyToAttack'); 
 
 ReadyToAttack:
-	if (!bHasRangedAttack)
+	if (!bHasRangedAttack || !HasAliveEnemy())
 		GotoState('Attacking');
 	DesiredRotation = Rotator(Enemy.Location - Location);
 	PlayRangedAttack();
 	Enable('AnimEnd');
+	Sleep(0.0);
+	
 Firing:
+	if (!HasAliveEnemy())
+		GotoState('Attacking');
 	TurnToward(Enemy);
 	Goto('Firing');
+	
 DoneFiring:
 	Disable('AnimEnd');
+	Sleep(0.0);
 	KeepAttacking();  
 	Goto('FaceTarget');
 }
 
 defaultproperties
 {
-     WeaponType=Class'UnrealShare.DispersionPistol'
-     LungeDamage=20
-     SpinDamage=15
-     ClawDamage=10
-     CarcassType=Class'UnrealI.TrooperCarcass'
-     RangedProjectile=None
-     GroundSpeed=400.000000
-     Health=170
-     CombatStyle=0.300000
-     Skin=Texture'UnrealI.Skins.sktrooper1'
-     Mesh=LodMesh'UnrealI.sktrooper'
-     CollisionRadius=32.000000
-     CollisionHeight=42.000000
-     Mass=125.000000
-     Buoyancy=125.000000
+      WeaponType=Class'UnrealShare.DispersionPistol'
+      myWeapon=None
+      ducktime=0.000000
+      LungeDamage=20
+      SpinDamage=15
+      ClawDamage=10
+      CarcassType=Class'UnrealI.TrooperCarcass'
+      RangedProjectile=None
+      GroundSpeed=400.000000
+      Health=170
+      CombatStyle=0.300000
+      Skin=Texture'UnrealI.Skins.sktrooper1'
+      Mesh=LodMesh'UnrealI.sktrooper'
+      CollisionRadius=32.000000
+      CollisionHeight=42.000000
+      Mass=125.000000
+      Buoyancy=125.000000
 }

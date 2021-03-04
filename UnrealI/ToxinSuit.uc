@@ -14,16 +14,16 @@ class ToxinSuit extends Suits;
 
 defaultproperties
 {
-     PickupMessage="You picked up the Toxin Suit"
-     PickupViewMesh=LodMesh'UnrealI.ToxSuit'
-     ProtectionType1=Corroded
-     Charge=50
-     ArmorAbsorption=50
-     bIsAnArmor=True
-     AbsorptionPriority=6
-     PickupSound=Sound'UnrealShare.Pickups.suitsnd'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.ToxSuit'
-     CollisionRadius=30.000000
-     CollisionHeight=30.000000
+      PickupMessage="You picked up the Toxin Suit"
+      PickupViewMesh=LodMesh'UnrealI.ToxSuit'
+      ProtectionType1="Corroded"
+      Charge=50
+      ArmorAbsorption=50
+      bIsAnArmor=True
+      AbsorptionPriority=6
+      PickupSound=Sound'UnrealShare.Pickups.suitsnd'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.ToxSuit'
+      CollisionRadius=30.000000
+      CollisionHeight=30.000000
 }

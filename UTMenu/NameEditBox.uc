@@ -91,4 +91,6 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      CharacterWindow=None
+      TextColor=(R=0,G=0,B=0,A=0)
 }

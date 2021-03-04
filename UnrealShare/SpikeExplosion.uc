@@ -29,7 +29,7 @@ Begin:
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.SpikeExp'
-     bUnlit=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.SpikeExp'
+      bUnlit=True
 }

@@ -24,6 +24,7 @@ var localized string GlobalNameChange;
 var localized string NoNameChange;
 var localized string TimeMessage[16];
 var class<BotInfo> BotConfigType;
+var localized string GlobalNameChangeTrailer;
 
 function PostBeginPlay()
 {
@@ -471,7 +472,7 @@ function ChangeName( Pawn Other, coerce string S, bool bNameChange )
 	}
 
 	if (bNameChange)
-		BroadcastMessage(Other.PlayerReplicationInfo.PlayerName$GlobalNameChange$S, false);
+		BroadcastMessage(Other.PlayerReplicationInfo.PlayerName$GlobalNameChange$S$GlobalNameChangeTrailer, false);
 			
 	Other.PlayerReplicationInfo.PlayerName = S;
 
@@ -523,33 +524,48 @@ function EndGame( string Reason )
 
 defaultproperties
 {
-     bChangeLevels=True
-     bHardCoreMode=True
-     InitialBots=4
-     GlobalNameChange=" changed name to "
-     NoNameChange=" is already in use"
-     TimeMessage(0)="5 minutes left in the game!"
-     TimeMessage(1)="4 minutes left in the game!"
-     TimeMessage(2)="3 minutes left in the game!"
-     TimeMessage(3)="2 minutes left in the game!"
-     TimeMessage(4)="1 minute left in the game!"
-     TimeMessage(5)="30 seconds left!"
-     TimeMessage(6)="10 seconds left!"
-     TimeMessage(7)="5 seconds and counting..."
-     TimeMessage(8)="4..."
-     TimeMessage(9)="3..."
-     TimeMessage(10)="2..."
-     TimeMessage(11)="1..."
-     TimeMessage(12)="Time Up!"
-     BotConfigType=Class'UnrealShare.BotInfo'
-     bNoMonsters=True
-     bRestartLevel=False
-     bPauseable=False
-     bDeathMatch=True
-     ScoreBoardType=Class'UnrealShare.UnrealScoreBoard'
-     GameMenuType=Class'UnrealShare.UnrealDMGameOptionsMenu'
-     MapListType=Class'UnrealShare.DMmaplist'
-     MapPrefix="DM"
-     BeaconName="DM"
-     GameName="DeathMatch"
+      FragLimit=0
+      TimeLimit=0
+      bMultiPlayerBots=False
+      bChangeLevels=True
+      bHardCoreMode=True
+      bMegaSpeed=False
+      bDontRestart=False
+      bGameEnded=False
+      bAlreadyChanged=False
+      RemainingTime=0
+      NumBots=0
+      RemainingBots=0
+      InitialBots=4
+      BotConfig=None
+      GlobalNameChange=" changed name to "
+      NoNameChange=" is already in use"
+      TimeMessage(0)="5 minutes left in the game!"
+      TimeMessage(1)="4 minutes left in the game!"
+      TimeMessage(2)="3 minutes left in the game!"
+      TimeMessage(3)="2 minutes left in the game!"
+      TimeMessage(4)="1 minute left in the game!"
+      TimeMessage(5)="30 seconds left!"
+      TimeMessage(6)="10 seconds left!"
+      TimeMessage(7)="5 seconds and counting..."
+      TimeMessage(8)="4..."
+      TimeMessage(9)="3..."
+      TimeMessage(10)="2..."
+      TimeMessage(11)="1..."
+      TimeMessage(12)="Time Up!"
+      TimeMessage(13)=""
+      TimeMessage(14)=""
+      TimeMessage(15)=""
+      BotConfigType=Class'UnrealShare.BotInfo'
+      GlobalNameChangeTrailer=""
+      bNoMonsters=True
+      bRestartLevel=False
+      bPauseable=False
+      bDeathMatch=True
+      ScoreBoardType=Class'UnrealShare.UnrealScoreBoard'
+      GameMenuType=Class'UnrealShare.UnrealDMGameOptionsMenu'
+      MapListType=Class'UnrealShare.DMmaplist'
+      MapPrefix="DM"
+      BeaconName="DM"
+      GameName="DeathMatch"
 }

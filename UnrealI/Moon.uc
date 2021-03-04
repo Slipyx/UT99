@@ -14,13 +14,13 @@ class Moon extends Decoration;
 
 defaultproperties
 {
-     bStatic=False
-     Physics=PHYS_Rotating
-     DrawType=DT_Mesh
-     Skin=Texture'UnrealI.Skins.JMoon1'
-     Mesh=Mesh'UnrealI.Moon1'
-     DrawScale=2.000000
-     bFixedRotationDir=True
-     RotationRate=(Yaw=500)
-     DesiredRotation=(Yaw=500)
+      bStatic=False
+      Physics=PHYS_Rotating
+      DrawType=DT_Mesh
+      Skin=Texture'UnrealI.Skins.JMoon1'
+      Mesh=Mesh'UnrealI.Moon1'
+      DrawScale=2.000000
+      bFixedRotationDir=True
+      RotationRate=(Yaw=500)
+      DesiredRotation=(Yaw=500)
 }

@@ -300,22 +300,32 @@ auto state Pickup
 
 defaultproperties
 {
-     DisruptionThreshold=65.000000
-     GlowColor(0)=Class'Botpack.TranslocGlow'
-     GlowColor(1)=Class'Botpack.TranslocBLue'
-     GlowColor(2)=Class'Botpack.TranslocGreen'
-     GlowColor(3)=Class'Botpack.TranslocGold'
-     ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
-     bNetTemporary=False
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.000000
-     AmbientSound=Sound'Botpack.Translocator.targethum'
-     Mesh=LodMesh'Botpack.Module'
-     SoundRadius=20
-     SoundVolume=100
-     CollisionRadius=10.000000
-     CollisionHeight=3.000000
-     bProjTarget=True
-     bBounce=True
-     Mass=50.000000
+      Disruption=0.000000
+      SpawnTime=0.000000
+      DisruptionThreshold=65.000000
+      Disruptor=None
+      Master=None
+      DesiredTarget=None
+      bAlreadyHit=False
+      bTempDamage=False
+      RealLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      Glow=None
+      GlowColor(0)=Class'Botpack.TranslocGlow'
+      GlowColor(1)=Class'Botpack.TranslocBLue'
+      GlowColor(2)=Class'Botpack.TranslocGreen'
+      GlowColor(3)=Class'Botpack.TranslocGold'
+      Shadow=None
+      ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
+      bNetTemporary=False
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.000000
+      AmbientSound=Sound'Botpack.Translocator.targethum'
+      Mesh=LodMesh'Botpack.Module'
+      SoundRadius=20
+      SoundVolume=100
+      CollisionRadius=10.000000
+      CollisionHeight=3.000000
+      bProjTarget=True
+      bBounce=True
+      Mass=50.000000
 }

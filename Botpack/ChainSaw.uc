@@ -366,29 +366,30 @@ simulated function TweenDown()
 
 defaultproperties
 {
-     Range=90.000000
-     HitSound=Sound'Botpack.ChainSaw.SawHit'
-     DownSound=Sound'Botpack.ChainSaw.ChainPowerDown'
-     WeaponDescription="Classification: Melee Blade\n\nPrimary Fire: When the trigger is held down, the chain covered blade will rev up. Drive this blade into opponents to inflict massive damage.\n\nSecondary Fire: The revved up blade can be swung horizontally and can cause instant decapitation of foes.\n\nTechniques: The chainsaw makes a loud and recognizable roar and can be avoided by listening for audio cues."
-     bMeleeWeapon=True
-     bRapidFire=True
-     FireOffset=(X=10.000000,Y=-2.500000,Z=5.000000)
-     MyDamageType=slashed
-     AltDamageType=Decapitated
-     RefireRate=1.000000
-     AltRefireRate=1.000000
-     SelectSound=Sound'Botpack.ChainSaw.ChainPickup'
-     DeathMessage="%k ripped into %o with a blood soaked %w."
-     PickupMessage="Its been five years since I've seen one of these."
-     ItemName="Chainsaw"
-     PlayerViewOffset=(X=2.000000,Y=-1.100000,Z=-0.900000)
-     PlayerViewMesh=LodMesh'Botpack.chainsawM'
-     PickupViewMesh=LodMesh'Botpack.ChainSawPick'
-     ThirdPersonMesh=LodMesh'Botpack.CSHand'
-     StatusIcon=Texture'Botpack.Icons.UseSaw'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseSaw'
-     Mesh=LodMesh'Botpack.ChainSawPick'
-     bNoSmooth=False
-     SoundVolume=100
+      Range=90.000000
+      HitSound=Sound'Botpack.ChainSaw.SawHit'
+      DownSound=Sound'Botpack.ChainSaw.ChainPowerDown'
+      LastHit=None
+      WeaponDescription="Classification: Melee Blade\n\nPrimary Fire: When the trigger is held down, the chain covered blade will rev up. Drive this blade into opponents to inflict massive damage.\n\nSecondary Fire: The revved up blade can be swung horizontally and can cause instant decapitation of foes.\n\nTechniques: The chainsaw makes a loud and recognizable roar and can be avoided by listening for audio cues."
+      bMeleeWeapon=True
+      bRapidFire=True
+      FireOffset=(X=10.000000,Y=-2.500000,Z=5.000000)
+      MyDamageType="slashed"
+      AltDamageType="Decapitated"
+      RefireRate=1.000000
+      AltRefireRate=1.000000
+      SelectSound=Sound'Botpack.ChainSaw.ChainPickup'
+      DeathMessage="%k ripped into %o with a blood soaked %w."
+      PickupMessage="Its been five years since I've seen one of these."
+      ItemName="Chainsaw"
+      PlayerViewOffset=(X=2.000000,Y=-1.100000,Z=-0.900000)
+      PlayerViewMesh=LodMesh'Botpack.chainsawM'
+      PickupViewMesh=LodMesh'Botpack.ChainSawPick'
+      ThirdPersonMesh=LodMesh'Botpack.CSHand'
+      StatusIcon=Texture'Botpack.Icons.UseSaw'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseSaw'
+      Mesh=LodMesh'Botpack.ChainSawPick'
+      bNoSmooth=False
+      SoundVolume=100
 }

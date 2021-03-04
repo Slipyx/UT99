@@ -34,19 +34,19 @@ auto state Explode
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=1.000000
-     AnimSequence=All
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Skins.TPEffect'
-     DrawScale=0.600000
-     bParticles=True
-     bMeshEnviroMap=True
-     LightType=LT_Pulse
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=170
-     LightSaturation=96
-     LightRadius=6
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=1.000000
+      AnimSequence="All"
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Skins.TPEffect'
+      DrawScale=0.600000
+      bParticles=True
+      bMeshEnviroMap=True
+      LightType=LT_Pulse
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=170
+      LightSaturation=96
+      LightRadius=6
 }

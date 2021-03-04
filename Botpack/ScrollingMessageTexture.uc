@@ -12,6 +12,7 @@ var() bool bResetPosOnTextChange;
 
 var string OldText;
 var int Position;
+var float FloatPosition; // 469 fix
 var float LastDrawTime;
 var PlayerPawn Player;
 
@@ -45,12 +46,12 @@ simulated event RenderTexture(ScriptedTexture Tex)
 		return;
 
 	if(LastDrawTime == 0)
-		Position = Tex.USize;
+		FloatPosition = Tex.USize;
 	else
-		Position -= (Level.TimeSeconds-LastDrawTime) * PixelsPerSecond;
+		FloatPosition -= (Level.TimeSeconds-LastDrawTime) * PixelsPerSecond;
 
-	if(Position < -ScrollWidth)
-		Position = Tex.USize;
+	if(FloatPosition < -ScrollWidth)
+		FloatPosition = Tex.USize;
 
 	LastDrawTime = Level.TimeSeconds;
 
@@ -87,9 +88,11 @@ simulated event RenderTexture(ScriptedTexture Tex)
 
 	if(Text != OldText && bResetPosOnTextChange)
 	{
-		Position = Tex.USize;
+		FloatPosition = Tex.USize;
 		OldText = Text;
 	}
+
+	Position = FloatPosition;
 
 	Tex.DrawColoredText( Position, YPos, Text, Font, FontColor );
 }
@@ -108,7 +111,19 @@ simulated function string Replace(string Text, string Match, string Replacement)
 
 defaultproperties
 {
-     HisMessage="his"
-     HerMessage="her"
-     bResetPosOnTextChange=True
+      ScrollingMessage=""
+      HisMessage="his"
+      HerMessage="her"
+      Font=None
+      FontColor=(R=0,G=0,B=0,A=0)
+      bCaps=False
+      PixelsPerSecond=0
+      ScrollWidth=0
+      YPos=0.000000
+      bResetPosOnTextChange=True
+      OldText=""
+      Position=0
+      FloatPosition=0.000000
+      LastDrawTime=0.000000
+      Player=None
 }

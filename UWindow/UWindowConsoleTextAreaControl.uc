@@ -2,5 +2,5 @@ class UWindowConsoleTextAreaControl extends UWindowDynamicTextArea;
 
 defaultproperties
 {
-     MaxLines=500
+      MaxLines=500
 }

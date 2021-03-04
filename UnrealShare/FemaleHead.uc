@@ -42,5 +42,5 @@ simulated function Landed(vector HitNormal)
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.FemHead1'
+      Mesh=LodMesh'UnrealShare.FemHead1'
 }

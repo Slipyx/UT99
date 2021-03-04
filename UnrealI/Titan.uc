@@ -83,8 +83,7 @@ function PlayAcquisitionSound()
 {
 	if (Acquire != None) 
 	{
-		PlaySound(Acquire, SLOT_Talk,, true); 
-		PlaySound(Acquire, SLOT_Misc,, true);
+		PlaySound( Acquire, SLOT_Talk, 2.0*TransientSoundVolume, true ); 
 	} 
 }
 
@@ -92,8 +91,7 @@ function PlayFearSound()
 {
 	if (Fear != None)
 	{
-		PlaySound(Fear, SLOT_Talk,, true); 
-		PlaySound(Fear, SLOT_Misc,, true); 
+		PlaySound( Fear, SLOT_Talk, 2.0*TransientSoundVolume, true ); 
 	}
 }
 
@@ -101,20 +99,17 @@ function PlayRoamingSound()
 {
 	if ( (Threaten != None) && (FRand() < 0.3) )
 	{
-		PlaySound(Threaten, SLOT_Talk,, true);
-		PlaySound(Threaten, SLOT_Misc,, true);
+		PlaySound( Threaten, SLOT_Talk, 2.0*TransientSoundVolume, true );
 		return;
 	}
 	if ( FRand() < 0.5 )
 	{
-		PlaySound(Sound'roam1Ti', SLOT_Talk,, true);
-		PlaySound(Sound'roam1Ti', SLOT_Misc,, true);
+		PlaySound( Sound'roam1Ti', SLOT_Talk, 2.0*TransientSoundVolume, true );
 		return;
 	}
 	if (Roam != None)
 	{
-		PlaySound(Roam, SLOT_Talk,, true);
-		PlaySound(Roam, SLOT_Misc,, true);
+		PlaySound( Roam, SLOT_Talk, 2.0*TransientSoundVolume, true );
 	}
 }
 
@@ -123,28 +118,39 @@ function PlayThreateningSound()
 	if (Threaten == None) return;
 	if (FRand() < 0.5)
 	{
-		PlaySound(Threaten, SLOT_Talk,, true);
-		PlaySound(Threaten, SLOT_Misc,, true);
+		PlaySound( Threaten, SLOT_Talk, 2.0*TransientSoundVolume, true );
 	}
 	else
 	{
-		PlaySound(Fear, SLOT_Talk,, true);
-		PlaySound(Fear, SLOT_Misc,, true);
+		PlaySound( Fear, SLOT_Talk, 2.0*TransientSoundVolume, true );
 	}
 }
 
 singular event BaseChange()
 {
 	local float decorMass;
-	if (Pawn(Base) != None)
+	if ( bDeleteMe )
+		return;
+	if ( (Base == None) && (Physics == PHYS_None) )
+		SetPhysics(PHYS_Falling);
+	else if( Base!=None && !Base.bDeleteMe )
 	{
-		Base.TakeDamage( 1000, Self,Location,0.5 * Velocity , 'stomped');
-		JumpOffPawn();
-	}
-	else if ( (Decoration(Base) != None) && (Velocity.Z < -400) )
-	{
-		decorMass = FMax(Decoration(Base).Mass, 1);
-		Base.TakeDamage(1000, Self, Location, 0.5 * Velocity, 'stomped');
+		if ( Base.bIsPawn )
+		{
+			Base.TakeDamage( 1000, Self,Location,0.5 * Velocity , 'stomped');
+			if( Base!=None && !Base.bDeleteMe && IsBlockedBy(Base) ) // See if Pawn was gibbed!
+				JumpOffPawn();
+			else SetPhysics(PHYS_Falling);
+		}
+		else if( Decoration(Base) != none )
+		{
+			if( Velocity.Z < -400 || (mass>100 && Physics!=PHYS_None && Decoration(Base).bPushable) )
+			{
+				Base.TakeDamage(1000, Self, Location, 0.5 * Velocity, 'stomped');
+				if( Base==None || Base.bDeleteMe || !IsBlockedBy(Base) )
+					SetPhysics(PHYS_Falling);
+			}
+		}
 	}
 }
 
@@ -305,8 +311,7 @@ function PlayChallenge()
 		PlayAnim('TFigh001', 1.0, 0.2);
 	else if ( decision < 0.75 )
 	{
-		PlaySound(Chest, SLOT_Interact);
-		PlaySound(Chest, SLOT_Misc);
+		PlaySound( Chest, SLOT_Interact, 2.0*TransientSoundVolume );
 		PlayAnim('TChest', 1.0, 0.2);
 	}
 	else
@@ -363,8 +368,7 @@ function PlayThreatening()
 		PlayAnim('TBrea001', animspeed, 0.4);
 	else if ( decision < 0.7 )
 	{
-		PlaySound(StompSound, SLOT_Talk);		
-		PlaySound(StompSound, SLOT_Misc);		
+		PlaySound( StompSound, SLOT_Misc, 2.0*TransientSoundVolume );
 		PlayAnim('TStom001', animspeed, 0.4);
 	}
 	else
@@ -396,8 +400,7 @@ function PlayDying(name DamageType, vector HitLocation)
 	else
 		PlayAnim('TDeat003', 0.7, 0.15);
 	
-	PlaySound(Die, SLOT_Talk);	
-	PlaySound(Die, SLOT_Misc);	
+	PlaySound( Die, SLOT_Talk, 2.0*TransientSoundVolume );	
 }
 
 function PlayTakeHit(float tweentime, vector HitLoc, int Damage)
@@ -453,28 +456,32 @@ function PlayVictoryDance()
 		FootStep();
 	DesiredSpeed = 0.0;
 	PlayAnim('TStom001', 0.6, 0.2); //gib the enemy here!
-	PlaySound(StompSound, SLOT_Talk);		
-	PlaySound(StompSound, SLOT_Misc);		
+	PlaySound( StompSound, SLOT_Talk, 2.0*TransientSoundVolume );		
 }
 
 function PunchDamageTarget()
 {
+	if ( Target == None )
+		return;
+
 	if ( MeleeDamageTarget(PunchDamage, (70000.0 * (Normal(Target.Location - Location)))) )
 	{
-		PlaySound(Slap, SLOT_Interact);
-		PlaySound(Slap, SLOT_Misc);
+		PlaySound( Slap, SLOT_Misc, 2.0*TransientSoundVolume );
 	}
 }
 
 function SlapDamageTarget()
 {
 	local vector X,Y,Z;
+
+	if ( Target == None )
+		return;
+
 	GetAxes(Rotation,X,Y,Z);
 	
 	if ( MeleeDamageTarget(SlapDamage, (70000.0 * ( Y + vect(0,0,1)))) )
 	{
-		PlaySound(Slap, SLOT_Interact);
-		PlaySound(Slap, SLOT_Misc);
+		PlaySound( Slap, SLOT_Misc, 2.0*TransientSoundVolume );
 	}
 }
 
@@ -498,14 +505,12 @@ function PlayMeleeAttack()
 		FootStep();
 	if (FRand() < 0.45)
 	{
-		PlaySound(sound'Punch1Ti', SLOT_Interact);			
-		PlaySound(sound'Punch1Ti', SLOT_Misc);			
+		PlaySound(sound'Punch1Ti', SLOT_Interact, 2.0*TransientSoundVolume );
   		PlayAnim('TPunc001');
 	}
 	else
 	{ 
-		PlaySound(swing, SLOT_Interact);			
-		PlaySound(swing, SLOT_Misc);			
+		PlaySound(swing, SLOT_Interact, 2.0*TransientSoundVolume );
 		PlayAnim('TSlap001'); 
 	}
 }
@@ -523,8 +528,7 @@ function PlayRangedAttack()
 	else
 	{
 		PlayAnim('TStom001'); 
-		PlaySound(StompSound, SLOT_Talk);			
-		PlaySound(StompSound, SLOT_Misc);			
+		PlaySound( StompSound, SLOT_Interact, 2.0*TransientSoundVolume );
 	}
 }
 
@@ -630,46 +634,52 @@ Begin:
 
 defaultproperties
 {
-     SlapDamage=85
-     PunchDamage=80
-     Step=Sound'UnrealI.Titan.step1t'
-     StompSound=Sound'UnrealI.Titan.stomp4t'
-     Slap=Sound'UnrealI.Titan.slaphit1Ti'
-     Swing=Sound'UnrealI.Titan.Swing1t'
-     Throw=Sound'UnrealI.Titan.Throw1t'
-     Chest=Sound'UnrealI.Titan.chestB2Ti'
-     Aggressiveness=8.000000
-     RefireRate=0.600000
-     WalkingSpeed=0.750000
-     bHasRangedAttack=True
-     bIsBoss=True
-     Acquire=Sound'UnrealI.Titan.yell1t'
-     Fear=Sound'UnrealI.Titan.yell2t'
-     Roam=Sound'UnrealI.Titan.yell3t'
-     Threaten=Sound'UnrealI.Titan.yell2t'
-     MeleeRange=140.000000
-     GroundSpeed=400.000000
-     AirSpeed=400.000000
-     AccelRate=1000.000000
-     JumpZ=-1.000000
-     Visibility=255
-     Health=1800
-     ReducedDamageType=exploded
-     ReducedDamagePct=0.300000
-     Intelligence=BRAINS_REPTILE
-     HitSound1=Sound'UnrealI.Titan.injur1t'
-     HitSound2=Sound'UnrealI.Titan.injur2t'
-     Land=Sound'UnrealI.Titan.stomp4t'
-     Die=Sound'UnrealI.Titan.death1t'
-     CombatStyle=0.850000
-     AmbientSound=Sound'UnrealI.Titan.amb1Ti'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Titan1'
-     SoundRadius=32
-     SoundVolume=250
-     TransientSoundVolume=20.000000
-     CollisionRadius=115.000000
-     CollisionHeight=110.000000
-     Mass=2000.000000
-     RotationRate=(Pitch=0,Yaw=30000,Roll=0)
+      SlapDamage=85
+      PunchDamage=80
+      bStomp=False
+      bLavaTitan=False
+      bEndFootStep=False
+      realSpeed=0.000000
+      StompEvent="None"
+      StepEvent="None"
+      Step=Sound'UnrealI.Titan.step1t'
+      StompSound=Sound'UnrealI.Titan.stomp4t'
+      Slap=Sound'UnrealI.Titan.slaphit1Ti'
+      Swing=Sound'UnrealI.Titan.Swing1t'
+      Throw=Sound'UnrealI.Titan.Throw1t'
+      Chest=Sound'UnrealI.Titan.chestB2Ti'
+      Aggressiveness=8.000000
+      RefireRate=0.600000
+      WalkingSpeed=0.750000
+      bHasRangedAttack=True
+      bIsBoss=True
+      Acquire=Sound'UnrealI.Titan.yell1t'
+      Fear=Sound'UnrealI.Titan.yell2t'
+      Roam=Sound'UnrealI.Titan.yell3t'
+      Threaten=Sound'UnrealI.Titan.yell2t'
+      MeleeRange=140.000000
+      GroundSpeed=400.000000
+      AirSpeed=400.000000
+      AccelRate=1000.000000
+      JumpZ=-1.000000
+      Visibility=255
+      Health=1800
+      ReducedDamageType="exploded"
+      ReducedDamagePct=0.300000
+      Intelligence=BRAINS_REPTILE
+      HitSound1=Sound'UnrealI.Titan.injur1t'
+      HitSound2=Sound'UnrealI.Titan.injur2t'
+      Land=Sound'UnrealI.Titan.stomp4t'
+      Die=Sound'UnrealI.Titan.death1t'
+      CombatStyle=0.850000
+      AmbientSound=Sound'UnrealI.Titan.amb1Ti'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Titan1'
+      SoundRadius=32
+      SoundVolume=250
+      TransientSoundVolume=20.000000
+      CollisionRadius=115.000000
+      CollisionHeight=110.000000
+      Mass=2000.000000
+      RotationRate=(Pitch=0,Yaw=30000,Roll=0)
 }

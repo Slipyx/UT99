@@ -13,7 +13,7 @@ class Pipe extends UT_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.pipeM'
-     DrawScale=0.500000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.pipeM'
+      DrawScale=0.500000
 }

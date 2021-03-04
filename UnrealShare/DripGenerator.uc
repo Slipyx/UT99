@@ -34,11 +34,11 @@ Begin:
 
 defaultproperties
 {
-     DripPause=0.700000
-     DripVariance=0.500000
-     DripTexture=Texture'UnrealShare.Skins.Jmisc1'
-     bStatic=False
-     bHidden=True
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.dripMesh'
+      DripPause=0.700000
+      DripVariance=0.500000
+      DripTexture=Texture'UnrealShare.Skins.JMisc1'
+      bStatic=False
+      bHidden=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.dripMesh'
 }

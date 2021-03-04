@@ -56,7 +56,7 @@ Begin:
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.IntroDude'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.IntroDude'
 }

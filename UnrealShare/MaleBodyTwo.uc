@@ -36,7 +36,7 @@ class MaleBodyTwo extends DeadMales;
 
 defaultproperties
 {
-     AnimSequence=Dead1
-     Mesh=LodMesh'UnrealShare.DeadMale2'
-     Mass=100.000000
+      AnimSequence="Dead1"
+      Mesh=LodMesh'UnrealShare.DeadMale2'
+      Mass=100.000000
 }

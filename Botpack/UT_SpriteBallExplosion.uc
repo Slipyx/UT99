@@ -44,24 +44,26 @@ function MakeSound()
 
 defaultproperties
 {
-     SpriteAnim(0)=Texture'Botpack.UT_Explosions.exp1_a00'
-     SpriteAnim(1)=Texture'Botpack.UT_Explosions.Exp6_a00'
-     SpriteAnim(2)=Texture'Botpack.UT_Explosions.Exp7_a00'
-     NumFrames=8
-     Pause=0.050000
-     EffectSound1=Sound'UnrealShare.General.Explo1'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.700000
-     DrawType=DT_SpriteAnimOnce
-     Style=STY_Translucent
-     Texture=Texture'Botpack.UT_Explosions.exp1_a00'
-     Skin=Texture'UnrealShare.Effects.ExplosionPal'
-     DrawScale=1.400000
-     LightType=LT_TexturePaletteOnce
-     LightEffect=LE_NonIncidence
-     LightBrightness=192
-     LightHue=27
-     LightSaturation=71
-     LightRadius=9
-     bCorona=False
+      ExpCount=0
+      MissCount=0
+      SpriteAnim(0)=Texture'Botpack.UT_Explosions.exp1_a00'
+      SpriteAnim(1)=Texture'Botpack.UT_Explosions.Exp6_a00'
+      SpriteAnim(2)=Texture'Botpack.UT_Explosions.Exp7_a00'
+      NumFrames=8
+      Pause=0.050000
+      EffectSound1=Sound'UnrealShare.General.Explo1'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.700000
+      DrawType=DT_SpriteAnimOnce
+      Style=STY_Translucent
+      Texture=Texture'Botpack.UT_Explosions.exp1_a00'
+      Skin=Texture'UnrealShare.Effects.ExplosionPal'
+      DrawScale=1.400000
+      LightType=LT_TexturePaletteOnce
+      LightEffect=LE_NonIncidence
+      LightBrightness=192
+      LightHue=27
+      LightSaturation=71
+      LightRadius=9
+      bCorona=False
 }

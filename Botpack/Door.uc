@@ -13,6 +13,6 @@ class Door extends UT_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.doorM'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.doorM'
 }

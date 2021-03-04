@@ -165,14 +165,15 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     AdvancedString="Advanced Options"
-     AdvancedHelp="Edit advanced game configuration options."
-     bCanModifyGore=True
-     GameClass=Class'UnrealShare.SinglePlayer'
-     MenuLength=2
-     HelpMessage(1)="Adjust the speed at which time passes in the game."
-     HelpMessage(2)="If true, reduces the gore in the game."
-     MenuList(1)="Game Speed"
-     MenuList(2)="Reduced Gore"
-     MenuTitle="GAME OPTIONS"
+      AdvancedString="Advanced Options"
+      AdvancedHelp="Edit advanced game configuration options."
+      bCanModifyGore=True
+      GameClass=Class'UnrealShare.SinglePlayer'
+      GameType=None
+      MenuLength=2
+      HelpMessage(1)="Adjust the speed at which time passes in the game."
+      HelpMessage(2)="If true, reduces the gore in the game."
+      MenuList(1)="Game Speed"
+      MenuList(2)="Reduced Gore"
+      MenuTitle="GAME OPTIONS"
 }

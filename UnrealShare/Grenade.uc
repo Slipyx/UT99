@@ -36,9 +36,14 @@ simulated function PostBeginPlay()
 
 	if ( Role == ROLE_Authority )
 	{
-		GetAxes(Instigator.ViewRotation,X,Y,Z);	
-		Velocity = X * (Instigator.Velocity Dot X)*0.4 + Vector(Rotation) * (Speed +
-			FRand() * 100);
+		if (Instigator!=None)
+		{
+			GetAxes(Instigator.ViewRotation,X,Y,Z);
+			Velocity = X * (Instigator.Velocity Dot X)*0.4 + Vector(Rotation) * (Speed +
+					   FRand() * 100);
+		}
+		else
+			Velocity = Vector(Rotation) * (Speed + FRand() * 100);
 		Velocity.z += 210;
 		RandRot.Pitch = FRand() * 1400 - 700;
 		RandRot.Yaw = FRand() * 1400 - 700;
@@ -84,17 +89,19 @@ simulated function Tick(float DeltaTime)
 {
 	local BlackSmoke b;
 
-	if (bHitWater) 
+	if( bHitWater || Level.NetMode==NM_DedicatedServer )
 	{
 		Disable('Tick');
 		Return;
 	}
 	Count += DeltaTime;
-	if ( (Count>Frand()*SmokeRate+SmokeRate+NumExtraGrenades*0.03) && (Level.NetMode!=NM_DedicatedServer) ) 
+	if ( (Count>Frand()*SmokeRate+SmokeRate+NumExtraGrenades*0.03) )
 	{
 		b = Spawn(class'BlackSmoke');
-		b.RemoteRole = ROLE_None;		
-		Count=0;
+		b.RemoteRole = ROLE_None;
+		if( Level.bDropDetail )
+			Count= -0.5; // Reduce detail.
+		else Count = 0;
 	}
 }
 
@@ -145,18 +152,24 @@ simulated function Explosion(vector HitLocation)
 
 defaultproperties
 {
-     speed=600.000000
-     MaxSpeed=1000.000000
-     Damage=100.000000
-     MomentumTransfer=50000
-     ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     AnimSequence=WingIn
-     Mesh=LodMesh'UnrealShare.GrenadeM'
-     AmbientGlow=64
-     bUnlit=True
-     bBounce=True
-     bFixedRotationDir=True
-     DesiredRotation=(Pitch=12000,Yaw=5666,Roll=2334)
+      bCanHitOwner=False
+      bHitWater=False
+      Count=0.000000
+      SmokeRate=0.000000
+      WarnTarget=None
+      NumExtraGrenades=0
+      speed=600.000000
+      MaxSpeed=1000.000000
+      Damage=100.000000
+      MomentumTransfer=50000
+      ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      AnimSequence="WingIn"
+      Mesh=LodMesh'UnrealShare.GrenadeM'
+      AmbientGlow=64
+      bUnlit=True
+      bBounce=True
+      bFixedRotationDir=True
+      DesiredRotation=(Pitch=12000,Yaw=5666,Roll=2334)
 }

@@ -42,7 +42,7 @@ function Trigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.CandleM'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.CandleM'
 }

@@ -30,12 +30,12 @@ function AnimEnd()
 
 defaultproperties
 {
-     Physics=PHYS_Trailer
-     RemoteRole=ROLE_None
-     LifeSpan=5.000000
-     AnimSequence=trail
-     Texture=Texture'Botpack.Blood.BD6'
-     Mesh=LodMesh'Botpack.UTBloodTrl'
-     DrawScale=0.200000
-     AmbientGlow=0
+      Physics=PHYS_Trailer
+      RemoteRole=ROLE_None
+      LifeSpan=5.000000
+      AnimSequence="trail"
+      Texture=Texture'Botpack.Blood.BD6'
+      Mesh=LodMesh'Botpack.UTBloodTrl'
+      DrawScale=0.200000
+      AmbientGlow=0
 }

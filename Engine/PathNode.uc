@@ -6,6 +6,6 @@ class PathNode extends NavigationPoint
 
 defaultproperties
 {
-     Texture=Texture'Engine.S_Pickup'
-     SoundVolume=128
+      Texture=Texture'Engine.S_Pickup'
+      SoundVolume=128
 }

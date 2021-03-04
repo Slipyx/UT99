@@ -30,11 +30,14 @@ function int Main( string Parms )
 	otherstring = "skywalker";
 	otherstring = Mid( otherstring, InStr( otherstring, "a" ) );
 	log("otherstring:" @ otherstring);
+
+	return 0;
 }
 
 defaultproperties
 {
-     HelpCmd="Simple"
-     HelpOneLiner="Simple"
-     HelpUsage="Simple"
+      intparm=0
+      HelpCmd="Simple"
+      HelpOneLiner="Simple"
+      HelpUsage="Simple"
 }

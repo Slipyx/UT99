@@ -13,7 +13,7 @@ class ICBM extends UT_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.icbmM'
-     bCollideActors=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.icbmM'
+      bCollideActors=True
 }

@@ -82,11 +82,12 @@ function Convulse()
 
 defaultproperties
 {
-     MasterReplacement=Class'UnrealShare.femalemasterchunk'
-     Physics=PHYS_None
-     LifeSpan=0.000000
-     AnimSequence=Slump1
-     AnimFrame=0.000000
-     Mesh=LodMesh'UnrealShare.Fem1Body'
-     Mass=100.000000
+      bFullyDead=False
+      MasterReplacement=Class'UnrealShare.femalemasterchunk'
+      Physics=PHYS_None
+      LifeSpan=0.000000
+      AnimSequence="Slump1"
+      AnimFrame=0.000000
+      Mesh=LodMesh'UnrealShare.Fem1Body'
+      Mass=100.000000
 }

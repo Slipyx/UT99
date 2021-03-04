@@ -5,7 +5,7 @@ class BlockAll extends Keypoint;
 
 defaultproperties
 {
-     bCollideActors=True
-     bBlockActors=True
-     bBlockPlayers=True
+      bCollideActors=True
+      bBlockActors=True
+      bBlockPlayers=True
 }

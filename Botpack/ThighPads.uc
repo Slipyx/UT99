@@ -65,19 +65,19 @@ function inventory SpawnCopy( pawn Other )
 
 defaultproperties
 {
-     bDisplayableInv=True
-     bRotatingPickup=True
-     PickupMessage="You got the Thigh Pads."
-     ItemName="Thigh Pads"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'Botpack.ThighPads'
-     Charge=50
-     ArmorAbsorption=50
-     bIsAnArmor=True
-     AbsorptionPriority=7
-     MaxDesireability=1.800000
-     PickupSound=Sound'Botpack.Pickups.ArmorUT'
-     Icon=Texture'UnrealShare.Icons.I_Armor'
-     Mesh=LodMesh'Botpack.ThighPads'
-     AmbientGlow=64
+      bDisplayableInv=True
+      bRotatingPickup=True
+      PickupMessage="You got the Thigh Pads."
+      ItemName="Thigh Pads"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'Botpack.ThighPads'
+      Charge=50
+      ArmorAbsorption=50
+      bIsAnArmor=True
+      AbsorptionPriority=7
+      MaxDesireability=1.800000
+      PickupSound=Sound'Botpack.Pickups.ArmorUT'
+      Icon=Texture'UnrealShare.Icons.I_Armor'
+      Mesh=LodMesh'Botpack.ThighPads'
+      AmbientGlow=64
 }

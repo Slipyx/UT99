@@ -31,4 +31,6 @@ function UWindowList CopyExistingListItem(Class<UWindowList> ItemClass, UWindowL
 
 defaultproperties
 {
+      bNGWorldStatsActive=False
+      bNGWorldStats=False
 }

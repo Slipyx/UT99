@@ -17,7 +17,7 @@ function ForceMeshToExist()
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.FlyM'
-     Mass=100.000000
-     Buoyancy=99.000000
+      Mesh=LodMesh'UnrealShare.FlyM'
+      Mass=100.000000
+      Buoyancy=99.000000
 }

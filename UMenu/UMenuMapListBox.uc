@@ -26,6 +26,6 @@ function DrawItem(Canvas C, UWindowList Item, float X, float Y, float W, float H
 
 defaultproperties
 {
-     ItemHeight=13.000000
-     ListClass=Class'UMenu.UMenuMapList'
+      ItemHeight=13.000000
+      ListClass=Class'UMenu.UMenuMapList'
 }

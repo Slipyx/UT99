@@ -144,7 +144,7 @@ static function ClientReceive(
 
 defaultproperties
 {
-     KilledString="was killed by"
-     ChildMessage=Class'Botpack.KillerMessagePlus'
-     DrawColor=(G=0,B=0)
+      KilledString="was killed by"
+      ChildMessage=Class'Botpack.KillerMessagePlus'
+      DrawColor=(G=0,B=0)
 }

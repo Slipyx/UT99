@@ -376,5 +376,11 @@ function MenuCmd(int Item)
 
 defaultproperties
 {
-     bAlwaysOnTop=True
+      Selected=None
+      Owner=None
+      ItemHeight=0
+      VBorder=0
+      HBorder=0
+      TextBorder=0
+      bAlwaysOnTop=True
 }

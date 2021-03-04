@@ -46,7 +46,7 @@ simulated function PlayMetalStep()
 
 defaultproperties
 {
-     CarcassType=Class'UnrealI.MaleOneCarcass'
-     Skin=Texture'UnrealShare.Skins.Kurgan'
-     Mesh=LodMesh'UnrealI.Male1'
+      CarcassType=Class'UnrealI.MaleOneCarcass'
+      Skin=Texture'UnrealShare.Skins.Kurgan'
+      Mesh=LodMesh'UnrealI.Male1'
 }

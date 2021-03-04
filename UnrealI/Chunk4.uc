@@ -13,8 +13,8 @@ class Chunk4 extends Chunk;
 
 defaultproperties
 {
-     Damage=16.000000
-     LifeSpan=2.800000
-     Mesh=LodMesh'UnrealI.Chnk4'
-     AmbientGlow=41
+      Damage=16.000000
+      LifeSpan=2.800000
+      Mesh=LodMesh'UnrealI.Chnk4'
+      AmbientGlow=41
 }

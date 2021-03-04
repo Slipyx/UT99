@@ -29,7 +29,15 @@ function PreBeginPlay()
 
 defaultproperties
 {
-     bDirectional=True
-     Texture=Texture'Engine.S_Patrol'
-     SoundVolume=128
+      Nextpatrol="None"
+      pausetime=0.000000
+      lookDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      PatrolAnim="None"
+      PatrolSound=None
+      numAnims=0
+      AnimCount=0
+      NextPatrolPoint=None
+      bDirectional=True
+      Texture=Texture'Engine.S_Patrol'
+      SoundVolume=128
 }

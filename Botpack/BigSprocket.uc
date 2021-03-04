@@ -15,5 +15,5 @@ class BigSprocket extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.BigSprocket'
+      Mesh=LodMesh'Botpack.BigSprocket'
 }

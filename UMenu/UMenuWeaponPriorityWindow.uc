@@ -56,6 +56,7 @@ function SaveConfigs()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuWeaponPriorityCW'
-     WindowTitle="Weapons"
+      CloseButton=None
+      ClientClass=Class'UMenu.UMenuWeaponPriorityCW'
+      WindowTitle="Weapons"
 }

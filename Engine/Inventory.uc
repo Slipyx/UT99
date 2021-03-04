@@ -20,6 +20,7 @@ var	travel bool   bActive;			  // Whether item is currently activated.
 var	  bool		  bSleepTouch;		  // Set when item is touched when leaving sleep state.
 var	  bool		  bHeldItem;		  // Set once an item has left pickup state.
 var	  bool	  bTossedOut;			  // true if weapon was tossed out (so players can't cheat w/ weaponstay)
+var transient const bool bCalcDrawOffsetFOV;  // v469: set during player owner's RenderOverlays
 
 //-----------------------------------------------------------------------------
 // Ambient glow related info.
@@ -236,7 +237,10 @@ simulated final function vector CalcDrawOffset()
 	local Pawn PawnOwner;
 
 	PawnOwner = Pawn(Owner);
-	DrawOffset = ((0.9/PawnOwner.FOVAngle * PlayerViewOffset) >> PawnOwner.ViewRotation);
+	if (bCalcDrawOffsetFOV)
+	    DrawOffset = ((0.9/PawnOwner.FOVAngle * PlayerViewOffset) >> PawnOwner.ViewRotation);
+	else
+		DrawOffset = (0.01*PlayerViewOffset) >> PawnOwner.ViewRotation;
 
 	if ( (Level.NetMode == NM_DedicatedServer) 
 		|| ((Level.NetMode == NM_ListenServer) && (Owner.RemoteRole == ROLE_AutonomousProxy)) )
@@ -278,6 +282,7 @@ function BecomeItem()
 	bOnlyOwnerSee = true;
 	bHidden       = true;
 	bCarriedItem  = true;
+	bAlwaysRelevant = false;
 	NetPriority   = 1.4;
 	SetCollision( false, false, false );
 	SetPhysics(PHYS_None);
@@ -781,32 +786,73 @@ State Idle2
 
 defaultproperties
 {
-     bAmbientGlow=True
-     bRotatingPickup=True
-     PickupMessage="Snagged an item."
-     ItemArticle="a"
-     PlayerViewScale=1.000000
-     BobDamping=0.960000
-     PickupViewScale=1.000000
-     ThirdPersonScale=1.000000
-     MaxDesireability=0.005000
-     bFirstFrame=True
-     bToggleSteadyFlash=True
-     M_Activated=" activated."
-     M_Selected=" selected."
-     M_Deactivated=" deactivated."
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Texture=Texture'Engine.S_Inventory'
-     AmbientGlow=255
-     bIsItemGoal=True
-     bTravel=True
-     CollisionRadius=30.000000
-     CollisionHeight=30.000000
-     bCollideActors=True
-     bFixedRotationDir=True
-     RotationRate=(Yaw=5000)
-     DesiredRotation=(Yaw=30000)
-     NetPriority=1.400000
-     NetUpdateFrequency=10.000000
+      AutoSwitchPriority=0
+      InventoryGroup=0
+      bActivatable=False
+      bDisplayableInv=False
+      bActive=False
+      bSleepTouch=False
+      bHeldItem=False
+      bTossedOut=False
+      bAmbientGlow=True
+      bInstantRespawn=False
+      bRotatingPickup=True
+      PickupMessage="Snagged an item."
+      ItemName=""
+      ItemArticle="a"
+      RespawnTime=0.000000
+      PlayerLastTouched="None"
+      PlayerViewOffset=(X=0.000000,Y=0.000000,Z=0.000000)
+      PlayerViewMesh=None
+      PlayerViewScale=1.000000
+      BobDamping=0.960000
+      PickupViewMesh=None
+      PickupViewScale=1.000000
+      ThirdPersonMesh=None
+      ThirdPersonScale=1.000000
+      StatusIcon=None
+      ProtectionType1="None"
+      ProtectionType2="None"
+      Charge=0
+      ArmorAbsorption=0
+      bIsAnArmor=False
+      AbsorptionPriority=0
+      NextArmor=None
+      MaxDesireability=0.005000
+      myMarker=None
+      bSteadyFlash3rd=False
+      bFirstFrame=True
+      bMuzzleFlashParticles=False
+      bToggleSteadyFlash=True
+      bSteadyToggle=False
+      FlashCount=0
+      OldFlashCount=0
+      MuzzleFlashStyle=STY_None
+      MuzzleFlashMesh=None
+      MuzzleFlashScale=0.000000
+      MuzzleFlashTexture=None
+      PickupSound=None
+      ActivateSound=None
+      DeActivateSound=None
+      RespawnSound=None
+      Icon=None
+      M_Activated=" activated."
+      M_Selected=" selected."
+      M_Deactivated=" deactivated."
+      PickupMessageClass=None
+      ItemMessageClass=None
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Texture=Texture'Engine.S_Inventory'
+      AmbientGlow=255
+      bIsItemGoal=True
+      bTravel=True
+      CollisionRadius=30.000000
+      CollisionHeight=30.000000
+      bCollideActors=True
+      bFixedRotationDir=True
+      RotationRate=(Yaw=5000)
+      DesiredRotation=(Yaw=30000)
+      NetPriority=1.400000
+      NetUpdateFrequency=10.000000
 }

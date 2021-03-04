@@ -15,4 +15,6 @@ function PreBeginPlay()
 
 defaultproperties
 {
+      RegFont=None
+      OwnerHUD=None
 }

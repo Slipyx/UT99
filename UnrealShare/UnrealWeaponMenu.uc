@@ -86,5 +86,27 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     MenuTitle="PRIORITIES"
+      Slot(0)=0
+      Slot(1)=0
+      Slot(2)=0
+      Slot(3)=0
+      Slot(4)=0
+      Slot(5)=0
+      Slot(6)=0
+      Slot(7)=0
+      Slot(8)=0
+      Slot(9)=0
+      Slot(10)=0
+      Slot(11)=0
+      Slot(12)=0
+      Slot(13)=0
+      Slot(14)=0
+      Slot(15)=0
+      Slot(16)=0
+      Slot(17)=0
+      Slot(18)=0
+      Slot(19)=0
+      Slot(20)=0
+      bInitLength=False
+      MenuTitle="PRIORITIES"
 }

@@ -14,9 +14,9 @@ class UT_bossarm extends UTPlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.bossarmm'
-     DrawScale=0.500000
-     Fatness=140
-     CollisionRadius=25.000000
-     Mass=40.000000
+      Mesh=LodMesh'Botpack.bossarmm'
+      DrawScale=0.500000
+      Fatness=140
+      CollisionRadius=25.000000
+      Mass=40.000000
 }

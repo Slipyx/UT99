@@ -41,17 +41,22 @@ simulated function Tick(float DeltaTime)
 {
 	local SpriteSmokePuff b;
 
-	if (bHitWater)
+	if (bHitWater || Level.Netmode==NM_DedicatedServer && RemoteRole != ROLE_DumbProxy)
 	{
 		Disable('Tick');
 		Return;
 	}
 	Count += DeltaTime;
-	if ( (Count>(SmokeRate+FRand()*(SmokeRate+NumExtraRockets*0.035))) && (Level.NetMode!=NM_DedicatedServer) ) 
+	if ( (Count>(SmokeRate+FRand()*(SmokeRate+NumExtraRockets*0.035))) ) 
 	{
 		b = Spawn(class'SpriteSmokePuff');
-		b.RemoteRole = ROLE_None;		
-		Count=0.0;
+		if (RemoteRole != ROLE_DumbProxy)
+		    b.RemoteRole = ROLE_None;		
+		
+		if( Level.bDropDetail )
+			Count= -0.5; // Reduce detail.
+		else Count = 0;
+
 	}
 }
 
@@ -99,8 +104,9 @@ auto state Flying
 		local SpriteBallExplosion s;
 		local RingExplosion3 r;
 
-		s = spawn(class'SpriteBallExplosion',,,HitLocation + HitNormal*16);	
- 		s.RemoteRole = ROLE_None;
+		s = spawn(class'SpriteBallExplosion',,,HitLocation + HitNormal*16);
+		if ( RemoteRole!=ROLE_DumbProxy ) // 227: Make sure it's replicated on seeking rocket!
+ 		    s.RemoteRole = ROLE_None;
 
 		if (bRing) 
 		{
@@ -118,7 +124,7 @@ auto state Flying
 		if ( Role == ROLE_Authority )	
 			Velocity = speed*initialDir;
 		Acceleration = initialDir*50;
-		PlaySound(SpawnSound, SLOT_None, 2.3);	
+		PlaySound(SpawnSound, SLOT_None, 2.3);
 		PlayAnim( 'Armed', 0.2 );
 		if (Region.Zone.bWaterZone)
 		{
@@ -130,29 +136,38 @@ auto state Flying
 
 defaultproperties
 {
-     speed=900.000000
-     MaxSpeed=1600.000000
-     Damage=85.000000
-     MomentumTransfer=80000
-     SpawnSound=Sound'UnrealShare.Eightball.Ignite'
-     ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=6.000000
-     AnimSequence=Armed
-     AmbientSound=Sound'UnrealShare.General.Brufly1'
-     Skin=FireTexture'UnrealShare.Effect16.fireeffect16'
-     Mesh=LodMesh'UnrealShare.RocketM'
-     DrawScale=0.050000
-     AmbientGlow=96
-     bUnlit=True
-     SoundRadius=9
-     SoundVolume=255
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=126
-     LightHue=28
-     LightSaturation=64
-     LightRadius=6
-     bCorona=True
-     bBounce=True
+      Seeking=None
+      MagnitudeVel=0.000000
+      Count=0.000000
+      SmokeRate=0.000000
+      InitialDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      bRing=False
+      bHitWater=False
+      bWaterStart=False
+      NumExtraRockets=0
+      speed=900.000000
+      MaxSpeed=1600.000000
+      Damage=85.000000
+      MomentumTransfer=80000
+      SpawnSound=Sound'UnrealShare.Eightball.Ignite'
+      ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=6.000000
+      AnimSequence="Armed"
+      AmbientSound=Sound'UnrealShare.General.Brufly1'
+      Skin=FireTexture'UnrealShare.Effect16.fireeffect16'
+      Mesh=LodMesh'UnrealShare.RocketM'
+      DrawScale=0.050000
+      AmbientGlow=96
+      bUnlit=True
+      SoundRadius=9
+      SoundVolume=255
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=126
+      LightHue=28
+      LightSaturation=64
+      LightRadius=6
+      bCorona=True
+      bBounce=True
 }

@@ -68,8 +68,10 @@ function Tick(float DeltaTime)
 
 defaultproperties
 {
-     MultiDecalLevel=3
-     LifeSpan=1.000000
-     Texture=Texture'Botpack.fshadow'
-     DrawScale=0.650000
+      LightSource=None
+      OldOwnerLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      MultiDecalLevel=3
+      LifeSpan=1.000000
+      Texture=Texture'Botpack.fshadow'
+      DrawScale=0.650000
 }

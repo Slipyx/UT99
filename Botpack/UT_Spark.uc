@@ -32,15 +32,15 @@ auto state Explode
 
 defaultproperties
 {
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_None
-     LifeSpan=1.000000
-     DrawType=DT_Sprite
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Effects.Sparky'
-     DrawScale=0.100000
-     bUnlit=True
-     bCollideWorld=True
-     bBounce=True
-     NetPriority=2.000000
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_None
+      LifeSpan=1.000000
+      DrawType=DT_Sprite
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Effects.Sparky'
+      DrawScale=0.100000
+      bUnlit=True
+      bCollideWorld=True
+      bBounce=True
+      NetPriority=2.000000
 }

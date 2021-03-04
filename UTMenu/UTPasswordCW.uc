@@ -100,5 +100,17 @@ function Connect()
 
 defaultproperties
 {
-     PasswordText="Password:"
+      URL=""
+      PasswordCombo=None
+      PasswordText="Password:"
+      PasswordHistory(0)=""
+      PasswordHistory(1)=""
+      PasswordHistory(2)=""
+      PasswordHistory(3)=""
+      PasswordHistory(4)=""
+      PasswordHistory(5)=""
+      PasswordHistory(6)=""
+      PasswordHistory(7)=""
+      PasswordHistory(8)=""
+      PasswordHistory(9)=""
 }

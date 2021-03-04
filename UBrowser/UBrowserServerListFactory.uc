@@ -68,4 +68,8 @@ function PlayerPawn GetPlayerOwner()
 
 defaultproperties
 {
+      PingedList=None
+      UnpingedList=None
+      Owner=None
+      bIncrementalPing=False
 }

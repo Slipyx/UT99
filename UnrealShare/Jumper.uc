@@ -36,5 +36,9 @@ function Touch( actor Other )
 
 defaultproperties
 {
-     bDirectional=True
+      bOnceOnly=False
+      LimitedToClass=None
+      Pending=None
+      JumpZ=0.000000
+      bDirectional=True
 }

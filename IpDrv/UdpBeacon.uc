@@ -32,7 +32,10 @@ function BeginPlay()
 
 function BroadcastBeacon(IpAddr Addr)
 {
-	SendText( Addr, BeaconProduct @ Mid(Level.GetAddressURL(),InStr(Level.GetAddressURL(),":")+1) @ Level.Game.GetBeaconText() );
+	local string Port;
+	
+	Port = GetPort( Level.GetAddressURL() );
+	SendText( Addr, BeaconProduct @ Port @ Level.Game.GetBeaconText() );
 	//Log( "UdpBeacon: sending reply to "$IpAddrToString(Addr) );
 }
 
@@ -59,10 +62,12 @@ function Destroyed()
 
 defaultproperties
 {
-     DoBeacon=True
-     ServerBeaconPort=8777
-     BeaconPort=9777
-     BeaconTimeout=5.000000
-     BeaconProduct="ut"
-     RemoteRole=ROLE_None
+      DoBeacon=True
+      ServerBeaconPort=8777
+      BeaconPort=9777
+      BeaconTimeout=5.000000
+      BeaconProduct="ut"
+      UdpServerQueryPort=0
+      boundport=0
+      RemoteRole=ROLE_None
 }

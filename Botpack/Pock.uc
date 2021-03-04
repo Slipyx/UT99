@@ -26,10 +26,10 @@ simulated function AttachToSurface()
 
 defaultproperties
 {
-     PockTex(0)=Texture'Botpack.pock0_t'
-     PockTex(1)=Texture'Botpack.pock2_t'
-     PockTex(2)=Texture'Botpack.pock4_t'
-     bImportant=False
-     MultiDecalLevel=0
-     DrawScale=0.190000
+      PockTex(0)=Texture'Botpack.pock0_t'
+      PockTex(1)=Texture'Botpack.pock2_t'
+      PockTex(2)=Texture'Botpack.pock4_t'
+      bImportant=False
+      MultiDecalLevel=0
+      DrawScale=0.190000
 }

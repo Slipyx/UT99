@@ -13,12 +13,10 @@ var bool bDelayTime;
 	function PostBeginPlay()
 	{
 		local rotator RandRot;
+		local vector X,Y,Z;
 
-		RandRot = Rotation;
-		RandRot.Pitch += FRand() * 2000 - 1000;
-		RandRot.Yaw += FRand() * 2000 - 1000;
-		RandRot.Roll += FRand() * 2000 - 1000;
-		Velocity = Vector(RandRot) * (Speed + (FRand() * 200 - 100));
+		GetAxes(Rotation,X,Y,Z);
+		Velocity = Normal(X+Y*(FRand()*0.2-0.1)+Z*(FRand()*0.2-0.1)) * (Speed + (FRand() * 200 - 100));
 		if (Region.zone.bWaterZone)
 			SetPhysics(PHYS_Falling);
 		Super.PostBeginPlay();
@@ -63,14 +61,17 @@ var bool bDelayTime;
 			Destroy();
 			return;
 		}
-		if (!bDelayTime) 
+		if ( Physics != PHYS_Falling ) 
 		{
 			bDelayTime=True;
 			SetPhysics(PHYS_Falling);
-			if ( (Level.Netmode != NM_DedicatedServer) && (FRand()<0.2) ) 
+			if ( !Level.bDropDetail && (Level.Netmode != NM_DedicatedServer) && !Region.Zone.bWaterZone ) 
 			{
-				s = Spawn(Class'SmallSpark',,,Location+HitNormal*5,rotator(HitNormal));
-				s.RemoteRole = ROLE_None;
+				if ( FRand() < 0.5 )
+				{
+				    s = Spawn(Class'SmallSpark',,,Location+HitNormal*5,rotator(HitNormal));
+				    s.RemoteRole = ROLE_None;
+				}
 			}
 		}
 		Velocity = 0.8*(( Velocity dot HitNormal ) * HitNormal * (-1.8 + FRand()*0.8) + Velocity);   // Reflect off Wall w/damping
@@ -99,14 +100,15 @@ var bool bDelayTime;
 
 defaultproperties
 {
-     speed=2500.000000
-     MaxSpeed=2700.000000
-     Damage=17.000000
-     MomentumTransfer=10000
-     MyDamageType=shredded
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.000000
-     bUnlit=True
-     bNoSmooth=True
-     bBounce=True
+      bDelayTime=False
+      speed=2500.000000
+      MaxSpeed=2700.000000
+      Damage=17.000000
+      MomentumTransfer=10000
+      MyDamageType="shredded"
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.000000
+      bUnlit=True
+      bNoSmooth=True
+      bBounce=True
 }

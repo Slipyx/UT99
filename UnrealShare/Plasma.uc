@@ -36,7 +36,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation)
 
 defaultproperties
 {
-     speed=1300.000000
-     Mesh=LodMesh'UnrealShare.plasmaM'
-     bUnlit=True
+      speed=1300.000000
+      Mesh=LodMesh'UnrealShare.plasmaM'
+      bUnlit=True
 }

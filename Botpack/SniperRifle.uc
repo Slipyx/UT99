@@ -64,6 +64,7 @@ class SniperRifle extends TournamentWeapon;
 #exec TEXTURE IMPORT NAME=IconRifle FILE=TEXTURES\HUD\WpnRifle.PCX GROUP="Icons" MIPS=OFF
 #exec TEXTURE IMPORT NAME=UseRifle FILE=TEXTURES\HUD\UseRifle.PCX GROUP="Icons" MIPS=OFF
 #exec TEXTURE IMPORT NAME=RReticle FILE=TEXTURES\rifleret.PCX GROUP="Icons" MIPS=OFF FLAGS=2 LODSET=2
+#exec TEXTURE MERGECOMPRESSED NAME=RReticle FILE=TEXTURES\rifleret_hires.PNG GROUP="Icons"
 
 #exec AUDIO IMPORT FILE="Sounds\SniperRifle\SniperFire.wav" NAME="SniperFire" GROUP="SniperRifle"
 
@@ -259,7 +260,7 @@ function TraceFire( float Accuracy )
 
 	Owner.MakeNoise(PawnOwner.SoundDampening);
 	GetAxes(PawnOwner.ViewRotation,X,Y,Z);
-	StartTrace = Owner.Location + PawnOwner.Eyeheight * Z; 
+	StartTrace = Owner.Location + PawnOwner.Eyeheight * vect(0,0,1); 
 	AdjustedAim = PawnOwner.AdjustAim(1000000, StartTrace, 2*AimError, False, False);	
 	X = vector(AdjustedAim);
 	EndTrace = StartTrace + 10000 * X; 
@@ -362,59 +363,63 @@ simulated function PlayIdleAnim()
 
 defaultproperties
 {
-     FireAnims(0)=Fire
-     FireAnims(1)=Fire2
-     FireAnims(2)=Fire3
-     FireAnims(3)=Fire4
-     FireAnims(4)=Fire5
-     WeaponDescription="Classification: Long Range Ballistic\n\nRegular Fire: Fires a high powered bullet. Can kill instantly when applied to the cranium of opposing forces. \n\nSecondary Fire: Zooms the rifle in, up to eight times normal vision. Allows for extreme precision from hundreds of yards away.\n\nTechniques: Great for long distance headshots!"
-     AmmoName=Class'Botpack.BulletBox'
-     PickupAmmoCount=8
-     bInstantHit=True
-     bAltInstantHit=True
-     FiringSpeed=1.800000
-     FireOffset=(Y=-5.000000,Z=-2.000000)
-     MyDamageType=shot
-     AltDamageType=Decapitated
-     shakemag=400.000000
-     shaketime=0.150000
-     shakevert=8.000000
-     AIRating=0.540000
-     RefireRate=0.600000
-     AltRefireRate=0.300000
-     FireSound=Sound'Botpack.SniperRifle.SniperFire'
-     SelectSound=Sound'UnrealI.Rifle.RiflePickup'
-     DeathMessage="%k put a bullet through %o's head."
-     NameColor=(R=0,G=0)
-     bDrawMuzzleFlash=True
-     MuzzleScale=1.000000
-     FlashY=0.110000
-     FlashO=0.014000
-     FlashC=0.031000
-     FlashLength=0.013000
-     FlashS=256
-     MFTexture=Texture'Botpack.Rifle.MuzzleFlash2'
-     AutoSwitchPriority=5
-     InventoryGroup=10
-     PickupMessage="You got a Sniper Rifle."
-     ItemName="Sniper Rifle"
-     PlayerViewOffset=(X=5.000000,Y=-1.600000,Z=-1.700000)
-     PlayerViewMesh=LodMesh'Botpack.Rifle2m'
-     PlayerViewScale=2.000000
-     BobDamping=0.975000
-     PickupViewMesh=LodMesh'Botpack.RiflePick'
-     ThirdPersonMesh=LodMesh'Botpack.RifleHand'
-     StatusIcon=Texture'Botpack.Icons.UseRifle'
-     bMuzzleFlashParticles=True
-     MuzzleFlashStyle=STY_Translucent
-     MuzzleFlashMesh=LodMesh'Botpack.muzzsr3'
-     MuzzleFlashScale=0.100000
-     MuzzleFlashTexture=Texture'Botpack.Skins.Muzzy3'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseRifle'
-     Rotation=(Roll=-1536)
-     Mesh=LodMesh'Botpack.RiflePick'
-     bNoSmooth=False
-     CollisionRadius=32.000000
-     CollisionHeight=8.000000
+      NumFire=0
+      FireAnims(0)="Fire"
+      FireAnims(1)="Fire2"
+      FireAnims(2)="Fire3"
+      FireAnims(3)="Fire4"
+      FireAnims(4)="Fire5"
+      OwnerLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      StillTime=0.000000
+      StillStart=0.000000
+      WeaponDescription="Classification: Long Range Ballistic\n\nRegular Fire: Fires a high powered bullet. Can kill instantly when applied to the cranium of opposing forces. \n\nSecondary Fire: Zooms the rifle in, up to eight times normal vision. Allows for extreme precision from hundreds of yards away.\n\nTechniques: Great for long distance headshots!"
+      AmmoName=Class'Botpack.BulletBox'
+      PickupAmmoCount=8
+      bInstantHit=True
+      bAltInstantHit=True
+      FiringSpeed=1.800000
+      FireOffset=(Y=-5.000000,Z=-2.000000)
+      MyDamageType="shot"
+      AltDamageType="Decapitated"
+      shakemag=400.000000
+      shaketime=0.150000
+      shakevert=8.000000
+      AIRating=0.540000
+      RefireRate=0.600000
+      AltRefireRate=0.300000
+      FireSound=Sound'Botpack.SniperRifle.SniperFire'
+      SelectSound=Sound'UnrealI.Rifle.RiflePickup'
+      DeathMessage="%k put a bullet through %o's head."
+      NameColor=(R=0,G=0)
+      bDrawMuzzleFlash=True
+      MuzzleScale=1.000000
+      FlashY=0.110000
+      FlashO=0.014000
+      FlashC=0.031000
+      FlashLength=0.013000
+      FlashS=256
+      MFTexture=Texture'Botpack.Rifle.MuzzleFlash2'
+      AutoSwitchPriority=5
+      InventoryGroup=10
+      PickupMessage="You got a Sniper Rifle."
+      ItemName="Sniper Rifle"
+      PlayerViewOffset=(X=5.000000,Y=-1.600000,Z=-1.700000)
+      PlayerViewMesh=LodMesh'Botpack.Rifle2m'
+      PlayerViewScale=2.000000
+      BobDamping=0.975000
+      PickupViewMesh=LodMesh'Botpack.RiflePick'
+      ThirdPersonMesh=LodMesh'Botpack.RifleHand'
+      StatusIcon=Texture'Botpack.Icons.UseRifle'
+      bMuzzleFlashParticles=True
+      MuzzleFlashStyle=STY_Translucent
+      MuzzleFlashMesh=LodMesh'Botpack.muzzsr3'
+      MuzzleFlashScale=0.100000
+      MuzzleFlashTexture=Texture'Botpack.Skins.Muzzy3'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseRifle'
+      Rotation=(Roll=-1536)
+      Mesh=LodMesh'Botpack.RiflePick'
+      bNoSmooth=False
+      CollisionRadius=32.000000
+      CollisionHeight=8.000000
 }

@@ -7,5 +7,5 @@ class ReplicationInfo extends Info
 
 defaultproperties
 {
-     bAlwaysRelevant=True
+      bAlwaysRelevant=True
 }

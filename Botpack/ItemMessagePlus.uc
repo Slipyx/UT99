@@ -23,5 +23,5 @@ static function string GetString(
 
 defaultproperties
 {
-     bCenter=True
+      bCenter=True
 }

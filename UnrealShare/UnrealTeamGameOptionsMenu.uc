@@ -40,8 +40,8 @@ function DrawValues(canvas Canvas, int StartX, int StartY, int Spacing)
 
 defaultproperties
 {
-     GameClass=Class'UnrealShare.TeamGame'
-     MenuLength=10
-     HelpMessage(10)="Percentage of damage taken when hit by friendly fire.  Note that you always take full damage from your own weapons."
-     MenuList(10)="Friendly Fire Scale"
+      GameClass=Class'UnrealShare.TeamGame'
+      MenuLength=10
+      HelpMessage(10)="Percentage of damage taken when hit by friendly fire.  Note that you always take full damage from your own weapons."
+      MenuList(10)="Friendly Fire Scale"
 }

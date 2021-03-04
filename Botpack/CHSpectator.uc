@@ -17,7 +17,7 @@ exec function Jump( optional float F )
 	ViewClass(class'SpectatorCam', true);
 	While ( (ViewTarget != None) && ViewTarget.IsA('SpectatorCam') && SpectatorCam(ViewTarget).bSkipView )
 		ViewClass(class'SpectatorCam', true);
-	if ( ViewTarget.IsA('SpectatorCam') )
+	if ( ViewTarget != None && ViewTarget.IsA('SpectatorCam') )
 		bBehindView = false;
 }
 
@@ -103,7 +103,8 @@ exec function Fire( optional float F )
 
 defaultproperties
 {
-     HUDType=Class'Botpack.CHSpectatorHUD'
-     FovAngle=110.000000
-     CollisionRadius=17.000000
+      oldTarget=None
+      HUDType=Class'Botpack.CHSpectatorHUD'
+      FovAngle=110.000000
+      CollisionRadius=17.000000
 }

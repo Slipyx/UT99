@@ -160,8 +160,10 @@ function TranslocChanged()
 
 defaultproperties
 {
-     TranslocText="Translocator"
-     TranslocHelp="If checked, each player will be equipped with a Translocator Personal Transport Device."
-     AirControlText="Air Control"
-     AirControlHelp="Use this slider to specify how much control you have over your player's movement whilst in the air."
+      TranslocCheck=None
+      TranslocText="Translocator"
+      TranslocHelp="If checked, each player will be equipped with a Translocator Personal Transport Device."
+      AirControlSlider=None
+      AirControlText="Air Control"
+      AirControlHelp="Use this slider to specify how much control you have over your player's movement whilst in the air."
 }

@@ -50,6 +50,7 @@ var		bool		bIsMultiSkinned;
 var		bool		bCountJumps;
 var		bool		bAdvancedTactics;	// used during movement between pathnodes
 var		bool		bViewTarget;
+var const bool		bPawnLink;
 
 // Ticked pawn timers
 var		float		SightCounter;	//Used to keep track of when to check player visibility
@@ -482,6 +483,8 @@ function float GetRating()
 
 function AddVelocity( vector NewVelocity)
 {
+	if ( NewVelocity == vect(0,0,0) )
+		return;
 	if (Physics == PHYS_Walking)
 		SetPhysics(PHYS_Falling);
 	if ( (Velocity.Z > 380) && (NewVelocity.Z > 0) )
@@ -605,6 +608,9 @@ function bool AddInventory( inventory NewItem )
 	// Skip if already in the inventory.
 	local inventory Inv;
 
+	if (Level.NetMode == NM_Client)
+		return false;
+
 	// The item should not have been destroyed if we get here.
 	if (NewItem ==None )
 		log("tried to add none inventory to "$self);
@@ -627,20 +633,29 @@ function bool DeleteInventory( inventory Item )
 {
 	// If this item is in our inventory chain, unlink it.
 	local actor Link;
+	local bool ItemExisted;
 
 	if ( Item == Weapon )
+	{
 		Weapon = None;
+		ItemExisted = true;
+	}
 	if ( Item == SelectedItem )
+	{
 		SelectedItem = None;
+		ItemExisted = true;
+	}
 	for( Link = Self; Link!=None; Link=Link.Inventory )
 	{
 		if( Link.Inventory == Item )
 		{
 			Link.Inventory = Item.Inventory;
+			ItemExisted = true;
 			break;
 		}
 	}
 	Item.SetOwner(None);
+	return ItemExisted;
 }
 
 // Just changed to pendingWeapon
@@ -688,6 +703,9 @@ event bool EncroachingOn( actor Other )
 	if ( (Other.Brush != None) || (Brush(Other) != None) )
 		return true;
 
+	if ( !bCanTeleport && (Pawn(Other) != None) && (Level.NetMode == NM_Client) )
+		return false; // Allow relocating inside pawns during ClientAdjustPosition
+		
 	if ( (!bIsPlayer || bWarping) && (Pawn(Other) != None))
 		return true;
 
@@ -1117,14 +1135,20 @@ function FireWeapon();
 */
 function actor TraceShot(out vector HitLocation, out vector HitNormal, vector EndTrace, vector StartTrace)
 {
-	local vector realHit;
-	local actor Other;
-	Other = Trace(HitLocation,HitNormal,EndTrace,StartTrace,True);
-	if ( Pawn(Other) != None )
+	local Actor A, Other;
+	
+	ForEach TraceActors( class'Actor', A, HitLocation, HitNormal, EndTrace, StartTrace)
 	{
-		realHit = HitLocation;
-		if ( !Pawn(Other).AdjustHitLocation(HitLocation, EndTrace - StartTrace) )
-			Other = Pawn(Other).TraceShot(HitLocation,HitNormal,EndTrace,realHit);
+		if ( Pawn(A) != None )
+		{
+			if ( (A != self) && Pawn(A).AdjustHitLocation( HitLocation, EndTrace - StartTrace) )
+				Other = A;
+		}
+		else if ( (A == Level) || (Mover(A) != None) || A.bProjTarget || (A.bBlockPlayers && A.bBlockActors) )
+			Other = A;
+
+		if ( Other != None )
+			break;
 	}
 	return Other;
 }
@@ -1798,46 +1822,179 @@ ignores SeePlayer, HearNoise, KilledBy, Bump, HitWall, HeadZoneChange, FootZoneC
 
 defaultproperties
 {
-     AvgPhysicsTime=0.100000
-     MaxDesiredSpeed=1.000000
-     GroundSpeed=320.000000
-     WaterSpeed=200.000000
-     AccelRate=500.000000
-     JumpZ=325.000000
-     MaxStepHeight=25.000000
-     AirControl=0.050000
-     Visibility=128
-     SightRadius=2500.000000
-     HearingThreshold=1.000000
-     OrthoZoom=40000.000000
-     FovAngle=90.000000
-     Health=100
-     AttitudeToPlayer=ATTITUDE_Hate
-     Intelligence=BRAINS_MAMMAL
-     noise1time=-10.000000
-     noise2time=-10.000000
-     SoundDampening=1.000000
-     DamageScaling=1.000000
-     PlayerReStartState=PlayerWalking
-     NameArticle=" a "
-     PlayerReplicationInfoClass=Class'Engine.PlayerReplicationInfo'
-     bCanTeleport=True
-     bStasis=True
-     bIsPawn=True
-     RemoteRole=ROLE_SimulatedProxy
-     AnimSequence=Fighter
-     bDirectional=True
-     Texture=Texture'Engine.S_Pawn'
-     bIsKillGoal=True
-     SoundRadius=9
-     SoundVolume=240
-     TransientSoundVolume=2.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     bProjTarget=True
-     bRotateToDesired=True
-     RotationRate=(Pitch=4096,Yaw=50000,Roll=3072)
-     NetPriority=2.000000
+      bBehindView=False
+      bIsPlayer=False
+      bJustLanded=False
+      bUpAndOut=False
+      bIsWalking=False
+      bHitSlopedWall=False
+      bNeverSwitchOnPickup=False
+      bWarping=False
+      bUpdatingDisplay=False
+      bCanStrafe=False
+      bFixedStart=False
+      bReducedSpeed=False
+      bCanJump=False
+      bCanWalk=False
+      bCanSwim=False
+      bCanFly=False
+      bCanOpenDoors=False
+      bCanDoSpecial=False
+      bDrowning=False
+      bLOSflag=False
+      bFromWall=False
+      bHunting=False
+      bAvoidLedges=False
+      bStopAtLedges=False
+      bJumpOffPawn=False
+      bShootSpecial=False
+      bAutoActivate=False
+      bIsHuman=False
+      bIsFemale=False
+      bIsMultiSkinned=False
+      bCountJumps=False
+      bAdvancedTactics=False
+      bViewTarget=False
+      bPawnLink=False
+      SightCounter=0.000000
+      PainTime=0.000000
+      SpeechTime=0.000000
+      AvgPhysicsTime=0.100000
+      FootRegion=(Zone=None,iLeaf=0,ZoneNumber=0)
+      HeadRegion=(Zone=None,iLeaf=0,ZoneNumber=0)
+      MoveTimer=0.000000
+      MoveTarget=None
+      FaceTarget=None
+      Destination=(X=0.000000,Y=0.000000,Z=0.000000)
+      Focus=(X=0.000000,Y=0.000000,Z=0.000000)
+      DesiredSpeed=0.000000
+      MaxDesiredSpeed=1.000000
+      MeleeRange=0.000000
+      GroundSpeed=320.000000
+      WaterSpeed=200.000000
+      AirSpeed=0.000000
+      AccelRate=500.000000
+      JumpZ=325.000000
+      MaxStepHeight=25.000000
+      AirControl=0.050000
+      MinHitWall=0.000000
+      Visibility=128
+      Alertness=0.000000
+      Stimulus=0.000000
+      SightRadius=2500.000000
+      PeripheralVision=0.000000
+      HearingThreshold=1.000000
+      LastSeenPos=(X=0.000000,Y=0.000000,Z=0.000000)
+      LastSeeingPos=(X=0.000000,Y=0.000000,Z=0.000000)
+      LastSeenTime=0.000000
+      Enemy=None
+      Weapon=None
+      PendingWeapon=None
+      SelectedItem=None
+      ViewRotation=(Pitch=0,Yaw=0,Roll=0)
+      WalkBob=(X=0.000000,Y=0.000000,Z=0.000000)
+      BaseEyeHeight=0.000000
+      EyeHeight=0.000000
+      Floor=(X=0.000000,Y=0.000000,Z=0.000000)
+      SplashTime=0.000000
+      OrthoZoom=40000.000000
+      FovAngle=90.000000
+      DieCount=0
+      ItemCount=0
+      KillCount=0
+      SecretCount=0
+      Spree=0
+      Health=100
+      SelectionMesh=""
+      SpecialMesh=""
+      ReducedDamageType="None"
+      ReducedDamagePct=0.000000
+      DropWhenKilled=None
+      UnderWaterTime=0.000000
+      AttitudeToPlayer=ATTITUDE_Hate
+      Intelligence=BRAINS_MAMMAL
+      Skill=0.000000
+      SpecialGoal=None
+      SpecialPause=0.000000
+      noise1spot=(X=0.000000,Y=0.000000,Z=0.000000)
+      noise1time=-10.000000
+      noise1other=None
+      noise1loudness=0.000000
+      noise2spot=(X=0.000000,Y=0.000000,Z=0.000000)
+      noise2time=-10.000000
+      noise2other=None
+      noise2loudness=0.000000
+      LastPainSound=0.000000
+      nextPawn=None
+      HitSound1=None
+      HitSound2=None
+      Land=None
+      Die=None
+      WaterStep=None
+      bZoom=0
+      bRun=0
+      bLook=0
+      bDuck=0
+      bSnapLevel=0
+      bStrafe=0
+      bFire=0
+      bAltFire=0
+      bFreeLook=0
+      bExtra0=0
+      bExtra1=0
+      bExtra2=0
+      bExtra3=0
+      CombatStyle=0.000000
+      home=None
+      NextState="None"
+      NextLabel="None"
+      SoundDampening=1.000000
+      DamageScaling=1.000000
+      AlarmTag="None"
+      SharedAlarmTag="None"
+      carriedDecoration=None
+      PlayerReStartState="PlayerWalking"
+      MenuName=""
+      NameArticle=" a "
+      VoicePitch=0
+      VoiceType=""
+      OldMessageTime=0.000000
+      RouteCache(0)=None
+      RouteCache(1)=None
+      RouteCache(2)=None
+      RouteCache(3)=None
+      RouteCache(4)=None
+      RouteCache(5)=None
+      RouteCache(6)=None
+      RouteCache(7)=None
+      RouteCache(8)=None
+      RouteCache(9)=None
+      RouteCache(10)=None
+      RouteCache(11)=None
+      RouteCache(12)=None
+      RouteCache(13)=None
+      RouteCache(14)=None
+      RouteCache(15)=None
+      PlayerReplicationInfoClass=Class'Engine.PlayerReplicationInfo'
+      PlayerReplicationInfo=None
+      Shadow=None
+      bCanTeleport=True
+      bStasis=True
+      bIsPawn=True
+      RemoteRole=ROLE_SimulatedProxy
+      AnimSequence="Fighter"
+      bDirectional=True
+      Texture=Texture'Engine.S_Pawn'
+      bIsKillGoal=True
+      SoundRadius=9
+      SoundVolume=240
+      TransientSoundVolume=2.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      bProjTarget=True
+      bRotateToDesired=True
+      RotationRate=(Pitch=4096,Yaw=50000,Roll=3072)
+      NetPriority=2.000000
 }

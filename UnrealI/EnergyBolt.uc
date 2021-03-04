@@ -50,10 +50,10 @@ Begin:
 
 defaultproperties
 {
-     MaxSpeed=1000.000000
-     Mesh=LodMesh'UnrealShare.bolt1'
-     AmbientGlow=67
-     bUnlit=True
-     LightType=LT_Steady
-     LightRadius=9
+      MaxSpeed=1000.000000
+      Mesh=LodMesh'UnrealShare.bolt1'
+      AmbientGlow=67
+      bUnlit=True
+      LightType=LT_Steady
+      LightRadius=9
 }

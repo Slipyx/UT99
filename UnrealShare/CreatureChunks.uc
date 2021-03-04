@@ -339,16 +339,23 @@ state Dead
 
 defaultproperties
 {
-     TrailSize=3.000000
-     bMustSpawnChunks=True
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=20.000000
-     Mesh=LodMesh'UnrealShare.CowBody1'
-     bUnlit=True
-     bCollideActors=False
-     bBounce=True
-     bFixedRotationDir=True
-     Mass=30.000000
-     Buoyancy=27.000000
-     RotationRate=(Pitch=30000,Roll=30000)
+      trail=None
+      TrailSize=3.000000
+      bGreenBlood=False
+      bMasterChunk=False
+      bMustSpawnChunks=True
+      CarcassClass=None
+      CarcassAnim="None"
+      CarcLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      CarcHeight=0.000000
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=20.000000
+      Mesh=LodMesh'UnrealShare.CowBody1'
+      bUnlit=True
+      bCollideActors=False
+      bBounce=True
+      bFixedRotationDir=True
+      Mass=30.000000
+      Buoyancy=27.000000
+      RotationRate=(Pitch=30000,Roll=30000)
 }

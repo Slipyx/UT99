@@ -7,4 +7,8 @@ var UWindowPulldownMenuItem MenuItem;
 
 defaultproperties
 {
+      MenuItemClassName=""
+      MenuCaption=""
+      MenuHelp=""
+      MenuItem=None
 }

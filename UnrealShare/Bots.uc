@@ -412,7 +412,7 @@ function CallForHelp()
 
 function string KillMessage( name damageType, pawn Other )
 {
-	return ( Level.Game.PlayerKillMessage(damageType, Other.PlayerReplicationInfo)$PlayerReplicationInfo.PlayerName );
+	return ( Other.PlayerReplicationInfo.PlayerName$Level.Game.PlayerKillMessage(damageType, Other.PlayerReplicationInfo)$PlayerReplicationInfo.PlayerName );
 }
 
 function Gasp()
@@ -839,7 +839,7 @@ event UpdateEyeHeight(float DeltaTime)
 /* Adjust hit location - adjusts the hit location in for pawns, and returns
 true if it was really a hit, and false if not (for ducking, etc.)
 */
-function bool AdjustHitLocation(out vector HitLocation, vector TraceDir)
+simulated function bool AdjustHitLocation(out vector HitLocation, vector TraceDir)
 {
 	local float adjZ, maxZ;
 
@@ -5228,34 +5228,92 @@ static function SetMultiSkin( Actor SkinActor, string SkinName, string FaceName,
 
 defaultproperties
 {
-     CarcassType=Class'UnrealShare.CreatureCarcass'
-     TimeBetweenAttacks=1.000000
-     Aggressiveness=0.200000
-     WalkingSpeed=0.400000
-     RefireRate=0.900000
-     bLeadTarget=True
-     bWarnTarget=True
-     bIsPlayer=True
-     bCanStrafe=True
-     bAutoActivate=True
-     MeleeRange=50.000000
-     GroundSpeed=400.000000
-     AirSpeed=400.000000
-     AccelRate=2048.000000
-     SightRadius=3000.000000
-     HearingThreshold=0.300000
-     BaseEyeHeight=23.000000
-     UnderWaterTime=20.000000
-     Intelligence=BRAINS_HUMAN
-     Land=Sound'UnrealShare.Generic.Land1'
-     WaterStep=Sound'UnrealShare.Generic.LSplash'
-     bStasis=False
-     DrawType=DT_Mesh
-     LightBrightness=70
-     LightHue=40
-     LightSaturation=128
-     LightRadius=6
-     Buoyancy=100.000000
-     RotationRate=(Pitch=3072,Yaw=30000,Roll=2048)
-     NetPriority=3.000000
+      CarcassType=Class'UnrealShare.CreatureCarcass'
+      TeamLeader=None
+      OrderObject=None
+      TimeBetweenAttacks=1.000000
+      NextAnim="None"
+      Aggressiveness=0.200000
+      OldEnemy=None
+      numHuntPaths=0
+      HuntStartTime=0.000000
+      HidingSpot=(X=0.000000,Y=0.000000,Z=0.000000)
+      WalkingSpeed=0.400000
+      RefireRate=0.900000
+      bReadyToAttack=False
+      bCanFire=False
+      bCanDuck=False
+      bStrafeDir=False
+      bIsWuss=False
+      bLeadTarget=True
+      bWarnTarget=True
+      bCrouching=False
+      bFirstHatePlayer=False
+      bClearShot=False
+      bSpecialGoal=False
+      bChangeDir=False
+      bMoraleBoosted=False
+      bFiringPaused=False
+      bSpecialPausing=False
+      bGreenBlood=False
+      bFrustrated=False
+      bNoShootDecor=False
+      bGathering=False
+      bCamping=False
+      bVerbose=False
+      bViewTarget=False
+      bWantsToCamp=False
+      bWallAdjust=False
+      bNoClearSpecial=False
+      EnemyDropped=None
+      PlayerKills=0.000000
+      PlayerDeaths=0.000000
+      LastInvFind=0.000000
+      FavoriteWeapon=None
+      Accuracy=0.000000
+      LastPainAnim="None"
+      LastPainTime=0.000000
+      drown=None
+      breathagain=None
+      Footstep1=None
+      Footstep2=None
+      Footstep3=None
+      HitSound3=None
+      HitSound4=None
+      Die2=None
+      Die3=None
+      Die4=None
+      GaspSound=None
+      UWHit1=None
+      UWHit2=None
+      LandGrunt=None
+      JumpSound=None
+      CampTime=0.000000
+      CampingRate=0.000000
+      LastCampCheck=0.000000
+      AmbushSpot=None
+      Pointer=None
+      bIsPlayer=True
+      bCanStrafe=True
+      bAutoActivate=True
+      MeleeRange=50.000000
+      GroundSpeed=400.000000
+      AirSpeed=400.000000
+      AccelRate=2048.000000
+      SightRadius=3000.000000
+      HearingThreshold=0.300000
+      BaseEyeHeight=23.000000
+      UnderWaterTime=20.000000
+      Intelligence=BRAINS_HUMAN
+      Land=Sound'UnrealShare.Generic.Land1'
+      WaterStep=Sound'UnrealShare.Generic.LSplash'
+      bStasis=False
+      DrawType=DT_Mesh
+      LightBrightness=70
+      LightHue=40
+      LightSaturation=128
+      LightRadius=6
+      Buoyancy=100.000000
+      RotationRate=(Pitch=3072,Yaw=30000,Roll=2048)
+      NetPriority=3.000000
 }

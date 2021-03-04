@@ -13,8 +13,8 @@ class CeilingGunBase extends UT_Decoration;
 
 defaultproperties
 {
-     bStatic=False
-     RemoteRole=ROLE_None
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.cdbaseM'
+      bStatic=False
+      RemoteRole=ROLE_None
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.cdbaseM'
 }

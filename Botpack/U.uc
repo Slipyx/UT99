@@ -12,10 +12,10 @@ class U extends Decoration;
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Texture=Texture'Botpack.GoldSkin2'
-     Skin=Texture'Botpack.GoldSkin2'
-     Mesh=LodMesh'Botpack.U'
-     bMeshEnviroMap=True
+      bStatic=False
+      DrawType=DT_Mesh
+      Texture=Texture'Botpack.GoldSkin2'
+      Skin=Texture'Botpack.GoldSkin2'
+      Mesh=LodMesh'Botpack.U'
+      bMeshEnviroMap=True
 }

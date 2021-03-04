@@ -10,7 +10,7 @@ class StatLog extends Info
 	native;
 
 // Internal
-var int		Context;
+var pointer	Context;
 
 // State
 var bool	bWorld;
@@ -36,8 +36,7 @@ var() globalconfig string	    WorldBatcherParams;		// Batcher command line param
 var() globalconfig string	    WorldStatsURL;			// URL to world stats information.
 var() globalconfig string		LocalLogDir;
 var() globalconfig string		WorldLogDir;
-var() globalconfig bool		bLogTypingEvents;		// UTPG - Allow admin to control whether server logs typing events
-
+var() globalconfig bool		    bLogTypingEvents;		// UTPG - Allow admin to control whether server logs typing events
 var globalconfig bool			bWorldBatcherError;		// An error occured last time we tried to process stats.
 
 
@@ -203,12 +202,12 @@ function LogStandardInfo()
 	else
 		LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Log_Standard"$Chr(9)$LocalStandard);
 	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Log_Version"$Chr(9)$LogVersion);
-	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Log_Info_URL"$Chr(9)$LogInfoURL);
+//	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Log_Info_URL"$Chr(9)$LogInfoURL);
 	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Game_Name"$Chr(9)$GameName);
 	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Game_Version"$Chr(9)$Level.EngineVersion);
 	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Game_Creator"$Chr(9)$GameCreator);
 	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Game_Creator_URL"$Chr(9)$GameCreatorURL);
-	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Game_Decoder_Ring_URL"$Chr(9)$DecoderRingURL);
+//	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Game_Decoder_Ring_URL"$Chr(9)$DecoderRingURL);
 	LogEventString(GetTimeStamp()$Chr(9)$"info"$Chr(9)$"Absolute_Time"$Chr(9)$GetAbsoluteTime());
 	if (bWorld)
 	{
@@ -334,6 +333,9 @@ function LogTypingEvent(bool bTyping, Pawn Other)
 
 function LogPickup(Inventory Item, Pawn Other)
 {
+	if (Other.PlayerReplicationInfo == None)
+	    return;
+		
 	if (Item.ItemName != "")
 		LogEventString(GetTimeStamp()$Chr(9)$"item_get"$Chr(9)$Item.ItemName$Chr(9)$Other.PlayerReplicationInfo.PlayerID);
 	else
@@ -349,6 +351,9 @@ function LogItemActivate(Inventory Item, Pawn Other)
 
 function LogItemDeactivate(Inventory Item, Pawn Other)
 {
+	if (Other.PlayerReplicationInfo == None)
+	    return;
+
 	LogEventString(GetTimeStamp()$Chr(9)$"item_deactivate"$Chr(9)$Item.ItemName$Chr(9)$Other.PlayerReplicationInfo.PlayerID);
 }
 
@@ -389,19 +394,25 @@ function LogGameEnd( string Reason )
 
 defaultproperties
 {
-     LocalStandard="ngLog"
-     WorldStandard="ngLog"
-     LogVersion="1.2"
-     LogInfoURL="http://www.netgamesusa.com/ngLog/"
-     GameName="Unreal"
-     GameCreator="Epic MegaGames, Inc."
-     GameCreatorURL="http://www.epicgames.com/"
-     DecoderRingURL="http://unreal.epicgames.com/Unreal_Log_Decoder_Ring.html"
-     LocalBatcherURL="../NetGamesUSA.com/ngStats/ngStatsUT.exe"
-     LocalStatsURL="../NetGamesUSA.com/ngStats/html/ngStats_Main.html"
-     WorldBatcherURL="../NetGamesUSA.com/ngWorldStats/bin/ngWorldStats.exe"
-     WorldBatcherParams="-d ../NetGamesUSA.com/ngWorldStats/logs -g UT"
-     WorldStatsURL="http://www.netgamesusa.com"
-     LocalLogDir="../Logs"
-     WorldLogDir="../NetGamesUSA.com/ngWorldStats/logs"
+      Context=
+      bWorld=False
+      TimeStamp=0.000000
+      LocalStandard="ngLog"
+      WorldStandard="ngLog"
+      LogVersion="1.2"
+      LogInfoURL=""
+      GameName="Unreal"
+      GameCreator="Epic Games, Inc."
+      GameCreatorURL="http://www.epicgames.com/"
+      DecoderRingURL=""
+      LocalBatcherURL="../NetGamesUSA.com/ngStats/ngStatsUT.exe"
+      LocalBatcherParams=""
+      LocalStatsURL="../NetGamesUSA.com/ngStats/html/ngStats_Main.html"
+      WorldBatcherURL="../NetGamesUSA.com/ngWorldStats/bin/ngWorldStats.exe"
+      WorldBatcherParams="-d ../NetGamesUSA.com/ngWorldStats/logs -g UT"
+      WorldStatsURL="http://www.netgamesusa.com"
+      LocalLogDir="../Logs"
+      WorldLogDir="../NetGamesUSA.com/ngWorldStats/logs"
+      bLogTypingEvents=False
+      bWorldBatcherError=False
 }

@@ -47,6 +47,7 @@ function SaveConfigs()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UTCreditsCW'
-     WindowTitle="UT Credits"
+      CloseButton=None
+      ClientClass=Class'UMenu.UTCreditsCW'
+      WindowTitle="UT Credits"
 }

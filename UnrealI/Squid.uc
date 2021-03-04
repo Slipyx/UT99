@@ -54,6 +54,8 @@ var(Sounds) sound grab;
 var(Sounds) sound spin;
 var(Sounds) sound flop;
 
+var float	AirTime;
+
 //-----------------------------------------------------------------------------
 // Squid functions.
 
@@ -64,6 +66,7 @@ function ZoneChange(ZoneInfo newZone)
 	
 	if ( newZone.bWaterZone )
 	{
+		AirTime = 0;
 		if (Physics != PHYS_Swimming)
 			setPhysics(PHYS_Swimming);
 	}
@@ -212,18 +215,24 @@ function PlayVictoryDance()
 
 function GrabTarget()
 {
+	if (Target == None)
+	    return;
 	if ( MeleeDamageTarget(SlapDamage, (SlapDamage * 1500.0 * Normal(Location - Target.Location))) )
 		PlaySound(SlapGrabHit, SLOT_Interact);
 }
 
 function SlapTarget()
 {
+	if (Target == None)
+	    return;
 	if ( MeleeDamageTarget(SlapDamage, (SlapDamage * 1500.0 * Normal(Target.Location - Location))) )
 		PlaySound(SlapGrabHit, SLOT_Interact);
 }
 
 function ThrustTarget()
 {
+	if (Target == None)
+	    return;
 	if ( MeleeDamageTarget(ThrustDamage, (ThrustDamage * 1500.0 * Normal(Target.Location - Location))) )
 		PlaySound(ThrustHit, SLOT_Interact);
 }
@@ -250,38 +259,53 @@ function PlayMeleeAttack()
  	}
 }
 
-
 function bool MeleeDamageTarget(int hitdamage, vector pushdir)
-	{
+{
 	local vector HitLocation, HitNormal, TargetPoint;
 	local float TargetDist;
 	local actor HitActor;
 	local bool result;
-	
+
 	result = false;
+
+	if (Target == self )
+		Target = none;
+	if (Target == none )   // allow non pawn targets
+	{
+		if ( enemy != none && enemy.health >0  && !enemy.bDeleteme && enemy!=self)
+			Target = Enemy;
+	}
+	if (Target == none || (Target != none && (Target.bDeleteme || (Target.IsA('Pawn') && Pawn(Target).Health <=0))) )
+		return false;
 	TargetDist = VSize(Target.Location - Location);
 	Acceleration = AccelRate * (Target.Location - Location)/TargetDist;
 	If (TargetDist <= (MeleeRange * 1.4 + Target.CollisionRadius + CollisionRadius)) //still in melee range
-		{
-		TargetPoint = Location - TargetDist * vector(Rotation); 
+	{
+		TargetPoint = Location - TargetDist * vector(Rotation);
 		TargetPoint.Z = FMin(TargetPoint.Z, Target.Location.Z + Target.CollisionHeight);
 		TargetPoint.Z = FMax(TargetPoint.Z, Target.Location.Z - Target.CollisionHeight);
 		HitActor = Trace(HitLocation, HitNormal, TargetPoint, Location, true);
 		If (HitActor == Target)
-			{	
+		{
 			Target.TakeDamage(hitdamage, Self,HitLocation, pushdir, 'hacked');
 			result = true;
-			}
 		}
-	return result;
 	}
-
+	return result;
+}
 
 State Flopping
 {
 ignores seeplayer, hearnoise, enemynotvisible, hitwall; 	
 	function Timer()
 	{
+		AirTime += 1;
+		if ( AirTime > 25 + 15 * FRand() )
+		{
+			Health = -1;
+			Died(None, 'suffocated', Location);
+			return;
+		}
 		SetPhysics(PHYS_Falling);
 		Velocity = 200 * VRand();
 		Velocity.Z = 170 + 200 * FRand();
@@ -294,6 +318,7 @@ ignores seeplayer, hearnoise, enemynotvisible, hitwall;
 		local Rotator newRotation;
 		if (NewZone.bWaterZone)
 		{
+			AirTime = 0;
 			newRotation = Rotation;
 			newRotation.Roll = 0;
 			SetRotation(newRotation);
@@ -306,19 +331,36 @@ ignores seeplayer, hearnoise, enemynotvisible, hitwall;
 	
 	function Landed(vector HitNormal)
 	{
+		local rotator newRotation;
 		SetPhysics(PHYS_None);
+		SetTimer(0.3 + 0.3 * AirTime * FRand(), false);
+		newRotation = Rotation;
+		newRotation.Pitch = 0;
+		newRotation.Roll = Rand(16384) - 8192;
 		DesiredRotation.Pitch = 0;
-		SetTimer(0.3 + FRand(), false);
+		SetRotation(newRotation);
+		PlaySound(land,SLOT_Interact,,,400);
+		TweenAnim('dead1', 0.3);
 	}
 	
 	function AnimEnd()
 	{
-		PlayAnim('Spin', 0.7);
+		if (Physics == PHYS_None)
+		{
+			if (AnimSequence == 'dead1')
+			{
+				PlayAnim('dead1');
+			}
+			else
+				TweenAnim('dead1', 0.2);
+		}
+		else
+			PlayAnim('turn', 0.7);
 	}
 
 Begin:
 	SetTimer(0.3 + FRand(), false);
-	TweenAnim('Flopping', 0.7);
+	TweenAnim('Swim', 0.7);
 }
 
 state TacticalMove
@@ -345,7 +387,7 @@ ignores SeePlayer, HearNoise, Bump;
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-		if ( health <= 0 )
+		if ( health <= 0 || bDeleteMe )
 			return;
 		if (NextState == 'TakeHit')
 		{
@@ -357,10 +399,9 @@ ignores SeePlayer, HearNoise, Bump;
 	function KeepAttacking()
 	{
 		bReadyToAttack = true;
-		if ( (Target == None) 
-			|| ((Pawn(Target) != None) && (Pawn(Target).Health == 0)) )
+		if (!HasAliveEnemy())
 			GotoState('Attacking');
-		else if (VSize(Target.Location - Location) > (0.9 * MeleeRange + Target.CollisionRadius + CollisionRadius)) 
+		else if (VSize(Enemy.Location - Location) > (0.9 * MeleeRange + Enemy.CollisionRadius + CollisionRadius))
 			GotoState('TacticalMove', 'NoCharge');
 	}
 
@@ -387,37 +428,48 @@ ignores SeePlayer, HearNoise, Bump;
 	}
 	
 Begin:
-	if (Target == None)
-		Target = Enemy;
-	
+	if (!HasAliveEnemy())
+		GotoState('Attacking');
+	Target = Enemy;
+
 FaceTarget:
+	if (!HasAliveEnemy())
+		GotoState('Attacking');
 	Acceleration = Vect(0,0,0);
-	if (NeedToTurn(2 * Location - Target.Location))
+	Target = Enemy;
+	if (NeedToTurn(2 * Location - Enemy.Location))
 	{
 		PlayTurning();
-		TurnTo(2 * Location - Target.Location);
+		TurnTo(2 * Location - Enemy.Location);
 		TweenToFighter(0.15);
 	}
-	else if ( (5 - Skill) * FRand() > 3 ) 
+	else if ( (5 - Skill) * FRand() > 3 )
 	{
-		DesiredRotation = Rotator(Location - Target.Location);
-		PlayChallenge(); 
+		DesiredRotation = Rotator(Location - Enemy.Location);
+		PlayChallenge();
 	}
-	
+
 	FinishAnim();
-		
-	if (VSize(Location - Target.Location) > MeleeRange + CollisionRadius + Target.CollisionRadius)
-		GotoState('Attacking'); 
+
+	if (VSize(Location - Enemy.Location) > MeleeRange + CollisionRadius + Enemy.CollisionRadius)
+		GotoState('Attacking');
 
 ReadyToAttack:
-	DesiredRotation = Rotator(Location - Target.Location);
+	if (!HasAliveEnemy())
+		GotoState('Attacking');
+	Target = Enemy;
+	DesiredRotation = Rotator(Location - Enemy.Location);
 	PlayMeleeAttack();
 	Enable('AnimEnd');
+	Sleep(0.0);
 Attacking:
-	TurnTo(2 * Location - Target.Location);
+	if (!HasAliveEnemy())
+		GotoState('Attacking');
+	TurnTo(2 * Location - Enemy.Location);
 	Goto('Attacking');
 DoneAttacking:
 	Disable('AnimEnd');
+	Sleep(0.0);
 	KeepAttacking();
 	Goto('FaceTarget');
 }
@@ -426,32 +478,35 @@ DoneAttacking:
 
 defaultproperties
 {
-     ThrustDamage=35
-     SlapDamage=30
-     Thrust=Sound'UnrealI.Squid.thrust1sq'
-     slapgrabhit=Sound'UnrealI.Squid.hit1sq'
-     thrusthit=Sound'UnrealI.Squid.hit1sq'
-     Slap=Sound'UnrealI.Squid.slap1sq'
-     Turn=Sound'UnrealI.Squid.turn1sq'
-     Grab=Sound'UnrealI.Squid.grab1sq'
-     Aggressiveness=0.800000
-     MeleeRange=70.000000
-     GroundSpeed=0.000000
-     WaterSpeed=260.000000
-     AirSpeed=0.000000
-     SightRadius=2000.000000
-     PeripheralVision=-0.500000
-     Health=260
-     Intelligence=BRAINS_REPTILE
-     HitSound1=Sound'UnrealI.Squid.injur1sq'
-     HitSound2=Sound'UnrealI.Squid.injur2sq'
-     Die=Sound'UnrealI.Squid.death1sq'
-     AmbientSound=Sound'UnrealI.Squid.amb1sq'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Squid1'
-     CollisionRadius=40.000000
-     CollisionHeight=60.000000
-     Mass=200.000000
-     Buoyancy=200.000000
-     RotationRate=(Pitch=13000,Roll=13000)
+      ThrustDamage=35
+      SlapDamage=30
+      Thrust=Sound'UnrealI.Squid.thrust1sq'
+      slapgrabhit=Sound'UnrealI.Squid.hit1sq'
+      thrusthit=Sound'UnrealI.Squid.hit1sq'
+      Slap=Sound'UnrealI.Squid.slap1sq'
+      Turn=Sound'UnrealI.Squid.turn1sq'
+      Grab=Sound'UnrealI.Squid.grab1sq'
+      spin=None
+      flop=None
+      AirTime=0.000000
+      Aggressiveness=0.800000
+      MeleeRange=70.000000
+      GroundSpeed=0.000000
+      WaterSpeed=260.000000
+      AirSpeed=0.000000
+      SightRadius=2000.000000
+      PeripheralVision=-0.500000
+      Health=260
+      Intelligence=BRAINS_REPTILE
+      HitSound1=Sound'UnrealI.Squid.injur1sq'
+      HitSound2=Sound'UnrealI.Squid.injur2sq'
+      Die=Sound'UnrealI.Squid.death1sq'
+      AmbientSound=Sound'UnrealI.Squid.amb1sq'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Squid1'
+      CollisionRadius=40.000000
+      CollisionHeight=60.000000
+      Mass=200.000000
+      Buoyancy=200.000000
+      RotationRate=(Pitch=13000,Roll=13000)
 }

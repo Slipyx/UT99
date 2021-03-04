@@ -67,13 +67,18 @@ function ActivateTranslator(bool bHint)
 
 defaultproperties
 {
-     NewMessage="Universal Translator"
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="Press F2 to activate the Translator"
-     PickupViewMesh=LodMesh'UnrealShare.TranslatorMesh'
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     Icon=Texture'UnrealShare.Icons.I_Tran'
-     Mesh=LodMesh'UnrealShare.TranslatorMesh'
-     CollisionHeight=5.000000
+      NewMessage="Universal Translator"
+      Hint=""
+      bNewMessage=False
+      bNotNewMessage=False
+      bShowHint=False
+      bCurrentlyActivated=False
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="Press F2 to activate the Translator"
+      PickupViewMesh=LodMesh'UnrealShare.TranslatorMesh'
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      Icon=Texture'UnrealShare.Icons.I_Tran'
+      Mesh=LodMesh'UnrealShare.TranslatorMesh'
+      CollisionHeight=5.000000
 }

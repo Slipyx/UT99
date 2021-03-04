@@ -5,6 +5,11 @@ var UWindowCheckbox	InstantRocketCheck;
 var localized string InstantRocketText;
 var localized string InstantRocketHelp;
 
+// Translocator Dual-Button Switch
+var UWindowCheckbox	TranslocatorDualButtonSwitchCheck;
+var localized string TranslocatorDualButtonSwitchText;
+var localized string TranslocatorDualButtonSwitchHelp;
+
 // Speech Binder Button
 var UWindowSmallButton SpeechBinderButton;
 var localized string SpeechBinderText;
@@ -36,6 +41,14 @@ function Created()
 	InstantRocketCheck.Align = TA_Right;
 
 	ControlOffset += 25;
+	TranslocatorDualButtonSwitchCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', ControlRight, ControlOffset, ControlWidth, 1));
+	TranslocatorDualButtonSwitchCheck.bChecked = bool(GetPlayerOwner().ConsoleCommand("get Botpack.Translocator bEnableDualButtonSwitch"));
+	TranslocatorDualButtonSwitchCheck.SetText(TranslocatorDualButtonSwitchText);
+	TranslocatorDualButtonSwitchCheck.SetHelpText(TranslocatorDualButtonSwitchHelp);
+	TranslocatorDualButtonSwitchCheck.SetFont(F_Normal);
+	TranslocatorDualButtonSwitchCheck.Align = TA_Right;
+
+	ControlOffset += 25;
 	SpeechBinderButton = UWindowSmallButton(CreateControl(class'UWindowSmallButton', ControlLeft, ControlOffset, 48, 16));
 	SpeechBinderButton.SetText(SpeechBinderText);
 	SpeechBinderButton.SetHelpText(SpeechBinderHelp);
@@ -56,6 +69,9 @@ function BeforePaint(Canvas C, float X, float Y)
 	InstantRocketCheck.SetSize(ControlWidth, 1);
 	InstantRocketCheck.WinLeft = ControlRight;
 
+	TranslocatorDualButtonSwitchCheck.SetSize(WinWidth - ControlLeft * 2, 1);
+	TranslocatorDualButtonSwitchCheck.WinLeft = ControlLeft;
+
 	SpeechBinderButton.AutoWidth(C);
 	SpeechBinderButton.WinLeft = (WinWidth - SpeechBinderButton.WinWidth) / 2;
 
@@ -73,6 +89,9 @@ function Notify(UWindowDialogControl C, byte E)
 			case InstantRocketCheck:
 				InstantRocketChanged();
 				break;
+			case TranslocatorDualButtonSwitchCheck:
+				 TranslocatorDualButtonSwitchChanged();
+				 break;
 		}
 		break;
 	case DE_Click:
@@ -91,10 +110,20 @@ function InstantRocketChanged()
 	TournamentPlayer(GetPlayerOwner()).SetInstantRocket(InstantRocketCheck.bChecked);
 }
 
+function TranslocatorDualButtonSwitchChanged()
+{
+	GetPlayerOwner().ConsoleCommand("set Botpack.Translocator bEnableDualButtonSwitch"@TranslocatorDualButtonSwitchCheck.bChecked);
+}
+
 defaultproperties
 {
-     InstantRocketText="Instant Rocket Fire"
-     InstantRocketHelp="Make the Rocket Launcher fire rockets instantly, rather than charging up multiple rockets."
-     SpeechBinderText="Speech Binder"
-     SpeechBinderHelp="Use this special window to bind taunts and orders to keys."
+      InstantRocketCheck=None
+      InstantRocketText="Instant Rocket Fire"
+      InstantRocketHelp="Make the Rocket Launcher fire rockets instantly, rather than charging up multiple rockets."
+      TranslocatorDualButtonSwitchCheck=None
+      TranslocatorDualButtonSwitchText="Translocator Dual-Button Weapon Switch"
+      TranslocatorDualButtonSwitchHelp="Make the Translocator automatically switch to your previous weapon when you press the fire and alt-fire buttons at the same time."
+      SpeechBinderButton=None
+      SpeechBinderText="Speech Binder"
+      SpeechBinderHelp="Use this special window to bind taunts and orders to keys."
 }

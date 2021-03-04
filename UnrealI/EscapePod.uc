@@ -28,8 +28,8 @@ function Timer()
 
 defaultproperties
 {
-     bStatic=False
-     bDirectional=True
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Escapep'
+      bStatic=False
+      bDirectional=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Escapep'
 }

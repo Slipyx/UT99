@@ -59,6 +59,6 @@ static function string AssembleString(
 
 defaultproperties
 {
-     bComplexString=True
-     DrawColor=(R=0,B=0)
+      bComplexString=True
+      DrawColor=(R=0,B=0)
 }

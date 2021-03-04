@@ -7,9 +7,9 @@ class RocketArena expands Arena;
 
 defaultproperties
 {
-     WeaponName=UT_Eightball
-     AmmoName=RocketPack
-     WeaponString="Botpack.UT_Eightball"
-     AmmoString="Botpack.RocketPack"
-     DefaultWeapon=Class'Botpack.UT_Eightball'
+      WeaponName="UT_Eightball"
+      AmmoName="RocketPack"
+      WeaponString="Botpack.UT_Eightball"
+      AmmoString="Botpack.RocketPack"
+      DefaultWeapon=Class'Botpack.UT_Eightball'
 }

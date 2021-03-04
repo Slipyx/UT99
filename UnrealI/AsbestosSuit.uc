@@ -14,16 +14,16 @@ class AsbestosSuit extends Suits;
 
 defaultproperties
 {
-     PickupMessage="You picked up the Asbestos Suit"
-     ProtectionType1=Burned
-     ProtectionType2=Frozen
-     Charge=50
-     ArmorAbsorption=50
-     bIsAnArmor=True
-     AbsorptionPriority=6
-     PickupSound=Sound'UnrealShare.Pickups.suitsnd'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Suit'
-     CollisionRadius=30.000000
-     CollisionHeight=30.000000
+      PickupMessage="You picked up the Asbestos Suit"
+      ProtectionType1="Burned"
+      ProtectionType2="Frozen"
+      Charge=50
+      ArmorAbsorption=50
+      bIsAnArmor=True
+      AbsorptionPriority=6
+      PickupSound=Sound'UnrealShare.Pickups.suitsnd'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Suit'
+      CollisionRadius=30.000000
+      CollisionHeight=30.000000
 }

@@ -77,10 +77,47 @@ native event int Main( string Parms );
 
 defaultproperties
 {
-     LogToStdout=True
-     IsServer=True
-     IsClient=True
-     IsEditor=True
-     LazyLoad=True
-     ShowBanner=True
+      HelpCmd=""
+      HelpOneLiner=""
+      HelpUsage=""
+      HelpWebLink=""
+      HelpParm(0)=""
+      HelpParm(1)=""
+      HelpParm(2)=""
+      HelpParm(3)=""
+      HelpParm(4)=""
+      HelpParm(5)=""
+      HelpParm(6)=""
+      HelpParm(7)=""
+      HelpParm(8)=""
+      HelpParm(9)=""
+      HelpParm(10)=""
+      HelpParm(11)=""
+      HelpParm(12)=""
+      HelpParm(13)=""
+      HelpParm(14)=""
+      HelpParm(15)=""
+      HelpDesc(0)=""
+      HelpDesc(1)=""
+      HelpDesc(2)=""
+      HelpDesc(3)=""
+      HelpDesc(4)=""
+      HelpDesc(5)=""
+      HelpDesc(6)=""
+      HelpDesc(7)=""
+      HelpDesc(8)=""
+      HelpDesc(9)=""
+      HelpDesc(10)=""
+      HelpDesc(11)=""
+      HelpDesc(12)=""
+      HelpDesc(13)=""
+      HelpDesc(14)=""
+      HelpDesc(15)=""
+      LogToStdout=True
+      IsServer=True
+      IsClient=True
+      IsEditor=True
+      LazyLoad=True
+      ShowErrorCount=False
+      ShowBanner=True
 }

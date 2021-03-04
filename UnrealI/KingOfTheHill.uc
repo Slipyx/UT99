@@ -51,7 +51,8 @@ function CrownNewKing(pawn newKing)
 
 defaultproperties
 {
-     KingMessage=" is the new king of the hill!"
-     BeaconName="King"
-     GameName="King of the Hill"
+      king=None
+      KingMessage=" is the new king of the hill!"
+      BeaconName="King"
+      GameName="King of the Hill"
 }

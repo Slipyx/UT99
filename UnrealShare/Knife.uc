@@ -14,6 +14,6 @@ class Knife extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.KnifeM'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.KnifeM'
 }

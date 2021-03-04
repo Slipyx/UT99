@@ -15,5 +15,5 @@ class DiscStud extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.DiscStud'
+      Mesh=LodMesh'Botpack.DiscStud'
 }

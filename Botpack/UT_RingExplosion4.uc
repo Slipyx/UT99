@@ -15,5 +15,5 @@ simulated function SpawnEffects()
 
 defaultproperties
 {
-     bExtraEffectsSpawned=False
+      bExtraEffectsSpawned=False
 }

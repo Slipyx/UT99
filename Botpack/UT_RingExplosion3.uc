@@ -20,6 +20,6 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     Skin=Texture'Botpack.Effects.BlueRing'
-     DrawScale=1.250000
+      Skin=Texture'Botpack.Effects.BlueRing'
+      DrawScale=1.250000
 }

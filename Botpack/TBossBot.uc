@@ -122,26 +122,29 @@ static function SetMultiSkin(Actor SkinActor, string SkinName, string FaceName, 
 
 defaultproperties
 {
-     CarcassType=Class'Botpack.TBossCarcass'
-     HitSound3=Sound'Botpack.Boss.BInjur3'
-     HitSound4=Sound'Botpack.Boss.BInjur4'
-     Deaths(0)=Sound'Botpack.Boss.BDeath1'
-     Deaths(1)=Sound'Botpack.Boss.BDeath1'
-     Deaths(2)=Sound'Botpack.Boss.BDeath3'
-     Deaths(3)=Sound'Botpack.Boss.BDeath4'
-     Deaths(4)=Sound'Botpack.Boss.BDeath3'
-     Deaths(5)=Sound'Botpack.Boss.BDeath4'
-     LandGrunt=Sound'Botpack.Boss.Bland01'
-     JumpSound=Sound'Botpack.Boss.BJump1'
-     DefaultSkinName="BossSkins.Boss"
-     StatusDoll=Texture'Botpack.Icons.BossDoll'
-     StatusBelt=Texture'Botpack.Icons.BossBelt'
-     VoicePackMetaClass="BotPack.VoiceBoss"
-     SelectionMesh="Botpack.SelectionBoss"
-     HitSound1=Sound'Botpack.Boss.BInjur1'
-     HitSound2=Sound'Botpack.Boss.BInjur2'
-     Die=Sound'Botpack.Boss.BDeath1'
-     MenuName="Boss"
-     VoiceType="BotPack.VoiceBotBoss"
-     Mesh=LodMesh'Botpack.Boss'
+      RealSkill=0.000000
+      RealAccuracy=0.000000
+      bRatedGame=False
+      CarcassType=Class'Botpack.TBossCarcass'
+      HitSound3=Sound'Botpack.Boss.BInjur3'
+      HitSound4=Sound'Botpack.Boss.BInjur4'
+      Deaths(0)=Sound'Botpack.Boss.BDeath1'
+      Deaths(1)=Sound'Botpack.Boss.BDeath1'
+      Deaths(2)=Sound'Botpack.Boss.BDeath3'
+      Deaths(3)=Sound'Botpack.Boss.BDeath4'
+      Deaths(4)=Sound'Botpack.Boss.BDeath3'
+      Deaths(5)=Sound'Botpack.Boss.BDeath4'
+      LandGrunt=Sound'Botpack.Boss.Bland01'
+      JumpSound=Sound'Botpack.Boss.BJump1'
+      DefaultSkinName="BossSkins.Boss"
+      StatusDoll=Texture'Botpack.Icons.BossDoll'
+      StatusBelt=Texture'Botpack.Icons.BossBelt'
+      VoicePackMetaClass="BotPack.VoiceBoss"
+      SelectionMesh="Botpack.SelectionBoss"
+      HitSound1=Sound'Botpack.Boss.BInjur1'
+      HitSound2=Sound'Botpack.Boss.BInjur2'
+      Die=Sound'Botpack.Boss.BDeath1'
+      MenuName="Boss"
+      VoiceType="BotPack.VoiceBotBoss"
+      Mesh=LodMesh'Botpack.Boss'
 }

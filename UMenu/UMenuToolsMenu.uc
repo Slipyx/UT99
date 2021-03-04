@@ -18,7 +18,8 @@ function Created()
 	Console.bChecked = Root.Console.bShowConsole;
 	TimeDemo = AddMenuItem(TimeDemoName, None);
 	TimeDemo.bChecked = Root.Console.bTimeDemo;
-	ShowLog = AddMenuItem(LogName, None);
+	if (GetPlayerOwner().ConsoleCommand("LOGWINDOWSUPPORT") ~= "ENABLED")
+	    ShowLog = AddMenuItem(LogName, None);
 }
 
 function ShowWindow()
@@ -72,10 +73,13 @@ function Select(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     ConsoleName="System &Console"
-     ConsoleHelp="This option brings up the Unreal Console.  You can use the console to enter advanced commands and cheats."
-     TimeDemoName="T&imeDemo Statistics"
-     TimeDemoHelp="Enable the TimeDemo statistic to measure your frame rate."
-     LogName="Show &Log"
-     LogHelp="Show the Unreal log window."
+      Console=None
+      TimeDemo=None
+      ShowLog=None
+      ConsoleName="System &Console"
+      ConsoleHelp="This option brings up the Unreal Console.  You can use the console to enter advanced commands and cheats."
+      TimeDemoName="T&imeDemo Statistics"
+      TimeDemoHelp="Enable the TimeDemo statistic to measure your frame rate."
+      LogName="Show &Log"
+      LogHelp="Show the Unreal log window."
 }

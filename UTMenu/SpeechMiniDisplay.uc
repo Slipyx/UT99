@@ -84,9 +84,10 @@ function bool CheckMousePassThrough(float X, float Y)
 
 defaultproperties
 {
-     ArrowString="<<<"
-     NameString="Name:"
-     OrdersString="Orders:"
-     LocationString="Location:"
-     HumanString="None <Human>"
+      DisplayArea=None
+      ArrowString="<<<"
+      NameString="Name:"
+      OrdersString="Orders:"
+      LocationString="Location:"
+      HumanString="None <Human>"
 }

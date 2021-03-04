@@ -13,9 +13,9 @@ class Sconce extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.sconceM'
-     bCollideActors=True
-     bCollideWorld=True
-     bProjTarget=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.sconceM'
+      bCollideActors=True
+      bCollideWorld=True
+      bProjTarget=True
 }

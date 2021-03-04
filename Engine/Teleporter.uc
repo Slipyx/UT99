@@ -280,13 +280,23 @@ function Actor SpecialHandling(Pawn Other)
 
 defaultproperties
 {
-     bChangesYaw=True
-     bEnabled=True
-     RemoteRole=ROLE_SimulatedProxy
-     bDirectional=True
-     Texture=Texture'Engine.S_Teleport'
-     SoundVolume=128
-     CollisionRadius=18.000000
-     CollisionHeight=40.000000
-     bCollideActors=True
+      URL=""
+      ProductRequired="None"
+      bChangesVelocity=False
+      bChangesYaw=True
+      bReversesX=False
+      bReversesY=False
+      bReversesZ=False
+      bEnabled=True
+      TargetVelocity=(X=0.000000,Y=0.000000,Z=0.000000)
+      TriggerActor=None
+      TriggerActor2=None
+      LastFired=0.000000
+      RemoteRole=ROLE_SimulatedProxy
+      bDirectional=True
+      Texture=Texture'Engine.S_Teleport'
+      SoundVolume=128
+      CollisionRadius=18.000000
+      CollisionHeight=40.000000
+      bCollideActors=True
 }

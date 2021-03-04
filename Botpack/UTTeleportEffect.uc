@@ -62,15 +62,18 @@ auto state Explode
 
 defaultproperties
 {
-     Texture=Texture'Botpack.FlareFX.utflare1'
-     bRandomFrame=True
-     MultiSkins(0)=Texture'Botpack.FlareFX.utflare1'
-     MultiSkins(1)=Texture'Botpack.FlareFX.utflare2'
-     MultiSkins(2)=Texture'Botpack.FlareFX.utflare3'
-     MultiSkins(3)=Texture'Botpack.FlareFX.utflare4'
-     MultiSkins(4)=Texture'Botpack.FlareFX.utflare5'
-     MultiSkins(5)=Texture'Botpack.FlareFX.utflare6'
-     MultiSkins(6)=Texture'Botpack.FlareFX.utflare7'
-     MultiSkins(7)=Texture'Botpack.FlareFX.utflare8'
-     LightRadius=9
+      bSpawnEffects=False
+      T1=None
+      T2=None
+      Texture=Texture'Botpack.FlareFX.utflare1'
+      bRandomFrame=True
+      MultiSkins(0)=Texture'Botpack.FlareFX.utflare1'
+      MultiSkins(1)=Texture'Botpack.FlareFX.utflare2'
+      MultiSkins(2)=Texture'Botpack.FlareFX.utflare3'
+      MultiSkins(3)=Texture'Botpack.FlareFX.utflare4'
+      MultiSkins(4)=Texture'Botpack.FlareFX.utflare5'
+      MultiSkins(5)=Texture'Botpack.FlareFX.utflare6'
+      MultiSkins(6)=Texture'Botpack.FlareFX.utflare7'
+      MultiSkins(7)=Texture'Botpack.FlareFX.utflare8'
+      LightRadius=9
 }

@@ -91,16 +91,23 @@ function Select(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     NewGameName="&New"
-     NewGameHelp="Select to setup a new single player game of Unreal."
-     LoadName="&Load"
-     LoadHelp="Select to load a previously saved game."
-     SaveName="&Save"
-     SaveHelp="Select to save your current game."
-     BotmatchName="&Botmatch"
-     BotmatchHelp="Select to begin a game of Botmatch: Deathmatch with Bots!"
-     QuitName="&Quit"
-     QuitHelp="Select to save preferences and exit Unreal."
-     QuitTitle="Confirm Quit"
-     QuitText="Are you sure you want to Quit?"
+      NewGame=None
+      Load=None
+      Save=None
+      GameOptions=None
+      Botmatch=None
+      Quit=None
+      NewGameName="&New"
+      NewGameHelp="Select to setup a new single player game of Unreal."
+      LoadName="&Load"
+      LoadHelp="Select to load a previously saved game."
+      SaveName="&Save"
+      SaveHelp="Select to save your current game."
+      BotmatchName="&Botmatch"
+      BotmatchHelp="Select to begin a game of Botmatch: Deathmatch with Bots!"
+      QuitName="&Quit"
+      QuitHelp="Select to save preferences and exit Unreal."
+      QuitTitle="Confirm Quit"
+      QuitText="Are you sure you want to Quit?"
+      ConfirmQuit=None
 }

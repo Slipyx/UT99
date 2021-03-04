@@ -14,7 +14,7 @@ class EliteKrallBolt extends KraalBolt;
 
 defaultproperties
 {
-     speed=880.000000
-     Damage=19.000000
-     Mesh=LodMesh'UnrealI.eplasma'
+      speed=880.000000
+      Damage=19.000000
+      Mesh=LodMesh'UnrealI.eplasma'
 }

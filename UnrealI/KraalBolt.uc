@@ -14,11 +14,15 @@ class KraalBolt extends Projectile;
 #exec MESHMAP SETTEXTURE MESHMAP=Krallbm NUM=0 TEXTURE=UnrealShare.Effect1.FireEffect1a
 #exec MESHMAP SETTEXTURE MESHMAP=Krallbm NUM=1 TEXTURE=UnrealShare.Effect1.FireEffect1
   
-function PostBeginPlay()
+simulated function PostBeginPlay()
 {
-	if ( ScriptedPawn(Instigator) != None )
-		Speed = ScriptedPawn(Instigator).ProjectileSpeed;
-	Velocity = Vector(Rotation) * speed;
+	if ( Role==ROLE_Authority )
+	{
+		if ( ScriptedPawn(Instigator) != None )
+		   Speed = ScriptedPawn(Instigator).ProjectileSpeed;
+		Velocity = Vector(Rotation) * speed;
+		bAlwaysRelevant = true;
+	}
 	PlaySound(SpawnSound,SLOT_None,4.0);
 	Super.PostBeginPlay();
 } 
@@ -64,19 +68,19 @@ Begin:
 
 defaultproperties
 {
-     speed=800.000000
-     MaxSpeed=800.000000
-     Damage=15.000000
-     MomentumTransfer=10000
-     SpawnSound=Sound'UnrealI.Krall.Krasht2'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=7.500000
-     Mesh=LodMesh'UnrealI.Krallbm'
-     AmbientGlow=255
-     bUnlit=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=200
-     LightHue=102
-     LightRadius=4
+      speed=800.000000
+      MaxSpeed=800.000000
+      Damage=15.000000
+      MomentumTransfer=10000
+      SpawnSound=Sound'UnrealI.Krall.Krasht2'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=7.500000
+      Mesh=LodMesh'UnrealI.Krallbm'
+      AmbientGlow=255
+      bUnlit=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=200
+      LightHue=102
+      LightRadius=4
 }

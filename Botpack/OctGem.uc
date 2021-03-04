@@ -15,5 +15,5 @@ class OctGem extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.OctGem'
+      Mesh=LodMesh'Botpack.OctGem'
 }

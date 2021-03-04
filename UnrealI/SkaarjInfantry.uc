@@ -5,5 +5,5 @@ class SkaarjInfantry extends SkaarjTrooper;
 
 defaultproperties
 {
-     WeaponType=Class'UnrealShare.Stinger'
+      WeaponType=Class'UnrealShare.Stinger'
 }

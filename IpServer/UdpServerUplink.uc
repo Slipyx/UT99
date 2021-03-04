@@ -253,8 +253,15 @@ function bool SendQueryPacket(IpAddr Addr, coerce string SendString, int QueryNu
 
 defaultproperties
 {
-     UpdateMinutes=1
-     MasterServerPort=27900
-     TargetQueryName=MasterUplink
-     RemoteRole=ROLE_None
+      DoUplink=False
+      UpdateMinutes=1
+      MasterServerAddress=""
+      MasterServerPort=27900
+      Region=0
+      TargetQueryName="MasterUplink"
+      MasterServerIpAddr=(Addr=0,Port=0)
+      HeartbeatMessage=""
+      Query=None
+      CurrentQueryNum=0
+      RemoteRole=ROLE_None
 }

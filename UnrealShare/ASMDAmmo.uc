@@ -22,18 +22,18 @@ class ASMDAmmo extends Ammo;
 
 defaultproperties
 {
-     AmmoAmount=10
-     MaxAmmo=50
-     UsedInWeaponSlot(4)=1
-     PickupMessage="You picked up an ASMD core."
-     PickupViewMesh=LodMesh'UnrealShare.AsmdAmmoM'
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Icon=Texture'UnrealShare.Icons.I_ASMD'
-     Mesh=LodMesh'UnrealShare.AsmdAmmoM'
-     SoundRadius=26
-     SoundVolume=37
-     SoundPitch=73
-     CollisionRadius=10.000000
-     CollisionHeight=20.000000
-     bCollideActors=True
+      AmmoAmount=10
+      MaxAmmo=50
+      UsedInWeaponSlot(4)=1
+      PickupMessage="You picked up an ASMD core."
+      PickupViewMesh=LodMesh'UnrealShare.AsmdAmmoM'
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Icon=Texture'UnrealShare.Icons.I_ASMD'
+      Mesh=LodMesh'UnrealShare.AsmdAmmoM'
+      SoundRadius=26
+      SoundVolume=37
+      SoundPitch=73
+      CollisionRadius=10.000000
+      CollisionHeight=20.000000
+      bCollideActors=True
 }

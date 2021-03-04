@@ -8,7 +8,7 @@ class TournamentAmmo extends Ammo
 
 defaultproperties
 {
-     PickupSound=Sound'Botpack.Pickups.AmmoPick'
-     PickupMessageClass=Class'Botpack.PickupMessagePlus'
-     bClientAnim=True
+      PickupSound=Sound'Botpack.Pickups.AmmoPick'
+      PickupMessageClass=Class'Botpack.PickupMessagePlus'
+      bClientAnim=True
 }

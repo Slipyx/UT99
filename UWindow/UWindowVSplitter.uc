@@ -92,5 +92,13 @@ function MouseMove(float X, float Y)
 
 defaultproperties
 {
-     bSizable=True
+      TopClientWindow=None
+      BottomClientWindow=None
+      bSizing=False
+      SplitPos=0.000000
+      MinWinHeight=0.000000
+      MaxSplitPos=0.000000
+      OldWinHeight=0.000000
+      bBottomGrow=False
+      bSizable=True
 }

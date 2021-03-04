@@ -76,5 +76,6 @@ simulated function DrawTeam(Canvas Canvas, TeamInfo TI)
 
 defaultproperties
 {
-     ServerInfoClass=Class'Botpack.ServerInfoCTF'
+      myFlag=None
+      ServerInfoClass=Class'Botpack.ServerInfoCTF'
 }

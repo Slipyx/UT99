@@ -181,6 +181,19 @@ Dropped:
 
 defaultproperties
 {
-     MaxDesireability=1.000000
-     DrawType=DT_Sprite
+      TrapTag="None"
+      TriggerTag="None"
+      Trap(0)=None
+      Trap(1)=None
+      Trap(2)=None
+      Trap(3)=None
+      Trap(4)=None
+      Trap(5)=None
+      Trap(6)=None
+      Trap(7)=None
+      TrapTrigger=None
+      bShootIt=False
+      trapnum=0
+      MaxDesireability=1.000000
+      DrawType=DT_Sprite
 }

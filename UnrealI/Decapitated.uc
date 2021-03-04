@@ -3,5 +3,5 @@ class Decapitated extends UnrealDamageType
 
 defaultproperties
 {
-     AltName="beheaded"
+      AltName="beheaded"
 }

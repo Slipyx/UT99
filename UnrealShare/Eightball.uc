@@ -305,11 +305,10 @@ state FireRockets
 		local int DupRockets;
 
 		Angle = 0;
-		DupRockets = RocketsLoaded - 1;
-		if (DupRockets < 0) DupRockets = 0;
+		DupRockets = Max( RocketsLoaded - 1, 0);
 		if ( PlayerPawn(Owner) != None )
 		{
-			PlayerPawn(Owner).shakeview(ShakeTime, ShakeMag*RocketsLoaded, ShakeVert); //shake player view
+			PlayerPawn(Owner).shakeview( ShakeTime, ShakeMag*RocketsLoaded, ShakeVert); //shake player view
 			PlayerPawn(Owner).ClientInstantFlash( -0.4, vect(650, 450, 190));
 		}
 		else
@@ -325,7 +324,7 @@ state FireRockets
 			
 		if ( PlayerPawn(Owner) != None )
 			AdjustedAim = Pawn(Owner).ViewRotation;
-				
+
 		PlayAnim( 'Fire', 0.6, 0.05);	
 		Owner.MakeNoise(Pawn(Owner).SoundDampening);
 		if ( (LockedTarget!=None) || !bFireLoad )
@@ -342,7 +341,8 @@ state FireRockets
 		bPointing = true;
 		FireRot = AdjustedAim;
 		RocketRad = 4;
-		if (bTightWad || !bFireLoad) RocketRad=7;
+		if (bTightWad || !bFireLoad)
+			RocketRad=7;
 		While ( RocketsLoaded > 0 )
 		{
 			Firelocation = StartLoc - Sin(Angle)*Y*RocketRad + (Cos(Angle)*RocketRad - 10.78)*Z + X * (10 + 8 * FRand());
@@ -377,7 +377,7 @@ state FireRockets
 				g = Spawn( class 'Grenade',, '', FireLocation,AdjustedAim);
 				g.WarnTarget = ScriptedPawn(BestTarget);
 				g.NumExtraGrenades = DupRockets;
-				Owner.PlaySound(AltFireSound, SLOT_None, 3.0*Pawn(Owner).SoundDampening);				
+				Owner.PlaySound( AltFireSound, SLOT_None, 3.0 * Pawn(Owner).SoundDampening);
 			}
 
 			Angle += 1.0484; //2*3.1415/6;
@@ -403,38 +403,45 @@ Begin:
 
 defaultproperties
 {
-     AmmoName=Class'UnrealShare.RocketCan'
-     PickupAmmoCount=6
-     bWarnTarget=True
-     bAltWarnTarget=True
-     bSplashDamage=True
-     bRecommendSplashDamage=True
-     ProjectileClass=Class'UnrealShare.Rocket'
-     AltProjectileClass=Class'UnrealShare.Grenade'
-     shakemag=350.000000
-     shaketime=0.200000
-     shakevert=7.500000
-     AIRating=0.700000
-     RefireRate=0.250000
-     AltRefireRate=0.250000
-     AltFireSound=Sound'UnrealShare.Eightball.EightAltFire'
-     CockingSound=Sound'UnrealShare.Eightball.Loading'
-     SelectSound=Sound'UnrealShare.Eightball.Selecting'
-     Misc1Sound=Sound'UnrealShare.Eightball.SeekLock'
-     Misc2Sound=Sound'UnrealShare.Eightball.SeekLost'
-     Misc3Sound=Sound'UnrealShare.Eightball.BarrelMove'
-     DeathMessage="%o was smacked down multiple times by %k's %w."
-     AutoSwitchPriority=5
-     InventoryGroup=5
-     PickupMessage="You got the Eightball gun"
-     ItemName="Eightball"
-     PlayerViewOffset=(X=1.900000,Z=-1.890000)
-     PlayerViewMesh=LodMesh'UnrealShare.EightB'
-     BobDamping=0.985000
-     PickupViewMesh=LodMesh'UnrealShare.EightPick'
-     ThirdPersonMesh=LodMesh'UnrealShare.8Ball3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealShare.EightPick'
-     bNoSmooth=False
-     CollisionHeight=10.000000
+      RocketsLoaded=0
+      RocketRad=0
+      bFireLoad=False
+      bTightWad=False
+      LockedTarget=None
+      NewTarget=None
+      oldTarget=None
+      AmmoName=Class'UnrealShare.RocketCan'
+      PickupAmmoCount=6
+      bWarnTarget=True
+      bAltWarnTarget=True
+      bSplashDamage=True
+      bRecommendSplashDamage=True
+      ProjectileClass=Class'UnrealShare.Rocket'
+      AltProjectileClass=Class'UnrealShare.Grenade'
+      shakemag=350.000000
+      shaketime=0.200000
+      shakevert=7.500000
+      AIRating=0.700000
+      RefireRate=0.250000
+      AltRefireRate=0.250000
+      AltFireSound=Sound'UnrealShare.Eightball.EightAltFire'
+      CockingSound=Sound'UnrealShare.Eightball.Loading'
+      SelectSound=Sound'UnrealShare.Eightball.Selecting'
+      Misc1Sound=Sound'UnrealShare.Eightball.SeekLock'
+      Misc2Sound=Sound'UnrealShare.Eightball.SeekLost'
+      Misc3Sound=Sound'UnrealShare.Eightball.BarrelMove'
+      DeathMessage="%o was smacked down multiple times by %k's %w."
+      AutoSwitchPriority=5
+      InventoryGroup=5
+      PickupMessage="You got the Eightball gun"
+      ItemName="Eightball"
+      PlayerViewOffset=(X=1.900000,Z=-1.890000)
+      PlayerViewMesh=LodMesh'UnrealShare.EightB'
+      BobDamping=0.985000
+      PickupViewMesh=LodMesh'UnrealShare.EightPick'
+      ThirdPersonMesh=LodMesh'UnrealShare.8Ball3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealShare.EightPick'
+      bNoSmooth=False
+      CollisionHeight=10.000000
 }

@@ -107,4 +107,6 @@ replication
 
 defaultproperties
 {
+      PlaybackActor=None
+      PlaybackGRI=None
 }

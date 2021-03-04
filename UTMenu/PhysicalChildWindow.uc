@@ -132,7 +132,7 @@ function Notify(UWindowWindow B, byte E)
 	{
 		case DE_DoubleClick:
 		case DE_Click:
-			GetPlayerOwner().PlaySound(sound'SpeechWindowClick', SLOT_Interact);
+			GetPlayerOwner().PlaySound( Sound'SpeechWindowClick', SLOT_Interface );
 			for (i=0; i<NumOptions; i++)
 			{
 				if (B == OptionButtons[i])
@@ -160,14 +160,68 @@ function Notify(UWindowWindow B, byte E)
 
 defaultproperties
 {
-     TauntCommand(0)="taunt victory1"
-     TauntCommand(1)="taunt thrust"
-     TauntCommand(2)="taunt taunt1"
-     TauntCommand(3)="taunt wave"
-     PhysicalTaunts(0)="Basic Taunt"
-     PhysicalTaunts(1)="Pelvic Thrust"
-     PhysicalTaunts(2)="Victory Dance"
-     PhysicalTaunts(3)="Wave"
-     TopTexture=Texture'UTMenu.Skins.OrdersTop2'
-     WindowTitle=""
+      OptionOffset=0
+      MinOptions=0
+      TauntCommand(0)="taunt victory1"
+      TauntCommand(1)="taunt thrust"
+      TauntCommand(2)="taunt taunt1"
+      TauntCommand(3)="taunt wave"
+      TauntCommand(4)=""
+      TauntCommand(5)=""
+      TauntCommand(6)=""
+      TauntCommand(7)=""
+      TauntCommand(8)=""
+      TauntCommand(9)=""
+      TauntCommand(10)=""
+      TauntCommand(11)=""
+      TauntCommand(12)=""
+      TauntCommand(13)=""
+      TauntCommand(14)=""
+      TauntCommand(15)=""
+      TauntCommand(16)=""
+      TauntCommand(17)=""
+      TauntCommand(18)=""
+      TauntCommand(19)=""
+      TauntCommand(20)=""
+      TauntCommand(21)=""
+      TauntCommand(22)=""
+      TauntCommand(23)=""
+      TauntCommand(24)=""
+      TauntCommand(25)=""
+      TauntCommand(26)=""
+      TauntCommand(27)=""
+      TauntCommand(28)=""
+      TauntCommand(29)=""
+      PhysicalTaunts(0)="Basic Taunt"
+      PhysicalTaunts(1)="Pelvic Thrust"
+      PhysicalTaunts(2)="Victory Dance"
+      PhysicalTaunts(3)="Wave"
+      PhysicalTaunts(4)=""
+      PhysicalTaunts(5)=""
+      PhysicalTaunts(6)=""
+      PhysicalTaunts(7)=""
+      PhysicalTaunts(8)=""
+      PhysicalTaunts(9)=""
+      PhysicalTaunts(10)=""
+      PhysicalTaunts(11)=""
+      PhysicalTaunts(12)=""
+      PhysicalTaunts(13)=""
+      PhysicalTaunts(14)=""
+      PhysicalTaunts(15)=""
+      PhysicalTaunts(16)=""
+      PhysicalTaunts(17)=""
+      PhysicalTaunts(18)=""
+      PhysicalTaunts(19)=""
+      PhysicalTaunts(20)=""
+      PhysicalTaunts(21)=""
+      PhysicalTaunts(22)=""
+      PhysicalTaunts(23)=""
+      PhysicalTaunts(24)=""
+      PhysicalTaunts(25)=""
+      PhysicalTaunts(26)=""
+      PhysicalTaunts(27)=""
+      PhysicalTaunts(28)=""
+      PhysicalTaunts(29)=""
+      TopTexture=Texture'UTMenu.Skins.OrdersTop2'
+      WindowTitle=""
 }

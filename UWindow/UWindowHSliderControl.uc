@@ -104,29 +104,33 @@ function BeforePaint(Canvas C, float X, float Y)
 	TrackStart = SliderDrawX + (SliderWidth - TrackWidth) * ((Value - MinValue)/(MaxValue - MinValue));
 }
 
-
-function Paint(Canvas C, float X, float Y)
+function Paint( Canvas C, float X, float Y)
 {
+	local float S; //Integer vertical scaling on the slider's line
 	local Texture T;
 	local Region R;
 
+	if ( Root.GUIScale > 1 )
+		S = float(int(Root.GUIScale)) / Root.GUIScale;
+	else
+		S = 1;
+
 	T = GetLookAndFeelTexture();
 
-
-	if(Text != "")
+	if ( Text != "" )
 	{
 		C.DrawColor = TextColor;
-		ClipText(C, TextX, TextY, Text);
+		ClipText( C, TextX, TextY, Text);
 		C.DrawColor.R = 255;
 		C.DrawColor.G = 255;
 		C.DrawColor.B = 255;
 	}
 	
 	R = LookAndFeel.HLine;
-	DrawStretchedTextureSegment( C, SliderDrawX, SliderDrawY, SliderWidth, R.H, R.X, R.Y, R.W, R.H, T);
-
-	DrawUpBevel(C, TrackStart, SliderDrawY-4, TrackWidth, 10, T);
+	DrawStretchedTextureSegment( C, SliderDrawX, SliderDrawY, SliderWidth, R.H*S, R.X, R.Y, R.W, R.H, T);
+	DrawUpBevel( C, TrackStart, SliderDrawY-4, TrackWidth, 10, T);
 }
+
 
 function LMouseUp(float X, float Y)
 {
@@ -210,4 +214,15 @@ function KeyDown(int Key, float X, float Y)
 
 defaultproperties
 {
+      MinValue=0.000000
+      MaxValue=0.000000
+      Value=0.000000
+      Step=0
+      SliderWidth=0.000000
+      SliderDrawX=0.000000
+      SliderDrawY=0.000000
+      TrackStart=0.000000
+      TrackWidth=0.000000
+      bSliding=False
+      bNoSlidingNotify=False
 }

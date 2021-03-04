@@ -61,21 +61,21 @@ Begin:
 
 defaultproperties
 {
-     ExpireMessage="Acoustic dampener has run out."
-     bAutoActivate=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You got the Acoustic Dampener"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'UnrealI.DampenerM'
-     Charge=200
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealI.Pickups.dampndea'
-     DeActivateSound=Sound'UnrealI.Pickups.DampSnd'
-     Icon=Texture'UnrealI.Icons.I_Dampener'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealI.DampenerM'
-     AmbientGlow=69
-     CollisionRadius=15.000000
-     CollisionHeight=10.000000
+      ExpireMessage="Acoustic dampener has run out."
+      bAutoActivate=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You got the Acoustic Dampener"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'UnrealI.DampenerM'
+      Charge=200
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealI.Pickups.dampndea'
+      DeActivateSound=Sound'UnrealI.Pickups.DampSnd'
+      Icon=Texture'UnrealI.Icons.I_Dampener'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealI.DampenerM'
+      AmbientGlow=69
+      CollisionRadius=15.000000
+      CollisionHeight=10.000000
 }

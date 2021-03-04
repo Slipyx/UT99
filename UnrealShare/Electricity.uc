@@ -27,15 +27,15 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=2.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Electr'
-     bUnlit=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=200
-     LightSaturation=255
-     LightRadius=3
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=2.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Electr'
+      bUnlit=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=200
+      LightSaturation=255
+      LightRadius=3
 }

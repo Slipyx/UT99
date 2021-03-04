@@ -19,6 +19,6 @@ function PlayerSpeech(int Type, int Index, int Callsign);
 
 defaultproperties
 {
-     RemoteRole=ROLE_None
-     LifeSpan=10.000000
+      RemoteRole=ROLE_None
+      LifeSpan=10.000000
 }

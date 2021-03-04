@@ -47,15 +47,15 @@ simulated function SpawnExtraEffects()
 
 defaultproperties
 {
-     bExtraEffectsSpawned=True
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.800000
-     AnimSequence=Explo
-     DrawType=DT_Mesh
-     Style=STY_None
-     Mesh=LodMesh'Botpack.UTRingex'
-     DrawScale=0.700000
-     ScaleGlow=1.100000
-     AmbientGlow=255
-     bUnlit=True
+      bExtraEffectsSpawned=True
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.800000
+      AnimSequence="Explo"
+      DrawType=DT_Mesh
+      Style=STY_None
+      Mesh=LodMesh'Botpack.UTRingex'
+      DrawScale=0.700000
+      ScaleGlow=1.100000
+      AmbientGlow=255
+      bUnlit=True
 }

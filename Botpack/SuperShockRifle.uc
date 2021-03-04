@@ -127,13 +127,13 @@ function SpawnEffect(vector HitLocation, vector SmokeLocation)
 
 defaultproperties
 {
-     hitdamage=1000
-     InstFog=(X=800.000000,Z=0.000000)
-     AmmoName=Class'Botpack.SuperShockCore'
-     aimerror=650.000000
-     DeathMessage="%k electrified %o with the %w."
-     PickupMessage="You got the enhanced Shock Rifle."
-     ItemName="Enhanced Shock Rifle"
-     PlayerViewMesh=LodMesh'Botpack.sshockm'
-     ThirdPersonMesh=LodMesh'Botpack.SASMD2hand'
+      hitdamage=1000
+      InstFog=(X=800.000000,Z=0.000000)
+      AmmoName=Class'Botpack.SuperShockCore'
+      aimerror=650.000000
+      DeathMessage="%k electrified %o with the %w."
+      PickupMessage="You got the enhanced Shock Rifle."
+      ItemName="Enhanced Shock Rifle"
+      PlayerViewMesh=LodMesh'Botpack.sshockm'
+      ThirdPersonMesh=LodMesh'Botpack.SASMD2hand'
 }

@@ -27,16 +27,16 @@ function touch(actor other)
 
 defaultproperties
 {
-     bStatic=False
-     bHidden=False
-     bOnlyOwnerSee=True
-     RemoteRole=ROLE_None
-     LifeSpan=6.000000
-     DrawType=DT_Mesh
-     DrawScale=0.500000
-     AmbientGlow=40
-     bCollideActors=True
-     LightType=LT_Steady
-     LightBrightness=125
-     LightSaturation=125
+      bStatic=False
+      bHidden=False
+      bOnlyOwnerSee=True
+      RemoteRole=ROLE_None
+      LifeSpan=6.000000
+      DrawType=DT_Mesh
+      DrawScale=0.500000
+      AmbientGlow=40
+      bCollideActors=True
+      LightType=LT_Steady
+      LightBrightness=125
+      LightSaturation=125
 }

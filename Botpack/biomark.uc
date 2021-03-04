@@ -12,7 +12,7 @@ simulated function BeginPlay()
 
 defaultproperties
 {
-     MultiDecalLevel=2
-     Texture=Texture'Botpack.biosplat'
-     DrawScale=0.650000
+      MultiDecalLevel=2
+      Texture=Texture'Botpack.biosplat'
+      DrawScale=0.650000
 }

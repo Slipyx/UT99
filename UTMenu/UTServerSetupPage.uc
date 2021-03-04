@@ -184,16 +184,23 @@ function BeforePaint(Canvas C, float X, float Y)
 
 defaultproperties
 {
-     GamePasswordText="Game Password"
-     GamePasswordHelp="If this is set, a player needs use this password to be allowed to login to the server."
-     AdminPasswordText="Admin Password"
-     AdminPasswordHelp="If this is set, a player can join your server using this password and have access to admin-only console commands."
-     EnableWebserverText="WWW Remote Admin"
-     EnableWebserverHelp="If checked, you will be able to administer your UT server remotely using a web browser."
-     WebAdminUsernameText="WWW Username"
-     WebAdminUsernameHelp="The username needed to login to the WWW-based remote server administration."
-     WebAdminPasswordText="WWW Password"
-     WebAdminPasswordHelp="The password needed to login to the WWW-based remote server administration."
-     ListenPortText="Webserver Port No."
-     ListenPortHelp="The port number that the remote administration webserver will listen on for incoming connections."
+      GamePasswordEdit=None
+      GamePasswordText="Game Password"
+      GamePasswordHelp="If this is set, a player needs use this password to be allowed to login to the server."
+      AdminPasswordEdit=None
+      AdminPasswordText="Admin Password"
+      AdminPasswordHelp="If this is set, a player can join your server using this password and have access to admin-only console commands."
+      EnableWebserverCheck=None
+      EnableWebserverText="WWW Remote Admin"
+      EnableWebserverHelp="If checked, you will be able to administer your UT server remotely using a web browser."
+      WebAdminUsernameEdit=None
+      WebAdminUsernameText="WWW Username"
+      WebAdminUsernameHelp="The username needed to login to the WWW-based remote server administration."
+      WebAdminPasswordEdit=None
+      WebAdminPasswordText="WWW Password"
+      WebAdminPasswordHelp="The password needed to login to the WWW-based remote server administration."
+      ListenPortEdit=None
+      ListenPortText="Webserver Port No."
+      ListenPortHelp="The port number that the remote administration webserver will listen on for incoming connections."
+      bInitialized=False
 }

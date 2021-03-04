@@ -13,19 +13,15 @@ event playerpawn Login
 )
 {
 	local PlayerPawn NewPlayer;
-	local SpectatorCam Cam;
 	local TrophyDude TD;
 	local int i;
 
 	NewPlayer = Super.Login(Portal, Options, Error, SpawnClass);
-	NewPlayer.bHidden = True;
-
-	foreach AllActors(class'SpectatorCam', Cam) 
-		NewPlayer.ViewTarget = Cam;
 
 	foreach AllActors(class'TrophyDude', TD)
 	{
 		TD.Mesh = Mesh(DynamicLoadObject(SpawnClass.Default.SpecialMesh, class'Mesh'));
+		TD.Skin = NewPlayer.Skin;
 		for (i=0; i<8; i++)
 			TD.MultiSkins[i] = NewPlayer.MultiSkins[i];
 	}
@@ -147,7 +143,7 @@ function Timer()
 
 	Super.Timer();
 
-	Log(Level.TimeSeconds);
+//	Log(Level.TimeSeconds);
 	if (TrophyTime >= 0)
 		TrophyTime--;
 	if (NewTrophyClass != None)
@@ -174,5 +170,8 @@ function PlayTrophyEffect(Trophy NewTrophy)
 
 defaultproperties
 {
-     HUDType=Class'Botpack.CHEOLHUD'
+      NewTrophyClass=None
+      TrophyTime=0
+      CorrectRotation=(Pitch=0,Yaw=0,Roll=0)
+      HUDType=Class'Botpack.CHEOLHUD'
 }

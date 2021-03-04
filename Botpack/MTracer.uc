@@ -35,21 +35,21 @@ simulated function ProcessTouch (Actor Other, vector HitLocation)
 
 defaultproperties
 {
-     speed=4000.000000
-     MaxSpeed=4000.000000
-     bReplicateInstigator=False
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=2.000000
-     Style=STY_Translucent
-     Texture=FireTexture'UnrealShare.Effect1.FireEffect1u'
-     Mesh=LodMesh'Botpack.MiniTrace'
-     DrawScale=0.800000
-     AmbientGlow=187
-     bUnlit=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=30
-     LightSaturation=69
-     LightRadius=3
+      speed=4000.000000
+      MaxSpeed=4000.000000
+      bReplicateInstigator=False
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=2.000000
+      Style=STY_Translucent
+      Texture=FireTexture'UnrealShare.Effect1.FireEffect1u'
+      Mesh=LodMesh'Botpack.MiniTrace'
+      DrawScale=0.800000
+      AmbientGlow=187
+      bUnlit=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=30
+      LightSaturation=69
+      LightRadius=3
 }

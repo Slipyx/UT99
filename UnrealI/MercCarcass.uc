@@ -69,21 +69,21 @@ static simulated function bool AllowChunk(int N, name A)
 
 defaultproperties
 {
-     bodyparts(0)=LodMesh'UnrealI.MercLeg'
-     bodyparts(1)=LodMesh'UnrealI.MercPart'
-     bodyparts(2)=LodMesh'UnrealI.MercGun'
-     bodyparts(3)=LodMesh'UnrealI.MercPart'
-     bodyparts(4)=LodMesh'UnrealI.MercLeg'
-     bodyparts(5)=LodMesh'UnrealI.MercHead'
-     ZOffset(1)=0.000000
-     ZOffset(4)=-0.500000
-     ZOffset(5)=-0.500000
-     bGreenBlood=True
-     LandedSound=Sound'UnrealI.Mercenary.thumpmr'
-     AnimSequence=Death
-     Mesh=LodMesh'UnrealI.Merc'
-     CollisionRadius=35.000000
-     CollisionHeight=48.000000
-     Mass=150.000000
-     Buoyancy=140.000000
+      bodyparts(0)=LodMesh'UnrealI.MercLeg'
+      bodyparts(1)=LodMesh'UnrealI.MercPart'
+      bodyparts(2)=LodMesh'UnrealI.MercGun'
+      bodyparts(3)=LodMesh'UnrealI.MercPart'
+      bodyparts(4)=LodMesh'UnrealI.MercLeg'
+      bodyparts(5)=LodMesh'UnrealI.MercHead'
+      ZOffset(1)=0.000000
+      ZOffset(4)=-0.500000
+      ZOffset(5)=-0.500000
+      bGreenBlood=True
+      LandedSound=Sound'UnrealI.Mercenary.thumpmr'
+      AnimSequence="Death"
+      Mesh=LodMesh'UnrealI.Merc'
+      CollisionRadius=35.000000
+      CollisionHeight=48.000000
+      Mass=150.000000
+      Buoyancy=140.000000
 }

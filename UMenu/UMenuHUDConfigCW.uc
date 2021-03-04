@@ -137,8 +137,10 @@ function SaveConfigs()
 
 defaultproperties
 {
-     HUDConfigText="HUD Layout"
-     HUDConfigHelp="Use the left and right arrow keys to select a Heads Up Display configuration."
-     CrosshairText="Crosshair Style"
-     CrosshairHelp="Choose the crosshair appearing at the center of your screen."
+      HUDConfigSlider=None
+      HUDConfigText="HUD Layout"
+      HUDConfigHelp="Use the left and right arrow keys to select a Heads Up Display configuration."
+      CrosshairSlider=None
+      CrosshairText="Crosshair Style"
+      CrosshairHelp="Choose the crosshair appearing at the center of your screen."
 }

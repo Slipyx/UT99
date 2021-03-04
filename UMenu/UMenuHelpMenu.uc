@@ -50,10 +50,10 @@ function ExecuteItem(UWindowPulldownMenuItem I)
 		MenuBar.SaveConfig();
 		break;
 	case EpicURL:
-		GetPlayerOwner().ConsoleCommand("start http://www.epicgames.com/");
+		GetPlayerOwner().ConsoleCommand("start https://www.epicgames.com/");
 		break;
 	case SupportURL:
-		GetPlayerOwner().ConsoleCommand("start http://us.infogrames.com/support/");
+		GetPlayerOwner().ConsoleCommand("start https://www.oldunreal.com/");
 		break;
 	case About:
 		if(class'GameInfo'.Default.DemoBuild == 1)
@@ -92,12 +92,16 @@ function Select(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     ContextName="&Context Help"
-     ContextHelp="Enable and disable this context help area at the bottom of the screen."
-     EpicGamesURLName="About &Epic Games"
-     EpicGamesURLHelp="Click to open Epic Games webpage!"
-     SupportURLName="Technical Support"
-     SupportURLHelp="Click to open the technical support web page at Infogrames."
-     AboutName="&UT Credits"
-     AboutHelp="Display credits."
+      Context=None
+      EpicURL=None
+      SupportURL=None
+      About=None
+      ContextName="&Context Help"
+      ContextHelp="Enable and disable this context help area at the bottom of the screen."
+      EpicGamesURLName="About &Epic Games"
+      EpicGamesURLHelp="Click to open Epic Games webpage!"
+      SupportURLName="Technical Support"
+      SupportURLHelp="Click to open the technical support web page at OldUnreaal."
+      AboutName="&UT Credits"
+      AboutHelp="Display credits."
 }

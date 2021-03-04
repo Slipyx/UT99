@@ -11,6 +11,6 @@ class UTChunk4 extends UTChunk;
 
 defaultproperties
 {
-     LifeSpan=3.000000
-     Mesh=LodMesh'Botpack.chunk4M'
+      LifeSpan=3.000000
+      Mesh=LodMesh'Botpack.chunk4M'
 }

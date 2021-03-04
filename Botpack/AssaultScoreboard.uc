@@ -20,6 +20,6 @@ function DrawVictoryConditions(Canvas Canvas)
 
 defaultproperties
 {
-     AssaultCondition="Assault the Base!"
-     FragGoal="Score Limit:"
+      AssaultCondition="Assault the Base!"
+      FragGoal="Score Limit:"
 }

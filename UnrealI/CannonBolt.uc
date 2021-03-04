@@ -34,8 +34,8 @@ simulated function Explode(vector HitLocation, vector HitNormal)
 
 defaultproperties
 {
-     speed=2000.000000
-     MaxSpeed=2000.000000
-     Damage=60.000000
-     Mesh=LodMesh'UnrealShare.bolt1'
+      speed=2000.000000
+      MaxSpeed=2000.000000
+      Damage=60.000000
+      Mesh=LodMesh'UnrealShare.bolt1'
 }

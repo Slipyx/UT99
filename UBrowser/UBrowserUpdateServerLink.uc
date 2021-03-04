@@ -94,7 +94,20 @@ function HTTPReceivedData(string Data)
 
 defaultproperties
 {
-     UpdateServerAddress="unreal.epicgames.com"
-     UpdateServerPort=80
-     UpdateServerTimeout=5
+      UpdateServerAddress="unreal.epicgames.com"
+      UpdateServerPort=80
+      UpdateServerTimeout=5
+      URIs(0)=""
+      URIs(1)=""
+      URIs(2)=""
+      URIs(3)=""
+      URIs(4)=""
+      URIs(5)=""
+      URIs(6)=""
+      URIs(7)=""
+      URIs(8)=""
+      URIs(9)=""
+      CurrentURI=0
+      MaxURI=0
+      UpdateWindow=None
 }

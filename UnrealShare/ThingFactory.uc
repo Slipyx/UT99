@@ -168,10 +168,34 @@ state Finished
 
 defaultproperties
 {
-     MaxItems=1
-     capacity=1000000
-     interval=1.000000
-     bFalling=True
-     bStatic=False
-     bCollideActors=True
+      prototype=None
+      MaxItems=1
+      numitems=0
+      numspots=0
+      capacity=1000000
+      interval=1.000000
+      itemtag="None"
+      bFalling=True
+      timeDistribution=DIST_Constant
+      bOnlyPlayerTouched=False
+      bCovert=False
+      bStoppable=False
+      spawnspot(0)=None
+      spawnspot(1)=None
+      spawnspot(2)=None
+      spawnspot(3)=None
+      spawnspot(4)=None
+      spawnspot(5)=None
+      spawnspot(6)=None
+      spawnspot(7)=None
+      spawnspot(8)=None
+      spawnspot(9)=None
+      spawnspot(10)=None
+      spawnspot(11)=None
+      spawnspot(12)=None
+      spawnspot(13)=None
+      spawnspot(14)=None
+      spawnspot(15)=None
+      bStatic=False
+      bCollideActors=True
 }

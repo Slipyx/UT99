@@ -15,5 +15,5 @@ class PlainStud extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.PlainStud'
+      Mesh=LodMesh'Botpack.PlainStud'
 }

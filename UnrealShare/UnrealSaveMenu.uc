@@ -55,6 +55,6 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     CantSave="CAN'T SAVE WHEN DEAD"
-     MenuTitle="SAVE GAME"
+      CantSave="CAN'T SAVE WHEN DEAD"
+      MenuTitle="SAVE GAME"
 }

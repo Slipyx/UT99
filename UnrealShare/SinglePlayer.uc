@@ -35,7 +35,7 @@ function DiscardInventory(Pawn Other)
 
 defaultproperties
 {
-     StartMap="..\maps\Vortex2.unr"
-     bHumansOnly=True
-     GameName="Unreal"
+      StartMap="..\maps\Vortex2.unr"
+      bHumansOnly=True
+      GameName="Unreal"
 }

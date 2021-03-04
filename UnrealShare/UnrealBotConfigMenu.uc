@@ -204,18 +204,43 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     MenuLength=6
-     HelpMessage(1)="If true, bots adjust their skill level based on how they are doing against players."
-     HelpMessage(2)="Base skill level of bots (between 0 and 3)."
-     HelpMessage(3)="If true, bots enter the game in random order. If false, they enter in their configuration order."
-     HelpMessage(4)="Change the configuration of individual bots."
-     HelpMessage(5)="Number of bots to start play (max 15)."
-     HelpMessage(6)="Use bots when playing with other people."
-     MenuList(1)="Auto-Adjust Skills"
-     MenuList(2)="Base Skill"
-     MenuList(3)="Random Order"
-     MenuList(4)="Configure Individual Bots"
-     MenuList(5)="Number of Bots"
-     MenuList(6)="Bots in Multiplayer"
-     MenuTitle="BOTS"
+      MenuValues(0)=""
+      MenuValues(1)=""
+      MenuValues(2)=""
+      MenuValues(3)=""
+      MenuValues(4)=""
+      MenuValues(5)=""
+      MenuValues(6)=""
+      MenuValues(7)=""
+      MenuValues(8)=""
+      MenuValues(9)=""
+      MenuValues(10)=""
+      MenuValues(11)=""
+      MenuValues(12)=""
+      MenuValues(13)=""
+      MenuValues(14)=""
+      MenuValues(15)=""
+      MenuValues(16)=""
+      MenuValues(17)=""
+      MenuValues(18)=""
+      MenuValues(19)=""
+      bAdjustSkill=False
+      bRandomOrder=False
+      SvMenu=None
+      GameType=None
+      Difficulty=0
+      MenuLength=6
+      HelpMessage(1)="If true, bots adjust their skill level based on how they are doing against players."
+      HelpMessage(2)="Base skill level of bots (between 0 and 3)."
+      HelpMessage(3)="If true, bots enter the game in random order. If false, they enter in their configuration order."
+      HelpMessage(4)="Change the configuration of individual bots."
+      HelpMessage(5)="Number of bots to start play (max 15)."
+      HelpMessage(6)="Use bots when playing with other people."
+      MenuList(1)="Auto-Adjust Skills"
+      MenuList(2)="Base Skill"
+      MenuList(3)="Random Order"
+      MenuList(4)="Configure Individual Bots"
+      MenuList(5)="Number of Bots"
+      MenuList(6)="Bots in Multiplayer"
+      MenuTitle="BOTS"
 }

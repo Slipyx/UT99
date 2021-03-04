@@ -35,6 +35,20 @@ function PreBeginPlay()
 
 defaultproperties
 {
-     bDirectional=True
-     Texture=Texture'UnrealShare.S_Alarm'
+      NextAlarm="None"
+      pausetime=0.000000
+      ducktime=0.000000
+      lookDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      AlarmAnim="None"
+      bStrafeTo=False
+      bAttackWhilePaused=False
+      bNoFail=False
+      bStopIfNoEnemy=False
+      bKillMe=False
+      bDestroyAlarmTriggerer=False
+      ShootTarget="None"
+      AlarmSound=None
+      NextAlarmObject=None
+      bDirectional=True
+      Texture=Texture'UnrealShare.S_Alarm'
 }

@@ -55,6 +55,6 @@ Begin:
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.IntroBoss'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.IntroBoss'
 }

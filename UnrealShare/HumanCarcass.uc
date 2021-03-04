@@ -77,11 +77,12 @@ state Dead
 
 defaultproperties
 {
-     flies=0
-     bReducedHeight=True
-     PrePivot=(Z=26.000000)
-     CollisionRadius=27.000000
-     CollisionHeight=13.000000
-     bBlockActors=False
-     bBlockPlayers=False
+      MasterReplacement=None
+      flies=0
+      bReducedHeight=True
+      PrePivot=(Z=26.000000)
+      CollisionRadius=27.000000
+      CollisionHeight=13.000000
+      bBlockActors=False
+      bBlockPlayers=False
 }

@@ -79,6 +79,7 @@ function FFChanged()
 
 defaultproperties
 {
-     FFText="Friendly Fire:"
-     FFHelp="Slide to adjust the amount of damage friendly fire imparts to other teammates."
+      FFSlider=None
+      FFText="Friendly Fire:"
+      FFHelp="Slide to adjust the amount of damage friendly fire imparts to other teammates."
 }

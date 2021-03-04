@@ -16,19 +16,22 @@ function SetMap(string MapName)
 	if(i != -1)
 		MapName = Left(MapName, i);
 
-	Screenshot = Texture(DynamicLoadObject(MapName$".Screenshot", class'Texture'));
-	L = LevelSummary(DynamicLoadObject(MapName$".LevelSummary", class'LevelSummary'));
-	if(L != None)
+    if (MapName != "")
 	{
-		MapTitle = L.Title;
-		MapAuthor = L.Author;
-		IdealPlayerCount = L.IdealPlayerCount;
-	}
-	else
-	{
-		MapTitle = "";
-		MapAuthor = "";
-		IdealPlayerCount = "";
+		Screenshot = Texture(DynamicLoadObject(MapName$".Screenshot", class'Texture'));
+		L = LevelSummary(DynamicLoadObject(MapName$".LevelSummary", class'LevelSummary'));
+		if(L != None)
+		{
+			MapTitle = L.Title;
+			MapAuthor = L.Author;
+			IdealPlayerCount = L.IdealPlayerCount;
+		}
+		else
+		{
+			MapTitle = "";
+			MapAuthor = "";
+			IdealPlayerCount = "";
+		}
 	}
 }
 
@@ -92,5 +95,9 @@ function Paint(Canvas C, float MouseX, float MouseY)
 
 defaultproperties
 {
-     PlayersText="Players"
+      Screenshot=None
+      MapTitle=""
+      MapAuthor=""
+      IdealPlayerCount=""
+      PlayersText="Players"
 }

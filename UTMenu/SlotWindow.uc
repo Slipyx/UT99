@@ -547,10 +547,10 @@ function RestoreGame(int i)
 
 	if (LadderObj.Sex ~= "M")
 	{
-		PlayerClass = LadderObj.Team.Default.MaleClass;
+		PlayerClass = LadderObj.Team.static.GetMaleClass();
 		PlayerSkin = LadderObj.Team.Default.MaleSkin;
 	} else {
-		PlayerClass = LadderObj.Team.Default.FemaleClass;
+		PlayerClass = LadderObj.Team.static.GetFemaleClass();
 		PlayerSkin = LadderObj.Team.Default.FemaleSkin;
 	}
 
@@ -608,20 +608,83 @@ function IterateFaces(string InSkinName, string MeshName)
 
 defaultproperties
 {
-     BGName1(0)="UTMenu.Save11"
-     BGName1(1)="UTMenu.Save12"
-     BGName1(2)="UTMenu.Save13"
-     BGName1(3)="UTMenu.Save14"
-     BGName2(0)="UTMenu.Save21"
-     BGName2(1)="UTMenu.Save22"
-     BGName2(2)="UTMenu.Save23"
-     BGName2(3)="UTMenu.Save24"
-     BGName3(0)="UTMenu.Save31"
-     BGName3(1)="UTMenu.Save32"
-     BGName3(2)="UTMenu.Save33"
-     BGName3(3)="UTMenu.Save34"
-     EmptyText="UNUSED"
-     Saves(0)="1\5\1\1\0\-1\0\-1\0\-1\0\0\M\0\Slipyx"
-     AvgRankStr="Average Rank:"
-     CompletedStr="Matches Won:"
+      BG1(0)=None
+      BG1(1)=None
+      BG1(2)=None
+      BG1(3)=None
+      BG2(0)=None
+      BG2(1)=None
+      BG2(2)=None
+      BG2(3)=None
+      BG3(0)=None
+      BG3(1)=None
+      BG3(2)=None
+      BG3(3)=None
+      BGName1(0)="UTMenu.Save11"
+      BGName1(1)="UTMenu.Save12"
+      BGName1(2)="UTMenu.Save13"
+      BGName1(3)="UTMenu.Save14"
+      BGName2(0)="UTMenu.Save21"
+      BGName2(1)="UTMenu.Save22"
+      BGName2(2)="UTMenu.Save23"
+      BGName2(3)="UTMenu.Save24"
+      BGName3(0)="UTMenu.Save31"
+      BGName3(1)="UTMenu.Save32"
+      BGName3(2)="UTMenu.Save33"
+      BGName3(3)="UTMenu.Save34"
+      SlotButton(0)=None
+      SlotButton(1)=None
+      SlotButton(2)=None
+      SlotButton(3)=None
+      SlotButton(4)=None
+      EmptyText="UNUSED"
+      KillButton(0)=None
+      KillButton(1)=None
+      KillButton(2)=None
+      KillButton(3)=None
+      KillButton(4)=None
+      GoButton(0)=None
+      GoButton(1)=None
+      GoButton(2)=None
+      GoButton(3)=None
+      GoButton(4)=None
+      Saves(0)=""
+      Saves(1)="1\5\6\15\6\9\5\9\0\1\0\0\M\0\Slipyx"
+      Saves(2)=""
+      Saves(3)=""
+      Saves(4)=""
+      AvgRankStr="Average Rank:"
+      CompletedStr="Matches Won:"
+      Faces(0)=""
+      Faces(1)=""
+      Faces(2)=""
+      Faces(3)=""
+      Faces(4)=""
+      Faces(5)=""
+      Faces(6)=""
+      Faces(7)=""
+      Faces(8)=""
+      Faces(9)=""
+      Faces(10)=""
+      Faces(11)=""
+      Faces(12)=""
+      Faces(13)=""
+      Faces(14)=""
+      Faces(15)=""
+      FaceDescs(0)=""
+      FaceDescs(1)=""
+      FaceDescs(2)=""
+      FaceDescs(3)=""
+      FaceDescs(4)=""
+      FaceDescs(5)=""
+      FaceDescs(6)=""
+      FaceDescs(7)=""
+      FaceDescs(8)=""
+      FaceDescs(9)=""
+      FaceDescs(10)=""
+      FaceDescs(11)=""
+      FaceDescs(12)=""
+      FaceDescs(13)=""
+      FaceDescs(14)=""
+      FaceDescs(15)=""
 }

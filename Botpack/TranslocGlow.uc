@@ -10,15 +10,15 @@ class TranslocGlow extends Effects;
 
 defaultproperties
 {
-     bNetTemporary=False
-     bTrailerPrePivot=True
-     Physics=PHYS_Trailer
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Sprite
-     Style=STY_Translucent
-     Sprite=Texture'Botpack.Translocator.Tranglow'
-     Texture=Texture'Botpack.Translocator.Tranglow'
-     Skin=Texture'Botpack.Translocator.Tranglow'
-     DrawScale=0.500000
-     PrePivot=(Z=20.000000)
+      bNetTemporary=False
+      bTrailerPrePivot=True
+      Physics=PHYS_Trailer
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Sprite
+      Style=STY_Translucent
+      Sprite=Texture'Botpack.Translocator.Tranglow'
+      Texture=Texture'Botpack.Translocator.Tranglow'
+      Skin=Texture'Botpack.Translocator.Tranglow'
+      DrawScale=0.500000
+      PrePivot=(Z=20.000000)
 }

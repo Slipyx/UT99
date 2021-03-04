@@ -26,5 +26,5 @@ function Created()
 
 defaultproperties
 {
-     WindowTitle="ngWorldStats Password"
+      WindowTitle="ngWorldStats Password"
 }

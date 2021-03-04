@@ -117,9 +117,15 @@ function KeyDown(int Key, float X, float Y)
 
 defaultproperties
 {
-     QueryText="Querying Server..."
-     FailureText="The server did not respond."
-     LinkClass=Class'UBrowser.UBrowserUpdateServerLink'
-     TextAreaClass=Class'UBrowser.UBrowserUpdateServerTextArea'
-     NumTries=3
+      Link=None
+      TextArea=None
+      QueryText="Querying Server..."
+      FailureText="The server did not respond."
+      LinkClass=Class'UBrowser.UBrowserUpdateServerLink'
+      TextAreaClass=Class'UBrowser.UBrowserUpdateServerTextArea'
+      bGotMOTD=False
+      StatusBarText=""
+      bHadInitialQuery=False
+      tries=0
+      NumTries=3
 }

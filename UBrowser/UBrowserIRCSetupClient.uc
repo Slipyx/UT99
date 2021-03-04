@@ -195,21 +195,40 @@ function SaveChannelCombo()
 
 defaultproperties
 {
-     IRCServerHistory(0)="irc.utchat.com"
-     IRCChannelHistory(0)="#utgames"
-     IRCChannelHistory(1)="#utchat"
-     IRCChannelHistory(2)="#utmods"
-     IRCChannelHistory(3)="#utlevels"
-     IRCChannelHistory(4)="#uthelp"
-     bHasReadWarning=True
-     ServerText="IRC Server"
-     ChannelText="Default Channel"
-     ServerHelp="Choose an IRC server from the list or type in your own IRC server name or IP address."
-     ChannelHelp="Choose a default channel to join once the server has connected, or type in your own channel name."
-     ConnectText="Connect"
-     DisconnectText="Logoff"
-     ConnectHelp="Connect to the IRC chat server."
-     DisconnectHelp="Disconnect from the IRC chat server."
-     WarningText="The Chat facility will connect you to the Internet Relay Chat (IRC) network.\n\nEpic Games is not responsible for the content of any channels in IRC. You enter these channels at your own risk.\n\nAre you sure you still want to connect?"
-     WarningTitle="Warning"
+      ServerCombo=None
+      ChannelCombo=None
+      ConnectButton=None
+      IRCServerHistory(0)="irc.utchat.com"
+      IRCServerHistory(1)=""
+      IRCServerHistory(2)=""
+      IRCServerHistory(3)=""
+      IRCServerHistory(4)=""
+      IRCServerHistory(5)=""
+      IRCServerHistory(6)=""
+      IRCServerHistory(7)=""
+      IRCServerHistory(8)=""
+      IRCServerHistory(9)=""
+      IRCChannelHistory(0)="#utgames"
+      IRCChannelHistory(1)="#utchat"
+      IRCChannelHistory(2)="#utmods"
+      IRCChannelHistory(3)="#utlevels"
+      IRCChannelHistory(4)="#uthelp"
+      IRCChannelHistory(5)=""
+      IRCChannelHistory(6)=""
+      IRCChannelHistory(7)=""
+      IRCChannelHistory(8)=""
+      IRCChannelHistory(9)=""
+      bHasReadWarning=True
+      ServerText="IRC Server"
+      ChannelText="Default Channel"
+      ServerHelp="Choose an IRC server from the list or type in your own IRC server name or IP address."
+      ChannelHelp="Choose a default channel to join once the server has connected, or type in your own channel name."
+      ConnectText="Connect"
+      DisconnectText="Logoff"
+      ConnectHelp="Connect to the IRC chat server."
+      DisconnectHelp="Disconnect from the IRC chat server."
+      WarningText="The Chat facility will connect you to the Internet Relay Chat (IRC) network.\n\nEpic Games is not responsible for the content of any channels in IRC. You enter these channels at your own risk.\n\nAre you sure you still want to connect?"
+      WarningTitle="Warning"
+      ConfirmJoin=None
+      SystemPage=None
 }

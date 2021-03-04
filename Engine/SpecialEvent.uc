@@ -131,5 +131,12 @@ state() PlayerPath
 
 defaultproperties
 {
-     Texture=Texture'Engine.S_SpecialEvent'
+      Damage=0
+      DamageType="None"
+      DamageString=""
+      Sound=None
+      Message=""
+      bBroadcast=False
+      bPlayerViewRot=False
+      Texture=Texture'Engine.S_SpecialEvent'
 }

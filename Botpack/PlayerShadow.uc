@@ -74,7 +74,9 @@ event Update(Actor L)
 
 defaultproperties
 {
-     MultiDecalLevel=3
-     Texture=Texture'Botpack.energymark'
-     DrawScale=0.500000
+      OldOwnerLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      OldLight=None
+      MultiDecalLevel=3
+      Texture=Texture'Botpack.energymark'
+      DrawScale=0.500000
 }

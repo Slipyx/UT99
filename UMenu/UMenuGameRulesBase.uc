@@ -230,15 +230,23 @@ function WeaponsChecked()
 
 defaultproperties
 {
-     FragText="Frag Limit"
-     FragHelp="The game will end if a player achieves this many frags. A value of 0 sets no frag limit."
-     TimeText="Time Limit"
-     TimeHelp="The game will end if after this many minutes. A value of 0 sets no time limit."
-     MaxPlayersText="Max Connections"
-     MaxPlayersHelp="Maximum number of human players allowed to connect to the game."
-     MaxSpectatorsText="Max Spectators"
-     MaxSpectatorsHelp="Maximum number of spectators allowed to connect to the game."
-     WeaponsText="Weapons Stay"
-     WeaponsHelp="If checked, weapons will stay at their pickup location after being picked up, instead of respawning."
-     ControlOffset=20.000000
+      BotmatchParent=None
+      Initialized=False
+      FragEdit=None
+      FragText="Frag Limit"
+      FragHelp="The game will end if a player achieves this many frags. A value of 0 sets no frag limit."
+      TimeEdit=None
+      TimeText="Time Limit"
+      TimeHelp="The game will end if after this many minutes. A value of 0 sets no time limit."
+      MaxPlayersEdit=None
+      MaxPlayersText="Max Connections"
+      MaxPlayersHelp="Maximum number of human players allowed to connect to the game."
+      MaxSpectatorsEdit=None
+      MaxSpectatorsText="Max Spectators"
+      MaxSpectatorsHelp="Maximum number of spectators allowed to connect to the game."
+      WeaponsCheck=None
+      WeaponsText="Weapons Stay"
+      WeaponsHelp="If checked, weapons will stay at their pickup location after being picked up, instead of respawning."
+      ControlOffset=20.000000
+      bControlRight=False
 }

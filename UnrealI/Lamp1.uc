@@ -15,10 +15,10 @@ class Lamp1 extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Lamp1M'
-     CollisionRadius=16.000000
-     CollisionHeight=76.000000
-     bCollideActors=True
-     bCollideWorld=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Lamp1M'
+      CollisionRadius=16.000000
+      CollisionHeight=76.000000
+      bCollideActors=True
+      bCollideWorld=True
 }

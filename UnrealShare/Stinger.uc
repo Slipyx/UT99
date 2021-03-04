@@ -135,6 +135,7 @@ state AltFiring
 			}
 		}
 		StingerProjectile(S).bLighting = True;
+		return S;
 	}
 
 Begin:
@@ -152,34 +153,35 @@ function PlayIdleAnim()
 
 defaultproperties
 {
-     AmmoName=Class'UnrealShare.StingerAmmo'
-     PickupAmmoCount=40
-     bAltWarnTarget=True
-     FireOffset=(X=12.000000,Y=-10.000000,Z=-15.000000)
-     ProjectileClass=Class'UnrealShare.StingerProjectile'
-     AltProjectileClass=Class'UnrealShare.StingerProjectile'
-     shakemag=120.000000
-     AIRating=0.400000
-     RefireRate=0.800000
-     FireSound=Sound'UnrealShare.Stinger.StingerFire'
-     AltFireSound=Sound'UnrealShare.Stinger.StingerAltFire'
-     SelectSound=Sound'UnrealShare.Stinger.StingerLoad'
-     Misc1Sound=Sound'UnrealShare.Stinger.EndFire'
-     DeathMessage="%o was perforated by %k's %w."
-     AutoSwitchPriority=3
-     InventoryGroup=3
-     PickupMessage="You picked up the Stinger"
-     ItemName="Stinger"
-     PlayerViewOffset=(X=4.200000,Y=-3.000000,Z=-4.000000)
-     PlayerViewMesh=LodMesh'UnrealShare.StingerM'
-     PlayerViewScale=1.700000
-     PickupViewMesh=LodMesh'UnrealShare.StingerPickup'
-     ThirdPersonMesh=LodMesh'UnrealShare.Stinger3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealShare.StingerPickup'
-     bNoSmooth=False
-     SoundRadius=64
-     SoundVolume=255
-     CollisionRadius=27.000000
-     CollisionHeight=8.000000
+      bAlreadyFiring=False
+      AmmoName=Class'UnrealShare.StingerAmmo'
+      PickupAmmoCount=40
+      bAltWarnTarget=True
+      FireOffset=(X=12.000000,Y=-10.000000,Z=-15.000000)
+      ProjectileClass=Class'UnrealShare.StingerProjectile'
+      AltProjectileClass=Class'UnrealShare.StingerProjectile'
+      shakemag=120.000000
+      AIRating=0.400000
+      RefireRate=0.800000
+      FireSound=Sound'UnrealShare.Stinger.StingerFire'
+      AltFireSound=Sound'UnrealShare.Stinger.StingerAltFire'
+      SelectSound=Sound'UnrealShare.Stinger.StingerLoad'
+      Misc1Sound=Sound'UnrealShare.Stinger.EndFire'
+      DeathMessage="%o was perforated by %k's %w."
+      AutoSwitchPriority=3
+      InventoryGroup=3
+      PickupMessage="You picked up the Stinger"
+      ItemName="Stinger"
+      PlayerViewOffset=(X=4.200000,Y=-3.000000,Z=-4.000000)
+      PlayerViewMesh=LodMesh'UnrealShare.StingerM'
+      PlayerViewScale=1.700000
+      PickupViewMesh=LodMesh'UnrealShare.StingerPickup'
+      ThirdPersonMesh=LodMesh'UnrealShare.Stinger3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealShare.StingerPickup'
+      bNoSmooth=False
+      SoundRadius=64
+      SoundVolume=255
+      CollisionRadius=27.000000
+      CollisionHeight=8.000000
 }

@@ -15,4 +15,10 @@ function bool ShowThisItem()
 
 defaultproperties
 {
+      WeaponClassName=""
+      WeaponName=""
+      PriorityName="None"
+      bFound=False
+      WeaponMesh=None
+      WeaponSkin=None
 }

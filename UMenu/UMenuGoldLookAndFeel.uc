@@ -1,50 +1,57 @@
 class UMenuGoldLookAndFeel extends UWindowLookAndFeel;
 
-#exec TEXTURE IMPORT NAME=GoldActiveFrame FILE=Textures\ActiveFrame.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
-#exec TEXTURE IMPORT NAME=GoldInactiveFrame FILE=Textures\InactiveFrame.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
-#exec TEXTURE IMPORT NAME=GoldActiveFrameS FILE=Textures\ActiveFrameS.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
-#exec TEXTURE IMPORT NAME=GoldInactiveFrameS FILE=Textures\InactiveFrameS.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
+#exec TEXTURE IMPORT NAME=GoldActiveFrame FILE=Textures\G_ActiveFrame.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
+#exec TEXTURE IMPORT NAME=GoldActiveFrameHiRes FILE=Textures\G_ActiveFrameHiRes.bmp GROUP="Icons" MIPS=ON
+#exec TEXTURE IMPORT NAME=GoldInactiveFrameHiRes FILE=Textures\G_InactiveFrameHiRes.bmp GROUP="Icons" MIPS=ON
+#exec TEXTURE IMPORT NAME=GoldInactiveFrame FILE=Textures\G_InactiveFrame.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
+#exec TEXTURE IMPORT NAME=GoldActiveFrameS FILE=Textures\G_ActiveFrameS.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
+#exec TEXTURE IMPORT NAME=GoldInactiveFrameS FILE=Textures\G_InactiveFrameS.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
 
-#exec TEXTURE IMPORT NAME=Misc FILE=Textures\Misc.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=Misc FILE=Textures\G_Misc.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=GoldButton FILE=Textures\G_SmallButton.pcx GROUP="Icons" MIPS=OFF
 
 #exec TEXTURE IMPORT NAME=ChkChecked FILE=Textures\ChkChecked.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
+#exec TEXTURE IMPORT NAME=ChkCheckedHiRes FILE=Textures\ChkCheckedHiRes.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
 #exec TEXTURE IMPORT NAME=ChkUnchecked FILE=Textures\ChkUnchecked.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
 #exec TEXTURE IMPORT NAME=ChkCheckedDisabled FILE=Textures\ChkCheckedDisabled.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
+#exec TEXTURE IMPORT NAME=ChkCheckedDisabledHiRes FILE=Textures\ChkCheckedDisabledHiRes.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
 #exec TEXTURE IMPORT NAME=ChkUncheckedDisabled FILE=Textures\ChkUncheckedDisabled.bmp GROUP="Icons" FLAGS=2 MIPS=OFF
 
-#exec TEXTURE IMPORT NAME=GoldButton FILE=Textures\SmallButton.pcx GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuArea FILE=Textures\G_MenuArea.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuTL FILE=Textures\G_MenuTL.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuT FILE=Textures\G_MenuT.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuTR FILE=Textures\G_MenuTR.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuL FILE=Textures\G_MenuL.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuR FILE=Textures\G_MenuR.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuBL FILE=Textures\G_MenuBL.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuB FILE=Textures\G_MenuB.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuBR FILE=Textures\G_MenuBR.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuHL FILE=Textures\G_MenuHL.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuHM FILE=Textures\G_MenuHM.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BMenuHR FILE=Textures\G_MenuHR.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=MenuLine FILE=Textures\G_MenuLine.bmp GROUP="Icons" MIPS=OFF
 
-#exec TEXTURE IMPORT NAME=BMenuArea FILE=Textures\MenuArea.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuTL FILE=Textures\MenuTL.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuT FILE=Textures\MenuT.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuTR FILE=Textures\MenuTR.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuL FILE=Textures\MenuL.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuR FILE=Textures\MenuR.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuBL FILE=Textures\MenuBL.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuB FILE=Textures\MenuB.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuBR FILE=Textures\MenuBR.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuHL FILE=Textures\MenuHL.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuHM FILE=Textures\MenuHM.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BMenuHR FILE=Textures\MenuHR.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=MenuLine FILE=Textures\MenuLine.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarL FILE=Textures\G_BarL.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarTile FILE=Textures\G_BarTile.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarMax FILE=Textures\G_BarMax.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarWin FILE=Textures\G_BarWin.bmp GROUP="Icons" MIPS=OFF
 
-#exec TEXTURE IMPORT NAME=BarL FILE=Textures\BarL.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BarTile FILE=Textures\BarTile.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BarMax FILE=Textures\BarMax.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BarWin FILE=Textures\BarWin.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarInL FILE=Textures\G_BarInL.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarInR FILE=Textures\G_BarInR.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarInM FILE=Textures\G_BarInM.bmp GROUP="Icons" MIPS=OFF
 
-#exec TEXTURE IMPORT NAME=BarInL FILE=Textures\BarInL.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BarInR FILE=Textures\BarInR.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BarInM FILE=Textures\BarInM.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarOutL FILE=Textures\G_BarOutL.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarOutR FILE=Textures\G_BarOutR.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=BarOutM FILE=Textures\G_BarOutM.bmp GROUP="Icons" MIPS=OFF
 
-#exec TEXTURE IMPORT NAME=BarOutL FILE=Textures\BarOutL.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BarOutR FILE=Textures\BarOutR.bmp GROUP="Icons" MIPS=OFF
-#exec TEXTURE IMPORT NAME=BarOutM FILE=Textures\BarOutM.bmp GROUP="Icons" MIPS=OFF
+#exec TEXTURE IMPORT NAME=MenuTickHiRes FILE=Textures\MenuTickHiRes.pcx GROUP="Icons" MIPS=OFF FLAGS=2
 
 #exec AUDIO IMPORT FILE="Sounds\bigselect.wav" NAME=BigSelect
 #exec AUDIO IMPORT FILE="Sounds\littleselect.wav" NAME=LittleSelect
 #exec AUDIO IMPORT FILE="Sounds\windowopen.wav" NAME=WindowOpen
 #exec AUDIO IMPORT FILE="Sounds\windowclose.wav" NAME=WindowClose
+
+var() Texture	SmallButton;
 
 var() Region	SBUpUp;
 var() Region	SBUpDown;
@@ -73,9 +80,25 @@ var() Region	CloseBoxDown;
 var() int		CloseBoxOffsetX;
 var() int		CloseBoxOffsetY;
 
+var() Region    ChkCheckedUp;
+
 
 const SIZEBORDER = 3;
 const BRSIZEBORDER = 15;
+
+function Region ScaleRegion(Region InRegion, float Scale)
+{
+	local Region OutRegion;
+	
+	if (Scale == 1.0)
+		return InRegion;
+	
+	OutRegion.X = InRegion.X * Scale;
+	OutRegion.Y = InRegion.Y * Scale;
+	OutRegion.W = InRegion.W * Scale;
+	OutRegion.H = InRegion.H * Scale;
+	return OutRegion;
+}
 
 /* Framed Window Drawing Functions */
 function FW_DrawWindowFrame(UWindowFramedWindow W, Canvas C)
@@ -174,7 +197,7 @@ function FW_DrawWindowFrame(UWindowFramedWindow W, Canvas C)
 		C.DrawColor.g = 0;
 		C.DrawColor.b = 0;
 
-		W.ClipTextWidth(C, 6, W.WinHeight - 13, W.StatusBarText, W.WinWidth - 22);
+		W.ClipTextWidth(C, 6, W.WinHeight - 15, W.StatusBarText, W.WinWidth - 22);
 
 		C.DrawColor.r = 255;
 		C.DrawColor.g = 255;
@@ -185,8 +208,9 @@ function FW_DrawWindowFrame(UWindowFramedWindow W, Canvas C)
 function FW_SetupFrameButtons(UWindowFramedWindow W, Canvas C)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.CloseBox.WinLeft = W.WinWidth - CloseBoxOffsetX - CloseBoxUp.W;
 	W.CloseBox.WinTop = CloseBoxOffsetY;
@@ -199,10 +223,11 @@ function FW_SetupFrameButtons(UWindowFramedWindow W, Canvas C)
 	W.CloseBox.OverTexture = T;
 	W.CloseBox.DisabledTexture = T;
 
-	W.CloseBox.UpRegion = CloseBoxUp;
-	W.CloseBox.DownRegion = CloseBoxDown;
-	W.CloseBox.OverRegion = CloseBoxUp;
-	W.CloseBox.DisabledRegion = CloseBoxUp;
+	W.CloseBox.UpRegion = ScaleRegion(CloseBoxUp, Scale);
+	W.CloseBox.DownRegion = ScaleRegion(CloseBoxDown, Scale);
+	W.CloseBox.OverRegion = ScaleRegion(CloseBoxUp, Scale);
+	W.CloseBox.DisabledRegion = ScaleRegion(CloseBoxUp, Scale);
+	W.CloseBox.RegionScale = 1 / Scale;
 }
 
 function Region FW_GetClientArea(UWindowFramedWindow W)
@@ -376,7 +401,7 @@ function ComboList_DrawItem(UWindowComboList Combo, Canvas C, float X, float Y, 
 		C.DrawColor.B = 0;
 	}
 
-	Combo.ClipText(C, X + Combo.TextBorder + 2, Y + 3, Text);
+	Combo.ClipText(C, X + Combo.TextBorder + 2, Y + 1.5, Text);
 }
 
 function Checkbox_SetupSizes(UWindowCheckbox W, Canvas C)
@@ -407,10 +432,16 @@ function Checkbox_SetupSizes(UWindowCheckbox W, Canvas C)
 
 	if(W.bChecked) 
 	{
-		W.UpTexture = Texture'ChkChecked';
-		W.DownTexture = Texture'ChkChecked';
-		W.OverTexture = Texture'ChkChecked';
-		W.DisabledTexture = Texture'ChkCheckedDisabled';
+		W.UpTexture = Texture'ChkCheckedHiRes';
+		W.DownTexture = Texture'ChkCheckedHiRes';
+		W.OverTexture = Texture'ChkCheckedHiRes';
+		W.DisabledTexture = Texture'ChkCheckedDisabledHiRes';
+		W.bUseRegion = true;
+		W.UpRegion = ChkCheckedUp;
+		W.DownRegion = ChkCheckedUp;
+		W.OverRegion = ChkCheckedUp;
+		W.DisabledRegion = ChkCheckedUp;
+		W.RegionScale = 0.25;
 	}
 	else 
 	{
@@ -418,14 +449,16 @@ function Checkbox_SetupSizes(UWindowCheckbox W, Canvas C)
 		W.DownTexture = Texture'ChkUnchecked';
 		W.OverTexture = Texture'ChkUnchecked';
 		W.DisabledTexture = Texture'ChkUncheckedDisabled';
+		W.bUseRegion = false;
 	}
 }
 
 function Combo_GetButtonBitmaps(UWindowComboButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 	
 	W.bUseRegion = True;
 
@@ -434,17 +467,19 @@ function Combo_GetButtonBitmaps(UWindowComboButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = ComboBtnUp;
-	W.DownRegion = ComboBtnDown;
-	W.OverRegion = ComboBtnUp;
-	W.DisabledRegion = ComboBtnDisabled;
+	W.UpRegion = ScaleRegion(ComboBtnUp, Scale);
+	W.DownRegion = ScaleRegion(ComboBtnDown, Scale);
+	W.OverRegion = ScaleRegion(ComboBtnUp, Scale);
+	W.DisabledRegion = ScaleRegion(ComboBtnDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 function Combo_SetupLeftButton(UWindowComboLeftButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.bUseRegion = True;
 
@@ -453,17 +488,19 @@ function Combo_SetupLeftButton(UWindowComboLeftButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBLeftUp;
-	W.DownRegion = SBLeftDown;
-	W.OverRegion = SBLeftUp;
-	W.DisabledRegion = SBLeftDisabled;
+	W.UpRegion = ScaleRegion(SBLeftUp, Scale);
+	W.DownRegion = ScaleRegion(SBLeftDown, Scale);
+	W.OverRegion = ScaleRegion(SBLeftUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBLeftDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 function Combo_SetupRightButton(UWindowComboRightButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.bUseRegion = True;
 
@@ -472,10 +509,11 @@ function Combo_SetupRightButton(UWindowComboRightButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBRightUp;
-	W.DownRegion = SBRightDown;
-	W.OverRegion = SBRightUp;
-	W.DisabledRegion = SBRightDisabled;
+	W.UpRegion = ScaleRegion(SBRightUp, Scale);
+	W.DownRegion = ScaleRegion(SBRightDown, Scale);
+	W.OverRegion = ScaleRegion(SBRightUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBRightDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 
@@ -552,75 +590,56 @@ function ControlFrame_Draw(UWindowControlFrame W, Canvas C)
 	W.DrawMiscBevel(C, 0, 0, W.WinWidth, W.WinHeight, Misc, EditBoxBevel);
 }
 
-function Tab_DrawTab(UWindowTabControlTabArea Tab, Canvas C, bool bActiveTab, bool bLeftmostTab, float X, float Y, float W, float H, string Text, bool bShowText)
+function Tab_DrawTab( UWindowTabControlTabArea Tab, Canvas C, bool bActiveTab, bool bLeftmostTab, float X, float Y, float W, float H, string Text, bool bShowText)
 {
-	local Region R;
-	local Texture T;
-	local float TW, TH;
+	local Region TabL, TabM, TabR;
+	local Texture Tex;
+	local float TW, TH, S;
+	local int FontMode;
 
 	C.DrawColor.R = 255;
 	C.DrawColor.G = 255;
 	C.DrawColor.B = 255;
 
-	T = Tab.GetLookAndFeelTexture();
-	
-	if(bActiveTab)
+	S = float(Max(Tab.Root.GUIScale,1)) / Tab.Root.GUIScale;
+	Tex = Tab.GetLookAndFeelTexture();
+	if ( bActiveTab )
 	{
-		R = TabSelectedL;
-		Tab.DrawStretchedTextureSegment( C, X, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
-
-		R = TabSelectedM;
-		Tab.DrawStretchedTextureSegment( C, X+TabSelectedL.W, Y, 
-										W - TabSelectedL.W
-										- TabSelectedR.W,
-										R.H, R.X, R.Y, R.W, R.H, T );
-
-		R = TabSelectedR;
-		Tab.DrawStretchedTextureSegment( C, X + W - R.W, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
-
-		C.Font = Tab.Root.Fonts[Tab.F_Bold];
-		C.DrawColor.R = 0;
-		C.DrawColor.G = 0;
-		C.DrawColor.B = 0;
-
-		if(bShowText)
-		{
-			Tab.TextSize(C, Text, TW, TH);
-			Tab.ClipText(C, X + (W-TW)/2, Y + 3, Text, True);
-		}
+		TabL = TabSelectedL;
+		TabM = TabSelectedM;
+		TabR = TabSelectedR;
+		FontMode = F_Bold; //1
 	}
 	else
 	{
-		R = TabUnselectedL;
-		Tab.DrawStretchedTextureSegment( C, X, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
+		TabL = TabUnselectedL;
+		TabM = TabUnselectedM;
+		TabR = TabUnselectedR;
+		FontMode = F_Normal; //0
+	}
 
-		R = TabUnselectedM;
-		Tab.DrawStretchedTextureSegment( C, X+TabUnselectedL.W, Y, 
-										W - TabUnselectedL.W
-										- TabUnselectedR.W,
-										R.H, R.X, R.Y, R.W, R.H, T );
+	Tab.DrawStretchedTextureSegment( C, X             , Y, (TabL.W)*S         , TabL.H, TabL.X, TabL.Y, TabL.W, TabL.H, Tex );
+	Tab.DrawStretchedTextureSegment( C, X+(TabL.W)*S  , Y, W-(TabL.W+TabR.W)*S, TabM.H, TabM.X, TabM.Y, TabM.W, TabM.H, Tex );
+	Tab.DrawStretchedTextureSegment( C, X+W-(TabR.W)*S, Y, (TabR.W)*S         , TabR.H, TabR.X, TabR.Y, TabR.W, TabR.H, Tex );
 
-		R = TabUnselectedR;
-		Tab.DrawStretchedTextureSegment( C, X + W - R.W, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
+	C.Font = Tab.Root.Fonts[FontMode];
+	C.DrawColor.R = 0;
+	C.DrawColor.G = 0;
+	C.DrawColor.B = 0;
 
-		C.Font = Tab.Root.Fonts[Tab.F_Normal];
-		C.DrawColor.R = 0;
-		C.DrawColor.G = 0;
-		C.DrawColor.B = 0;
-
-		if(bShowText)
-		{
-			Tab.TextSize(C, Text, TW, TH);
-			Tab.ClipText(C, X + (W-TW)/2, Y + 4, Text, True);
-		}
+	if( bShowText )
+	{
+		Tab.TextSize(C, Text, TW, TH);
+		Tab.ClipText(C, X + (W-TW)/2, Y + 3-FontMode, Text, True); //Bold text starts 1 more pixel to the left
 	}
 }
 
 function SB_SetupUpButton(UWindowSBUpButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.bUseRegion = True;
 
@@ -629,17 +648,19 @@ function SB_SetupUpButton(UWindowSBUpButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBUpUp;
-	W.DownRegion = SBUpDown;
-	W.OverRegion = SBUpUp;
-	W.DisabledRegion = SBUpDisabled;
+	W.UpRegion = ScaleRegion(SBUpUp, Scale);
+	W.DownRegion = ScaleRegion(SBUpDown, Scale);
+	W.OverRegion = ScaleRegion(SBUpUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBUpDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 function SB_SetupDownButton(UWindowSBDownButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.bUseRegion = True;
 
@@ -648,10 +669,11 @@ function SB_SetupDownButton(UWindowSBDownButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBDownUp;
-	W.DownRegion = SBDownDown;
-	W.OverRegion = SBDownUp;
-	W.DisabledRegion = SBDownDisabled;
+	W.UpRegion = ScaleRegion(SBDownUp, Scale);
+	W.DownRegion = ScaleRegion(SBDownDown, Scale);
+	W.OverRegion = ScaleRegion(SBDownUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBDownDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 
@@ -659,8 +681,9 @@ function SB_SetupDownButton(UWindowSBDownButton W)
 function SB_SetupLeftButton(UWindowSBLeftButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.bUseRegion = True;
 
@@ -669,17 +692,19 @@ function SB_SetupLeftButton(UWindowSBLeftButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBLeftUp;
-	W.DownRegion = SBLeftDown;
-	W.OverRegion = SBLeftUp;
-	W.DisabledRegion = SBLeftDisabled;
+	W.UpRegion = ScaleRegion(SBLeftUp, Scale);
+	W.DownRegion = ScaleRegion(SBLeftDown, Scale);
+	W.OverRegion = ScaleRegion(SBLeftUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBLeftDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 function SB_SetupRightButton(UWindowSBRightButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.bUseRegion = True;
 
@@ -688,10 +713,11 @@ function SB_SetupRightButton(UWindowSBRightButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBRightUp;
-	W.DownRegion = SBRightDown;
-	W.OverRegion = SBRightUp;
-	W.DisabledRegion = SBRightDisabled;
+	W.UpRegion = ScaleRegion(SBRightUp, Scale);
+	W.DownRegion = ScaleRegion(SBRightDown, Scale);
+	W.OverRegion = ScaleRegion(SBRightUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBRightDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 function SB_VDraw(UWindowVScrollbar W, Canvas C)
@@ -729,8 +755,9 @@ function SB_HDraw(UWindowHScrollbar W, Canvas C)
 function Tab_SetupLeftButton(UWindowTabControlLeftButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 
 	W.WinWidth = Size_ScrollbarButtonHeight;
@@ -745,17 +772,19 @@ function Tab_SetupLeftButton(UWindowTabControlLeftButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBLeftUp;
-	W.DownRegion = SBLeftDown;
-	W.OverRegion = SBLeftUp;
-	W.DisabledRegion = SBLeftDisabled;
+	W.UpRegion = ScaleRegion(SBLeftUp, Scale);
+	W.DownRegion = ScaleRegion(SBLeftDown, Scale);
+	W.OverRegion = ScaleRegion(SBLeftUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBLeftDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 function Tab_SetupRightButton(UWindowTabControlRightButton W)
 {
 	local Texture T;
+	local float Scale;
 
-	T = W.GetLookAndFeelTexture();
+	T = W.GetLookAndFeelTextureEx(Scale);
 
 	W.WinWidth = Size_ScrollbarButtonHeight;
 	W.WinHeight = Size_ScrollbarWidth;
@@ -769,10 +798,11 @@ function Tab_SetupRightButton(UWindowTabControlRightButton W)
 	W.OverTexture = T;
 	W.DisabledTexture = T;
 
-	W.UpRegion = SBRightUp;
-	W.DownRegion = SBRightDown;
-	W.OverRegion = SBRightUp;
-	W.DisabledRegion = SBRightDisabled;
+	W.UpRegion = ScaleRegion(SBRightUp, Scale);
+	W.DownRegion = ScaleRegion(SBRightDown, Scale);
+	W.OverRegion = ScaleRegion(SBRightUp, Scale);
+	W.DisabledRegion = ScaleRegion(SBRightDisabled, Scale);
+	W.RegionScale = 1 / Scale;
 }
 
 function Tab_SetTabPageSize(UWindowPageControl W, UWindowPageWindow P)
@@ -826,7 +856,7 @@ function Menu_DrawMenuBarItem(UWindowMenuBar B, UWindowMenuBarItem I, float X, f
 	C.DrawColor.G = 0;
 	C.DrawColor.B = 0;
 
-	B.ClipText(C, X + B.SPACING / 2, 3, I.Caption, True);
+	B.ClipText(C, X + B.SPACING / 2, 1.5, I.Caption, True);
 }
 
 function Menu_DrawPulldownMenuBackground(UWindowPulldownMenu W, Canvas C)
@@ -886,29 +916,50 @@ function Menu_DrawPulldownMenuItem(UWindowPulldownMenu M, UWindowPulldownMenuIte
 
 	// DrawColor will render the tick black white or gray.
 	if(Item.bChecked)
-		M.DrawClippedTexture(C, X + 1, Y + 3, Texture'MenuTick');
-
+		M.DrawStretchedTextureSegment( C, X + 1, Y + 3, 8, 8, 0, 0, 64, 64, Texture'MenuTickHiRes');
+		
 	if(Item.SubMenu != None)
 		M.DrawClippedTexture(C, X + W - 9, Y + 3, Texture'MenuSubArrow');
 
-	M.ClipText(C, X + M.TextBorder + 2, Y + 3, Item.Caption, True);	
+	M.ClipText(C, X + M.TextBorder + 2, Y + 1.5, Item.Caption, True);	
 }
 
-function Button_DrawSmallButton(UWindowSmallButton B, Canvas C)
+function Button_DrawSmallButton( UWindowSmallButton B, Canvas C)
 {
-	local float Y;
+	local float Y, H, W;
+	local float S, SB;
 
-	if(B.bDisabled)
-		Y = 34;
-	else
-	if(B.bMouseDown)
-		Y = 17;
-	else
-		Y = 0;
+	if      ( B.bDisabled )  Y = 34;
+	else if ( B.bMouseDown ) Y = 17;
+	else                     Y = 0;
 
-	B.DrawStretchedTextureSegment(C, 0, 0, 3, 16, 0, Y, 3, 16, Texture'GoldButton');
-	B.DrawStretchedTextureSegment(C, B.WinWidth - 3, 0, 3, 16, 45, Y, 3, 16, Texture'GoldButton');
-	B.DrawStretchedTextureSegment(C, 3, 0, B.WinWidth-6, 16, 3, Y, 42, 16, Texture'GoldButton');
+	S = float(Max(B.Root.GUIScale,1)) / B.Root.GUIScale;
+
+	//Scale does not contain fractions, 3 drawcalls are enough
+	if ( S == 1 )
+	{
+		W = B.WinWidth;
+		H = B.WinHeight;
+		B.DrawStretchedTextureSegment(C, 0  , 0, 3  , H, 0 , Y, 3 , 16, SmallButton); //L
+		B.DrawStretchedTextureSegment(C, 3  , 0, W-6, H, 3 , Y, 42, 16, SmallButton); //C
+		B.DrawStretchedTextureSegment(C, W-3, 0, 3  , H, 45, Y, 3 , 16, SmallButton); //R
+	}
+	//Button needs to be rendered with unstretched borders
+	else
+	{
+		SB = 3.0 * S;
+		W = B.WinWidth;
+		H = B.WinHeight;
+		B.DrawStretchedTextureSegment(C, 0      , 0   , SB    , SB    , 0 , Y   , 3 , 3  , SmallButton); //TL
+		B.DrawStretchedTextureSegment(C, 0      , SB  , SB    , H-SB*2, 0 , Y+3 , 3 , 10 , SmallButton); //CL
+		B.DrawStretchedTextureSegment(C, 0      , H-SB, SB    , SB    , 0 , Y+13, 3 , 3  , SmallButton); //BL
+		B.DrawStretchedTextureSegment(C, SB     , 0   , W-SB*2, SB    , 3 , Y   , 42, 3  , SmallButton); //T
+		B.DrawStretchedTextureSegment(C, SB     , SB  , W-SB*2, H-SB*2, 3 , Y+3 , 42, 10 , SmallButton); //C
+		B.DrawStretchedTextureSegment(C, SB     , H-SB, W-SB*2, SB    , 3 , Y+13, 42, 3  , SmallButton); //B
+		B.DrawStretchedTextureSegment(C, W-SB   , 0   , SB    , SB    , 45, Y   , 3 , 3  , SmallButton); //TR
+		B.DrawStretchedTextureSegment(C, W-SB   , SB  , SB    , H-SB*2, 45, Y+3 , 3 , 10 , SmallButton); //CR
+		B.DrawStretchedTextureSegment(C, W-SB   , H-SB, SB    , SB    , 45, Y+13, 3 , 3  , SmallButton); //BR
+	}
 }
 
 simulated function PlayMenuSound(UWindowWindow W, MenuSound S)
@@ -916,122 +967,131 @@ simulated function PlayMenuSound(UWindowWindow W, MenuSound S)
 	switch(S)
 	{
 	case MS_MenuPullDown:
-		W.GetPlayerOwner().PlaySound(sound'WindowOpen');
+		W.GetPlayerOwner().PlaySound(sound'WindowOpen', SLOT_Interface);
 		break;
 	case MS_MenuCloseUp:
 		break;
 	case MS_MenuItem:
-		W.GetPlayerOwner().PlaySound(sound'LittleSelect');
+		W.GetPlayerOwner().PlaySound(sound'LittleSelect', SLOT_Interface);
 		break;
 	case MS_WindowOpen:
-		W.GetPlayerOwner().PlaySound(sound'BigSelect');
+		W.GetPlayerOwner().PlaySound(sound'BigSelect', SLOT_Interface);
 		break;
 	case MS_WindowClose:
 		break;
 	case MS_ChangeTab:
-		W.GetPlayerOwner().PlaySound(sound'LittleSelect');
+		W.GetPlayerOwner().PlaySound(sound'LittleSelect', SLOT_Interface);
 		break;
-		
 	}
 }
 
 defaultproperties
 {
-     SBUpUp=(X=20,Y=16,W=12,H=10)
-     SBUpDown=(X=32,Y=16,W=12,H=10)
-     SBUpDisabled=(X=44,Y=16,W=12,H=10)
-     SBDownUp=(X=20,Y=26,W=12,H=10)
-     SBDownDown=(X=32,Y=26,W=12,H=10)
-     SBDownDisabled=(X=44,Y=26,W=12,H=10)
-     SBLeftUp=(X=20,Y=48,W=10,H=12)
-     SBLeftDown=(X=30,Y=48,W=10,H=12)
-     SBLeftDisabled=(X=40,Y=48,W=10,H=12)
-     SBRightUp=(X=20,Y=36,W=10,H=12)
-     SBRightDown=(X=30,Y=36,W=10,H=12)
-     SBRightDisabled=(X=40,Y=36,W=10,H=12)
-     SBBackground=(X=4,Y=79,W=1,H=1)
-     FrameSBL=(Y=112,W=2,H=16)
-     FrameSB=(X=32,Y=112,W=1,H=16)
-     FrameSBR=(X=112,Y=112,W=16,H=16)
-     CloseBoxUp=(X=4,Y=32,W=11,H=11)
-     CloseBoxDown=(X=4,Y=43,W=11,H=11)
-     CloseBoxOffsetX=2
-     CloseBoxOffsetY=2
-     Active=Texture'UMenu.Icons.GoldActiveFrame'
-     Inactive=Texture'UMenu.Icons.GoldInactiveFrame'
-     ActiveS=Texture'UMenu.Icons.GoldActiveFrameS'
-     InactiveS=Texture'UMenu.Icons.GoldInactiveFrameS'
-     Misc=Texture'UWindow.Icons.Misc'
-     FrameTL=(W=2,H=16)
-     FrameT=(X=32,W=1,H=16)
-     FrameTR=(X=126,W=2,H=16)
-     FrameL=(Y=32,W=2,H=1)
-     FrameR=(X=126,Y=32,W=2,H=1)
-     FrameBL=(Y=125,W=2,H=3)
-     FrameB=(X=32,Y=125,W=1,H=3)
-     FrameBR=(X=126,Y=125,W=2,H=3)
-     FrameInactiveTitleColor=(R=255,G=255,B=255)
-     HeadingInActiveTitleColor=(R=255,G=255,B=255)
-     FrameTitleX=6
-     FrameTitleY=2
-     BevelUpTL=(X=4,Y=16,W=2,H=2)
-     BevelUpT=(X=10,Y=16,W=1,H=2)
-     BevelUpTR=(X=18,Y=16,W=2,H=2)
-     BevelUpL=(X=4,Y=20,W=2,H=1)
-     BevelUpR=(X=18,Y=20,W=2,H=1)
-     BevelUpBL=(X=4,Y=30,W=2,H=2)
-     BevelUpB=(X=10,Y=30,W=1,H=2)
-     BevelUpBR=(X=18,Y=30,W=2,H=2)
-     BevelUpArea=(X=8,Y=20,W=1,H=1)
-     MiscBevelTL(0)=(Y=17,W=3,H=3)
-     MiscBevelTL(1)=(W=3,H=3)
-     MiscBevelTL(2)=(Y=33,W=2,H=2)
-     MiscBevelT(0)=(X=3,Y=17,W=116,H=3)
-     MiscBevelT(1)=(X=3,W=116,H=3)
-     MiscBevelT(2)=(X=2,Y=33,W=1,H=2)
-     MiscBevelTR(0)=(X=119,Y=17,W=3,H=3)
-     MiscBevelTR(1)=(X=119,W=3,H=3)
-     MiscBevelTR(2)=(X=11,Y=33,W=2,H=2)
-     MiscBevelL(0)=(Y=20,W=3,H=10)
-     MiscBevelL(1)=(Y=3,W=3,H=10)
-     MiscBevelL(2)=(Y=36,W=2,H=1)
-     MiscBevelR(0)=(X=119,Y=20,W=3,H=10)
-     MiscBevelR(1)=(X=119,Y=3,W=3,H=10)
-     MiscBevelR(2)=(X=11,Y=36,W=2,H=1)
-     MiscBevelBL(0)=(Y=30,W=3,H=3)
-     MiscBevelBL(1)=(Y=14,W=3,H=3)
-     MiscBevelBL(2)=(Y=44,W=2,H=2)
-     MiscBevelB(0)=(X=3,Y=30,W=116,H=3)
-     MiscBevelB(1)=(X=3,Y=14,W=116,H=3)
-     MiscBevelB(2)=(X=2,Y=44,W=1,H=2)
-     MiscBevelBR(0)=(X=119,Y=30,W=3,H=3)
-     MiscBevelBR(1)=(X=119,Y=14,W=3,H=3)
-     MiscBevelBR(2)=(X=11,Y=44,W=2,H=2)
-     MiscBevelArea(0)=(X=3,Y=20,W=116,H=10)
-     MiscBevelArea(1)=(X=3,Y=3,W=116,H=10)
-     MiscBevelArea(2)=(X=2,Y=35,W=9,H=9)
-     ComboBtnUp=(X=20,Y=60,W=12,H=12)
-     ComboBtnDown=(X=32,Y=60,W=12,H=12)
-     ComboBtnDisabled=(X=44,Y=60,W=12,H=12)
-     ColumnHeadingHeight=13
-     HLine=(X=5,Y=78,W=1,H=2)
-     EditBoxBevel=2
-     TabSelectedL=(X=4,Y=80,W=3,H=17)
-     TabSelectedM=(X=7,Y=80,W=1,H=17)
-     TabSelectedR=(X=55,Y=80,W=2,H=17)
-     TabUnselectedL=(X=57,Y=80,W=3,H=15)
-     TabUnselectedM=(X=60,Y=80,W=1,H=15)
-     TabUnselectedR=(X=109,Y=80,W=2,H=15)
-     TabBackground=(X=4,Y=79,W=1,H=1)
-     Size_ScrollbarWidth=12.000000
-     Size_ScrollbarButtonHeight=10.000000
-     Size_MinScrollbarHeight=6.000000
-     Size_TabAreaHeight=15.000000
-     Size_TabAreaOverhangHeight=2.000000
-     Size_TabSpacing=20.000000
-     Size_TabXOffset=1.000000
-     Pulldown_ItemHeight=16.000000
-     Pulldown_VBorder=4.000000
-     Pulldown_HBorder=3.000000
-     Pulldown_TextBorder=9.000000
+      SmallButton=Texture'UMenu.Icons.GoldButton'
+      SBUpUp=(X=20,Y=16,W=12,H=10)
+      SBUpDown=(X=32,Y=16,W=12,H=10)
+      SBUpDisabled=(X=44,Y=16,W=12,H=10)
+      SBDownUp=(X=20,Y=26,W=12,H=10)
+      SBDownDown=(X=32,Y=26,W=12,H=10)
+      SBDownDisabled=(X=44,Y=26,W=12,H=10)
+      SBLeftUp=(X=20,Y=48,W=10,H=12)
+      SBLeftDown=(X=30,Y=48,W=10,H=12)
+      SBLeftDisabled=(X=40,Y=48,W=10,H=12)
+      SBRightUp=(X=20,Y=36,W=10,H=12)
+      SBRightDown=(X=30,Y=36,W=10,H=12)
+      SBRightDisabled=(X=40,Y=36,W=10,H=12)
+      SBBackground=(X=4,Y=79,W=1,H=1)
+      FrameSBL=(X=0,Y=112,W=2,H=16)
+      FrameSB=(X=32,Y=112,W=1,H=16)
+      FrameSBR=(X=112,Y=112,W=16,H=16)
+      CloseBoxUp=(X=4,Y=32,W=11,H=11)
+      CloseBoxDown=(X=4,Y=43,W=11,H=11)
+      CloseBoxOffsetX=2
+      CloseBoxOffsetY=2
+      ChkCheckedUp=(X=0,Y=0,W=64,H=64)
+      Active=Texture'UMenu.Icons.GoldActiveFrame'
+      Inactive=Texture'UMenu.Icons.GoldInactiveFrame'
+      ActiveS=Texture'UMenu.Icons.GoldActiveFrameS'
+      InactiveS=Texture'UMenu.Icons.GoldInactiveFrameS'
+      ActiveHiRes=Texture'UMenu.Icons.GoldActiveFrameHiRes'
+      InactiveHiRes=Texture'UMenu.Icons.GoldInactiveFrameHiRes'
+      ActiveSHiRes=Texture'UMenu.Icons.GoldActiveFrameHiRes'
+      InactiveSHiRes=Texture'UMenu.Icons.GoldInactiveFrameHiRes'
+      ActiveHiResScale=8.000000
+      InactiveHiResScale=8.000000
+      ActiveSHiResScale=8.000000
+      InactiveSHiResScale=8.000000
+      Misc=Texture'UWindow.Icons.Misc'
+      FrameTL=(W=2,H=16)
+      FrameT=(X=32,W=1,H=16)
+      FrameTR=(X=126,W=2,H=16)
+      FrameL=(Y=32,W=2,H=1)
+      FrameR=(X=126,Y=32,W=2,H=1)
+      FrameBL=(Y=125,W=2,H=3)
+      FrameB=(X=32,Y=125,W=1,H=3)
+      FrameBR=(X=126,Y=125,W=2,H=3)
+      FrameInactiveTitleColor=(R=255,G=255,B=255)
+      HeadingInActiveTitleColor=(R=255,G=255,B=255)
+      FrameTitleX=6
+      FrameTitleY=2
+      BevelUpTL=(X=4,Y=16,W=2,H=2)
+      BevelUpT=(X=10,Y=16,W=1,H=2)
+      BevelUpTR=(X=18,Y=16,W=2,H=2)
+      BevelUpL=(X=4,Y=20,W=2,H=1)
+      BevelUpR=(X=18,Y=20,W=2,H=1)
+      BevelUpBL=(X=4,Y=30,W=2,H=2)
+      BevelUpB=(X=10,Y=30,W=1,H=2)
+      BevelUpBR=(X=18,Y=30,W=2,H=2)
+      BevelUpArea=(X=8,Y=20,W=1,H=1)
+      MiscBevelTL(0)=(Y=17,W=3,H=3)
+      MiscBevelTL(1)=(W=3,H=3)
+      MiscBevelTL(2)=(Y=33,W=2,H=2)
+      MiscBevelT(0)=(X=3,Y=17,W=116,H=3)
+      MiscBevelT(1)=(X=3,W=116,H=3)
+      MiscBevelT(2)=(X=2,Y=33,W=1,H=2)
+      MiscBevelTR(0)=(X=119,Y=17,W=3,H=3)
+      MiscBevelTR(1)=(X=119,W=3,H=3)
+      MiscBevelTR(2)=(X=11,Y=33,W=2,H=2)
+      MiscBevelL(0)=(Y=20,W=3,H=10)
+      MiscBevelL(1)=(Y=3,W=3,H=10)
+      MiscBevelL(2)=(Y=36,W=2,H=1)
+      MiscBevelR(0)=(X=119,Y=20,W=3,H=10)
+      MiscBevelR(1)=(X=119,Y=3,W=3,H=10)
+      MiscBevelR(2)=(X=11,Y=36,W=2,H=1)
+      MiscBevelBL(0)=(Y=30,W=3,H=3)
+      MiscBevelBL(1)=(Y=14,W=3,H=3)
+      MiscBevelBL(2)=(Y=44,W=2,H=2)
+      MiscBevelB(0)=(X=3,Y=30,W=116,H=3)
+      MiscBevelB(1)=(X=3,Y=14,W=116,H=3)
+      MiscBevelB(2)=(X=2,Y=44,W=1,H=2)
+      MiscBevelBR(0)=(X=119,Y=30,W=3,H=3)
+      MiscBevelBR(1)=(X=119,Y=14,W=3,H=3)
+      MiscBevelBR(2)=(X=11,Y=44,W=2,H=2)
+      MiscBevelArea(0)=(X=3,Y=20,W=116,H=10)
+      MiscBevelArea(1)=(X=3,Y=3,W=116,H=10)
+      MiscBevelArea(2)=(X=2,Y=35,W=9,H=9)
+      ComboBtnUp=(X=20,Y=60,W=12,H=12)
+      ComboBtnDown=(X=32,Y=60,W=12,H=12)
+      ComboBtnDisabled=(X=44,Y=60,W=12,H=12)
+      ColumnHeadingHeight=16
+      HLine=(X=5,Y=78,W=1,H=2)
+      EditBoxBevel=2
+      TabSelectedL=(X=4,Y=80,W=3,H=17)
+      TabSelectedM=(X=7,Y=80,W=1,H=17)
+      TabSelectedR=(X=55,Y=80,W=2,H=17)
+      TabUnselectedL=(X=57,Y=80,W=3,H=15)
+      TabUnselectedM=(X=60,Y=80,W=1,H=15)
+      TabUnselectedR=(X=109,Y=80,W=2,H=15)
+      TabBackground=(X=4,Y=79,W=1,H=1)
+      Size_ScrollbarWidth=12.000000
+      Size_ScrollbarButtonHeight=10.000000
+      Size_MinScrollbarHeight=6.000000
+      Size_TabAreaHeight=15.000000
+      Size_TabAreaOverhangHeight=2.000000
+      Size_TabSpacing=20.000000
+      Size_TabXOffset=1.000000
+      Pulldown_ItemHeight=16.000000
+      Pulldown_VBorder=4.000000
+      Pulldown_HBorder=3.000000
+      Pulldown_TextBorder=9.000000
 }

@@ -65,6 +65,11 @@ var float	baseSize;
 
 defaultproperties
 {
-     Numthrows=1
-     bStatic=False
+      throwVect=(X=0.000000,Y=0.000000,Z=0.000000)
+      bRandomize=False
+      interval=0.000000
+      Numthrows=1
+      remainingThrows=0
+      baseSize=0.000000
+      bStatic=False
 }

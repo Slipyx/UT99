@@ -65,9 +65,9 @@ function Created()
 	StatsLabel.SetFont(F_Normal);
 	StatsLabel.Align = TA_Left;
 
-	StatsButton = UWindowSmallButton(CreateControl(class'UWindowSmallButton', CenterPos + CenterWidth - 48, ControlOffset, 48, 16));
-	StatsButton.SetText(StatsButtonText);
-	StatsButton.SetFont(F_Normal);
+//	StatsButton = UWindowSmallButton(CreateControl(class'UWindowSmallButton', CenterPos + CenterWidth - 48, ControlOffset, 48, 16));
+//	StatsButton.SetText(StatsButtonText);
+//	StatsButton.SetFont(F_Normal);
 }
 
 function LoadCurrent()
@@ -206,8 +206,8 @@ function BeforePaint(Canvas C, float X, float Y)
 	StatsLabel.SetSize(CenterWidth, 1);
 	StatsLabel.WinLeft = CenterPos;
 
-	StatsButton.AutoWidth(C);
-	StatsButton.WinLeft = CenterPos + CenterWidth - 48;
+//	StatsButton.AutoWidth(C);
+//	StatsButton.WinLeft = CenterPos + CenterWidth - 48;
 }
 
 function Notify(UWindowDialogControl C, byte E)
@@ -230,13 +230,6 @@ function Notify(UWindowDialogControl C, byte E)
 			break;*/
 		}
 		break;
-	case DE_Click:
-		switch(C)
-		{
-		case StatsButton:
-			StatsPressed();
-			break;
-		}
 		break;
 
 	}
@@ -244,7 +237,7 @@ function Notify(UWindowDialogControl C, byte E)
 
 function StatsPressed()
 {
-	Root.CreateWindow(class<UWindowWindow>(DynamicLoadObject("UTMenu.ngWorldSecretWindow", class'Class')), 100, 100, 200, 200, Root, True);
+//	Root.CreateWindow(class<UWindowWindow>(DynamicLoadObject("UTMenu.ngWorldSecretWindow", class'Class')), 100, 100, 200, 200, Root, True);
 }
 
 function SpectatorChanged()
@@ -307,10 +300,15 @@ function LoadClasses()
 
 defaultproperties
 {
-     VoicePackText="Voice"
-     VoicePackHelp="Choose a voice for your player's taunts and commands."
-     SpectatorText="Play as Spectator"
-     SpectatorHelp="Check this checkbox to watch the action in the game as a spectator."
-     StatsText="ngWorldStats Password:"
-     StatsButtonText="Change"
+      VoicePackCombo=None
+      VoicePackText="Voice"
+      VoicePackHelp="Choose a voice for your player's taunts and commands."
+      SpectatorCheck=None
+      SpectatorText="Play as Spectator"
+      SpectatorHelp="Check this checkbox to watch the action in the game as a spectator."
+      StatsLabel=None
+      StatsText=""
+      StatsButton=None
+      StatsButtonText=""
+      ClassChanging=False
 }

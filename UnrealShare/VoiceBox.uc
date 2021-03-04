@@ -90,28 +90,31 @@ state Playing
 
 defaultproperties
 {
-     BattleSounds(0)=Sound'UnrealShare.AutoMag.shot'
-     BattleSounds(1)=Sound'UnrealShare.flak.expl2'
-     BattleSounds(2)=Sound'UnrealShare.AutoMag.shot'
-     BattleSounds(3)=Sound'UnrealShare.AutoMag.shot'
-     BattleSounds(4)=Sound'UnrealShare.flak.Explode1'
-     BattleSounds(5)=Sound'UnrealShare.flak.expl2'
-     BattleSounds(6)=Sound'UnrealShare.flak.shot1'
-     BattleSounds(7)=Sound'UnrealShare.ASMD.TazerFire'
-     BattleSounds(8)=Sound'UnrealShare.Stinger.Ricochet'
-     BattleSounds(9)=Sound'UnrealShare.AutoMag.shot'
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You picked up the Voice Box"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'UnrealShare.VoiceBoxMesh'
-     Charge=100
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     Icon=Texture'UnrealShare.Icons.I_VoiceBox'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealShare.VoiceBoxMesh'
-     AmbientGlow=64
-     CollisionRadius=18.000000
-     CollisionHeight=8.000000
-     bCollideWorld=True
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      BattleSounds(0)=Sound'UnrealShare.AutoMag.shot'
+      BattleSounds(1)=Sound'UnrealShare.flak.expl2'
+      BattleSounds(2)=Sound'UnrealShare.AutoMag.shot'
+      BattleSounds(3)=Sound'UnrealShare.AutoMag.shot'
+      BattleSounds(4)=Sound'UnrealShare.flak.Explode1'
+      BattleSounds(5)=Sound'UnrealShare.flak.expl2'
+      BattleSounds(6)=Sound'UnrealShare.flak.shot1'
+      BattleSounds(7)=Sound'UnrealShare.ASMD.TazerFire'
+      BattleSounds(8)=Sound'UnrealShare.Stinger.Ricochet'
+      BattleSounds(9)=Sound'UnrealShare.AutoMag.shot'
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You picked up the Voice Box"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'UnrealShare.VoiceBoxMesh'
+      Charge=100
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      Icon=Texture'UnrealShare.Icons.I_VoiceBox'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealShare.VoiceBoxMesh'
+      AmbientGlow=64
+      CollisionRadius=18.000000
+      CollisionHeight=8.000000
+      bCollideWorld=True
 }

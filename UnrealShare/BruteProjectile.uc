@@ -43,7 +43,10 @@ auto state Flying
 	
 	function BlowUp(vector HitLocation)
 	{
-		HurtRadius(damage, 50 + instigator.skill * 45, 'exploded', MomentumTransfer, HitLocation);
+		if (Instigator != none)
+		    HurtRadius(damage, 50 + instigator.skill * 45, 'exploded', MomentumTransfer, HitLocation);
+		else
+			HurtRadius(damage, 50, 'exploded', MomentumTransfer, HitLocation);
 		MakeNoise(1.0);
 		PlaySound(ImpactSound);
 	}
@@ -95,26 +98,27 @@ Begin:
 
 defaultproperties
 {
-     speed=700.000000
-     MaxSpeed=900.000000
-     Damage=30.000000
-     MomentumTransfer=50000
-     SpawnSound=Sound'UnrealShare.Eightball.Ignite'
-     ImpactSound=Sound'UnrealShare.flak.Explode1'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=8.000000
-     AmbientSound=Sound'UnrealShare.General.BRocket'
-     Texture=None
-     Mesh=LodMesh'UnrealShare.srocket'
-     DrawScale=0.120000
-     AmbientGlow=9
-     bUnlit=True
-     SoundRadius=15
-     SoundVolume=255
-     SoundPitch=73
-     LightType=LT_Steady
-     LightBrightness=154
-     LightHue=24
-     LightSaturation=207
-     LightRadius=2
+      TimerDelay=0.000000
+      speed=700.000000
+      MaxSpeed=900.000000
+      Damage=30.000000
+      MomentumTransfer=50000
+      SpawnSound=Sound'UnrealShare.Eightball.Ignite'
+      ImpactSound=Sound'UnrealShare.flak.Explode1'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=8.000000
+      AmbientSound=Sound'UnrealShare.General.BRocket'
+      Texture=None
+      Mesh=LodMesh'UnrealShare.srocket'
+      DrawScale=0.120000
+      AmbientGlow=9
+      bUnlit=True
+      SoundRadius=15
+      SoundVolume=255
+      SoundPitch=73
+      LightType=LT_Steady
+      LightBrightness=154
+      LightHue=24
+      LightSaturation=207
+      LightRadius=2
 }

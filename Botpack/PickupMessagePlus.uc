@@ -22,10 +22,10 @@ static function string GetString(
 
 defaultproperties
 {
-     FontSize=1
-     bIsSpecial=True
-     bIsUnique=True
-     bFadeMessage=True
-     YPos=64.000000
-     bCenter=True
+      FontSize=1
+      bIsSpecial=True
+      bIsUnique=True
+      bFadeMessage=True
+      YPos=64.000000
+      bCenter=True
 }

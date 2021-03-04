@@ -107,6 +107,8 @@ function Fire( float Value )
 	//bAltFireMem = false;
 	if (AmmoType.UseAmmo(1))
 	{
+		if ( FiringSpeed>0 )
+			Pawn(Owner).PlayRecoil(FiringSpeed);	
 		CheckVisibility();
 		bPointing=True;
 		Start = Owner.Location + CalcDrawOffset();
@@ -142,6 +144,8 @@ function AltFire( float Value )
 	//bAltFireMem = false;
 	if (AmmoType.UseAmmo(1))
 	{
+		if ( FiringSpeed>0 )
+			Pawn(Owner).PlayRecoil(FiringSpeed);	
 		CheckVisibility();
 		Owner.PlaySound(Misc1Sound, SLOT_None, 0.6*Pawn(Owner).SoundDampening);
 		Owner.PlaySound(AltFireSound, SLOT_None,Pawn(Owner).SoundDampening*4.0);
@@ -217,41 +221,41 @@ function PlayPostSelect()
 
 defaultproperties
 {
-     AmmoName=Class'UnrealI.FlakBox'
-     PickupAmmoCount=10
-     bWarnTarget=True
-     bAltWarnTarget=True
-     bSplashDamage=True
-     FireOffset=(X=10.000000,Y=-12.000000,Z=-15.000000)
-     ProjectileClass=Class'UnrealI.MasterChunk'
-     AltProjectileClass=Class'UnrealI.FlakShell'
-     shakemag=350.000000
-     shaketime=0.150000
-     shakevert=8.500000
-     AIRating=0.800000
-     FireSound=Sound'UnrealShare.flak.shot1'
-     AltFireSound=Sound'UnrealShare.flak.Explode1'
-     CockingSound=Sound'UnrealI.flak.load1'
-     SelectSound=Sound'UnrealI.flak.pdown'
-     Misc2Sound=Sound'UnrealI.flak.Hidraul2'
-     Misc3Sound=Sound'UnrealShare.flak.Click'
-     DeathMessage="%o was ripped to shreds by %k's %w."
-     AutoSwitchPriority=6
-     InventoryGroup=6
-     PickupMessage="You got the Flak Cannon"
-     ItemName="Flak Cannon"
-     PlayerViewOffset=(X=2.100000,Y=-1.500000,Z=-1.250000)
-     PlayerViewMesh=LodMesh'UnrealI.flak'
-     PlayerViewScale=1.200000
-     PickupViewMesh=LodMesh'UnrealI.FlakPick'
-     ThirdPersonMesh=LodMesh'UnrealI.Flak3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealI.FlakPick'
-     bNoSmooth=False
-     CollisionRadius=27.000000
-     CollisionHeight=23.000000
-     LightBrightness=228
-     LightHue=30
-     LightSaturation=71
-     LightRadius=14
+      AmmoName=Class'UnrealI.FlakBox'
+      PickupAmmoCount=10
+      bWarnTarget=True
+      bAltWarnTarget=True
+      bSplashDamage=True
+      FireOffset=(X=10.000000,Y=-12.000000,Z=-15.000000)
+      ProjectileClass=Class'UnrealI.MasterChunk'
+      AltProjectileClass=Class'UnrealI.FlakShell'
+      shakemag=350.000000
+      shaketime=0.150000
+      shakevert=8.500000
+      AIRating=0.800000
+      FireSound=Sound'UnrealShare.flak.shot1'
+      AltFireSound=Sound'UnrealShare.flak.Explode1'
+      CockingSound=Sound'UnrealI.flak.load1'
+      SelectSound=Sound'UnrealI.flak.pdown'
+      Misc2Sound=Sound'UnrealI.flak.Hidraul2'
+      Misc3Sound=Sound'UnrealShare.flak.Click'
+      DeathMessage="%o was ripped to shreds by %k's %w."
+      AutoSwitchPriority=6
+      InventoryGroup=6
+      PickupMessage="You got the Flak Cannon"
+      ItemName="Flak Cannon"
+      PlayerViewOffset=(X=2.100000,Y=-1.500000,Z=-1.250000)
+      PlayerViewMesh=LodMesh'UnrealI.flak'
+      PlayerViewScale=1.200000
+      PickupViewMesh=LodMesh'UnrealI.FlakPick'
+      ThirdPersonMesh=LodMesh'UnrealI.Flak3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealI.FlakPick'
+      bNoSmooth=False
+      CollisionRadius=27.000000
+      CollisionHeight=23.000000
+      LightBrightness=228
+      LightHue=30
+      LightSaturation=71
+      LightRadius=14
 }

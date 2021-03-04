@@ -19,6 +19,6 @@ function Created()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuNewGameClientWindow'
-     WindowTitle="New Game"
+      ClientClass=Class'UMenu.UMenuNewGameClientWindow'
+      WindowTitle="New Game"
 }

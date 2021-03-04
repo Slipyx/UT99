@@ -31,4 +31,22 @@ function Trigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
+      OutEvents(0)="None"
+      OutEvents(1)="None"
+      OutEvents(2)="None"
+      OutEvents(3)="None"
+      OutEvents(4)="None"
+      OutEvents(5)="None"
+      OutEvents(6)="None"
+      OutEvents(7)="None"
+      OutEvents(8)="None"
+      OutEvents(9)="None"
+      OutEvents(10)="None"
+      OutEvents(11)="None"
+      OutEvents(12)="None"
+      OutEvents(13)="None"
+      OutEvents(14)="None"
+      OutEvents(15)="None"
+      bLoop=False
+      i=0
 }

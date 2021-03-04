@@ -339,6 +339,7 @@ function setHand(float Hand)
 	else
 		bHideWeapon = false;
 
+	Hand = fClamp( Hand, -1.0, 1.0); // v469 weapon hand exploit fix
 	if ( Hand == 0 )
 	{
 		PlayerViewOffset.X = Default.PlayerViewOffset.X * 0.88;
@@ -407,6 +408,7 @@ function inventory SpawnCopy( pawn Other )
 	Copy.bTossedOut = false;
 	Copy.GiveTo( Other );
 	newWeapon = Weapon(Copy);
+	newWeapon.PickupAmmoCount = PickupAmmoCount; // 469 fix
 	newWeapon.Instigator = Other;
 	newWeapon.GiveAmmo(Other);
 	newWeapon.SetSwitchPriority(Other);
@@ -594,8 +596,15 @@ simulated function bool ClientFire( float Value )
 	return true;
 }
 
-function ForceFire();
-function ForceAltFire();
+function ForceFire()
+{
+	Fire(0);
+}
+
+function ForceAltFire()
+{
+	AltFire(0);
+}
 
 function Fire( float Value )
 {
@@ -905,30 +914,76 @@ function PlayIdleAnim()
 
 defaultproperties
 {
-     MaxTargetRange=4096.000000
-     bCanThrow=True
-     ProjectileSpeed=1000.000000
-     AltProjectileSpeed=1000.000000
-     aimerror=550.000000
-     shakemag=300.000000
-     shaketime=0.100000
-     shakevert=5.000000
-     AIRating=0.100000
-     RefireRate=0.500000
-     AltRefireRate=0.500000
-     MessageNoAmmo=" has no ammo."
-     DeathMessage="%o was killed by %k's %w."
-     NameColor=(R=255,G=255,B=255)
-     MuzzleScale=4.000000
-     FlashLength=0.100000
-     AutoSwitchPriority=1
-     InventoryGroup=1
-     PickupMessage="You got a weapon"
-     ItemName="Weapon"
-     RespawnTime=30.000000
-     PlayerViewOffset=(X=30.000000,Z=-5.000000)
-     MaxDesireability=0.500000
-     Icon=Texture'Engine.S_Weapon'
-     Texture=Texture'Engine.S_Weapon'
-     bNoSmooth=True
+      MaxTargetRange=4096.000000
+      AmmoName=None
+      ReloadCount=0
+      PickupAmmoCount=0
+      AmmoType=None
+      bPointing=False
+      bInstantHit=False
+      bAltInstantHit=False
+      bWarnTarget=False
+      bAltWarnTarget=False
+      bWeaponUp=False
+      bChangeWeapon=False
+      bLockedOn=False
+      bSplashDamage=False
+      bCanThrow=True
+      bRecommendSplashDamage=False
+      bRecommendAltSplashDamage=False
+      bWeaponStay=False
+      bOwnsCrosshair=False
+      bHideWeapon=False
+      bMeleeWeapon=False
+      bRapidFire=False
+      bSpecialIcon=False
+      FiringSpeed=0.000000
+      FireOffset=(X=0.000000,Y=0.000000,Z=0.000000)
+      ProjectileClass=None
+      AltProjectileClass=None
+      MyDamageType="None"
+      AltDamageType="None"
+      ProjectileSpeed=1000.000000
+      AltProjectileSpeed=1000.000000
+      aimerror=550.000000
+      shakemag=300.000000
+      shaketime=0.100000
+      shakevert=5.000000
+      AIRating=0.100000
+      RefireRate=0.500000
+      AltRefireRate=0.500000
+      FireSound=None
+      AltFireSound=None
+      CockingSound=None
+      SelectSound=None
+      Misc1Sound=None
+      Misc2Sound=None
+      Misc3Sound=None
+      MessageNoAmmo=" has no ammo."
+      DeathMessage="%o was killed by %k's %w."
+      NameColor=(R=255,G=255,B=255,A=0)
+      AdjustedAim=(Pitch=0,Yaw=0,Roll=0)
+      bSetFlashTime=False
+      bDrawMuzzleFlash=False
+      bMuzzleFlash=0
+      FlashTime=0.000000
+      MuzzleScale=4.000000
+      FlashY=0.000000
+      FlashO=0.000000
+      FlashC=0.000000
+      FlashLength=0.100000
+      FlashS=0
+      MFTexture=None
+      MuzzleFlare=None
+      FlareOffset=0.000000
+      AutoSwitchPriority=1
+      InventoryGroup=1
+      PickupMessage="You got a weapon"
+      ItemName="Weapon"
+      RespawnTime=30.000000
+      PlayerViewOffset=(X=30.000000,Z=-5.000000)
+      MaxDesireability=0.500000
+      Icon=Texture'Engine.S_Weapon'
+      Texture=Texture'Engine.S_Weapon'
+      bNoSmooth=True
 }

@@ -52,4 +52,5 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
+      bNoExtraChunks=False
 }

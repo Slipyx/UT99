@@ -62,15 +62,15 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     MenuLength=5
-     HelpMessage(1)="Hit enter to save the current game."
-     HelpMessage(2)="Hit enter to load a saved game."
-     HelpMessage(3)="Select a difficulty level, and start a new game."
-     HelpMessage(4)="Hit enter to modify game options.  Note that you cannot do this if you are playing in a multiplayer game."
-     HelpMessage(5)="DeathMatch against Bots."
-     MenuList(1)="SAVE GAME"
-     MenuList(2)="LOAD GAME"
-     MenuList(3)="NEW GAME"
-     MenuList(4)="GAME OPTIONS"
-     MenuList(5)="BOTMATCH"
+      MenuLength=5
+      HelpMessage(1)="Hit enter to save the current game."
+      HelpMessage(2)="Hit enter to load a saved game."
+      HelpMessage(3)="Select a difficulty level, and start a new game."
+      HelpMessage(4)="Hit enter to modify game options.  Note that you cannot do this if you are playing in a multiplayer game."
+      HelpMessage(5)="DeathMatch against Bots."
+      MenuList(1)="SAVE GAME"
+      MenuList(2)="LOAD GAME"
+      MenuList(3)="NEW GAME"
+      MenuList(4)="GAME OPTIONS"
+      MenuList(5)="BOTMATCH"
 }

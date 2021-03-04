@@ -20,7 +20,7 @@ function beginPlay()
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.fighterM'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.fighterM'
 }

@@ -41,4 +41,5 @@ function ExecuteItem(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
+      ModList=None
 }

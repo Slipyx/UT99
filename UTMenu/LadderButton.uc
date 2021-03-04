@@ -61,4 +61,7 @@ function BeforePaint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      bTop=False
+      bBottom=False
+      bSelected=False
 }

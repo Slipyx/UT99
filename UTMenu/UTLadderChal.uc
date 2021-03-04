@@ -59,9 +59,9 @@ function EvaluateMatch(optional bool bTrophyVictory)
 
 defaultproperties
 {
-     GameType="Botpack.ChallengeDMP"
-     TrophyMap="EOL_Challenge.unr"
-     LadderName="Final Challenge"
-     Ladder=Class'Botpack.LadderChal'
-     LadderTrophy=Texture'UTMenu.Skins.TrophyChal'
+      GameType="Botpack.ChallengeDMP"
+      TrophyMap="EOL_Challenge.unr"
+      LadderName="Final Challenge"
+      Ladder=Class'Botpack.LadderChal'
+      LadderTrophy=Texture'UTMenu.Skins.TrophyChal'
 }

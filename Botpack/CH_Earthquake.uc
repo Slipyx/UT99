@@ -71,4 +71,5 @@ var() bool bThrowStuff;
 
 defaultproperties
 {
+      bThrowStuff=False
 }

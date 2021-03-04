@@ -124,26 +124,26 @@ function PlayDecap()
 
 defaultproperties
 {
-     CarcassType=Class'Botpack.TFemale1Carcass'
-     drown=Sound'UnrealShare.Female.mdrown2fem'
-     breathagain=Sound'Botpack.FemaleSounds.(All).hgasp3'
-     HitSound3=Sound'Botpack.FemaleSounds.(All).linjur4'
-     HitSound4=Sound'Botpack.FemaleSounds.(All).hinjur4'
-     Deaths(0)=Sound'Botpack.FemaleSounds.(All).death1d'
-     Deaths(1)=Sound'Botpack.FemaleSounds.(All).death2a'
-     Deaths(2)=Sound'Botpack.FemaleSounds.(All).death3c'
-     Deaths(3)=Sound'Botpack.FemaleSounds.(All).decap01'
-     Deaths(4)=Sound'Botpack.FemaleSounds.(All).death41'
-     Deaths(5)=Sound'Botpack.FemaleSounds.(All).death42'
-     UWHit1=Sound'Botpack.FemaleSounds.(All).UWhit01'
-     UWHit2=Sound'UnrealShare.Male.MUWHit2'
-     LandGrunt=Sound'Botpack.FemaleSounds.(All).lland1'
-     JumpSound=Sound'Botpack.FemaleSounds.(All).Fjump1'
-     StatusDoll=Texture'Botpack.Icons.Woman'
-     StatusBelt=Texture'Botpack.Icons.WomanBelt'
-     VoicePackMetaClass="BotPack.VoiceFemale"
-     bIsFemale=True
-     HitSound1=Sound'Botpack.FemaleSounds.(All).linjur2'
-     HitSound2=Sound'Botpack.FemaleSounds.(All).linjur3'
-     Die=Sound'Botpack.FemaleSounds.(All).death1d'
+      CarcassType=Class'Botpack.TFemale1Carcass'
+      drown=Sound'UnrealShare.Female.mdrown2fem'
+      breathagain=Sound'Botpack.FemaleSounds.(All).hgasp3'
+      HitSound3=Sound'Botpack.FemaleSounds.(All).linjur4'
+      HitSound4=Sound'Botpack.FemaleSounds.(All).hinjur4'
+      Deaths(0)=Sound'Botpack.FemaleSounds.(All).death1d'
+      Deaths(1)=Sound'Botpack.FemaleSounds.(All).death2a'
+      Deaths(2)=Sound'Botpack.FemaleSounds.(All).death3c'
+      Deaths(3)=Sound'Botpack.FemaleSounds.(All).decap01'
+      Deaths(4)=Sound'Botpack.FemaleSounds.(All).death41'
+      Deaths(5)=Sound'Botpack.FemaleSounds.(All).death42'
+      UWHit1=Sound'Botpack.FemaleSounds.(All).UWhit01'
+      UWHit2=Sound'UnrealShare.Male.MUWHit2'
+      LandGrunt=Sound'Botpack.FemaleSounds.(All).lland1'
+      JumpSound=Sound'Botpack.FemaleSounds.(All).Fjump1'
+      StatusDoll=Texture'Botpack.Icons.Woman'
+      StatusBelt=Texture'Botpack.Icons.WomanBelt'
+      VoicePackMetaClass="BotPack.VoiceFemale"
+      bIsFemale=True
+      HitSound1=Sound'Botpack.FemaleSounds.(All).linjur2'
+      HitSound2=Sound'Botpack.FemaleSounds.(All).linjur3'
+      Die=Sound'Botpack.FemaleSounds.(All).death1d'
 }

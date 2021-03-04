@@ -89,20 +89,20 @@ function CreateReplacement()
 
 defaultproperties
 {
-     bodyparts(0)=LodMesh'UnrealShare.NaliPart'
-     bodyparts(1)=LodMesh'UnrealShare.NaliLeg'
-     bodyparts(2)=LodMesh'UnrealShare.NaliPart'
-     bodyparts(3)=LodMesh'UnrealShare.NaliFoot'
-     bodyparts(4)=LodMesh'UnrealShare.NaliHand1'
-     bodyparts(5)=LodMesh'UnrealShare.NaliHand2'
-     bodyparts(6)=LodMesh'UnrealShare.NaliHead'
-     ZOffset(0)=0.000000
-     ZOffset(3)=-0.500000
-     ZOffset(6)=0.500000
-     LandedSound=Sound'UnrealShare.Nali.thumpn'
-     Mesh=LodMesh'UnrealShare.Nali1'
-     CollisionRadius=24.000000
-     CollisionHeight=48.000000
-     Mass=100.000000
-     Buoyancy=96.000000
+      bodyparts(0)=LodMesh'UnrealShare.NaliPart'
+      bodyparts(1)=LodMesh'UnrealShare.NaliLeg'
+      bodyparts(2)=LodMesh'UnrealShare.NaliPart'
+      bodyparts(3)=LodMesh'UnrealShare.NaliFoot'
+      bodyparts(4)=LodMesh'UnrealShare.NaliHand1'
+      bodyparts(5)=LodMesh'UnrealShare.NaliHand2'
+      bodyparts(6)=LodMesh'UnrealShare.NaliHead'
+      ZOffset(0)=0.000000
+      ZOffset(3)=-0.500000
+      ZOffset(6)=0.500000
+      LandedSound=Sound'UnrealShare.Nali.thumpn'
+      Mesh=LodMesh'UnrealShare.Nali1'
+      CollisionRadius=24.000000
+      CollisionHeight=48.000000
+      Mass=100.000000
+      Buoyancy=96.000000
 }

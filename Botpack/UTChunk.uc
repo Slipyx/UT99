@@ -116,29 +116,31 @@ var int Count;
 
 defaultproperties
 {
-     AnimFrame(0)=Texture'Botpack.ChunkGlow.Chunk_a00'
-     AnimFrame(1)=Texture'Botpack.ChunkGlow.Chunk_a01'
-     AnimFrame(2)=Texture'Botpack.ChunkGlow.Chunk_a02'
-     AnimFrame(3)=Texture'Botpack.ChunkGlow.Chunk_a03'
-     AnimFrame(4)=Texture'Botpack.ChunkGlow.Chunk_a04'
-     AnimFrame(5)=Texture'Botpack.ChunkGlow.Chunk_a05'
-     AnimFrame(6)=Texture'Botpack.ChunkGlow.Chunk_a06'
-     AnimFrame(7)=Texture'Botpack.ChunkGlow.Chunk_a07'
-     AnimFrame(8)=Texture'Botpack.ChunkGlow.Chunk_a08'
-     AnimFrame(9)=Texture'Botpack.ChunkGlow.Chunk_a09'
-     AnimFrame(10)=Texture'Botpack.ChunkGlow.Chunk_a10'
-     AnimFrame(11)=Texture'Botpack.ChunkGlow.Chunk_a11'
-     speed=2500.000000
-     MaxSpeed=2700.000000
-     Damage=16.000000
-     MomentumTransfer=10000
-     MyDamageType=shredded
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=2.900000
-     Texture=Texture'Botpack.ChunkGlow.Chunk_a00'
-     DrawScale=0.400000
-     AmbientGlow=255
-     bUnlit=True
-     bNoSmooth=True
-     bBounce=True
+      trail=None
+      AnimFrame(0)=Texture'Botpack.ChunkGlow.Chunk_a00'
+      AnimFrame(1)=Texture'Botpack.ChunkGlow.Chunk_a01'
+      AnimFrame(2)=Texture'Botpack.ChunkGlow.Chunk_a02'
+      AnimFrame(3)=Texture'Botpack.ChunkGlow.Chunk_a03'
+      AnimFrame(4)=Texture'Botpack.ChunkGlow.Chunk_a04'
+      AnimFrame(5)=Texture'Botpack.ChunkGlow.Chunk_a05'
+      AnimFrame(6)=Texture'Botpack.ChunkGlow.Chunk_a06'
+      AnimFrame(7)=Texture'Botpack.ChunkGlow.Chunk_a07'
+      AnimFrame(8)=Texture'Botpack.ChunkGlow.Chunk_a08'
+      AnimFrame(9)=Texture'Botpack.ChunkGlow.Chunk_a09'
+      AnimFrame(10)=Texture'Botpack.ChunkGlow.Chunk_a10'
+      AnimFrame(11)=Texture'Botpack.ChunkGlow.Chunk_a11'
+      Count=0
+      speed=2500.000000
+      MaxSpeed=2700.000000
+      Damage=16.000000
+      MomentumTransfer=10000
+      MyDamageType="shredded"
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=2.900000
+      Texture=Texture'Botpack.ChunkGlow.Chunk_a00'
+      DrawScale=0.400000
+      AmbientGlow=255
+      bUnlit=True
+      bNoSmooth=True
+      bBounce=True
 }

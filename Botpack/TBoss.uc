@@ -72,6 +72,13 @@ class TBoss extends TournamentMale;
 #exec MESH SEQUENCE MESH=Boss SEQ=BackRun   STARTFRAME=670 NUMFRAMES=10 RATE=17		Group=MovingFire
 #exec MESH SEQUENCE MESH=Boss SEQ=StrafeL   STARTFRAME=680 NUMFRAMES=10 RATE=17		Group=MovingFire
 #exec MESH SEQUENCE MESH=Boss SEQ=StrafeR   STARTFRAME=690 NUMFRAMES=10 RATE=17		Group=MovingFire
+#exec MESH NOTIFY MESH=Boss SEQ=StrafeL TIME=0.25 FUNCTION=PlayFootStep
+#exec MESH NOTIFY MESH=Boss SEQ=StrafeL TIME=0.75 FUNCTION=PlayFootStep
+#exec MESH NOTIFY MESH=Boss SEQ=StrafeR TIME=0.25 FUNCTION=PlayFootStep
+#exec MESH NOTIFY MESH=Boss SEQ=StrafeR TIME=0.75 FUNCTION=PlayFootStep
+#exec MESH NOTIFY MESH=Boss SEQ=BackRun TIME=0.25 FUNCTION=PlayFootStep
+#exec MESH NOTIFY MESH=Boss SEQ=BackRun TIME=0.75 FUNCTION=PlayFootStep
+
 
 #exec MESH SEQUENCE MESH=Boss SEQ=DeathEnd  STARTFRAME=537 NUMFRAMES=1
 #exec MESH SEQUENCE MESH=Boss SEQ=DeathEnd2 STARTFRAME=553 NUMFRAMES=1
@@ -156,28 +163,28 @@ static function SetMultiSkin(Actor SkinActor, string SkinName, string FaceName, 
 
 defaultproperties
 {
-     Deaths(0)=Sound'Botpack.Boss.BDeath1'
-     Deaths(1)=Sound'Botpack.Boss.BDeath1'
-     Deaths(2)=Sound'Botpack.Boss.BDeath3'
-     Deaths(3)=Sound'Botpack.Boss.BDeath4'
-     Deaths(4)=Sound'Botpack.Boss.BDeath3'
-     Deaths(5)=Sound'Botpack.Boss.BDeath4'
-     FaceSkin=1
-     DefaultSkinName="BossSkins.Boss"
-     HitSound3=Sound'Botpack.Boss.BInjur3'
-     HitSound4=Sound'Botpack.Boss.BInjur4'
-     LandGrunt=Sound'Botpack.Boss.Bland01'
-     StatusDoll=Texture'Botpack.Icons.BossDoll'
-     StatusBelt=Texture'Botpack.Icons.BossBelt'
-     VoicePackMetaClass="BotPack.VoiceBoss"
-     CarcassType=Class'Botpack.TBossCarcass'
-     JumpSound=Sound'Botpack.Boss.BJump1'
-     SelectionMesh="Botpack.SelectionBoss"
-     SpecialMesh="Botpack.TrophyBoss"
-     HitSound1=Sound'Botpack.Boss.BInjur1'
-     HitSound2=Sound'Botpack.Boss.BInjur2'
-     Die=Sound'Botpack.Boss.BDeath1'
-     MenuName="Boss"
-     VoiceType="BotPack.VoiceBoss"
-     Mesh=LodMesh'Botpack.Boss'
+      Deaths(0)=Sound'Botpack.Boss.BDeath1'
+      Deaths(1)=Sound'Botpack.Boss.BDeath1'
+      Deaths(2)=Sound'Botpack.Boss.BDeath3'
+      Deaths(3)=Sound'Botpack.Boss.BDeath4'
+      Deaths(4)=Sound'Botpack.Boss.BDeath3'
+      Deaths(5)=Sound'Botpack.Boss.BDeath4'
+      FaceSkin=1
+      DefaultSkinName="BossSkins.Boss"
+      HitSound3=Sound'Botpack.Boss.BInjur3'
+      HitSound4=Sound'Botpack.Boss.BInjur4'
+      LandGrunt=Sound'Botpack.Boss.Bland01'
+      StatusDoll=Texture'Botpack.Icons.BossDoll'
+      StatusBelt=Texture'Botpack.Icons.BossBelt'
+      VoicePackMetaClass="BotPack.VoiceBoss"
+      CarcassType=Class'Botpack.TBossCarcass'
+      JumpSound=Sound'Botpack.Boss.BJump1'
+      SelectionMesh="Botpack.SelectionBoss"
+      SpecialMesh="Botpack.TrophyBoss"
+      HitSound1=Sound'Botpack.Boss.BInjur1'
+      HitSound2=Sound'Botpack.Boss.BInjur2'
+      Die=Sound'Botpack.Boss.BDeath1'
+      MenuName="Boss"
+      VoiceType="BotPack.VoiceBoss"
+      Mesh=LodMesh'Botpack.Boss'
 }

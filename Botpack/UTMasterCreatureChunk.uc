@@ -40,6 +40,8 @@ function InitVelocity(Actor Other)
 
 defaultproperties
 {
-     TrailSize=0.500000
-     CarcHeight=39.000000
+      PlayerRep=None
+      bChunked=False
+      TrailSize=0.500000
+      CarcHeight=39.000000
 }

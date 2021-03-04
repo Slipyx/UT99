@@ -246,7 +246,7 @@ function string GetColorString(int Num)
 
 defaultproperties
 {
-     MaxLines=500
-     bTopCentric=False
-     bVariableRowHeight=False
+      MaxLines=500
+      bTopCentric=False
+      bVariableRowHeight=False
 }

@@ -247,4 +247,52 @@ function Tick( float DeltaTime )
 
 defaultproperties
 {
+      PathActorTag="None"
+      bAlterPitch=False
+      bAlterYaw=False
+      bAlterRoll=False
+      RAdjust=(Pitch=0,Yaw=0,Roll=0)
+      PathActor=None
+      Path(0)=None
+      Path(1)=None
+      Path(2)=None
+      Path(3)=None
+      Path(4)=None
+      Path(5)=None
+      Path(6)=None
+      Path(7)=None
+      Path(8)=None
+      Path(9)=None
+      Path(10)=None
+      Path(11)=None
+      Path(12)=None
+      Path(13)=None
+      Path(14)=None
+      Path(15)=None
+      Path(16)=None
+      Path(17)=None
+      Path(18)=None
+      Path(19)=None
+      Path(20)=None
+      Path(21)=None
+      Path(22)=None
+      Path(23)=None
+      Path(24)=None
+      Path(25)=None
+      Path(26)=None
+      Path(27)=None
+      Path(28)=None
+      Path(29)=None
+      Path(30)=None
+      Path(31)=None
+      Path(32)=None
+      Path(33)=None
+      Path(34)=None
+      numPathNodes=0
+      curNode=0
+      uValue=0.000000
+      bTriggeredOnce=False
+      bPlayedOnce=False
+      lastPosition=(X=0.000000,Y=0.000000,Z=0.000000)
+      lastRotation=(Pitch=0,Yaw=0,Roll=0)
 }

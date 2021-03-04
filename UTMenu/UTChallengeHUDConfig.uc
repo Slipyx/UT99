@@ -92,6 +92,14 @@ var UWindowHSliderControl CrosshairSlider;
 var localized string CrosshairText;
 var localized string CrosshairHelp;
 
+var UWindowCheckbox CrosshairScaleAutoCheck;
+var localized string CrosshairScaleAutoText;
+var localized string CrosshairScaleAutoHelp;
+
+var UWindowHSliderControl CrosshairScaleSlider;
+var localized string CrosshairScaleText;
+var localized string CrosshairScaleHelp;
+
 var UWindowSmallButton DefaultsButton;
 var localized string DefaultsText;
 var localized string DefaultsHelp;
@@ -273,6 +281,20 @@ function Created()
 	CrosshairSlider.SetText(CrosshairText);
 	CrosshairSlider.SetHelpText(CrosshairHelp);
 	CrosshairSlider.SetFont(F_Normal);
+	ControlOffset += 20;
+
+	CrosshairScaleAutoCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', CenterPos, ControlOffset, CenterWidth, 1));
+	CrosshairScaleAutoCheck.SetText(CrosshairScaleAutoText);
+	CrosshairScaleAutoCheck.SetHelpText(CrosshairScaleAutoHelp);
+	CrosshairScaleAutoCheck.SetFont(F_Normal);
+	CrosshairScaleAutoCheck.Align = TA_Left;
+	ControlOffset += 20;
+
+	CrosshairScaleSlider = UWindowHSliderControl(CreateControl(class'UWindowHSliderControl', CenterPos, ControlOffset, CenterWidth, 1));
+	CrosshairScaleSlider.SetRange(5, 30, 1);
+	CrosshairScaleSlider.SetText(CrosshairScaleText);
+	CrosshairScaleSlider.SetHelpText(CrosshairScaleHelp);
+	CrosshairScaleSlider.SetFont(F_Normal);
 	ControlOffset += 30;
 
 	DesiredHeight = ControlOffset + 70;
@@ -330,6 +352,9 @@ function LoadCurrentValues()
 	ShowFragsCheck.bDisabled = !ShowHUDCheck.bChecked;
 	ShowFacesCheck.bDisabled = !ShowHUDCheck.bChecked;
 	UseTeamColorCheck.bDisabled = !ShowHUDCheck.bChecked;
+	
+	CrosshairScaleAutoCheck.bChecked = H.bAutoCrosshairScale;
+	CrosshairScaleSlider.SetValue(H.CrosshairScale * 10);	
 
 	bInitialized = True;
 }
@@ -358,7 +383,9 @@ function LoadDefaultValues()
 	H.FavoriteHUDColor.B = class'ChallengeHUD'.default.FavoriteHUDColor.B; 
 	H.CrosshairColor.R = class'ChallengeHUD'.default.CrosshairColor.R;
 	H.CrosshairColor.G = class'ChallengeHUD'.default.CrosshairColor.G;
-	H.CrosshairColor.B = class'ChallengeHUD'.default.CrosshairColor.B; 
+	H.CrosshairColor.B = class'ChallengeHUD'.default.CrosshairColor.B;
+	H.bAutoCrosshairScale = class'ChallengeHUD'.default.bAutoCrosshairScale;
+	H.CrosshairScale = class'ChallengeHUD'.default.CrosshairScale;
 }
 
 function BeforePaint(Canvas C, float X, float Y)
@@ -430,6 +457,11 @@ function BeforePaint(Canvas C, float X, float Y)
 	CrosshairBSlider.SetSize(CenterWidth, 1);
 	CrosshairBSlider.SliderWidth = 90;
 	CrosshairBSlider.WinLeft = CenterPos;
+	CrosshairScaleAutoCheck.SetSize(CenterWidth, 1);
+	CrosshairScaleAutoCheck.WinLeft = CenterPos;
+	CrosshairScaleSlider.SetSize(CenterWidth, 1);
+	CrosshairScaleSlider.SliderWidth = 90;
+	CrosshairScaleSlider.WinLeft = CenterPos;
 }
 
 function Paint(Canvas C, float X, float Y)
@@ -438,7 +470,21 @@ function Paint(Canvas C, float X, float Y)
 	local int CenterWidth, CenterPos, CrosshairX, HUDX;
 	local ChallengeHUD H;
 	local Texture CrossHair, T;
+	local float XScale;
+	local byte OldStyle;
 
+	if (CrosshairScaleAutoCheck.bChecked)
+	{
+		if ( C.ClipX < 512 )
+		    XScale = 0.5;
+		else
+			XScale = Clamp(int(0.1 + C.ClipX/640.0), 1, 2);
+	}
+	else
+	{
+		XScale = CrosshairScaleSlider.GetValue() / 10.0;
+	}
+	
 	ControlWidth = WinWidth/2.5;
 	ControlLeft = (WinWidth/2 - ControlWidth)/2;
 	ControlRight = WinWidth/2 + ControlLeft;
@@ -455,14 +501,22 @@ function Paint(Canvas C, float X, float Y)
 
 	CrosshairX = (WinWidth - Crosshair.USize) / 2;
 	T = GetLookAndFeelTexture();
-	DrawUpBevel(C, CrosshairX - 3, CrosshairSlider.WinTop + 20 - 3, CrossHair.USize + 6, CrossHair.VSize + 6, T);
-	DrawStretchedTexture(C, CrosshairX, CrosshairSlider.WinTop + 20, CrossHair.USize, CrossHair.VSize, Texture'BlackTexture');
+	DrawUpBevel(C, CrosshairX - 3, CrosshairScaleSlider.WinTop + 20 - 3, CrossHair.USize + 6, CrossHair.VSize + 6, T);
+	DrawStretchedTexture(C, CrosshairX, CrosshairScaleSlider.WinTop + 20, CrossHair.USize, CrossHair.VSize, Texture'BlackTexture');
 
 	C.DrawColor.R = 15 * H.CrosshairColor.R;
 	C.DrawColor.G = 15 * H.CrosshairColor.G;
 	C.DrawColor.B = 15 * H.CrosshairColor.B;
-	DrawClippedTexture(C, CrosshairX, CrosshairSlider.WinTop + 20, CrossHair);
-
+//	DrawClippedTexture(C, CrosshairX, CrosshairScaleSlider.WinTop + 20, CrossHair);
+	OldStyle = C.Style;
+	C.Style = GetPlayerOwner().ERenderStyle.STY_Translucent;
+	DrawStretchedTexture(C,
+		CrosshairX + (1 - XScale) * CrossHair.USize / 2,
+		CrosshairScaleSlider.WinTop + 20 + (1 - XScale) * CrossHair.VSize / 2,
+		Crosshair.USize * XScale,
+		Crosshair.VSize * XScale,
+		CrossHair);
+	C.Style = OldStyle;
 
 	HUDX = (WinWidth - Texture'HudPreview'.USize) / 2;
 	C.DrawColor.R = 255;
@@ -502,6 +556,8 @@ function Notify(UWindowDialogControl C, byte E)
 	case DE_Change:
 		switch(C)
 		{
+		case CrosshairScaleSlider:
+		case CrosshairScaleAutoCheck:
 		case CrosshairSlider:
 			CrosshairChanged();
 			break;
@@ -647,7 +703,14 @@ singular function HUDLayoutChanged()
 
 function CrosshairChanged()
 {
-	GetPlayerOwner().myHUD.Crosshair = int(CrosshairSlider.Value);
+	local ChallengeHUD H;
+
+	if (!bInitialized) return;
+	
+	H = ChallengeHUD(GetPlayerOwner().MyHUD);
+	H.Crosshair = int(CrosshairSlider.Value);
+	H.bAutoCrosshairScale=CrosshairScaleAutoCheck.bChecked;
+	H.CrosshairScale = CrosshairScaleSlider.GetValue() / 10.0;
 }
 
 function SaveConfigs()
@@ -659,71 +722,118 @@ function SaveConfigs()
 
 defaultproperties
 {
-     ShowHUDText="Show HUD"
-     ShowHUDHelp="Show the Heads-up Display (HUD)."
-     ShowWeaponsText="Show Weapon Display"
-     ShowWeaponsHelp="Show weapon displays on the HUD."
-     ShowStatusText="Show Player Status"
-     ShowStatusHelp="Shows the player status indicator (top right) on the HUD."
-     ShowAmmoText="Show Ammo Count"
-     ShowAmmoHelp="Show your current ammo count on the HUD."
-     ShowTeamInfoText="Show Team Info"
-     ShowTeamInfoHelp="Show team-related information on the HUD."
-     ShowFacesText="Show Chat Area"
-     ShowFacesHelp="Show the chat area in the top left corner, where chat messages and kills appear."
-     ShowFragsText="Show Frags"
-     ShowFragsHelp="Show your frag count on the HUD."
-     UseTeamColorText="Use Team Color in Team Games"
-     UseTeamColorHelp="In team games, this setting uses your team color as the color for your HUD."
-     HUDColorText="HUD Color"
-     HUDColorHelp="Change your prefered HUD color.  In team games your team color will be used instead."
-     HUDColorNames(0)="Red"
-     HUDColorNames(1)="Purple"
-     HUDColorNames(2)="Light Blue"
-     HUDColorNames(3)="Turquoise"
-     HUDColorNames(4)="Green"
-     HUDColorNames(5)="Orange"
-     HUDColorNames(6)="Gold"
-     HUDColorNames(7)="Pink"
-     HUDColorNames(8)="White"
-     HUDColorNames(9)="Deep Blue"
-     HUDColorNames(10)="Custom"
-     HUDColorValues(0)="16,0,0"
-     HUDColorValues(1)="16,0,16"
-     HUDColorValues(2)="0,8,16"
-     HUDColorValues(3)="0,16,16"
-     HUDColorValues(4)="0,16,0"
-     HUDColorValues(5)="16,8,0"
-     HUDColorValues(6)="16,16,0"
-     HUDColorValues(7)="16,0,8"
-     HUDColorValues(8)="16,16,16"
-     HUDColorValues(9)="0,0,16"
-     HUDColorValues(10)="cust"
-     HUDRText="HUD Color Red"
-     HUDRHelp="Use the RGB sliders to select a custom HUD color."
-     HUDGText="HUD Color Green"
-     HUDGHelp="Use the RGB sliders to select a custom HUD color."
-     HUDBText="HUD Color Blue"
-     HUDBHelp="Use the RGB sliders to select a custom HUD color."
-     CrosshairColorText="Crosshair Color"
-     CrosshairColorHelp="Change your prefered Crosshair color."
-     CrosshairRText="Crosshair Color Red"
-     CrosshairRHelp="Use the RGB sliders to select a custom Crosshair color."
-     CrosshairGText="Crosshair Color Green"
-     CrosshairGHelp="Use the RGB sliders to select a custom Crosshair color."
-     CrosshairBText="Crosshair Color Blue"
-     CrosshairBHelp="Use the RGB sliders to select a custom Crosshair color."
-     OpacityText="HUD Transparency"
-     OpacityHelp="Adjust the level of transparency in the HUD."
-     HUDScaleText="HUD Size"
-     HUDScaleHelp="Adjust the size of the elements on the HUD."
-     WeaponScaleText="Weapon Icon Size"
-     WeaponScaleHelp="Adjust the size of the weapon icons on the HUD."
-     StatusScaleText="Status Size"
-     StatusScaleHelp="Adjust the scale of the player status indicator (top right) on the HUD."
-     CrosshairText="Crosshair Style"
-     CrosshairHelp="Choose the crosshair appearing at the center of your screen."
-     DefaultsText="Reset"
-     DefaultsHelp="Reset HUD settings to default values."
-     ControlOffset=10
+      ShowHUDCheck=None
+      ShowHUDText="Show HUD"
+      ShowHUDHelp="Show the Heads-up Display (HUD)."
+      ShowWeaponsCheck=None
+      ShowWeaponsText="Show Weapon Display"
+      ShowWeaponsHelp="Show weapon displays on the HUD."
+      ShowStatusCheck=None
+      ShowStatusText="Show Player Status"
+      ShowStatusHelp="Shows the player status indicator (top right) on the HUD."
+      ShowAmmoCheck=None
+      ShowAmmoText="Show Ammo Count"
+      ShowAmmoHelp="Show your current ammo count on the HUD."
+      ShowTeamInfoCheck=None
+      ShowTeamInfoText="Show Team Info"
+      ShowTeamInfoHelp="Show team-related information on the HUD."
+      ShowFacesCheck=None
+      ShowFacesText="Show Chat Area"
+      ShowFacesHelp="Show the chat area in the top left corner, where chat messages and kills appear."
+      ShowFragsCheck=None
+      ShowFragsText="Show Frags"
+      ShowFragsHelp="Show your frag count on the HUD."
+      UseTeamColorCheck=None
+      UseTeamColorText="Use Team Color in Team Games"
+      UseTeamColorHelp="In team games, this setting uses your team color as the color for your HUD."
+      HUDColorCombo=None
+      HUDColorText="HUD Color"
+      HUDColorHelp="Change your prefered HUD color.  In team games your team color will be used instead."
+      HUDColorNames(0)="Red"
+      HUDColorNames(1)="Purple"
+      HUDColorNames(2)="Light Blue"
+      HUDColorNames(3)="Turquoise"
+      HUDColorNames(4)="Green"
+      HUDColorNames(5)="Orange"
+      HUDColorNames(6)="Gold"
+      HUDColorNames(7)="Pink"
+      HUDColorNames(8)="White"
+      HUDColorNames(9)="Deep Blue"
+      HUDColorNames(10)="Custom"
+      HUDColorNames(11)=""
+      HUDColorNames(12)=""
+      HUDColorNames(13)=""
+      HUDColorNames(14)=""
+      HUDColorNames(15)=""
+      HUDColorNames(16)=""
+      HUDColorNames(17)=""
+      HUDColorNames(18)=""
+      HUDColorNames(19)=""
+      HUDColorValues(0)="16,0,0"
+      HUDColorValues(1)="16,0,16"
+      HUDColorValues(2)="0,8,16"
+      HUDColorValues(3)="0,16,16"
+      HUDColorValues(4)="0,16,0"
+      HUDColorValues(5)="16,8,0"
+      HUDColorValues(6)="16,16,0"
+      HUDColorValues(7)="16,0,8"
+      HUDColorValues(8)="16,16,16"
+      HUDColorValues(9)="0,0,16"
+      HUDColorValues(10)="cust"
+      HUDColorValues(11)=""
+      HUDColorValues(12)=""
+      HUDColorValues(13)=""
+      HUDColorValues(14)=""
+      HUDColorValues(15)=""
+      HUDColorValues(16)=""
+      HUDColorValues(17)=""
+      HUDColorValues(18)=""
+      HUDColorValues(19)=""
+      HUDRSlider=None
+      HUDRText="HUD Color Red"
+      HUDRHelp="Use the RGB sliders to select a custom HUD color."
+      HUDGSlider=None
+      HUDGText="HUD Color Green"
+      HUDGHelp="Use the RGB sliders to select a custom HUD color."
+      HUDBSlider=None
+      HUDBText="HUD Color Blue"
+      HUDBHelp="Use the RGB sliders to select a custom HUD color."
+      CrosshairColorCombo=None
+      CrosshairColorText="Crosshair Color"
+      CrosshairColorHelp="Change your prefered Crosshair color."
+      CrosshairRSlider=None
+      CrosshairRText="Crosshair Color Red"
+      CrosshairRHelp="Use the RGB sliders to select a custom Crosshair color."
+      CrosshairGSlider=None
+      CrosshairGText="Crosshair Color Green"
+      CrosshairGHelp="Use the RGB sliders to select a custom Crosshair color."
+      CrosshairBSlider=None
+      CrosshairBText="Crosshair Color Blue"
+      CrosshairBHelp="Use the RGB sliders to select a custom Crosshair color."
+      OpacitySlider=None
+      OpacityText="HUD Transparency"
+      OpacityHelp="Adjust the level of transparency in the HUD."
+      HUDScaleSlider=None
+      HUDScaleText="HUD Size"
+      HUDScaleHelp="Adjust the size of the elements on the HUD."
+      WeaponScaleSlider=None
+      WeaponScaleText="Weapon Icon Size"
+      WeaponScaleHelp="Adjust the size of the weapon icons on the HUD."
+      StatusScaleSlider=None
+      StatusScaleText="Status Size"
+      StatusScaleHelp="Adjust the scale of the player status indicator (top right) on the HUD."
+      CrosshairSlider=None
+      CrosshairText="Crosshair Style"
+      CrosshairHelp="Choose the crosshair appearing at the center of your screen."
+      CrosshairScaleAutoCheck=None
+      CrosshairScaleAutoText="Automatic Crosshair Scaling"
+      CrosshairScaleAutoHelp="Activate automatic crosshair scaling. Disable this if your crosshair looks too big or too small."
+      CrosshairScaleSlider=None
+      CrosshairScaleText="Crosshair Scale"
+      CrosshairScaleHelp="Adjust the size of your crosshair."
+      DefaultsButton=None
+      DefaultsText="Reset"
+      DefaultsHelp="Reset HUD settings to default values."
+      bInitialized=False
+      ControlOffset=10
 }

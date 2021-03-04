@@ -23,4 +23,13 @@ function RightClickTab()
 
 defaultproperties
 {
+      Caption=""
+      HelpText=""
+      Owner=None
+      TabTop=0.000000
+      TabLeft=0.000000
+      TabWidth=0.000000
+      TabHeight=0.000000
+      RowNumber=0
+      bFlash=False
 }

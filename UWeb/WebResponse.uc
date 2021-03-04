@@ -2,7 +2,7 @@ class WebResponse expands Object
 	native
 	noexport;
 
-var private native const int ReplacementMap[5];	// TMap<FString, FString>!
+var private native const pointer ReplacementMap[5];	// TMap<FString, FString>!
 var const config string IncludePath;
 var localized string CharSet;
 var WebConnection Connection;
@@ -114,5 +114,9 @@ function Redirect(string URL)
 
 defaultproperties
 {
-     IncludePath="../Web"
+      IncludePath="../Web"
+      CharSet=""
+      Connection=None
+      bSentText=False
+      bSentResponse=False
 }

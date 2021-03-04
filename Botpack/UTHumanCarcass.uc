@@ -455,18 +455,26 @@ Begin:
 
 defaultproperties
 {
-     ReducedHeightFactor=0.300000
-     LandedSound=Sound'UnrealShare.Gibs.Thump'
-     GibSounds(0)=Sound'UnrealShare.Gibs.Gib1'
-     GibSounds(1)=Sound'Botpack.Male.NewGib'
-     GibSounds(2)=Sound'UnrealShare.Gibs.Gib4'
-     GibSounds(3)=Sound'UnrealShare.Gibs.Gib5'
-     bReducedHeight=True
-     bSlidingCarcass=True
-     RemoteRole=ROLE_SimulatedProxy
-     PrePivot=(Z=28.000000)
-     TransientSoundVolume=3.000000
-     CollisionRadius=27.000000
-     CollisionHeight=13.000000
-     NetPriority=2.500000
+      MasterReplacement=None
+      bGreenBlood=False
+      bThumped=False
+      bPermanent=False
+      bCorroding=False
+      DeathZone=None
+      ReducedHeightFactor=0.300000
+      ExistTime=0.000000
+      LandedSound=Sound'UnrealShare.Gibs.Thump'
+      GibSounds(0)=Sound'UnrealShare.Gibs.Gib1'
+      GibSounds(1)=Sound'Botpack.Male.NewGib'
+      GibSounds(2)=Sound'UnrealShare.Gibs.Gib4'
+      GibSounds(3)=Sound'UnrealShare.Gibs.Gib5'
+      Pool=None
+      bReducedHeight=True
+      bSlidingCarcass=True
+      RemoteRole=ROLE_SimulatedProxy
+      PrePivot=(Z=28.000000)
+      TransientSoundVolume=3.000000
+      CollisionRadius=27.000000
+      CollisionHeight=13.000000
+      NetPriority=2.500000
 }

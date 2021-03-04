@@ -11,14 +11,14 @@ function PreBeginPlay()
 
 defaultproperties
 {
-     AccelRate=1.000000
-     SightRadius=4100.000000
-     CombatStyle=4363467783093056800000000.000000
-     CollisionRadius=52.000000
-     CollisionHeight=50.000000
-     bCollideActors=False
-     bCollideWorld=False
-     bBlockActors=False
-     bBlockPlayers=False
-     bProjTarget=False
+      AccelRate=1.000000
+      SightRadius=4100.000000
+      CombatStyle=4363467783093056784302080.000000
+      CollisionRadius=52.000000
+      CollisionHeight=50.000000
+      bCollideActors=False
+      bCollideWorld=False
+      bBlockActors=False
+      bBlockPlayers=False
+      bProjTarget=False
 }

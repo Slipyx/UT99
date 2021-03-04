@@ -65,16 +65,16 @@ simulated function CalcVelocity(vector Momentum, float ExplosionSize)
 
 defaultproperties
 {
-     Fragments(0)=LodMesh'UnrealShare.vfrag1'
-     Fragments(1)=LodMesh'UnrealShare.vfrag2'
-     Fragments(2)=LodMesh'UnrealShare.vfrag3'
-     Fragments(3)=LodMesh'UnrealShare.vfrag4'
-     Fragments(4)=LodMesh'UnrealShare.vfrag5'
-     Fragments(5)=LodMesh'UnrealShare.vfrag6'
-     Fragments(6)=LodMesh'UnrealShare.vfrag7'
-     numFragmentTypes=7
-     ImpactSound=Sound'UnrealShare.General.GlassTink1'
-     MiscSound=Sound'UnrealShare.General.GlassTink2'
-     LifeSpan=9.000000
-     Mesh=LodMesh'UnrealShare.vfrag1'
+      Fragments(0)=LodMesh'UnrealShare.vfrag1'
+      Fragments(1)=LodMesh'UnrealShare.vfrag2'
+      Fragments(2)=LodMesh'UnrealShare.vfrag3'
+      Fragments(3)=LodMesh'UnrealShare.vfrag4'
+      Fragments(4)=LodMesh'UnrealShare.vfrag5'
+      Fragments(5)=LodMesh'UnrealShare.vfrag6'
+      Fragments(6)=LodMesh'UnrealShare.vfrag7'
+      numFragmentTypes=7
+      ImpactSound=Sound'UnrealShare.General.GlassTink1'
+      MiscSound=Sound'UnrealShare.General.GlassTink2'
+      LifeSpan=9.000000
+      Mesh=LodMesh'UnrealShare.vfrag1'
 }

@@ -111,22 +111,34 @@ Auto State Exploding
 
 defaultproperties
 {
-     ExplosionSize=200.000000
-     ExplosionDimensions=120.000000
-     WallParticleSize=1.000000
-     WoodParticleSize=1.000000
-     GlassParticleSize=1.000000
-     NumWallChunks=10
-     NumWoodChunks=3
-     ActivatedBy(0)=exploded
-     bNetTemporary=False
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Sprite
-     Texture=Texture'UnrealShare.s_Exp'
-     DrawScale=0.300000
-     CollisionRadius=32.000000
-     CollisionHeight=32.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bProjTarget=True
+      ExplosionSize=200.000000
+      ExplosionDimensions=120.000000
+      WallParticleSize=1.000000
+      WoodParticleSize=1.000000
+      GlassParticleSize=1.000000
+      NumWallChunks=10
+      NumWoodChunks=3
+      NumGlassChunks=0
+      WallTexture=None
+      WoodTexture=None
+      GlassTexture=None
+      Health=0
+      ActivatedBy(0)="exploded"
+      ActivatedBy(1)="None"
+      ActivatedBy(2)="None"
+      ActivatedBy(3)="None"
+      ActivatedBy(4)="None"
+      BreakingSound=None
+      bTranslucentGlass=False
+      bUnlitGlass=False
+      bNetTemporary=False
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Sprite
+      Texture=Texture'UnrealShare.s_Exp'
+      DrawScale=0.300000
+      CollisionRadius=32.000000
+      CollisionHeight=32.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bProjTarget=True
 }

@@ -7,5 +7,5 @@ class ChainsawMelee expands Mutator;
 
 defaultproperties
 {
-     DefaultWeapon=Class'Botpack.ChainSaw'
+      DefaultWeapon=Class'Botpack.ChainSaw'
 }

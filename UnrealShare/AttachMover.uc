@@ -39,4 +39,5 @@ function PostBeginPlay()
 
 defaultproperties
 {
+      AttachTag="None"
 }

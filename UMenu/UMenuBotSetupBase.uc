@@ -115,17 +115,20 @@ function BotChanged()
 
 defaultproperties
 {
-     BotText="Bot:"
-     BotHelp="Select the bot you wish to configure."
-     BotWord="Bot"
-     DefaultsText="Reset"
-     DefaultsHelp="Reset all bot configurations to their default settings."
-     ControlOffset=35
-     PlayerBaseClass="Bots"
-     NameHelp="Set this bot's name."
-     TeamText="Color:"
-     TeamHelp="Select the team color for this bot."
-     ClassHelp="Select this bot's class."
-     SkinHelp="Choose a skin for this bot."
-     FaceHelp="Choose a face for this bot."
+      ConfigureBot=0
+      BotCombo=None
+      BotText="Bot:"
+      BotHelp="Select the bot you wish to configure."
+      BotWord="Bot"
+      DefaultsButton=None
+      DefaultsText="Reset"
+      DefaultsHelp="Reset all bot configurations to their default settings."
+      ControlOffset=35
+      PlayerBaseClass="Bots"
+      NameHelp="Set this bot's name."
+      TeamText="Color:"
+      TeamHelp="Select the team color for this bot."
+      ClassHelp="Select this bot's class."
+      SkinHelp="Choose a skin for this bot."
+      FaceHelp="Choose a face for this bot."
 }

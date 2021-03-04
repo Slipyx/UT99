@@ -23,4 +23,5 @@ function OverURL(string URL)
 
 defaultproperties
 {
+      StatusURL=""
 }

@@ -48,8 +48,10 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.BulletHitM'
-     AmbientGlow=64
+      AnimType="None"
+      MyRotation=(Pitch=0,Yaw=0,Roll=0)
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.BulletHitM'
+      AmbientGlow=64
 }

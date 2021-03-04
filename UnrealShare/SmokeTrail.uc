@@ -11,10 +11,10 @@ class SmokeTrail extends Effects;
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.SmoketrailM'
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.SmoketrailM'
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
 }

@@ -23,11 +23,11 @@ event ActorLeaving( actor Other )
 
 defaultproperties
 {
-     ZoneFluidFriction=4.000000
-     ZoneTerminalVelocity=250.000000
-     EntrySound=Sound'UnrealShare.Generic.LavaEn'
-     ExitSound=Sound'UnrealShare.Generic.LavaEx'
-     bWaterZone=True
-     ViewFlash=(X=-0.390000,Y=-0.390000,Z=-0.390000)
-     ViewFog=(X=0.312500,Y=0.312500,Z=0.234375)
+      ZoneFluidFriction=4.000000
+      ZoneTerminalVelocity=250.000000
+      EntrySound=Sound'UnrealShare.Generic.LavaEn'
+      ExitSound=Sound'UnrealShare.Generic.LavaEx'
+      bWaterZone=True
+      ViewFlash=(X=-0.390000,Y=-0.390000,Z=-0.390000)
+      ViewFog=(X=0.312500,Y=0.312500,Z=0.234375)
 }

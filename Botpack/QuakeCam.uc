@@ -33,6 +33,6 @@ function Timer()
 
 defaultproperties
 {
-     magnitude=2000.000000
-     bStatic=False
+      magnitude=2000.000000
+      bStatic=False
 }

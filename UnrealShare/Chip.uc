@@ -64,14 +64,15 @@ auto state Flying
 
 defaultproperties
 {
-     bNetOptional=True
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.ChipM'
-     bUnlit=True
-     bCollideWorld=True
-     bBounce=True
-     bFixedRotationDir=True
+      bHasBounced=False
+      bNetOptional=True
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.ChipM'
+      bUnlit=True
+      bCollideWorld=True
+      bBounce=True
+      bFixedRotationDir=True
 }

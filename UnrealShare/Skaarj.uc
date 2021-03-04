@@ -688,12 +688,16 @@ function PlayTakeHit(float tweentime, vector HitLoc, int damage)
 
 function SpinDamageTarget()
 {
+	if (Target == None)
+	    return;
 	if (MeleeDamageTarget(SpinDamage, (SpinDamage * 1000 * Normal(Target.Location - Location))) )
 		PlaySound(slice, SLOT_Interact);		
 }
 
 function ClawDamageTarget()
 {
+    if (Target == None)
+	    return;
 	if ( MeleeDamageTarget(ClawDamage, (ClawDamage * 900 * Normal(Target.Location - Location))) )
 		PlaySound(slice, SLOT_Interact);			
 }
@@ -703,6 +707,12 @@ function PlayMeleeAttack()
 {
 	local int hitdamage;
 	local float TargetDist, decision;
+
+    if (Target == None)
+	{
+        PlayChallenge();
+		return;
+    }
 
 	decision = FRand();
 	if (AnimSequence == 'Spin')
@@ -757,6 +767,8 @@ ignores seeplayer, hearnoise, bump, hitwall;
 	function BeginState()
 	{
 		Super.BeginState();
+		if (NextState == 'TakeHit')
+			NextState = '';		
 		If ( AnimSequence == 'Death2' )
 			GotoState('FallingState');
 	}	
@@ -884,6 +896,8 @@ ignores SeePlayer, HearNoise;
 	
 	function LungeDamageTarget()
 	{
+		if (Target == None)
+		    return;
 		If (MeleeDamageTarget(LungeDamage, (LungeDamage * 2000 * Normal(Target.Location - Location))))
 		{
 			AttackSuccess = true;
@@ -895,6 +909,13 @@ ignores SeePlayer, HearNoise;
 	function PlayRangedAttack()
 	{
 		local float dist;
+
+		if (Target == None)
+		{
+			GotoState('Attacking');
+			return;
+		}
+		
 		dist = VSize(Target.Location - Location + vect(0,0,1) * (CollisionHeight - Target.CollisionHeight));
 		if ( (FRand() < 0.7) && (dist < 180 + CollisionRadius + Target.CollisionRadius) && (Region.Zone.bWaterZone || !Target.Region.Zone.bWaterZone) )
 		{
@@ -916,52 +937,57 @@ ignores SeePlayer, HearNoise;
 
 defaultproperties
 {
-     LungeDamage=30
-     SpinDamage=20
-     ClawDamage=15
-     HitSound3=Sound'UnrealShare.Skaarj.injur3sk'
-     HitSound4=Sound'UnrealShare.Skaarj.injur3sk'
-     syllable1=Sound'UnrealShare.Skaarj.syl07sk'
-     syllable2=Sound'UnrealShare.Skaarj.syl09sk'
-     syllable3=Sound'UnrealShare.Skaarj.syl11sk'
-     syllable4=Sound'UnrealShare.Skaarj.syl12sk'
-     syllable5=Sound'UnrealShare.Skaarj.syl13sk'
-     syllable6=Sound'UnrealShare.Skaarj.syl15sk'
-     spin=Sound'UnrealShare.Skaarj.spin1s'
-     claw=Sound'UnrealShare.Skaarj.claw2s'
-     slice=Sound'UnrealShare.Skaarj.clawhit1s'
-     lunge=Sound'UnrealShare.Skaarj.lunge1sk'
-     hairflip=Sound'UnrealShare.Skaarj.hairflp2sk'
-     Die2=Sound'UnrealShare.Skaarj.death2sk'
-     footstep=Sound'UnrealShare.Cow.walkC'
-     Footstep2=Sound'UnrealShare.Cow.walkC'
-     VoicePitch=0.500000
-     CarcassType=Class'UnrealShare.SkaarjCarcass'
-     Aggressiveness=0.500000
-     RefireRate=0.500000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     RangedProjectile=Class'UnrealShare.SkaarjProjectile'
-     Acquire=Sound'UnrealShare.Skaarj.chalnge1s'
-     Roam=Sound'UnrealShare.Skaarj.roam11s'
-     Threaten=Sound'UnrealShare.Skaarj.chalnge3s'
-     bCanStrafe=True
-     MeleeRange=40.000000
-     GroundSpeed=440.000000
-     AccelRate=1200.000000
-     Health=210
-     UnderWaterTime=-1.000000
-     Intelligence=BRAINS_HUMAN
-     HitSound1=Sound'UnrealShare.Skaarj.injur1sk'
-     HitSound2=Sound'UnrealShare.Skaarj.injur2sk'
-     Die=Sound'UnrealShare.Skaarj.death1sk'
-     CombatStyle=0.650000
-     AmbientSound=Sound'UnrealShare.Skaarj.amb1sk'
-     DrawType=DT_Mesh
-     TransientSoundVolume=3.000000
-     CollisionRadius=35.000000
-     CollisionHeight=46.000000
-     Mass=150.000000
-     Buoyancy=150.000000
-     RotationRate=(Pitch=3072,Yaw=60000,Roll=2048)
+      LungeDamage=30
+      SpinDamage=20
+      ClawDamage=15
+      AttackSuccess=False
+      bButtonPusher=False
+      bFakeDeath=False
+      HitSound3=Sound'UnrealShare.Skaarj.injur3sk'
+      HitSound4=Sound'UnrealShare.Skaarj.injur3sk'
+      syllable1=Sound'UnrealShare.Skaarj.syl07sk'
+      syllable2=Sound'UnrealShare.Skaarj.syl09sk'
+      syllable3=Sound'UnrealShare.Skaarj.syl11sk'
+      syllable4=Sound'UnrealShare.Skaarj.syl12sk'
+      syllable5=Sound'UnrealShare.Skaarj.syl13sk'
+      syllable6=Sound'UnrealShare.Skaarj.syl15sk'
+      spin=Sound'UnrealShare.Skaarj.spin1s'
+      claw=Sound'UnrealShare.Skaarj.claw2s'
+      slice=Sound'UnrealShare.Skaarj.clawhit1s'
+      lunge=Sound'UnrealShare.Skaarj.lunge1sk'
+      hairflip=Sound'UnrealShare.Skaarj.hairflp2sk'
+      Die2=Sound'UnrealShare.Skaarj.death2sk'
+      footstep=Sound'UnrealShare.Cow.walkC'
+      Footstep2=Sound'UnrealShare.Cow.walkC'
+      phrase="None"
+      phrasesyllable=0
+      VoicePitch=0.500000
+      CarcassType=Class'UnrealShare.SkaarjCarcass'
+      Aggressiveness=0.500000
+      RefireRate=0.500000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      RangedProjectile=Class'UnrealShare.SkaarjProjectile'
+      Acquire=Sound'UnrealShare.Skaarj.chalnge1s'
+      Roam=Sound'UnrealShare.Skaarj.roam11s'
+      Threaten=Sound'UnrealShare.Skaarj.chalnge3s'
+      bCanStrafe=True
+      MeleeRange=40.000000
+      GroundSpeed=440.000000
+      AccelRate=1200.000000
+      Health=210
+      UnderWaterTime=-1.000000
+      Intelligence=BRAINS_HUMAN
+      HitSound1=Sound'UnrealShare.Skaarj.injur1sk'
+      HitSound2=Sound'UnrealShare.Skaarj.injur2sk'
+      Die=Sound'UnrealShare.Skaarj.death1sk'
+      CombatStyle=0.650000
+      AmbientSound=Sound'UnrealShare.Skaarj.amb1sk'
+      DrawType=DT_Mesh
+      TransientSoundVolume=3.000000
+      CollisionRadius=35.000000
+      CollisionHeight=46.000000
+      Mass=150.000000
+      Buoyancy=150.000000
+      RotationRate=(Pitch=3072,Yaw=60000,Roll=2048)
 }

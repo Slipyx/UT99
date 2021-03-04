@@ -177,19 +177,21 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     InternetOption=" Internet (28.8 - 56K)"
-     FastInternetOption=" Fast Internet (ISDN, cable modem)"
-     LANOption=" LAN"
-     MenuLength=5
-     HelpMessage(1)="Listen for local servers"
-     HelpMessage(2)="Choose a server from a list of favorites"
-     HelpMessage(3)="Hit enter to type in a server address.  Hit enter again to go to this server."
-     HelpMessage(4)="Set networking speed."
-     HelpMessage(5)="Open GameSpy Lite"
-     MenuList(1)="Find Local Servers"
-     MenuList(2)="Choose From Favorites"
-     MenuList(3)="Open"
-     MenuList(4)="Net Speed"
-     MenuList(5)="Go to the Unreal server list"
-     MenuTitle="JOIN GAME"
+      LastServer=""
+      OldLastServer=""
+      InternetOption=" Internet (28.8 - 56K)"
+      FastInternetOption=" Fast Internet (ISDN, cable modem)"
+      LANOption=" LAN"
+      MenuLength=5
+      HelpMessage(1)="Listen for local servers"
+      HelpMessage(2)="Choose a server from a list of favorites"
+      HelpMessage(3)="Hit enter to type in a server address.  Hit enter again to go to this server."
+      HelpMessage(4)="Set networking speed."
+      HelpMessage(5)="Open GameSpy Lite"
+      MenuList(1)="Find Local Servers"
+      MenuList(2)="Choose From Favorites"
+      MenuList(3)="Open"
+      MenuList(4)="Net Speed"
+      MenuList(5)="Go to the Unreal server list"
+      MenuTitle="JOIN GAME"
 }

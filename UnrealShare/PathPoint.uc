@@ -10,4 +10,8 @@ var   vector pVelocity;			// calculated internally, the velocity at this point
 
 defaultproperties
 {
+      sequence_Number=0
+      curveSpeed=0.000000
+      speedU=0.000000
+      pVelocity=(X=0.000000,Y=0.000000,Z=0.000000)
 }

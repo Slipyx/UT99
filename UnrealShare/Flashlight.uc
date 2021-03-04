@@ -90,24 +90,34 @@ Begin:
 
 defaultproperties
 {
-     ExpireMessage="Flashlight batteries have died."
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You picked up the flashlight"
-     RespawnTime=40.000000
-     PickupViewMesh=LodMesh'UnrealShare.Flashl'
-     Charge=800
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealShare.Pickups.FSHLITE1'
-     DeActivateSound=Sound'UnrealShare.Pickups.FSHLITE2'
-     Icon=Texture'UnrealShare.Icons.I_Flashlight'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealShare.Flashl'
-     AmbientGlow=96
-     CollisionRadius=22.000000
-     CollisionHeight=4.000000
-     LightBrightness=100
-     LightHue=33
-     LightSaturation=187
-     LightRadius=7
+      S=None
+      TimeChange=0.000000
+      HitNormal=(X=0.000000,Y=0.000000,Z=0.000000)
+      HitLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      EndTrace=(X=0.000000,Y=0.000000,Z=0.000000)
+      StartTrace=(X=0.000000,Y=0.000000,Z=0.000000)
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      NewHitLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      ExpireMessage="Flashlight batteries have died."
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You picked up the flashlight"
+      RespawnTime=40.000000
+      PickupViewMesh=LodMesh'UnrealShare.Flashl'
+      Charge=800
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealShare.Pickups.FSHLITE1'
+      DeActivateSound=Sound'UnrealShare.Pickups.FSHLITE2'
+      Icon=Texture'UnrealShare.Icons.I_Flashlight'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealShare.Flashl'
+      AmbientGlow=96
+      CollisionRadius=22.000000
+      CollisionHeight=4.000000
+      LightBrightness=100
+      LightHue=33
+      LightSaturation=187
+      LightRadius=7
 }

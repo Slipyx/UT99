@@ -13,10 +13,10 @@ class ToolBox extends ut_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.toolboxM'
-     DrawScale=0.250000
-     CollisionHeight=30.000000
-     bBlockActors=True
-     bBlockPlayers=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.toolboxM'
+      DrawScale=0.250000
+      CollisionHeight=30.000000
+      bBlockActors=True
+      bBlockPlayers=True
 }

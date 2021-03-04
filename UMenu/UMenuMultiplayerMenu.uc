@@ -144,7 +144,7 @@ function ExecuteItem(UWindowPulldownMenuItem I)
 			LoadUBrowser();
 		break;
 	case Patch:
-		GetPlayerOwner().ConsoleCommand("start http://unreal.epicgames.com/");
+		GetPlayerOwner().ConsoleCommand("start https://www.oldunreal.com/");
 		break;
 	case Disconnect:
 		GetPlayerOwner().ConsoleCommand("disconnect");
@@ -217,24 +217,36 @@ function LoadUBrowser()
 
 defaultproperties
 {
-     StartName="&Start New Multiplayer Game"
-     StartHelp="Start your own network game which others can join."
-     BrowserName="&Find Internet Games"
-     BrowserHelp="Search for games currently in progress on the Internet."
-     LANName="Find &LAN Games"
-     LANHelp="Search for games of your local LAN."
-     OpenLocationName="Open &Location"
-     OpenLocationHelp="Connect to a server using its IP address or unreal:// URL."
-     PatchName="Download Latest &Update"
-     PatchHelp="Find the latest update to Unreal Tournament on the web!"
-     DisconnectName="&Disconnect from Server"
-     DisconnectHelp="Disconnect from the current server."
-     ReconnectName="&Reconnect to Server"
-     ReconnectHelp="Attempt to reconnect to the last server you were connected to."
-     SuggestPlayerSetupTitle="Check Player Name"
-     SuggestPlayerSetupText="Your name is currently set to Player.  It is recommended that you go to Player Setup and give yourself another name before playing a multiplayer game.\n\nWould you like to go to Player Setup instead?"
-     SuggestNetspeedTitle="Check Internet Speed"
-     SuggestNetspeedText="You haven't yet configured the type of Internet connection you will be playing with. It is recommended that you go to the Network Settings screen to ensure you have the best online gaming experience.\n\nWould you like to go to Network Settings instead?"
-     UBrowserClassName="UBrowser.UBrowserMainWindow"
-     StartGameClassName="UMenu.UMenuStartGameWindow"
+      Start=None
+      Browser=None
+      LAN=None
+      Patch=None
+      Disconnect=None
+      Reconnect=None
+      OpenLocation=None
+      BrowserWindow=None
+      StartName="&Start New Multiplayer Game"
+      StartHelp="Start your own network game which others can join."
+      BrowserName="&Find Internet Games"
+      BrowserHelp="Search for games currently in progress on the Internet."
+      LANName="Find &LAN Games"
+      LANHelp="Search for games of your local LAN."
+      OpenLocationName="Open &Location"
+      OpenLocationHelp="Connect to a server using its IP address or unreal:// URL."
+      PatchName="Download Latest &Update"
+      PatchHelp="Find the latest update to Unreal Tournament on the web!"
+      DisconnectName="&Disconnect from Server"
+      DisconnectHelp="Disconnect from the current server."
+      ReconnectName="&Reconnect to Server"
+      ReconnectHelp="Attempt to reconnect to the last server you were connected to."
+      SuggestPlayerSetupTitle="Check Player Name"
+      SuggestPlayerSetupText="Your name is currently set to Player.  It is recommended that you go to Player Setup and give yourself another name before playing a multiplayer game.\n\nWould you like to go to Player Setup instead?"
+      SuggestNetspeedTitle="Check Internet Speed"
+      SuggestNetspeedText="You haven't yet configured the type of Internet connection you will be playing with. It is recommended that you go to the Network Settings screen to ensure you have the best online gaming experience.\n\nWould you like to go to Network Settings instead?"
+      UBrowserClassName="UBrowser.UBrowserMainWindow"
+      StartGameClassName="UMenu.UMenuStartGameWindow"
+      SuggestPlayerSetup=None
+      SuggestNetspeed=None
+      bOpenLocation=False
+      bOpenLAN=False
 }

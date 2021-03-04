@@ -40,6 +40,7 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuMapListCW'
-     WindowTitle="Map List"
+      CloseButton=None
+      ClientClass=Class'UMenu.UMenuMapListCW'
+      WindowTitle="Map List"
 }

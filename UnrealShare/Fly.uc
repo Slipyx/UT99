@@ -198,9 +198,18 @@ function PlayVictoryDance()
 	
 function PlayMeleeAttack()
 {
-	PlayAnim('Shoot1');
+	if ( Target == None )
+	{
+		Playrunning();
+		return;
+	}
+	if (Physics == PHYS_Walking)
+		PlayAnim('Shoot2');
+	else
+		PlayAnim('Shoot1');
+
 	if ( MeleeDamageTarget(15, (15 * 1000.0 * Normal(Target.Location - Location))) )
-		PlaySound(Threaten, SLOT_Talk); //FIXME - stingdamage instead of projectile
+		PlaySound(Threaten, SLOT_Talk);
 	GotoState('TacticalMove', 'BackOff');
 }
 
@@ -209,14 +218,20 @@ function PlayRangedAttack()
 	local vector projStart;
 	local vector adjust;
 
+	if ( Target != none && VSize(Target.Location - Location) <= (MeleeRange + Target.CollisionRadius + CollisionRadius ) )
+	{
+		PlayMeleeAttack();
+		return;
+	}
 	PlayAnim('Shoot1');
-	/*
-	adjust = vect(0,0,0);
-	adjust.Z = Target.CollisionHeight + 20;
-	Acceleration = AccelRate * Normal(Target.Location - Location + adjust);
-	projStart = Location - 0.5 * CollisionHeight * vect(0,0,1);
-	spawn(RangedProjectile ,self,'',projStart,AdjustAim(ProjectileSpeed, projStart, 400, false, false));
-	*/
+	if (RangedProjectile!=None)
+	{
+	    adjust = vect(0,0,0);
+	    adjust.Z = Target.CollisionHeight + 20;
+	    Acceleration = AccelRate * Normal(Target.Location - Location + adjust);
+	    projStart = Location - 0.5 * CollisionHeight * vect(0,0,1);
+	    spawn(RangedProjectile ,self,'',projStart,AdjustAim(ProjectileSpeed, projStart, 400, false, false));
+	}
 }
 
 function PlayMovingAttack()
@@ -229,7 +244,10 @@ state TacticalMove
 ignores SeePlayer, HearNoise;
 
 BackOff:
-	Acceleration = AccelRate * Normal(Location - Enemy.Location);
+	if (Enemy == none)
+		Acceleration = AccelRate * Normal(Focus);
+	else
+		Acceleration = AccelRate * Normal(Location - Enemy.Location);
 	Acceleration.Z *= 0.5;
 	Destination = Location;
 	Sleep(0.5);
@@ -248,32 +266,55 @@ Begin:
 	GotoState('Wandering');
 }
 
+state Attacking
+{
+	ignores SeePlayer, HearNoise, Bump, HitWall;
+
+	function BeginState()
+	{
+		if ( TimerRate <= 0.0 )
+			SetTimer(TimeBetweenAttacks  * (1.0 + FRand()),false);
+		SetMovementPhysics();
+	}
+}
+
+state Charging
+{
+	ignores SeePlayer, HearNoise;
+
+	function BeginState()
+	{
+		SetMovementPhysics(); // came from bump melee ? reset
+		super.Beginstate();
+	}
+}
+
 defaultproperties
 {
-     CarcassType=Class'UnrealShare.FlyCarcass'
-     Aggressiveness=0.700000
-     RefireRate=0.700000
-     WalkingSpeed=1.000000
-     bCanStrafe=True
-     MeleeRange=40.000000
-     GroundSpeed=100.000000
-     AirSpeed=240.000000
-     AccelRate=600.000000
-     JumpZ=10.000000
-     Visibility=100
-     SightRadius=1000.000000
-     PeripheralVision=-0.500000
-     Health=30
-     HitSound1=Sound'UnrealShare.Razorfly.injur1rf'
-     HitSound2=Sound'UnrealShare.Razorfly.injur2rf'
-     Land=None
-     Die=Sound'UnrealShare.Razorfly.death1rf'
-     CombatStyle=0.400000
-     AmbientSound=Sound'UnrealShare.Razorfly.buzz3rf'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.FlyM'
-     CollisionRadius=20.000000
-     CollisionHeight=12.000000
-     Buoyancy=110.000000
-     RotationRate=(Pitch=6000,Yaw=65000,Roll=8192)
+      CarcassType=Class'UnrealShare.FlyCarcass'
+      Aggressiveness=0.700000
+      RefireRate=0.700000
+      WalkingSpeed=1.000000
+      bCanStrafe=True
+      MeleeRange=40.000000
+      GroundSpeed=100.000000
+      AirSpeed=240.000000
+      AccelRate=600.000000
+      JumpZ=10.000000
+      Visibility=100
+      SightRadius=1000.000000
+      PeripheralVision=-0.500000
+      Health=30
+      HitSound1=Sound'UnrealShare.Razorfly.injur1rf'
+      HitSound2=Sound'UnrealShare.Razorfly.injur2rf'
+      Land=None
+      Die=Sound'UnrealShare.Razorfly.death1rf'
+      CombatStyle=0.400000
+      AmbientSound=Sound'UnrealShare.Razorfly.buzz3rf'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.FlyM'
+      CollisionRadius=20.000000
+      CollisionHeight=12.000000
+      Buoyancy=110.000000
+      RotationRate=(Pitch=6000,Yaw=65000,Roll=8192)
 }

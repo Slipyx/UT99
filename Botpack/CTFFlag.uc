@@ -72,6 +72,9 @@ function SendHome()
 	For (aPawn = Level.PawnList; aPawn!=None; aPawn=aPawn.nextPawn )
 		if ( aPawn.MoveTarget == self )
 			aPawn.MoveTimer = -1.0;
+
+	// stijn: wasn't getting reset previously...
+	LightType = LT_Steady;
 }
 	
 function Landed(vector HitNormall)
@@ -369,30 +372,35 @@ auto state Home
 
 defaultproperties
 {
-     bHome=True
-     bStatic=False
-     bHidden=True
-     bAlwaysRelevant=True
-     bStasis=False
-     DrawType=DT_Mesh
-     Style=STY_Masked
-     Skin=Texture'Botpack.Skins.JpflagB'
-     Mesh=LodMesh'Botpack.pflag'
-     DrawScale=0.600000
-     PrePivot=(X=2.000000)
-     bUnlit=True
-     CollisionRadius=48.000000
-     CollisionHeight=30.000000
-     bCollideActors=True
-     bCollideWorld=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=170
-     LightRadius=6
-     bFixedRotationDir=True
-     Mass=30.000000
-     Buoyancy=20.000000
-     RotationRate=(Pitch=30000,Roll=30000)
-     NetPriority=3.000000
+      Team=0
+      bHome=True
+      bKnownLocation=False
+      bHeld=False
+      Holder=None
+      HomeBase=None
+      bStatic=False
+      bHidden=True
+      bAlwaysRelevant=True
+      bStasis=False
+      DrawType=DT_Mesh
+      Style=STY_Masked
+      Skin=Texture'Botpack.Skins.JpflagB'
+      Mesh=LodMesh'Botpack.pflag'
+      DrawScale=0.600000
+      PrePivot=(X=2.000000)
+      bUnlit=True
+      CollisionRadius=48.000000
+      CollisionHeight=30.000000
+      bCollideActors=True
+      bCollideWorld=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=170
+      LightRadius=6
+      bFixedRotationDir=True
+      Mass=30.000000
+      Buoyancy=20.000000
+      RotationRate=(Pitch=30000,Roll=30000)
+      NetPriority=3.000000
 }

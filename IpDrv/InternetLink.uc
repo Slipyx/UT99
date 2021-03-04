@@ -25,10 +25,10 @@ var enum ELinkMode
 } LinkMode;
 
 // Internal
-var	const int Socket;
+var	const pointer Socket;
 var const int Port;
-var	const int RemoteSocket;
-var private native const int PrivateResolveInfo;
+var	const pointer RemoteSocket;
+var private native const pointer PrivateResolveInfo;
 var const int DataPending;
 
 // Receive mode.
@@ -91,4 +91,10 @@ event ResolveFailed();
 
 defaultproperties
 {
+      LinkMode=MODE_Text
+      Socket=
+      Port=0
+      RemoteSocket=
+      DataPending=0
+      ReceiveMode=RMODE_Manual
 }

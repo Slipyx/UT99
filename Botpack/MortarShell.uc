@@ -22,6 +22,6 @@ function Explode(vector HitLocation, vector HitNormal)
 
 defaultproperties
 {
-     BlastRadius=150
-     MomentumTransfer=150000
+      BlastRadius=150
+      MomentumTransfer=150000
 }

@@ -39,13 +39,13 @@ function PostBeginPlay()
 
 function Connect(UBrowserIRCSystemPage InSystemPage, string InServer, string InNickName, string InUserIdent, string InFullName, string InDefaultChannel)
 {
-	local int i;
+	local string Port;
 
-  UPop = "@";
-  UPhalfop = "%";
-  UPvoice = "+";
-  UserPrefixes = UPop$UPhalfop$UPvoice;
-  ChannelPrefixes = "&#";
+	UPop = "@";
+	UPhalfop = "%";
+	UPvoice = "+";
+	UserPrefixes = UPop$UPhalfop$UPvoice;
+	ChannelPrefixes = "&#";
 
 	SystemPage = InSystemPage;
 	NickName = InNickName;
@@ -53,16 +53,16 @@ function Connect(UBrowserIRCSystemPage InSystemPage, string InServer, string InN
 	UserIdent = InUserIdent;
 	DefaultChannel = InDefaultChannel;
 
-	i = InStr(InServer, ":");
-	if(i == -1)
+	Port = GetPort(InServer);
+	if ( Port == "" )
 	{
 		ServerAddress = InServer;
 		ServerPort = 6667;
 	}
 	else
 	{
-		ServerAddress = Left(InServer, i);
-		ServerPort = Int(Mid(InServer, i+1));
+		ServerAddress = StripPort(InServer);
+		ServerPort = int(Port);
 	}
 
 	ResetBuffer();
@@ -571,13 +571,26 @@ function DestroyLink()
 
 defaultproperties
 {
-     InvalidAddressText="Invalid server address, aborting."
-     ErrorBindingText="Error binding local port, aborting."
-     ResolveFailedText="Failed to resolve server address, aborting."
-     ConnectedText="Connected."
-     ConnectingToText="Connecting to"
-     TimeOutError="Timeout connecting to server."
-     InviteString="invites you to join"
-     DisconnectReason="Disconnected"
-     VersionString="UBrowser IRC Client version "
+      ServerIPAddr=(Addr=0,Port=0)
+      ServerAddress=""
+      ServerPort=0
+      NickName=""
+      UserIdent=""
+      FullName=""
+      DefaultChannel=""
+      InvalidAddressText="Invalid server address, aborting."
+      ErrorBindingText="Error binding local port, aborting."
+      ResolveFailedText="Failed to resolve server address, aborting."
+      ConnectedText="Connected."
+      ConnectingToText="Connecting to"
+      TimeOutError="Timeout connecting to server."
+      InviteString="invites you to join"
+      SystemPage=None
+      DisconnectReason="Disconnected"
+      VersionString="UBrowser IRC Client version "
+      UPop=""
+      UPhalfop=""
+      UPvoice=""
+      UserPrefixes=""
+      ChannelPrefixes=""
 }

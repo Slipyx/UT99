@@ -52,29 +52,42 @@ simulated function Destroyed()
 
 simulated function CheckBeam(vector X, float DeltaTime)
 {
-	local actor HitActor;
-	local vector HitLocation, HitNormal;
+	local Actor HitActor;
+	local vector HitLocation, HitNormal, Momentum;
 
+	// [Higor] Fix for firing through walls (check between player eye and bolt start first)
+	if ( (Position == 0) && (Instigator != None) )
+		HitActor = Trace( HitLocation, HitNormal, Location, Instigator.Location + vect(0,0,1)*Instigator.BaseEyeHeight, true);
+	
 	// check to see if hits something, else spawn or orient child
+	if ( (HitActor == None) || (HitActor == Instigator) )
+		HitActor = Trace(HitLocation, HitNormal, Location + BeamSize * X, Location, true);
 
-	HitActor = Trace(HitLocation, HitNormal, Location + BeamSize * X, Location, true);
 	if ( (HitActor != None)	&& (HitActor != Instigator)
 		&& (HitActor.bProjTarget || (HitActor == Level) || (HitActor.bBlockActors && HitActor.bBlockPlayers)) 
 		&& ((Pawn(HitActor) == None) || Pawn(HitActor).AdjustHitLocation(HitLocation, Velocity)) )
 	{
 		if ( Level.Netmode != NM_Client )
-		{
+		{			
 			if ( DamagedActor == None )
 			{
 				AccumulatedDamage = FMin(0.5 * (Level.TimeSeconds - LastHitTime), 0.1);
-				HitActor.TakeDamage(damage * AccumulatedDamage, instigator,HitLocation,
-					(MomentumTransfer * X * AccumulatedDamage), MyDamageType);
+				if (Level.Game.NoLockdown == 1)
+				    Momentum = vect(0,0,0);
+				else
+				    Momentum = MomentumTransfer * X * AccumulatedDamage;
+				HitActor.TakeDamage(damage * AccumulatedDamage, instigator, HitLocation,
+					Momentum, MyDamageType);
 				AccumulatedDamage = 0;
 			}				
 			else if ( DamagedActor != HitActor )
 			{
-				DamagedActor.TakeDamage(damage * AccumulatedDamage, instigator,HitLocation,
-					(MomentumTransfer * X * AccumulatedDamage), MyDamageType);
+   				if (Level.Game.NoLockdown == 1)
+				    Momentum = vect(0,0,0);
+				else
+				    Momentum = MomentumTransfer * X * AccumulatedDamage;
+				DamagedActor.TakeDamage(damage * AccumulatedDamage, instigator, HitLocation,
+					Momentum, MyDamageType);
 				AccumulatedDamage = 0;
 			}				
 			LastHitTime = Level.TimeSeconds;
@@ -82,10 +95,15 @@ simulated function CheckBeam(vector X, float DeltaTime)
 			AccumulatedDamage += DeltaTime;
 			if ( AccumulatedDamage > 0.22 )
 			{
+				// repeated hits to the same actor
 				if ( DamagedActor.IsA('Carcass') && (FRand() < 0.09) )
 					AccumulatedDamage = 35/damage;
-				DamagedActor.TakeDamage(damage * AccumulatedDamage, instigator,HitLocation,
-					(MomentumTransfer * X * AccumulatedDamage), MyDamageType);
+   				if (Level.Game.NoLockdown > 0)
+				    Momentum = vect(0,0,0);
+				else
+				    Momentum = MomentumTransfer * X * AccumulatedDamage;
+				DamagedActor.TakeDamage(damage * AccumulatedDamage, instigator, HitLocation,
+					Momentum, MyDamageType);
 				AccumulatedDamage = 0;
 			}
 		}
@@ -118,8 +136,13 @@ simulated function CheckBeam(vector X, float DeltaTime)
 	}
 	else if ( (Level.Netmode != NM_Client) && (DamagedActor != None) )
 	{
+		if (Level.Game.NoLockdown == 1)
+		    Momentum = vect(0,0,0);
+		else
+		    Momentum = MomentumTransfer * X * AccumulatedDamage;
+
 		DamagedActor.TakeDamage(damage * AccumulatedDamage, instigator, DamagedActor.Location - X * 1.2 * DamagedActor.CollisionRadius,
-			(MomentumTransfer * X * AccumulatedDamage), MyDamageType);
+			Momentum, MyDamageType);
 		AccumulatedDamage = 0;
 		DamagedActor = None;
 	}			
@@ -156,9 +179,6 @@ simulated function CheckBeam(vector X, float DeltaTime)
 
 simulated function UpdateBeam(PBolt ParentBolt, vector Dir, float DeltaTime)
 {
-	local actor HitActor;
-	local vector HitLocation, HitNormal;
-
 	SpriteFrame = ParentBolt.SpriteFrame;
 	Skin = SpriteAnim[SpriteFrame];
 	SetLocation(ParentBolt.Location + BeamSize * Dir);
@@ -168,31 +188,39 @@ simulated function UpdateBeam(PBolt ParentBolt, vector Dir, float DeltaTime)
 
 defaultproperties
 {
-     SpriteAnim(0)=Texture'Botpack.Skins.pbolt0'
-     SpriteAnim(1)=Texture'Botpack.Skins.pbolt1'
-     SpriteAnim(2)=Texture'Botpack.Skins.pbolt2'
-     SpriteAnim(3)=Texture'Botpack.Skins.pbolt3'
-     SpriteAnim(4)=Texture'Botpack.Skins.pbolt4'
-     FireOffset=(X=16.000000,Y=-14.000000,Z=-8.000000)
-     BeamSize=81.000000
-     bRight=True
-     MaxSpeed=0.000000
-     Damage=72.000000
-     MomentumTransfer=8500
-     MyDamageType=zapped
-     ExplosionDecal=Class'Botpack.BoltScorch'
-     bNetTemporary=False
-     Physics=PHYS_None
-     RemoteRole=ROLE_None
-     LifeSpan=60.000000
-     AmbientSound=Sound'Botpack.PulseGun.PulseBolt'
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Skins.pbolt0'
-     Skin=Texture'Botpack.Skins.pbolt0'
-     Mesh=LodMesh'Botpack.PBolt'
-     bUnlit=True
-     SoundRadius=12
-     SoundVolume=255
-     bCollideActors=False
-     bCollideWorld=False
+      SpriteAnim(0)=Texture'Botpack.Skins.pbolt0'
+      SpriteAnim(1)=Texture'Botpack.Skins.pbolt1'
+      SpriteAnim(2)=Texture'Botpack.Skins.pbolt2'
+      SpriteAnim(3)=Texture'Botpack.Skins.pbolt3'
+      SpriteAnim(4)=Texture'Botpack.Skins.pbolt4'
+      SpriteFrame=0
+      PlasmaBeam=None
+      WallEffect=None
+      Position=0
+      FireOffset=(X=16.000000,Y=-14.000000,Z=-8.000000)
+      BeamSize=81.000000
+      bRight=True
+      bCenter=False
+      AccumulatedDamage=0.000000
+      LastHitTime=0.000000
+      DamagedActor=None
+      MaxSpeed=0.000000
+      Damage=72.000000
+      MomentumTransfer=8500
+      MyDamageType="zapped"
+      ExplosionDecal=Class'Botpack.BoltScorch'
+      bNetTemporary=False
+      Physics=PHYS_None
+      RemoteRole=ROLE_None
+      LifeSpan=60.000000
+      AmbientSound=Sound'Botpack.PulseGun.PulseBolt'
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Skins.pbolt0'
+      Skin=Texture'Botpack.Skins.pbolt0'
+      Mesh=LodMesh'Botpack.PBolt'
+      bUnlit=True
+      SoundRadius=12
+      SoundVolume=255
+      bCollideActors=False
+      bCollideWorld=False
 }

@@ -90,6 +90,18 @@ static function int GetFontSize( int Switch );
 
 defaultproperties
 {
-     Lifetime=3
-     DrawColor=(R=255,G=255,B=255)
+      bComplexString=False
+      bIsSpecial=False
+      bIsUnique=False
+      bIsConsoleMessage=False
+      bFadeMessage=False
+      bBeep=False
+      bOffsetYPos=False
+      Lifetime=3
+      ChildMessage=None
+      bFromBottom=False
+      DrawColor=(R=255,G=255,B=255,A=0)
+      XPos=0.000000
+      YPos=0.000000
+      bCenter=False
 }

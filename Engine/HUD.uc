@@ -103,10 +103,15 @@ function bool ProcessKeyEvent( int Key, int Action, FLOAT Delta )
 
 defaultproperties
 {
-     Crosshair=7
-     HUDConfigWindowType="UMenu.UMenuHUDConfigCW"
-     WhiteColor=(G=128,B=255)
-     bHidden=True
-     bAlwaysTick=True
-     RemoteRole=ROLE_SimulatedProxy
+      HudMode=0
+      Crosshair=0
+      MainMenuType=None
+      HUDConfigWindowType="UMenu.UMenuHUDConfigCW"
+      WhiteColor=(R=0,G=128,B=255,A=0)
+      MainMenu=None
+      HUDMutator=None
+      PlayerOwner=None
+      bHidden=True
+      bAlwaysTick=True
+      RemoteRole=ROLE_SimulatedProxy
 }

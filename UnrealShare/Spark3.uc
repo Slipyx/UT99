@@ -33,11 +33,11 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     LifeSpan=0.250000
-     Style=STY_Translucent
-     Texture=FireTexture'UnrealShare.Effect1.FireEffect1u'
-     Mesh=LodMesh'UnrealShare.Spark3M'
-     DrawScale=0.100000
-     bUnlit=False
-     bParticles=True
+      LifeSpan=0.250000
+      Style=STY_Translucent
+      Texture=FireTexture'UnrealShare.Effect1.FireEffect1u'
+      Mesh=LodMesh'UnrealShare.Spark3M'
+      DrawScale=0.100000
+      bUnlit=False
+      bParticles=True
 }

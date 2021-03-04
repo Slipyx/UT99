@@ -13,6 +13,6 @@ function Created()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuHelpClientWindow'
-     WindowTitle="Help"
+      ClientClass=Class'UMenu.UMenuHelpClientWindow'
+      WindowTitle="Help"
 }

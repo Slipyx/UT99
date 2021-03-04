@@ -76,8 +76,8 @@ function Created()
 	OptionsUMenuType = Class<UWindowPulldownMenu>(DynamicLoadObject(OptionsUMenuName, class'Class'));
 	Options = UMenuOptionsMenu(OptionsItem.CreateMenu(OptionsUMenuType));
 
-	StatsItem = AddItem(StatsName);
-	Stats = StatsItem.CreateMenu(class'UMenuStatsMenu');
+//	StatsItem = AddItem(StatsName);
+//	Stats = StatsItem.CreateMenu(class'UMenuStatsMenu');
 
 	ToolItem = AddItem(ToolName);
 	Tool = ToolItem.CreateMenu(class'UMenuToolsMenu');
@@ -152,9 +152,9 @@ function ShowHelpItem(UWindowMenuBarItem I)
 	case OptionsItem:
 		SetHelp(OptionsHelp);
 		break;	
-	case StatsItem:
-		SetHelp(StatsHelp);
-		break;
+//	case StatsItem:
+//		SetHelp(StatsHelp);
+//		break;
 	case ToolItem:
 		SetHelp(ToolHelp);
 		break;	
@@ -227,7 +227,7 @@ function DrawMenuBar(Canvas C)
 	C.DrawColor.B = 0;
 
 	TextSize(C, VersionText, W, H);
-	ClipText(C, WinWidth - W - 20, 3, VersionText);
+	ClipText(C, WinWidth - W - 20, 1.5, VersionText);
 }
 
 function LMouseDown(float X, float Y)
@@ -317,24 +317,44 @@ function MenuCmd(int Menu, int Item)
 
 defaultproperties
 {
-     ShowHelp=True
-     GameName="&Game"
-     GameHelp="Start a new game, load a game, or quit."
-     MultiplayerName="&Multiplayer"
-     MultiplayerHelp="Host or join a multiplayer game."
-     OptionsName="&Options"
-     OptionsHelp="Configure settings."
-     StatsName="&Stats"
-     StatsHelp="Manage your local and world stats."
-     ToolName="&Tools"
-     ToolHelp="Enable various system tools."
-     HelpName="&Help"
-     HelpHelp="Enable or disable help."
-     VersionName="Version"
-     ModName="M&od"
-     ModHelp="Configure user-created mods you have installed."
-     GameUMenuDefault="UTMenu.UTGameMenu"
-     MultiplayerUMenuDefault="UTMenu.UTMultiplayerMenu"
-     OptionsUMenuDefault="UTMenu.UTOptionsMenu"
-     ModMenuClass="UMenu.UMenuModMenu"
+      Game=None
+      Multiplayer=None
+      Stats=None
+      Tool=None
+      Help=None
+      Mods=None
+      Options=None
+      GameItem=None
+      MultiplayerItem=None
+      OptionsItem=None
+      StatsItem=None
+      ToolItem=None
+      HelpItem=None
+      ModItem=None
+      OldHelpItem=None
+      HelpWindow=None
+      ShowHelp=True
+      OldSelected=None
+      VersionText=""
+      bShowMenu=False
+      GameName="&Game"
+      GameHelp="Start a new game, load a game, or quit."
+      MultiplayerName="&Multiplayer"
+      MultiplayerHelp="Host or join a multiplayer game."
+      OptionsName="&Options"
+      OptionsHelp="Configure settings."
+      StatsName="&Stats"
+      StatsHelp="Manage your local and world stats."
+      ToolName="&Tools"
+      ToolHelp="Enable various system tools."
+      HelpName="&Help"
+      HelpHelp="Enable or disable help."
+      VersionName="Version"
+      ModName="M&od"
+      ModHelp="Configure user-created mods you have installed."
+      ModItems=None
+      GameUMenuDefault="UTMenu.UTGameMenu"
+      MultiplayerUMenuDefault="UTMenu.UTMultiplayerMenu"
+      OptionsUMenuDefault="UTMenu.UTOptionsMenu"
+      ModMenuClass="UMenu.UMenuModMenu"
 }

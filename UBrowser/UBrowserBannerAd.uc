@@ -37,4 +37,5 @@ function MouseEnter()
 
 defaultproperties
 {
+      URL=""
 }

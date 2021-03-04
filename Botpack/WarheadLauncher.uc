@@ -82,7 +82,8 @@ simulated function PostRender( canvas Canvas )
 			PlayerPawn(Owner).ViewTarget = None;
 		return;
 	}
-	GuidedShell.PostRender(Canvas);
+	if (GuidedShell != none)
+	    GuidedShell.PostRender(Canvas);
 	OldClipX = Canvas.ClipX;
 	OldClipY = Canvas.ClipY;
 	XScale = FMax(0.5, int(Canvas.ClipX/640.0));
@@ -176,11 +177,14 @@ function AltFire( float Value )
 		Pawn(Owner).PlayRecoil(FiringSpeed);
 		PlayFiring();
 		GuidedShell = GuidedWarShell(ProjectileFire(AltProjectileClass, ProjectileSpeed, bWarnTarget));
-		GuidedShell.SetOwner(Owner);
-		PlayerPawn(Owner).ViewTarget = GuidedShell;
-		GuidedShell.Guider = PlayerPawn(Owner);
-		ClientAltFire(0);
-		GotoState('Guiding');
+		if (GuidedShell != none)
+		{
+		    GuidedShell.SetOwner(Owner);
+		    PlayerPawn(Owner).ViewTarget = GuidedShell;
+		    GuidedShell.Guider = PlayerPawn(Owner);
+		    ClientAltFire(0);
+		    GotoState('Guiding');
+		}
 	}
 }
 
@@ -262,45 +266,52 @@ Begin:
 
 defaultproperties
 {
-     WeaponDescription="Classification: Thermonuclear Device\n\nPrimary Fire: Launches a huge yet slow moving missile that, upon striking a solid surface, will explode and send out a gigantic shock wave, instantly pulverizing anyone or anything within its colossal radius, including yourself.\n\nSecondary Fire: Take control of the missile and fly it anywhere.  You can press the primary fire button to explode the missile early.\n\nTechniques: Remember that while this rocket is being piloted you are a sitting duck.  If an opponent manages to hit your incoming Redeemer missile while it's in the air, the missile will explode harmlessly."
-     InstFlash=-0.400000
-     InstFog=(X=950.000000,Y=650.000000,Z=290.000000)
-     AmmoName=Class'Botpack.WarHeadAmmo'
-     ReloadCount=1
-     PickupAmmoCount=1
-     bWarnTarget=True
-     bAltWarnTarget=True
-     bSplashDamage=True
-     bSpecialIcon=True
-     FiringSpeed=1.000000
-     FireOffset=(X=18.000000,Z=-10.000000)
-     ProjectileClass=Class'Botpack.WarShell'
-     AltProjectileClass=Class'Botpack.GuidedWarshell'
-     shakemag=350.000000
-     shaketime=0.200000
-     shakevert=7.500000
-     AIRating=1.000000
-     RefireRate=0.250000
-     AltRefireRate=0.250000
-     FireSound=Sound'Botpack.Redeemer.WarheadShot'
-     SelectSound=Sound'Botpack.Redeemer.WarheadPickup'
-     DeathMessage="%o was vaporized by %k's %w!!"
-     NameColor=(G=128,B=128)
-     AutoSwitchPriority=10
-     InventoryGroup=10
-     PickupMessage="You got the Redeemer."
-     ItemName="Redeemer"
-     RespawnTime=60.000000
-     PlayerViewOffset=(X=1.800000,Y=1.000000,Z=-1.890000)
-     PlayerViewMesh=LodMesh'Botpack.WarHead'
-     BobDamping=0.975000
-     PickupViewMesh=LodMesh'Botpack.WHPick'
-     ThirdPersonMesh=LodMesh'Botpack.WHHand'
-     StatusIcon=Texture'Botpack.Icons.UseWarH'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseWarH'
-     Mesh=LodMesh'Botpack.WHPick'
-     bNoSmooth=False
-     CollisionRadius=45.000000
-     CollisionHeight=23.000000
+      GuidedShell=None
+      Scroll=0
+      GuidingPawn=None
+      bGuiding=False
+      bCanFire=False
+      bShowStatic=False
+      StartRotation=(Pitch=0,Yaw=0,Roll=0)
+      WeaponDescription="Classification: Thermonuclear Device\n\nPrimary Fire: Launches a huge yet slow moving missile that, upon striking a solid surface, will explode and send out a gigantic shock wave, instantly pulverizing anyone or anything within its colossal radius, including yourself.\n\nSecondary Fire: Take control of the missile and fly it anywhere.  You can press the primary fire button to explode the missile early.\n\nTechniques: Remember that while this rocket is being piloted you are a sitting duck.  If an opponent manages to hit your incoming Redeemer missile while it's in the air, the missile will explode harmlessly."
+      InstFlash=-0.400000
+      InstFog=(X=950.000000,Y=650.000000,Z=290.000000)
+      AmmoName=Class'Botpack.WarHeadAmmo'
+      ReloadCount=1
+      PickupAmmoCount=1
+      bWarnTarget=True
+      bAltWarnTarget=True
+      bSplashDamage=True
+      bSpecialIcon=True
+      FiringSpeed=1.000000
+      FireOffset=(X=18.000000,Z=-10.000000)
+      ProjectileClass=Class'Botpack.WarShell'
+      AltProjectileClass=Class'Botpack.GuidedWarshell'
+      shakemag=350.000000
+      shaketime=0.200000
+      shakevert=7.500000
+      AIRating=1.000000
+      RefireRate=0.250000
+      AltRefireRate=0.250000
+      FireSound=Sound'Botpack.Redeemer.WarheadShot'
+      SelectSound=Sound'Botpack.Redeemer.WarheadPickup'
+      DeathMessage="%o was vaporized by %k's %w!!"
+      NameColor=(G=128,B=128)
+      AutoSwitchPriority=10
+      InventoryGroup=10
+      PickupMessage="You got the Redeemer."
+      ItemName="Redeemer"
+      RespawnTime=60.000000
+      PlayerViewOffset=(X=1.800000,Y=1.000000,Z=-1.890000)
+      PlayerViewMesh=LodMesh'Botpack.WarHead'
+      BobDamping=0.975000
+      PickupViewMesh=LodMesh'Botpack.WHPick'
+      ThirdPersonMesh=LodMesh'Botpack.WHHand'
+      StatusIcon=Texture'Botpack.Icons.UseWarH'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseWarH'
+      Mesh=LodMesh'Botpack.WHPick'
+      bNoSmooth=False
+      CollisionRadius=45.000000
+      CollisionHeight=23.000000
 }

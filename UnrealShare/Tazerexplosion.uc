@@ -33,13 +33,14 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     Damage=40.000000
-     Radius=120.000000
-     MomentumTransfer=1400.000000
-     EffectSound1=Sound'UnrealShare.flak.Explode1'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.TazerExpl'
-     bUnlit=True
+      NormUp=(Pitch=0,Yaw=0,Roll=0)
+      Damage=40.000000
+      Radius=120.000000
+      MomentumTransfer=1400.000000
+      EffectSound1=Sound'UnrealShare.flak.Explode1'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.TazerExpl'
+      bUnlit=True
 }

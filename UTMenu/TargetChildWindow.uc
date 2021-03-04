@@ -178,7 +178,7 @@ function Notify(UWindowWindow B, byte E)
 			break;
 		case DE_DoubleClick:
 		case DE_Click:
-			GetPlayerOwner().PlaySound(sound'SpeechWindowClick', SLOT_Interact);
+			GetPlayerOwner().PlaySound( Sound'SpeechWindowClick', SLOT_Interface );
 			for (i=0; i<NumOptions; i++)
 			{
 				if ( B == OptionButtons[i] )
@@ -195,7 +195,28 @@ function Notify(UWindowWindow B, byte E)
 
 defaultproperties
 {
-     AllString="All"
-     TopTexture=Texture'UTMenu.Skins.OrdersTop2'
-     WindowTitle=""
+      OptionOffset=0
+      MinOptions=0
+      AllString="All"
+      Message=0
+      MiniDisplay=None
+      bSelectLast=False
+      OptionTeamIDs(0)=0
+      OptionTeamIDs(1)=0
+      OptionTeamIDs(2)=0
+      OptionTeamIDs(3)=0
+      OptionTeamIDs(4)=0
+      OptionTeamIDs(5)=0
+      OptionTeamIDs(6)=0
+      OptionTeamIDs(7)=0
+      OptionTeamIDs(8)=0
+      OptionTeamIDs(9)=0
+      OptionTeamIDs(10)=0
+      OptionTeamIDs(11)=0
+      OptionTeamIDs(12)=0
+      OptionTeamIDs(13)=0
+      OptionTeamIDs(14)=0
+      OptionTeamIDs(15)=0
+      TopTexture=Texture'UTMenu.Skins.OrdersTop2'
+      WindowTitle=""
 }

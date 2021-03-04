@@ -126,20 +126,28 @@ Begin:
 
 defaultproperties
 {
-     bDecorative=True
-     bStatic=False
-     bStasis=False
-     Physics=PHYS_Falling
-     LifeSpan=180.000000
-     AnimSequence=Dead
-     AnimFrame=0.900000
-     DrawType=DT_Mesh
-     Texture=Texture'Engine.S_Corpse'
-     CollisionRadius=18.000000
-     CollisionHeight=4.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bProjTarget=True
-     Mass=180.000000
-     Buoyancy=105.000000
+      bPlayerCarcass=False
+      flies=0
+      rats=0
+      bReducedHeight=False
+      bDecorative=True
+      bSlidingCarcass=False
+      CumulativeDamage=0
+      PlayerOwner=None
+      Bugs=None
+      bStatic=False
+      bStasis=False
+      Physics=PHYS_Falling
+      LifeSpan=180.000000
+      AnimSequence="Dead"
+      AnimFrame=0.900000
+      DrawType=DT_Mesh
+      Texture=Texture'Engine.S_Corpse'
+      CollisionRadius=18.000000
+      CollisionHeight=4.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bProjTarget=True
+      Mass=180.000000
+      Buoyancy=105.000000
 }

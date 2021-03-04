@@ -163,24 +163,25 @@ state Activated
 
 defaultproperties
 {
-     ExtraFireSound=Sound'Botpack.Pickups.AmpFire'
-     EndFireSound=Sound'Botpack.Pickups.AmpFire2b'
-     FinalCount=5
-     bAutoActivate=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You got the Damage Amplifier!"
-     ItemName="Damage Amplifier"
-     RespawnTime=120.000000
-     PickupViewMesh=LodMesh'Botpack.UDamage'
-     Charge=300
-     MaxDesireability=2.500000
-     PickupSound=Sound'Botpack.Pickups.AmpPickup'
-     DeActivateSound=Sound'Botpack.Pickups.AmpOut'
-     Icon=Texture'Botpack.Icons.I_UDamage'
-     Physics=PHYS_Rotating
-     RemoteRole=ROLE_DumbProxy
-     Texture=Texture'Botpack.GoldSkin2'
-     Mesh=LodMesh'Botpack.UDamage'
-     bMeshEnviroMap=True
+      UDamageWeapon=None
+      ExtraFireSound=Sound'Botpack.Pickups.AmpFire'
+      EndFireSound=Sound'Botpack.Pickups.AmpFire2b'
+      FinalCount=5
+      bAutoActivate=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You got the Damage Amplifier!"
+      ItemName="Damage Amplifier"
+      RespawnTime=120.000000
+      PickupViewMesh=LodMesh'Botpack.UDamage'
+      Charge=300
+      MaxDesireability=2.500000
+      PickupSound=Sound'Botpack.Pickups.AmpPickup'
+      DeActivateSound=Sound'Botpack.Pickups.AmpOut'
+      Icon=Texture'Botpack.Icons.I_UDamage'
+      Physics=PHYS_Rotating
+      RemoteRole=ROLE_DumbProxy
+      Texture=Texture'Botpack.GoldSkin2'
+      Mesh=LodMesh'Botpack.UDamage'
+      bMeshEnviroMap=True
 }

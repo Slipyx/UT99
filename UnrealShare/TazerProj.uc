@@ -59,25 +59,25 @@ function Explode(vector HitLocation,vector HitNormal)
 
 defaultproperties
 {
-     speed=1000.000000
-     Damage=55.000000
-     MomentumTransfer=70000
-     ImpactSound=Sound'UnrealShare.General.Expla02'
-     bNetTemporary=False
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=10.000000
-     Mesh=LodMesh'UnrealShare.TazerProja'
-     bUnlit=True
-     CollisionRadius=12.000000
-     CollisionHeight=12.000000
-     bProjTarget=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=101
-     LightHue=165
-     LightSaturation=72
-     LightRadius=6
-     bFixedRotationDir=True
-     RotationRate=(Pitch=45345,Yaw=33453,Roll=63466)
-     DesiredRotation=(Pitch=23442,Yaw=34234,Roll=34234)
+      speed=1000.000000
+      Damage=55.000000
+      MomentumTransfer=70000
+      ImpactSound=Sound'UnrealShare.General.Expla02'
+      bNetTemporary=False
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=10.000000
+      Mesh=LodMesh'UnrealShare.TazerProja'
+      bUnlit=True
+      CollisionRadius=12.000000
+      CollisionHeight=12.000000
+      bProjTarget=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=101
+      LightHue=165
+      LightSaturation=72
+      LightRadius=6
+      bFixedRotationDir=True
+      RotationRate=(Pitch=45345,Yaw=33453,Roll=63466)
+      DesiredRotation=(Pitch=23442,Yaw=34234,Roll=34234)
 }

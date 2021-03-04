@@ -47,7 +47,8 @@ Function Timer()
 
 defaultproperties
 {
-     bPauseable=False
-     DefaultWeapon=None
-     HUDType=Class'UnrealI.IntroNullHud'
+      NewPlayer=None
+      bPauseable=False
+      DefaultWeapon=None
+      HUDType=Class'UnrealI.IntroNullHud'
 }

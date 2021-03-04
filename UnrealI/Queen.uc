@@ -98,8 +98,9 @@ function TryToDuck(vector duckDir, bool bReversed)
 
 function SpawnShield()
 {
-	Shield = Spawn(class'QueenShield',,,Location + 150 * Vector(Rotation)); 
-	Shield.SetBase(self);
+	Shield = Spawn(class'QueenShield',,,Location + 150 * Vector(Rotation));
+	if (Shield != None)
+	    Shield.SetBase(self);
 }
 
 function eAttitude AttitudeToCreature(Pawn Other)
@@ -168,10 +169,7 @@ function Scream()
 		foreach AllActors( class 'Actor', A, ScreamEvent )
 			A.Trigger( Self, Instigator );
 
-	PlaySound(ScreamSound, SLOT_Talk, 2 * TransientSoundVolume);
-	PlaySound(ScreamSound, SLOT_None, 2 * TransientSoundVolume);
-	PlaySound(ScreamSound, SLOT_None, 2 * TransientSoundVolume);
-	PlaySound(ScreamSound, SLOT_None, 2 * TransientSoundVolume);
+	PlaySound(ScreamSound, SLOT_None, 8 * TransientSoundVolume);
 	PlayAnim('Scream');
 	bJustScreamed = true;
 }
@@ -294,6 +292,8 @@ function PlayVictoryDance()
 
 function ClawDamageTarget()
 {
+	if (Target == None)
+	    return;
 	if ( MeleeDamageTarget(ClawDamage, (50000.0 * (Normal(Target.Location - Location)))) )
 		PlaySound(Claw, SLOT_Interact);
 }
@@ -301,6 +301,10 @@ function ClawDamageTarget()
 function StabDamageTarget()
 {
 	local vector X,Y,Z;
+
+	if (Target == None)
+	    return;
+		
 	GetAxes(Rotation,X,Y,Z);
 	
 	if ( MeleeDamageTarget(StabDamage, (15000.0 * ( Y + vect(0,0,1)))) )
@@ -377,6 +381,16 @@ function PlayRangedAttack()
 	}
 }
 
+function bool CanTeleportInMap()
+{
+	local NavigationPoint Nav;
+
+	for (Nav = Level.NavigationPointList; Nav != None; Nav = Nav.NextNavigationPoint)
+		if( QueenDest(Nav)!=None )
+			return true;
+	return false;
+}
+
 state TacticalMove
 {
 ignores SeePlayer, HearNoise;
@@ -384,7 +398,12 @@ ignores SeePlayer, HearNoise;
 	function PickDestination(bool bNoCharge)
 	{
 		if ( FRand() < 0.26 )
-			GotoState('Teleporting');
+		{
+			if (CanTeleportInMap())
+			    GotoState('Teleporting');
+			else
+			    Super.PickDestination(bNoCharge);
+		}
 		else
 			Super.PickDestination(bNoCharge);
 	}
@@ -396,7 +415,10 @@ ignores EnemyNotVisible;
 
 	function PickDestination()
 	{
-		GotoState('Teleporting');
+		if (CanTeleportInMap())
+		    GotoState('Teleporting');
+		else
+			Super.PickDestination();
 	}
 }
 
@@ -417,11 +439,16 @@ ignores TakeDamage, SeePlayer, EnemyNotVisible, HearNoise, KilledBy, Bump, HitWa
 			{
 				Spawn(class'QueenTeleportEffect',,, TelepDest);
 				Spawn(class'QueenTeleportLight',,, TelepDest);
-				EnemyRot = rotator(Enemy.Location - Location);
+				if ( Shield != None && !Shield.bDeleteme )
+					Shield.Destroy();
+				if (Enemy!=none && !Enemy.bDeleteme)
+					EnemyRot = rotator(Enemy.Location - Location);
+				else
+					EnemyRot = Rotation;
 				EnemyRot.Pitch = 0;
 				SetLocation(TelepDest);
 				setRotation(EnemyRot);
-				PlaySound(sound'Teleport1', SLOT_Interface);
+				PlaySound( Sound'Teleport1', SLOT_None );
 				GotoState('Attacking');
 			}
 			return;
@@ -500,45 +527,50 @@ ignores TakeDamage, SeePlayer, EnemyNotVisible, HearNoise, KilledBy, Bump, HitWa
 
 defaultproperties
 {
-     ClawDamage=50
-     StabDamage=80
-     FootstepSound=Sound'UnrealI.Titan.step1t'
-     ScreamSound=Sound'UnrealI.Queen.yell3Q'
-     Stab=Sound'UnrealI.Queen.stab1Q'
-     Shoot=Sound'UnrealI.Queen.shoot1Q'
-     claw=Sound'UnrealI.Queen.claw1Q'
-     Aggressiveness=5.000000
-     RefireRate=0.400000
-     bHasRangedAttack=True
-     bCanDuck=True
-     bIsBoss=True
-     RangedProjectile=Class'UnrealI.QueenProjectile'
-     Acquire=Sound'UnrealI.Queen.yell1Q'
-     Fear=Sound'UnrealI.Queen.yell2Q'
-     Roam=Sound'UnrealI.Queen.nearby2Q'
-     Threaten=Sound'UnrealI.Queen.yell2Q'
-     MeleeRange=100.000000
-     GroundSpeed=400.000000
-     AccelRate=1500.000000
-     JumpZ=800.000000
-     Visibility=250
-     SightRadius=3000.000000
-     Health=1500
-     ReducedDamageType='
-     ReducedDamagePct=0.500000
-     Intelligence=BRAINS_HUMAN
-     HitSound1=Sound'UnrealI.Queen.yell2Q'
-     HitSound2=Sound'UnrealI.Queen.yell2Q'
-     Die=Sound'UnrealI.Queen.outcoldQ'
-     CombatStyle=0.950000
-     NameArticle=" the "
-     AmbientSound=Sound'UnrealI.Queen.amb1Q'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.SkQueen'
-     SoundRadius=32
-     TransientSoundVolume=16.000000
-     CollisionRadius=90.199997
-     CollisionHeight=106.699997
-     Mass=1000.000000
-     RotationRate=(Pitch=6000)
+      ClawDamage=50
+      StabDamage=80
+      ScreamEvent="None"
+      Row=0
+      FootstepSound=Sound'UnrealI.Titan.step1t'
+      ScreamSound=Sound'UnrealI.Queen.yell3Q'
+      Stab=Sound'UnrealI.Queen.stab1Q'
+      Shoot=Sound'UnrealI.Queen.shoot1Q'
+      claw=Sound'UnrealI.Queen.claw1Q'
+      bJustScreamed=False
+      bEndFootStep=False
+      Shield=None
+      TelepDest=(X=0.000000,Y=0.000000,Z=0.000000)
+      Aggressiveness=5.000000
+      RefireRate=0.400000
+      bHasRangedAttack=True
+      bCanDuck=True
+      bIsBoss=True
+      RangedProjectile=Class'UnrealI.QueenProjectile'
+      Acquire=Sound'UnrealI.Queen.yell1Q'
+      Fear=Sound'UnrealI.Queen.yell2Q'
+      Roam=Sound'UnrealI.Queen.nearby2Q'
+      Threaten=Sound'UnrealI.Queen.yell2Q'
+      MeleeRange=100.000000
+      GroundSpeed=400.000000
+      AccelRate=1500.000000
+      JumpZ=800.000000
+      Visibility=250
+      SightRadius=3000.000000
+      Health=1500
+      ReducedDamagePct=0.500000
+      Intelligence=BRAINS_HUMAN
+      HitSound1=Sound'UnrealI.Queen.yell2Q'
+      HitSound2=Sound'UnrealI.Queen.yell2Q'
+      Die=Sound'UnrealI.Queen.outcoldQ'
+      CombatStyle=0.950000
+      NameArticle=" the "
+      AmbientSound=Sound'UnrealI.Queen.amb1Q'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.SkQueen'
+      SoundRadius=32
+      TransientSoundVolume=16.000000
+      CollisionRadius=90.199997
+      CollisionHeight=106.699997
+      Mass=1000.000000
+      RotationRate=(Pitch=6000)
 }

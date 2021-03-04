@@ -59,7 +59,7 @@ function ProcessMenuUpdate( coerce string InputString )
 function Menu ExitMenu()
 {
 	SetOwner(RealOwner);
-	Super.ExitMenu();
+	return Super.ExitMenu();
 }
 
 function bool ProcessLeft()
@@ -243,25 +243,32 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     Teams(0)="Red"
-     Teams(1)="Blue"
-     Teams(2)="Green"
-     Teams(3)="Gold"
-     MenuLength=3
-     HelpMessage(1)="Hit enter to type in your name. Be sure to do this before joining a multiplayer game."
-     HelpMessage(2)="Use the arrow keys to change your team color (Red, Blue, Green, or Yellow)."
-     HelpMessage(3)="Change your skin using the left and right arrow keys."
-     MenuList(1)="Name: "
-     MenuList(2)="Team Color:"
-     MenuList(3)="Skin:"
-     MenuTitle="Select Digital Representation"
-     bOnlyOwnerSee=True
-     Physics=PHYS_Rotating
-     AnimSequence=Walk
-     DrawType=DT_Mesh
-     DrawScale=0.100000
-     bUnlit=True
-     bFixedRotationDir=True
-     RotationRate=(Yaw=8000)
-     DesiredRotation=(Yaw=30000)
+      RealOwner=None
+      bSetUp=False
+      bPulseDown=False
+      PlayerName=""
+      CurrentTeam=0
+      Teams(0)="Red"
+      Teams(1)="Blue"
+      Teams(2)="Green"
+      Teams(3)="Gold"
+      PreferredSkin=""
+      ClassString=""
+      MenuLength=3
+      HelpMessage(1)="Hit enter to type in your name. Be sure to do this before joining a multiplayer game."
+      HelpMessage(2)="Use the arrow keys to change your team color (Red, Blue, Green, or Yellow)."
+      HelpMessage(3)="Change your skin using the left and right arrow keys."
+      MenuList(1)="Name: "
+      MenuList(2)="Team Color:"
+      MenuList(3)="Skin:"
+      MenuTitle="Select Digital Representation"
+      bOnlyOwnerSee=True
+      Physics=PHYS_Rotating
+      AnimSequence="Walk"
+      DrawType=DT_Mesh
+      DrawScale=0.100000
+      bUnlit=True
+      bFixedRotationDir=True
+      RotationRate=(Yaw=8000)
+      DesiredRotation=(Yaw=30000)
 }

@@ -25,19 +25,19 @@ auto state Explode
 
 defaultproperties
 {
-     bHighDetail=True
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=7.000000
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Jgreen'
-     Mesh=LodMesh'Botpack.BioGelm'
-     DrawScale=0.800000
-     bUnlit=True
-     CollisionRadius=4.000000
-     CollisionHeight=4.000000
-     bCollideWorld=True
-     bBounce=True
-     NetPriority=2.000000
+      bHighDetail=True
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=7.000000
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Jgreen'
+      Mesh=LodMesh'Botpack.BioGelm'
+      DrawScale=0.800000
+      bUnlit=True
+      CollisionRadius=4.000000
+      CollisionHeight=4.000000
+      bCollideWorld=True
+      bBounce=True
+      NetPriority=2.000000
 }

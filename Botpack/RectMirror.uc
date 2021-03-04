@@ -15,5 +15,5 @@ class RectMirror extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.RectMirror'
+      Mesh=LodMesh'Botpack.RectMirror'
 }

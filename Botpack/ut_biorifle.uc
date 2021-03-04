@@ -120,13 +120,24 @@ function AltFire( float Value )
 	}
 }
 
+
 simulated function bool ClientAltFire( float Value )
 {
+	local TournamentPickup SavedAffector;
 	local bool bResult;
 
 	InstFlash = 0.0;
+	SavedAffector = Affector;
+	Affector = None;
+	ShakeTime = 0; //No shaking the Player's screen
+	ShakeMag = 0;
+	
 	bResult = Super.ClientAltFire(value);
+	
+	ShakeTime = Default.ShakeTime;
+	ShakeMag = Default.ShakeMag;
 	InstFlash = Default.InstFlash;
+	Affector = SavedAffector;
 	return bResult;
 }
 
@@ -158,6 +169,8 @@ state ClientAltFiring
 			GotoState('');
 		else if ( Pawn(Owner).bAltFire == 0 )
 		{
+			if ( Affector != None )
+				Affector.FireEffect();
 			PlayAltBurst();
 			bBurst = true;
 		}
@@ -193,7 +206,7 @@ state AltFiring
 					GoToState('ShootLoad');
 			}
 		}
-		if( (pawn(Owner).bAltFire==0) ) 
+		if( Pawn(Owner).bAltFire == 0 ) 
 			GoToState('ShootLoad');
 	}
 
@@ -261,7 +274,10 @@ state ShootLoad
 		Local Projectile Gel;
 
 		Gel = ProjectileFire(AltProjectileClass, AltProjectileSpeed, bAltWarnTarget);
-		Gel.DrawScale = 1.0 + 0.8 * ChargeSize;
+		if (Gel != none)
+		    Gel.DrawScale = 1.0 + 0.8 * ChargeSize;
+		if ( Affector != None )
+			Affector.FireEffect();
 		PlayAltBurst();
 	}
 
@@ -298,6 +314,7 @@ function Finish()
 
 simulated function PlayAltBurst()
 {
+	PlayerPawn(Owner).ShakeView(ShakeTime, ShakeMag, ShakeVert);
 	if ( Owner.IsA('PlayerPawn') )
 		PlayerPawn(Owner).ClientInstantFlash( InstFlash, InstFog);
 	PlayOwnedSound(FireSound, SLOT_Misc, 1.7*Pawn(Owner).SoundDampening);	//shoot goop
@@ -312,39 +329,42 @@ simulated function PlayFiring()
 
 defaultproperties
 {
-     WeaponDescription="Classification: Toxic Rifle\n\nPrimary Fire: Wads of Tarydium byproduct are lobbed at a medium rate of fire.\n\nSecondary Fire: When trigger is held down, the BioRifle will create a much larger wad of byproduct. When this wad is launched, it will burst into smaller wads which will adhere to any surfaces.\n\nTechniques: Byproducts will adhere to walls, floors, or ceilings. Chain reactions can be caused by covering entryways with this lethal green waste."
-     InstFlash=-0.150000
-     InstFog=(X=139.000000,Y=218.000000,Z=72.000000)
-     AmmoName=Class'Botpack.BioAmmo'
-     PickupAmmoCount=25
-     bAltWarnTarget=True
-     bRapidFire=True
-     FiringSpeed=1.000000
-     FireOffset=(X=12.000000,Y=-11.000000,Z=-6.000000)
-     ProjectileClass=Class'Botpack.UT_BioGel'
-     AltProjectileClass=Class'Botpack.BioGlob'
-     AIRating=0.600000
-     RefireRate=0.900000
-     AltRefireRate=0.700000
-     FireSound=Sound'UnrealI.BioRifle.GelShot'
-     AltFireSound=Sound'UnrealI.BioRifle.GelShot'
-     CockingSound=Sound'UnrealI.BioRifle.GelLoad'
-     SelectSound=Sound'UnrealI.BioRifle.GelSelect'
-     DeathMessage="%o drank a glass of %k's dripping green load."
-     NameColor=(R=0,B=0)
-     AutoSwitchPriority=3
-     InventoryGroup=3
-     PickupMessage="You got the GES BioRifle."
-     ItemName="GES Bio Rifle"
-     PlayerViewOffset=(X=1.700000,Y=-0.850000,Z=-0.950000)
-     PlayerViewMesh=LodMesh'Botpack.BRifle2'
-     BobDamping=0.972000
-     PickupViewMesh=LodMesh'Botpack.BRifle2Pick'
-     ThirdPersonMesh=LodMesh'Botpack.BRifle23'
-     StatusIcon=Texture'Botpack.Icons.UseBio'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseBio'
-     Mesh=LodMesh'Botpack.BRifle2Pick'
-     bNoSmooth=False
-     CollisionHeight=19.000000
+      ChargeSize=0.000000
+      Count=0.000000
+      bBurst=False
+      WeaponDescription="Classification: Toxic Rifle\n\nPrimary Fire: Wads of Tarydium byproduct are lobbed at a medium rate of fire.\n\nSecondary Fire: When trigger is held down, the BioRifle will create a much larger wad of byproduct. When this wad is launched, it will burst into smaller wads which will adhere to any surfaces.\n\nTechniques: Byproducts will adhere to walls, floors, or ceilings. Chain reactions can be caused by covering entryways with this lethal green waste."
+      InstFlash=-0.150000
+      InstFog=(X=139.000000,Y=218.000000,Z=72.000000)
+      AmmoName=Class'Botpack.BioAmmo'
+      PickupAmmoCount=25
+      bAltWarnTarget=True
+      bRapidFire=True
+      FiringSpeed=1.000000
+      FireOffset=(X=12.000000,Y=-11.000000,Z=-6.000000)
+      ProjectileClass=Class'Botpack.UT_BioGel'
+      AltProjectileClass=Class'Botpack.BioGlob'
+      AIRating=0.600000
+      RefireRate=0.900000
+      AltRefireRate=0.700000
+      FireSound=Sound'UnrealI.BioRifle.GelShot'
+      AltFireSound=Sound'UnrealI.BioRifle.GelShot'
+      CockingSound=Sound'UnrealI.BioRifle.GelLoad'
+      SelectSound=Sound'UnrealI.BioRifle.GelSelect'
+      DeathMessage="%o drank a glass of %k's dripping green load."
+      NameColor=(R=0,B=0)
+      AutoSwitchPriority=3
+      InventoryGroup=3
+      PickupMessage="You got the GES BioRifle."
+      ItemName="GES Bio Rifle"
+      PlayerViewOffset=(X=1.700000,Y=-0.850000,Z=-0.950000)
+      PlayerViewMesh=LodMesh'Botpack.BRifle2'
+      BobDamping=0.972000
+      PickupViewMesh=LodMesh'Botpack.BRifle2Pick'
+      ThirdPersonMesh=LodMesh'Botpack.BRifle23'
+      StatusIcon=Texture'Botpack.Icons.UseBio'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseBio'
+      Mesh=LodMesh'Botpack.BRifle2Pick'
+      bNoSmooth=False
+      CollisionHeight=19.000000
 }

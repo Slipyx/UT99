@@ -24,8 +24,7 @@ function Trigger( Actor Other, Pawn EventInstigator )
 	// Find the object that should be changed
 	if ( FatTag != '' )
 		foreach AllActors( class 'Actor', FatActor, FatTag )
-		{
-		}
+		    break;
 
 	if( FatActor != None )
 	{
@@ -57,4 +56,10 @@ function Tick( float DeltaTime )
 
 defaultproperties
 {
+      FatTag="None"
+      StartFatness=0
+      EndFatness=0
+      ChangeTime=0.000000
+      FatActor=None
+      TimePassed=0.000000
 }

@@ -65,6 +65,10 @@ var class<CriticalEventPlus> TimeMessageClass;
 
 var class<Actor> BossRef;
 
+// OldUnreal additions
+var PlayerPawn Announcers[10];
+var int NextAnnouncerSoundIndex;
+
 replication
 {
 	// Things the server should send to the client.
@@ -126,42 +130,125 @@ function DoJump( optional float F )
 		SetPhysics(PHYS_Falling);
 	}
 }
-//Play a sound client side (so only client will hear it
+// Play a sound client side (so only client will hear it)
+//
+// stijn: This was one of the weirdest bits of Unreal Engine 1 code out there.
+//
+// These were the problems in the original implementation and how OldUnreal addressed them:
+//
+// 1) The bInterrupt and bVolumeControl parameters have extremely misleading names. bInterrupt does
+// the opposite of what one would expect (see note below). A better name would have been bNoOverride.
+// bVolumeControl should have been called bAnnouncerSound or bUseAnnouncerVolume. These names
+// would have given the caller a much better idea of what the parameter was going to get used for.
+//
+// OldUnreal did not change these paramter names as doing so might break network compatibility.
+//
+// 2) ClientPlaySound tried to play the sound in up to 4 different slots simultaneously, depending on "volume".
+// The volume was calculated using the following rules (in order of priority):
+//
+// Volume = 0 if bVolumeControl and AnnouncerVolume == 0
+//        = 1 if b3DSound
+//        = AnnouncerVolume if bVolumeControl
+//        = 4 if no other conditions were met
+//
+// Then:
+//
+// if Volume == 0 -> sound was not played
+// if Volume == 1 -> sound was played in SLOT_None
+// if Volume == 2 -> sound was played in SLOT_None + SLOT_Interface
+// if Volume == 3 -> sound was played in SLOT_None + SLOT_Interface + SLOT_Misc
+// if Volume == 4 -> sound was played in SLOT_None + SLOT_Interface + SLOT_Misc + SLOT_Talk
+//
+// Internally, PlaySound requests were handled as follows:
+//
+// For SLOT_None -> Play the sound in any available effects channel. If no effects channels are available,
+// try to stop a lower priority sound in favor of the new sound. If no lower priority sounds were playing,
+// do not play the new sound at all. In practice, this meant SLOT_None sounds would almost certainly play.
+//
+// For other slots -> Check if one of the effects channels is already playing a sound for the same actor
+// and slot. If so, check the value of bInterupt/bNoOverride for the new sound. If bNoOverride is true,
+// do not play the new sound. If bNoOverride is false, stop the already playing sound in favor of the
+// new sound.
+//
+// If none of the playing sounds matched the actor+slot, the engine would try to find an effects channel
+// with a sound that had lower priority than the new sound. If such a channel was found, the already playing
+// sound was stopped in favor of the new sound. Otherwise, the new sound would not play.
+//
+// In practice, this meant that a lot of sounds would effectively play in 4 effects channels at the same
+// time. This could lead to distortion and lower performance.
+//
+// OldUnreal now plays the sound in only one slot, but spawns dedicated AnnouncerSpectator objects
+// which allow us to play certain SLOT_Interface sounds simultaneously.
+//
+// 3) ClientPlaySound played all sounds at extremely high volumes. While other game sounds were seldom
+// played at volumes higher than 2.0, all sounds in this function were played at a volume of 16.0.
+// We assume (but cannot confirm) that this was done to artificially boost the priority of the sounds
+// played through this function. However, playing sounds at such high volumes has the unfortunate side
+// effect that audio drivers that attempt to do faithful playback can "blow out your speakers" when
+// playing announcer sounds.
+//
+// OldUnreal adjusted the volumes as follows:
+//
+// for bVolumeControl sounds -> use AnnouncerVolume instead of 16.0
+// for other sounds -> use 4.0 instead of 16.0
+//
+// To deal with sound priorities, we multiply the priority of incoming SLOT_Interface sound requests
+// by 16.0.
+//
 simulated function ClientPlaySound(sound ASound, optional bool bInterrupt, optional bool bVolumeControl )
 {	
 	local actor SoundPlayer;
-	local int Volume;
-
-	if ( b3DSound )
-	{
-		if ( bVolumeControl && (AnnouncerVolume == 0) )
-			Volume = 0;
-		else
-			Volume = 1;
-	}
-	else if ( bVolumeControl )
-		Volume = AnnouncerVolume;
-	else
-		Volume = 4;
+	local float Volume;
+	local ESoundSlot Slot;
+	local int AnnouncerIndex;
+	local SpawnNotify OldSpawnNotify;
 
 	LastPlaySound = Level.TimeSeconds;	// so voice messages won't overlap
-	if ( ViewTarget != None )
-		SoundPlayer = ViewTarget;
-	else
-		SoundPlayer = self;
+	
+	if ( bVolumeControl )
+	{
+		Volume = AnnouncerVolume;
+		Slot = SLOT_Interface;
 
-	if ( Volume == 0 )
-		return;
-	SoundPlayer.PlaySound(ASound, SLOT_None, 16.0, bInterrupt);
-	if ( Volume == 1 )
-		return;
-	SoundPlayer.PlaySound(ASound, SLOT_Interface, 16.0, bInterrupt);
-	if ( Volume == 2 )
-		return;
-	SoundPlayer.PlaySound(ASound, SLOT_Misc, 16.0, bInterrupt);
-	if ( Volume == 3 )
-		return;
-	SoundPlayer.PlaySound(ASound, SLOT_Talk, 16.0, bInterrupt);
+		AnnouncerIndex = NextAnnouncerSoundIndex++;
+		if (NextAnnouncerSoundIndex >= ArrayCount(Announcers))
+		    NextAnnouncerSoundIndex = 0;
+
+		if (Announcers[AnnouncerIndex] == none)
+		{
+			// stijn: hack. Make this invisible to spawnnotify objects
+			OldSpawnNotify = Level.SpawnNotify;
+			Level.SpawnNotify = None;
+			Announcers[AnnouncerIndex] = Level.Spawn(class'AnnouncerSpectator');
+			Level.SpawnNotify = OldSpawnNotify;
+
+			// stijn: UTPure hax...
+			SoundPlayer = Announcers[AnnouncerIndex];
+			if (SoundPlayer != None)
+			{
+				SoundPlayer.LightType = LT_Steady;
+				SoundPlayer.bHidden = True;
+				SoundPlayer.AmbientGlow = 254;
+				SoundPlayer.LightRadius = 0;
+				PlayerPawn(SoundPlayer).PlayerReplicationInfo = None;
+			}
+		}
+
+		SoundPlayer = Announcers[AnnouncerIndex];
+	}
+	else
+	{
+		Volume = 4.0;
+		Slot = SLOT_None;
+
+		if ( ViewTarget != None )
+		    SoundPlayer = ViewTarget;
+		else
+			SoundPlayer = self;
+	}
+
+	if (SoundPlayer != none)
+        SoundPlayer.PlaySound(ASound, Slot, Volume, bInterrupt);
 }
 
 //==============
@@ -323,6 +410,8 @@ function ReplicateMove
 	{
 		if ( (Weapon == ClientPending) || (Weapon != OldClientWeapon) )
 		{
+			if ( Weapon.Owner != self ) //Non-respawnable weapon was picked up and Owner wasn't replicated yet
+				Weapon.SetOwner(self); //Simulate owner change locally
 			if ( Weapon.IsInState('ClientActive') )
 				AnimEnd();
 			else
@@ -557,7 +646,7 @@ function PlayDyingSound()
 
 simulated function PlayBeepSound()
 {
-	PlaySound(sound'NewBeep',SLOT_Interface, 2.0);
+	PlaySound(sound'NewBeep', SLOT_Interface, 2.0, true);
 }
 
 function PlayChatting()
@@ -1486,48 +1575,100 @@ state GameEnded
 
 defaultproperties
 {
-     spreenote(0)="is on a killing spree!"
-     spreenote(1)="is on a rampage!"
-     spreenote(2)="is dominating!"
-     spreenote(3)="is brutalizing the competition!"
-     spreenote(4)="is unstoppable!"
-     spreenote(5)="owns you!"
-     spreenote(6)="needs to find some real competition!"
-     spreenote(7)="is a GOD!"
-     LastKillTime=-1000.000000
-     Footstep1=Sound'Botpack.FemaleSounds.(All).stone02'
-     Footstep2=Sound'Botpack.FemaleSounds.(All).stone04'
-     Footstep3=Sound'Botpack.FemaleSounds.(All).stone05'
-     StatusDoll=Texture'Botpack.Icons.Man'
-     StatusBelt=Texture'Botpack.Icons.ManBelt'
-     VoicePackMetaClass="BotPack.ChallengeVoicePack"
-     AnnouncerVolume=4
-     bSinglePlayer=True
-     bCheatsEnabled=True
-     bCanStrafe=True
-     bIsHuman=True
-     bIsMultiSkinned=True
-     MeleeRange=50.000000
-     GroundSpeed=400.000000
-     AirSpeed=400.000000
-     AccelRate=2048.000000
-     AirControl=0.350000
-     BaseEyeHeight=27.000000
-     EyeHeight=27.000000
-     UnderWaterTime=20.000000
-     Intelligence=BRAINS_HUMAN
-     Land=Sound'UnrealShare.Generic.Land1'
-     WaterStep=Sound'UnrealShare.Generic.LSplash'
-     VoiceType="BotPack.VoiceMaleOne"
-     AnimSequence=WalkSm
-     DrawType=DT_Mesh
-     AmbientGlow=17
-     CollisionRadius=17.000000
-     CollisionHeight=39.000000
-     LightBrightness=70
-     LightHue=40
-     LightSaturation=128
-     LightRadius=6
-     Buoyancy=99.000000
-     RotationRate=(Pitch=3072,Yaw=65000,Roll=2048)
+      spreenote(0)="is on a killing spree!"
+      spreenote(1)="is on a rampage!"
+      spreenote(2)="is dominating!"
+      spreenote(3)="is brutalizing the competition!"
+      spreenote(4)="is unstoppable!"
+      spreenote(5)="owns you!"
+      spreenote(6)="needs to find some real competition!"
+      spreenote(7)="is a GOD!"
+      spreenote(8)=""
+      spreenote(9)=""
+      Deaths(0)=None
+      Deaths(1)=None
+      Deaths(2)=None
+      Deaths(3)=None
+      Deaths(4)=None
+      Deaths(5)=None
+      FaceSkin=0
+      FixedSkin=0
+      TeamSkin1=0
+      TeamSkin2=0
+      MultiLevel=0
+      DefaultSkinName=""
+      DefaultPackage=""
+      LastKillTime=-1000.000000
+      drown=None
+      breathagain=None
+      Footstep1=Sound'Botpack.FemaleSounds.(All).stone02'
+      Footstep2=Sound'Botpack.FemaleSounds.(All).stone04'
+      Footstep3=Sound'Botpack.FemaleSounds.(All).stone05'
+      HitSound3=None
+      HitSound4=None
+      Die2=None
+      Die3=None
+      Die4=None
+      GaspSound=None
+      UWHit1=None
+      UWHit2=None
+      LandGrunt=None
+      bLastJumpAlt=False
+      bInstantRocket=False
+      bAutoTaunt=False
+      bNoAutoTaunts=False
+      bNoVoiceTaunts=False
+      bNoMatureLanguage=False
+      bNoVoiceMessages=False
+      bNeedActivate=False
+      b3DSound=False
+      WeaponUpdate=0
+      StatusDoll=Texture'Botpack.Icons.Man'
+      StatusBelt=Texture'Botpack.Icons.ManBelt'
+      VoicePackMetaClass="BotPack.ChallengeVoicePack"
+      StartSpot=None
+      ClientPending=None
+      OldClientWeapon=None
+      AnnouncerVolume=4
+      TimeMessageClass=None
+      BossRef=None
+      Announcers(0)=None
+      Announcers(1)=None
+      Announcers(2)=None
+      Announcers(3)=None
+      Announcers(4)=None
+      Announcers(5)=None
+      Announcers(6)=None
+      Announcers(7)=None
+      Announcers(8)=None
+      Announcers(9)=None
+      NextAnnouncerSoundIndex=0
+      bSinglePlayer=True
+      bCheatsEnabled=True
+      bCanStrafe=True
+      bIsHuman=True
+      bIsMultiSkinned=True
+      MeleeRange=50.000000
+      GroundSpeed=400.000000
+      AirSpeed=400.000000
+      AccelRate=2048.000000
+      AirControl=0.350000
+      BaseEyeHeight=27.000000
+      EyeHeight=27.000000
+      UnderWaterTime=20.000000
+      Intelligence=BRAINS_HUMAN
+      Land=Sound'UnrealShare.Generic.Land1'
+      WaterStep=Sound'UnrealShare.Generic.LSplash'
+      VoiceType="BotPack.VoiceMaleOne"
+      AnimSequence="WalkSm"
+      DrawType=DT_Mesh
+      AmbientGlow=17
+      CollisionRadius=17.000000
+      CollisionHeight=39.000000
+      LightBrightness=70
+      LightHue=40
+      LightSaturation=128
+      LightRadius=6
+      Buoyancy=99.000000
+      RotationRate=(Pitch=3072,Yaw=65000,Roll=2048)
 }

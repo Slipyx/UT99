@@ -57,4 +57,8 @@ function BeforePaint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      Server=None
+      VSplitter=None
+      HSplitter=None
+      PrevSplitPos=0.000000
 }

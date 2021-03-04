@@ -28,7 +28,7 @@ auto state Flying
 	{
 		if ( bCanHitInstigator || (Other != Instigator) ) 
 		{
-			if ( Role == ROLE_Authority )
+			if ( Instigator != None && Role == ROLE_Authority )
 			{
 				if ( Other.IsA('Pawn') && (HitLocation.Z - Other.Location.Z > 0.62 * Other.CollisionHeight)
 					&& (instigator.IsA('PlayerPawn') || (instigator.skill > 1))
@@ -123,22 +123,25 @@ auto state Flying
 
 defaultproperties
 {
-     speed=1300.000000
-     MaxSpeed=1200.000000
-     Damage=30.000000
-     MomentumTransfer=15000
-     SpawnSound=Sound'UnrealI.Razorjack.StartBlade'
-     ImpactSound=Sound'UnrealI.Razorjack.BladeHit'
-     MiscSound=Sound'UnrealI.Razorjack.BladeThunk'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=6.000000
-     AnimSequence=spin
-     AmbientSound=Sound'UnrealI.Razorjack.RazorHum'
-     Mesh=LodMesh'UnrealI.razorb'
-     AmbientGlow=167
-     bUnlit=True
-     SoundRadius=12
-     SoundVolume=128
-     SoundPitch=200
-     bBounce=True
+      NumWallHits=0
+      bCanHitInstigator=False
+      bHitWater=False
+      speed=1300.000000
+      MaxSpeed=1200.000000
+      Damage=30.000000
+      MomentumTransfer=15000
+      SpawnSound=Sound'UnrealI.Razorjack.StartBlade'
+      ImpactSound=Sound'UnrealI.Razorjack.BladeHit'
+      MiscSound=Sound'UnrealI.Razorjack.BladeThunk'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=6.000000
+      AnimSequence="spin"
+      AmbientSound=Sound'UnrealI.Razorjack.RazorHum'
+      Mesh=LodMesh'UnrealI.razorb'
+      AmbientGlow=167
+      bUnlit=True
+      SoundRadius=12
+      SoundVolume=128
+      SoundPitch=200
+      bBounce=True
 }

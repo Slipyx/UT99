@@ -11,21 +11,21 @@ class EnergyBurst extends AnimSpriteEffect;
 
 defaultproperties
 {
-     NumFrames=6
-     Pause=0.060000
-     EffectSound1=Sound'UnrealShare.General.Explo1'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.500000
-     DrawType=DT_SpriteAnimOnce
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.MainEffect.E6_A00'
-     Skin=Texture'UnrealShare.Effects.ExplosionPal3'
-     DrawScale=1.500000
-     LightType=LT_TexturePaletteOnce
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=0
-     LightSaturation=255
-     LightRadius=8
-     bCorona=False
+      NumFrames=6
+      Pause=0.060000
+      EffectSound1=Sound'UnrealShare.General.Explo1'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.500000
+      DrawType=DT_SpriteAnimOnce
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.MainEffect.E6_A00'
+      Skin=Texture'UnrealShare.Effects.ExplosionPal3'
+      DrawScale=1.500000
+      LightType=LT_TexturePaletteOnce
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=0
+      LightSaturation=255
+      LightRadius=8
+      bCorona=False
 }

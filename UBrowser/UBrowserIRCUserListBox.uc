@@ -129,6 +129,9 @@ function DoubleClickItem(UWindowListBoxItem I)
 
 defaultproperties
 {
-     ItemHeight=13.000000
-     ListClass=Class'UBrowser.UBrowserIRCUserList'
+      UPop=""
+      UPhalfop=""
+      UPvoice=""
+      ItemHeight=13.000000
+      ListClass=Class'UBrowser.UBrowserIRCUserList'
 }

@@ -19,4 +19,5 @@ function UWindowHotkeyWindowList FindWindow(UWindowWindow W)
 
 defaultproperties
 {
+      Window=None
 }

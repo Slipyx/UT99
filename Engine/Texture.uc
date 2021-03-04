@@ -80,13 +80,65 @@ var transient  float   Accumulator;
 // Mipmaps.
 var private native const array<int> Mips, CompMips;
 var const ETextureFormat CompFormat;
+var private native pointer SourceMip;
+
+// OldUnreal bindless texture support
+var private native pointer TextureHandle;	
 
 defaultproperties
 {
-     Diffuse=1.000000
-     Specular=1.000000
-     DrawScale=1.000000
-     Friction=1.000000
-     MipMult=1.000000
-     LODSet=LODSET_World
+      BumpMap=None
+      DetailTexture=None
+      MacroTexture=None
+      Diffuse=1.000000
+      Specular=1.000000
+      Alpha=0.000000
+      DrawScale=1.000000
+      Friction=1.000000
+      MipMult=1.000000
+      FootstepSound=None
+      HitSound=None
+      bInvisible=False
+      bMasked=False
+      bTransparent=False
+      bNotSolid=False
+      bEnvironment=False
+      bSemisolid=False
+      bModulate=False
+      bFakeBackdrop=False
+      bTwoSided=False
+      bAutoUPan=False
+      bAutoVPan=False
+      bNoSmooth=False
+      bBigWavy=False
+      bSmallWavy=False
+      bWaterWavy=False
+      bLowShadowDetail=False
+      bNoMerge=False
+      bCloudWavy=False
+      bDirtyShadows=False
+      bHighLedge=False
+      bSpecialLit=False
+      bGouraud=False
+      bUnlit=False
+      bHighShadowDetail=False
+      bPortal=False
+      bMirrored=False
+      bX2=False
+      bX3=False
+      bX4=False
+      bX5=False
+      bX6=False
+      bX7=False
+      bHighColorQuality=False
+      bHighTextureQuality=False
+      bRealtime=False
+      bParametric=False
+      bHasComp=False
+      LODSet=LODSET_World
+      AnimNext=None
+      PrimeCount=0
+      MinFrameRate=0.000000
+      MaxFrameRate=0.000000
+      CompFormat=TEXF_P8
 }

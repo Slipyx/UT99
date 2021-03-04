@@ -31,8 +31,9 @@ static function float GetOffset(int Switch, float YL, float ClipY )
 
 defaultproperties
 {
-     GreenColor=(G=255)
-     LightGreenColor=(G=128)
-     CyanColor=(G=128,B=255)
-     bIsConsoleMessage=True
+      GreenColor=(R=0,G=255,B=0,A=0)
+      LightGreenColor=(R=0,G=128,B=0,A=0)
+      CyanColor=(R=0,G=128,B=255,A=0)
+      FontSize=0
+      bIsConsoleMessage=True
 }

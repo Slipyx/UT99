@@ -4,5 +4,5 @@ class BlastMark expands Scorch;
 
 defaultproperties
 {
-     Texture=Texture'Botpack.rocketblast'
+      Texture=Texture'Botpack.rocketblast'
 }

@@ -188,5 +188,16 @@ function DoBufferQueueIO()
 
 defaultproperties
 {
-     ReceiveMode=RMODE_Event
+      InputBuffer=""
+      OutputBuffer=""
+      CRLF=""
+      CR=""
+      LF=""
+      bWaiting=False
+      WaitTimeoutTime=0.000000
+      WaitingFor=""
+      WaitForCountChars=0
+      WaitResult=""
+      WaitMatchData=0
+      ReceiveMode=RMODE_Event
 }

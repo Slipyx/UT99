@@ -15,7 +15,7 @@ function setMovementPhysics()
 
 function string KillMessage(name damageType, pawn Other)
 {
-	return(BlobKillMessage);
+	return(Other.PlayerReplicationInfo.PlayerName$BlobKillMessage);
 }
 
 function Shrink(bloblet b)
@@ -64,7 +64,7 @@ function Killed(pawn Killer, pawn Other, name damageType)
 	if (Other == Enemy)
 	{
 		for (i=0; i<numBlobs; i++ )
-			blobs[i].GotoState('Sleep');
+			blobs[i].GotoState('asleep');
 		GotoState('stasis');
 	}
 }
@@ -98,6 +98,12 @@ ignores EncroachedBy, EnemyNotVisible;
 					aPawn = None;
 			}
 			SetRadius();
+		}
+		else
+		{
+			for (i = 0; i < numBlobs; i++)
+			    if (blobs[i] != None)
+				     blobs[i].GotoState('Active');
 		}
 		enemy = Pawn(SeenPlayer);
 		bEnemyVisible = true;
@@ -160,16 +166,34 @@ Chase:
 
 defaultproperties
 {
-     BlobKillMessage="was corroded by a Blob"
-     GroundSpeed=150.000000
-     WaterSpeed=150.000000
-     AccelRate=800.000000
-     JumpZ=-1.000000
-     MaxStepHeight=50.000000
-     SightRadius=1000.000000
-     PeripheralVision=-5.000000
-     HearingThreshold=50.000000
-     Intelligence=BRAINS_NONE
-     bHidden=True
-     Tag=blob1
+      bEnemyVisible=False
+      numBlobs=0
+      blobs(0)=None
+      blobs(1)=None
+      blobs(2)=None
+      blobs(3)=None
+      blobs(4)=None
+      blobs(5)=None
+      blobs(6)=None
+      blobs(7)=None
+      blobs(8)=None
+      blobs(9)=None
+      blobs(10)=None
+      blobs(11)=None
+      blobs(12)=None
+      blobs(13)=None
+      blobs(14)=None
+      blobs(15)=None
+      BlobKillMessage="was corroded by a Blob"
+      GroundSpeed=150.000000
+      WaterSpeed=150.000000
+      AccelRate=800.000000
+      JumpZ=-1.000000
+      MaxStepHeight=50.000000
+      SightRadius=1000.000000
+      PeripheralVision=-5.000000
+      HearingThreshold=50.000000
+      Intelligence=BRAINS_NONE
+      bHidden=True
+      Tag="blob1"
 }

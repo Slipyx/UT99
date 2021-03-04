@@ -14,5 +14,5 @@ class Tree2 extends Tree;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.Tree2M'
+      Mesh=LodMesh'UnrealShare.Tree2M'
 }

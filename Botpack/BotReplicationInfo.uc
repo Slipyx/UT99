@@ -25,5 +25,9 @@ function SetRealOrderGiver(Pawn P)
 
 defaultproperties
 {
-     bIsABot=True
+      OrderObject=None
+      RealOrders="None"
+      RealOrderGiver=None
+      RealOrderGiverPRI=None
+      bIsABot=True
 }

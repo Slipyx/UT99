@@ -61,11 +61,11 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     MenuLength=3
-     HelpMessage(1)="Join a network game."
-     HelpMessage(2)="Set up and start a network game."
-     HelpMessage(3)="Configure appearance, name, and team name."
-     MenuList(1)="JOIN GAME"
-     MenuList(2)="START GAME"
-     MenuList(3)="PLAYER SETUP"
+      MenuLength=3
+      HelpMessage(1)="Join a network game."
+      HelpMessage(2)="Set up and start a network game."
+      HelpMessage(3)="Configure appearance, name, and team name."
+      MenuList(1)="JOIN GAME"
+      MenuList(2)="START GAME"
+      MenuList(3)="PLAYER SETUP"
 }

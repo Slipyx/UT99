@@ -4,4 +4,5 @@ var UBrowserServerListWindow SupersetWindow;
 
 defaultproperties
 {
+      SupersetWindow=None
 }

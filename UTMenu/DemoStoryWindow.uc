@@ -115,9 +115,12 @@ function Close(optional bool bByParent)
 
 defaultproperties
 {
-     Title="Congratulations!"
-     Message(0)="Thank you for playing the demo version of Unreal Tournament.  So much more is in store for you in the full version of the game.  You'll get 50 levels of pure gaming excitement, all the weapons, new game modes and much, much more.  For complete information about pricing, availability and the latest news point your web browser to http://www.UnrealTournament.com."
-     Message(2)="This demo is based on a pre-release version of Unreal Tournament and you might experience problems with it.  We would sincerely appreciate your help in tracking down bugs.  Feel free to report any problems you encountered by sending an email to utbugs@epicgames.com."
-     Message(3)="Thanks again for playing the Unreal Tournament demo!"
-     Message(4)="Press [ESC] to continue."
+      Title="Congratulations!"
+      Message(0)="Thank you for playing the demo version of Unreal Tournament.  So much more is in store for you in the full version of the game.  You'll get 50 levels of pure gaming excitement, all the weapons, new game modes and much, much more.  For complete information about pricing, availability and the latest news point your web browser to http://www.UnrealTournament.com."
+      Message(1)=""
+      Message(2)="This demo is based on a pre-release version of Unreal Tournament and you might experience problems with it.  We would sincerely appreciate your help in tracking down bugs.  Feel free to report any problems you encountered by sending an email to utbugs@epicgames.com."
+      Message(3)="Thanks again for playing the Unreal Tournament demo!"
+      Message(4)="Press [ESC] to continue."
+      YOffset2=0.000000
+      TimeCount=0.000000
 }

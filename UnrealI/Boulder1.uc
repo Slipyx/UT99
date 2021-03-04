@@ -35,9 +35,9 @@ auto state Flying
 
 defaultproperties
 {
-     speed=1300.000000
-     MaxSpeed=1300.000000
-     Mesh=LodMesh'UnrealShare.BoulderM'
-     DrawScale=1.700000
-     CollisionRadius=60.000000
+      speed=1300.000000
+      MaxSpeed=1300.000000
+      Mesh=LodMesh'UnrealShare.BoulderM'
+      DrawScale=1.700000
+      CollisionRadius=60.000000
 }

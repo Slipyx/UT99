@@ -54,16 +54,16 @@ Begin:
 
 defaultproperties
 {
-     speed=800.000000
-     MaxSpeed=800.000000
-     Damage=12.000000
-     SpawnSound=Sound'UnrealShare.Tentacle.TentSpawn'
-     ImpactSound=Sound'UnrealShare.Tentacle.TentImpact'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=15.000000
-     AnimRate=1.000000
-     Mesh=LodMesh'UnrealShare.TentProjectile'
-     AmbientGlow=255
-     bUnlit=True
-     Mass=2.000000
+      speed=800.000000
+      MaxSpeed=800.000000
+      Damage=12.000000
+      SpawnSound=Sound'UnrealShare.Tentacle.TentSpawn'
+      ImpactSound=Sound'UnrealShare.Tentacle.TentImpact'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=15.000000
+      AnimRate=1.000000
+      Mesh=LodMesh'UnrealShare.TentProjectile'
+      AmbientGlow=255
+      bUnlit=True
+      Mass=2.000000
 }

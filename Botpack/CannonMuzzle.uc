@@ -8,13 +8,13 @@ function PostBeginPlay()
 
 defaultproperties
 {
-     bHidden=True
-     bNetTemporary=False
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Skins.Muzzy'
-     Mesh=LodMesh'Botpack.MuzzFlash3'
-     DrawScale=0.250000
-     bUnlit=True
-     bParticles=True
+      bHidden=True
+      bNetTemporary=False
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Skins.Muzzy'
+      Mesh=LodMesh'Botpack.MuzzFlash3'
+      DrawScale=0.250000
+      bUnlit=True
+      bParticles=True
 }

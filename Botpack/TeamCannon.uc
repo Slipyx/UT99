@@ -387,21 +387,28 @@ ignores SeePlayer, HearNoise, KilledBy, Bump, HitWall, HeadZoneChange, FootZoneC
 
 defaultproperties
 {
-     FireSound=Sound'UnrealI.Cannon.CannonShot'
-     ActivateSound=Sound'UnrealI.Cannon.CannonActivate'
-     SampleTime=0.330000
-     TrackingRate=25000
-     Drop=60.000000
-     ProjectileType=Class'Botpack.CannonShot'
-     PostKillMessage="was killed by an automatic cannon!"
-     SightRadius=3000.000000
-     FovAngle=90.000000
-     Health=220
-     MenuName="automatic cannon!"
-     NameArticle="an "
-     RemoteRole=ROLE_SimulatedProxy
-     AnimSequence=Activate
-     Mesh=LodMesh'Botpack.cdgunmainM'
-     CollisionRadius=28.000000
-     RotationRate=(Yaw=25000)
+      FireSound=Sound'UnrealI.Cannon.CannonShot'
+      ActivateSound=Sound'UnrealI.Cannon.CannonActivate'
+      DeActivateSound=None
+      SampleTime=0.330000
+      TrackingRate=25000
+      Drop=60.000000
+      bLeadTarget=False
+      bShoot=False
+      ProjectileType=Class'Botpack.CannonShot'
+      StartingRotation=(Pitch=0,Yaw=0,Roll=0)
+      MyTeam=0
+      GunBase=None
+      PreKillMessage=""
+      PostKillMessage="was killed by an automatic cannon!"
+      SightRadius=3000.000000
+      FovAngle=90.000000
+      Health=220
+      MenuName="automatic cannon!"
+      NameArticle="an "
+      RemoteRole=ROLE_SimulatedProxy
+      AnimSequence="Activate"
+      Mesh=LodMesh'Botpack.cdgunmainM'
+      CollisionRadius=28.000000
+      RotationRate=(Yaw=25000)
 }

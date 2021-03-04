@@ -31,4 +31,5 @@ function LMouseUp(float X, float Y)
 
 defaultproperties
 {
+      bChecked=False
 }

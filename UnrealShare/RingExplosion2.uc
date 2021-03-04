@@ -31,8 +31,8 @@ simulated function SpawnEffects()
 
 defaultproperties
 {
-     ExploSound=Sound'UnrealShare.General.SpecialExpl'
-     Skin=FireTexture'UnrealShare.Effect51.MyTex3'
-     DrawScale=1.000000
-     LightRadius=8
+      ExploSound=Sound'UnrealShare.General.SpecialExpl'
+      Skin=FireTexture'UnrealShare.Effect51.MyTex3'
+      DrawScale=1.000000
+      LightRadius=8
 }

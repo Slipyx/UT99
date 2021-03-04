@@ -75,11 +75,12 @@ simulated function PostRender( canvas Canvas )
 
 defaultproperties
 {
-     Message1="The Skaarj escape pod has broken free from the planet's gravitational pull... barely.  Yet it's fuel has depleted and you drift aimlessly."
-     Message2="From where many have died, you have escaped.  You laugh to yourself; so much has happened, but little has changed."
-     Message3="Before the crash landing, you were trapped in a cramped cell.  Now, once again you are confined in a prison."
-     Message4="But, you feel confident that someone will come upon your small vessel... eventually."
-     Message5="Until then, you drift and hope."
-     Message6="To Be Continued..."
-     Event=EndShip
+      Message1="The Skaarj escape pod has broken free from the planet's gravitational pull... barely.  Yet it's fuel has depleted and you drift aimlessly."
+      Message2="From where many have died, you have escaped.  You laugh to yourself; so much has happened, but little has changed."
+      Message3="Before the crash landing, you were trapped in a cramped cell.  Now, once again you are confined in a prison."
+      Message4="But, you feel confident that someone will come upon your small vessel... eventually."
+      Message5="Until then, you drift and hope."
+      Message6="To Be Continued..."
+      MessageNumber=0
+      Event="EndShip"
 }

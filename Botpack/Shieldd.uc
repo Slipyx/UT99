@@ -15,6 +15,6 @@ class Shieldd extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.shieldM'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.shieldM'
 }

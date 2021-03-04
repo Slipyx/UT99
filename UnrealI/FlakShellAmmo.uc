@@ -13,11 +13,11 @@ class FlakShellAmmo extends FlakBox;
 
 defaultproperties
 {
-     AmmoAmount=1
-     ParentAmmo=Class'UnrealI.FlakBox'
-     PickupMessage="You got a flak shell."
-     PickupViewMesh=LodMesh'UnrealI.FlakShAm'
-     Mesh=LodMesh'UnrealI.FlakShAm'
-     CollisionRadius=10.000000
-     CollisionHeight=8.000000
+      AmmoAmount=1
+      ParentAmmo=Class'UnrealI.FlakBox'
+      PickupMessage="You got a flak shell."
+      PickupViewMesh=LodMesh'UnrealI.FlakShAm'
+      Mesh=LodMesh'UnrealI.FlakShAm'
+      CollisionRadius=10.000000
+      CollisionHeight=8.000000
 }

@@ -19,5 +19,5 @@ static function string GetString(
 
 defaultproperties
 {
-     OutMessage="is OUT!"
+      OutMessage="is OUT!"
 }

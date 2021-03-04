@@ -13,8 +13,8 @@ simulated function BeginPlay()
 
 defaultproperties
 {
-     bImportant=False
-     MultiDecalLevel=0
-     Texture=Texture'Botpack.WallCrack1'
-     DrawScale=0.400000
+      bImportant=False
+      MultiDecalLevel=0
+      Texture=Texture'Botpack.WallCrack1'
+      DrawScale=0.400000
 }

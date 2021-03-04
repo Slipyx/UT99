@@ -16,27 +16,29 @@ class Boulder extends Decoration;
 #exec MESHMAP SCALE MESHMAP=BoulderM X=0.1 Y=0.1 Z=0.2
 #exec MESHMAP SETTEXTURE MESHMAP=BoulderM NUM=1 TEXTURE=JBoulder1
 
-function PostBeginPlay()
+simulated function PostBeginPlay()
 {
 	local float Decision;
 
 	Super.PostBeginPlay();
+	if ( Mesh!=Default.Mesh )
+		Return; // Must do this to avoid scriptwarning(s)
 	Decision = FRand();
 	if (Decision<0.25) PlayAnim('Pos1');
-	if (Decision<0.5) PlayAnim('Pos2');
-	if (Decision<0.75) PlayAnim('Pos3');
-	else PlayAnim('Pos4');	
+	else if (Decision<0.5) PlayAnim('Pos2');
+	else if (Decision<0.75) PlayAnim('Pos3');
+	else PlayAnim('Pos4');
 }
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.BoulderM'
-     CollisionRadius=26.000000
-     CollisionHeight=16.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     bProjTarget=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.BoulderM'
+      CollisionRadius=26.000000
+      CollisionHeight=16.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      bProjTarget=True
 }

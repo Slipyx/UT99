@@ -54,17 +54,17 @@ function Landed(vector HitNormal)
 
 defaultproperties
 {
-     bodyparts(0)=LodMesh'UnrealShare.TentBody'
-     bodyparts(1)=LodMesh'UnrealShare.TentPart'
-     bodyparts(2)=LodMesh'UnrealShare.TentPart'
-     bodyparts(3)=LodMesh'UnrealShare.TentArm'
-     bodyparts(4)=LodMesh'UnrealShare.TentArm'
-     bodyparts(5)=LodMesh'UnrealShare.TentHead'
-     bodyparts(6)=LodMesh'UnrealShare.TentArm'
-     AnimSequence=Dead1Land
-     Mesh=LodMesh'UnrealShare.Tentacle1'
-     CollisionRadius=28.000000
-     CollisionHeight=36.000000
-     Mass=200.000000
-     Buoyancy=190.000000
+      bodyparts(0)=LodMesh'UnrealShare.TentBody'
+      bodyparts(1)=LodMesh'UnrealShare.TentPart'
+      bodyparts(2)=LodMesh'UnrealShare.TentPart'
+      bodyparts(3)=LodMesh'UnrealShare.TentArm'
+      bodyparts(4)=LodMesh'UnrealShare.TentArm'
+      bodyparts(5)=LodMesh'UnrealShare.TentHead'
+      bodyparts(6)=LodMesh'UnrealShare.TentArm'
+      AnimSequence="Dead1Land"
+      Mesh=LodMesh'UnrealShare.Tentacle1'
+      CollisionRadius=28.000000
+      CollisionHeight=36.000000
+      Mass=200.000000
+      Buoyancy=190.000000
 }

@@ -20,4 +20,5 @@ function Trigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
+      bInitiallyActive=False
 }

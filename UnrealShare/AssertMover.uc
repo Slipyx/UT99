@@ -148,4 +148,19 @@ CloseFully:
 
 defaultproperties
 {
+      OpenTimes(0)=0.000000
+      OpenTimes(1)=0.000000
+      OpenTimes(2)=0.000000
+      OpenTimes(3)=0.000000
+      OpenTimes(4)=0.000000
+      OpenTimes(5)=0.000000
+      CloseTimes(0)=0.000000
+      CloseTimes(1)=0.000000
+      CloseTimes(2)=0.000000
+      CloseTimes(3)=0.000000
+      CloseTimes(4)=0.000000
+      CloseTimes(5)=0.000000
+      bOnceOnlyStopOpen=False
+      WaitUnAssertTime=0.000000
+      LastKeyNum=0
 }

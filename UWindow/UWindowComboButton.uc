@@ -37,5 +37,6 @@ function FocusOtherWindow(UWindowWindow W)
 
 defaultproperties
 {
-     bNoKeyboard=True
+      Owner=None
+      bNoKeyboard=True
 }

@@ -25,4 +25,6 @@ event ActorEntered( actor Other )
 
 defaultproperties
 {
+      TeleporterTag="None"
+      myTeleporter=None
 }

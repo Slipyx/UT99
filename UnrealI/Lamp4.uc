@@ -19,6 +19,8 @@ auto state active
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteMe)
+		   return;
 		skinnedFrag(class'Fragment1',texture'JLamp41', Momentum, 0.3, 5);
 		if ( Instigator != None )
 			MakeNoise(1.0);
@@ -29,10 +31,10 @@ Begin:
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Lamp4M'
-     CollisionHeight=32.000000
-     bCollideActors=True
-     bCollideWorld=True
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Lamp4M'
+      CollisionHeight=32.000000
+      bCollideActors=True
+      bCollideWorld=True
 }

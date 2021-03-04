@@ -29,5 +29,6 @@ function Resized()
 
 defaultproperties
 {
-     LookAndFeelClass="UWindow.UWindowWin95LookAndFeel"
+      MainWindow=None
+      LookAndFeelClass="UWindow.UWindowWin95LookAndFeel"
 }

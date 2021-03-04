@@ -142,6 +142,7 @@ static function int TestStatic( int i )
 	assert(i==123);
 	assert(default.xnum==777);
 	assert(OtherStatic(i*2)==555);
+	return 0;
 }
 
 function TestContinueFor()
@@ -387,12 +388,22 @@ state EEDDAA extends DDAA
 
 defaultproperties
 {
-     bTrue1=True
-     bTrue2=True
-     xnum=777
-     ppp=3.140000
-     sxx="Tim"
-     bHidden=False
-     bAlwaysRelevant=True
-     RemoteRole=ROLE_SimulatedProxy
+      bTrue1=True
+      bFalse1=False
+      bTrue2=True
+      bFalse2=False
+      bBool1=False
+      bBool2=False
+      xnum=777
+      ppp=3.140000
+      sxx="Tim"
+      MyArray(0)=0
+      MyArray(1)=0
+      v1=(X=0.000000,Y=0.000000,Z=0.000000)
+      v2=(X=0.000000,Y=0.000000,Z=0.000000)
+      TestRepStr=""
+      ST=(b1=False,i=0,b2=False,b3=False)
+      bHidden=False
+      bAlwaysRelevant=True
+      RemoteRole=ROLE_SimulatedProxy
 }

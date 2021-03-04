@@ -108,7 +108,7 @@ state UWindow
 		if (Root.GetPlayerOwner().Song == None)
 		{
 			MenuSong = Music(DynamicLoadObject("utmenu23.utmenu23", class'Music'));
-			Root.GetPlayerOwner().ClientSetMusic( MenuSong, 0, 0, MTRAN_Fade );
+			Root.GetPlayerOwner().ClientSetMusic( MenuSong, 0, 255, MTRAN_Fade );
 		}
 	}
 	exec function MenuCmd(int Menu, int Item)
@@ -224,7 +224,6 @@ function StartNewGame()
 function LoadGame()
 {
 	// Clear all slots.
-	Root.GetPlayerOwner().PlaySound(sound'LadderSounds.ladvance', SLOT_None, 0.1);
 	Root.GetPlayerOwner().PlaySound(sound'LadderSounds.ladvance', SLOT_Misc, 0.1);
 	Root.GetPlayerOwner().PlaySound(sound'LadderSounds.ladvance', SLOT_Pain, 0.1);
 	Root.GetPlayerOwner().PlaySound(sound'LadderSounds.ladvance', SLOT_Interact, 0.1);
@@ -466,15 +465,30 @@ function PrintTimeDemoResult()
 
 defaultproperties
 {
-     SpeechKey=86
-     ManagerWindowClass="UTMenu.ManagerWindow"
-     UTLadderDMClass="UTMenu.UTLadderDM"
-     UTLadderCTFClass="UTMenu.UTLadderCTF"
-     UTLadderDOMClass="UTMenu.UTLadderDOM"
-     UTLadderASClass="UTMenu.UTLadderAS"
-     UTLadderChalClass="UTMenu.UTLadderChal"
-     UTLadderDMTestClass="UTMenu.UTLadderDMTest"
-     UTLadderDOMTestClass="UTMenu.UTLadderDOMTest"
-     InterimObjectType="UTMenu.NewGameInterimObject"
-     SlotWindowType="UTMenu.SlotWindow"
+      SpeechWindow=None
+      SpeechKey=86
+      bTimeDemoIsEntry=False
+      bShowMessage=False
+      bWasShowingMessage=False
+      MessageWindow=None
+      ManagerWindowClass="UTMenu.ManagerWindow"
+      UTLadderDMClass="UTMenu.UTLadderDM"
+      UTLadderCTFClass="UTMenu.UTLadderCTF"
+      UTLadderDOMClass="UTMenu.UTLadderDOM"
+      UTLadderASClass="UTMenu.UTLadderAS"
+      UTLadderChalClass="UTMenu.UTLadderChal"
+      UTLadderDMTestClass="UTMenu.UTLadderDMTest"
+      UTLadderDOMTestClass="UTMenu.UTLadderDOMTest"
+      InterimObjectType="UTMenu.NewGameInterimObject"
+      SlotWindowType="UTMenu.SlotWindow"
+      SavedPasswords(0)=""
+      SavedPasswords(1)=""
+      SavedPasswords(2)=""
+      SavedPasswords(3)=""
+      SavedPasswords(4)=""
+      SavedPasswords(5)=""
+      SavedPasswords(6)=""
+      SavedPasswords(7)=""
+      SavedPasswords(8)=""
+      SavedPasswords(9)=""
 }

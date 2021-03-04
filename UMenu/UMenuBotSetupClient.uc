@@ -100,4 +100,5 @@ function SaveConfigs()
 
 defaultproperties
 {
+      BotInfo=None
 }

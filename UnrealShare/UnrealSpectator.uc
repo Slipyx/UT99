@@ -18,6 +18,6 @@ exec function Fire( optional float F )
 
 defaultproperties
 {
-     HUDType=Class'UnrealShare.spectatorhud'
-     CollisionRadius=17.000000
+      HUDType=Class'UnrealShare.spectatorhud'
+      CollisionRadius=17.000000
 }

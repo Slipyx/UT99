@@ -75,6 +75,28 @@ function Timer()
 
 defaultproperties
 {
-     Team=255
-     NetUpdateFrequency=2.000000
+      PlayerName=""
+      OldName=""
+      PlayerID=0
+      TeamName=""
+      Team=255
+      TeamID=0
+      Score=0.000000
+      Deaths=0.000000
+      VoiceType=None
+      HasFlag=None
+      Ping=0
+      PacketLoss=0
+      bIsFemale=False
+      bIsABot=False
+      bFeigningDeath=False
+      bIsSpectator=False
+      bWaitingPlayer=False
+      bAdmin=False
+      TalkTexture=None
+      PlayerZone=None
+      PlayerLocation=None
+      StartTime=0
+      TimeAcc=0
+      NetUpdateFrequency=2.000000
 }

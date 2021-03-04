@@ -17,5 +17,9 @@ replication
 
 defaultproperties
 {
-     bAlwaysRelevant=True
+      TeamName=""
+      Size=0
+      Score=0.000000
+      TeamIndex=0
+      bAlwaysRelevant=True
 }

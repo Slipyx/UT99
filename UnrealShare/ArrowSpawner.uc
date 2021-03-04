@@ -54,12 +54,13 @@ Begin:
 
 defaultproperties
 {
-     TriggerDelay=0.100000
-     RepeatDelay=0.500000
-     ArrowsToShootAfterDeactivated=1
-     ArrowSpeed=1000
-     bHidden=True
-     bNetTemporary=False
-     bDirectional=True
-     DrawType=DT_Sprite
+      TriggerDelay=0.100000
+      RepeatDelay=0.500000
+      ArrowsToShootAfterDeactivated=1
+      ArrowSpeed=1000
+      ArrowCount=0
+      bHidden=True
+      bNetTemporary=False
+      bDirectional=True
+      DrawType=DT_Sprite
 }

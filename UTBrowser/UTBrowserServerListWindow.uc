@@ -2,6 +2,6 @@ class UTBrowserServerListWindow expands UBrowserServerListWindow;
 
 defaultproperties
 {
-     ServerListClassName="UTBrowser.UTBrowserServerList"
-     GridClass="UTBrowser.UTBrowserServerGrid"
+      ServerListClassName="UTBrowser.UTBrowserServerList"
+      GridClass="UTBrowser.UTBrowserServerGrid"
 }

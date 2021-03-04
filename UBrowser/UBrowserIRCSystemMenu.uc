@@ -49,7 +49,10 @@ function ShowWindow()
 
 defaultproperties
 {
-     ConnectText="&Connect"
-     DisconnectText="&Disconnect"
-     JoinText="&Join"
+      Connect=None
+      Disconnect=None
+      Join=None
+      ConnectText="&Connect"
+      DisconnectText="&Disconnect"
+      JoinText="&Join"
 }

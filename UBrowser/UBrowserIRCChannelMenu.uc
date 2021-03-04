@@ -33,6 +33,8 @@ function ShowWindow()
 
 defaultproperties
 {
-     PartText="&Leave"
-     JoinText="&Join"
+      Part=None
+      Join=None
+      PartText="&Leave"
+      JoinText="&Join"
 }

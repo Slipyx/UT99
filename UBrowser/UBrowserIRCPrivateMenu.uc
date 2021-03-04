@@ -27,6 +27,8 @@ function ExecuteItem(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     CloseText="&Close "
-     JoinText="&Join"
+      CloseChat=None
+      Join=None
+      CloseText="&Close "
+      JoinText="&Join"
 }

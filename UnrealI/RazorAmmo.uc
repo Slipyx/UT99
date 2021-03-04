@@ -52,17 +52,18 @@ auto state Pickup
 
 defaultproperties
 {
-     AmmoAmount=25
-     MaxAmmo=75
-     UsedInWeaponSlot(7)=1
-     PickupMessage="You picked up Razor Blades"
-     PickupViewMesh=LodMesh'UnrealI.RazorAmmoMesh'
-     MaxDesireability=0.220000
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Icon=Texture'UnrealI.Icons.I_RazorAmmo'
-     Physics=PHYS_Falling
-     Mesh=LodMesh'UnrealI.RazorAmmoMesh'
-     CollisionRadius=20.000000
-     CollisionHeight=10.000000
-     bCollideActors=True
+      bOpened=False
+      AmmoAmount=25
+      MaxAmmo=75
+      UsedInWeaponSlot(7)=1
+      PickupMessage="You picked up Razor Blades"
+      PickupViewMesh=LodMesh'UnrealI.RazorAmmoMesh'
+      MaxDesireability=0.220000
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Icon=Texture'UnrealI.Icons.I_RazorAmmo'
+      Physics=PHYS_Falling
+      Mesh=LodMesh'UnrealI.RazorAmmoMesh'
+      CollisionRadius=20.000000
+      CollisionHeight=10.000000
+      bCollideActors=True
 }

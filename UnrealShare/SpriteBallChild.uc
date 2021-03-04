@@ -11,8 +11,8 @@ Function PostBeginPlay()
 
 defaultproperties
 {
-     bHighDetail=True
-     DrawScale=2.500000
-     LightType=LT_None
-     LightEffect=LE_None
+      bHighDetail=True
+      DrawScale=2.500000
+      LightType=LT_None
+      LightEffect=LE_None
 }

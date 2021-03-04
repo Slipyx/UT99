@@ -28,9 +28,9 @@ simulated function SpawnCloud()
 
 defaultproperties
 {
-     bOwnerNoSee=True
-     AnimSequence=burst
-     Texture=Texture'Botpack.Blood.BD6'
-     DrawScale=0.150000
-     AmbientGlow=80
+      bOwnerNoSee=True
+      AnimSequence="burst"
+      Texture=Texture'Botpack.Blood.BD6'
+      DrawScale=0.150000
+      AmbientGlow=80
 }

@@ -177,10 +177,13 @@ event FootZoneChange(ZoneInfo newFootZone)
 {
 	local float OldPainTime;
 
-	OldPainTime = PainTime;
+    OldPainTime = PainTime;
 	Super.FootZoneChange(newFootZone);
 	if ( bIsInvulnerable && (PainTime <= 0) )
+	{
 		PainTime = FMax(OldPainTime, 0.1);
+		BecomeNormal();
+	}
 } 
 
 event HeadZoneChange(ZoneInfo newHeadZone)
@@ -234,7 +237,7 @@ function BecomeNormal()
 
 function PainTimer()
 {
-	if ( Health <= 0 )
+	if ( Health <= 0 || bDeleteMe )
 		return;
 	if ( !bIsInvulnerable )
 	{
@@ -762,6 +765,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal,X,Y,Z, projStart, EnemyDir, EnemyUp;
 	local actor HitActor;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+		return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -799,6 +805,12 @@ function SprayTarget()
 	local rotator AdjRot;
 	local vector X,Y,Z;
 
+	if ( Target == None || Target.bDeleteMe )
+	{
+		PlayChallenge();
+		return;
+	}
+
 	AdjRot = Rotation;
 	if ( AnimSequence == 'Dead5' )
 		AdjRot.Yaw += 3000 * (2 - sprayOffset);
@@ -816,24 +828,29 @@ function SprayTarget()
 	}
 	if ( AnimSequence == 'Dead5' )
 		sprayoffset++;
-	EndTrace = Location + 2000 * fireDir; 
-	EndTrace.Z = Target.Location.Z + Target.CollisionHeight * 0.6;
+	EndTrace = Location + 2000 * fireDir;
+	if (Target.IsA('Pawn'))
+	   EndTrace.Z = Target.Location.Z + Target.CollisionHeight * 0.6;
 	HitActor = TraceShot(HitLocation,HitNormal,EndTrace,Location);
 	if (HitActor == Level)   // Hit a wall
 	{
 		spawn(class'SmallSpark2',,,HitLocation+HitNormal*5,rotator(HitNormal*2+VRand()));
-		spawn(class'SpriteSmokePuff',,,HitLocation+HitNormal*9);		
+		spawn(class'SpriteSmokePuff',,,HitLocation+HitNormal*9);
+		spawn(class'LightWallHitEffect',,, HitLocation+HitNormal*9, Rotator(HitNormal));
 	}
 	else if ((HitActor != self) && (HitActor != Owner))
 	{
 		HitActor.TakeDamage(10, self, HitLocation, 10000.0*fireDir, 'shot');			
-		spawn(class'SpriteSmokePuff',,,HitLocation+HitNormal*9);		
+		spawn(class'SpriteSmokePuff',,,HitLocation+HitNormal*9);
+		spawn(class'LightWallHitEffect',,, HitLocation+HitNormal*9, Rotator(HitNormal));		
 	} 
 }
 
 
 function HitDamageTarget()
 {
+	if (Target==None)
+	    return;
 	if (MeleeDamageTarget(PunchDamage, (PunchDamage * 1000 * Normal(Target.Location - Location))))
 		PlaySound(PunchHit, SLOT_Interact);
 }
@@ -843,6 +860,9 @@ function PlayRangedAttack()
 	//FIXME - if going to ranged attack need to
 	//	TweenAnim('StillFire', 0.2);
 	//What I need is a tween into time for the PlayAnim()
+
+	if (Target==None)
+	    return;
 
 	if ( bIsInvulnerable && !bCanFireWhileInvulnerable )
 	{
@@ -900,7 +920,7 @@ state SpeakOrders
 	function Killed(pawn Killer, pawn Other, name damageType)
 	{
 		Super.Killed(Killer, Other, damageType);
-		if ( (Health > 0) && !bTeamLeader )
+		if ( Health > 0 && !bDeleteMe && !bTeamLeader )
 			GotoState('Attacking');
 	}
 
@@ -908,7 +928,7 @@ state SpeakOrders
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-		if ( health <= 0 )
+		if ( health <= 0 || bDeleteMe )
 			return;
 		if (NextState == 'TakeHit')
 		{
@@ -925,7 +945,7 @@ state SpeakOrders
 Begin:
 	bAlertedTeam = true;
 	Acceleration = vect(0,0,0);
-	if (NeedToTurn(enemy.Location))
+	if (enemy!=None && NeedToTurn(enemy.Location))
 	{
 		PlayTurning();
 		TurnToward(Enemy);
@@ -1009,57 +1029,71 @@ ignores SeePlayer, HearNoise;
 
 defaultproperties
 {
-     PunchDamage=20
-     bHasInvulnerableShield=True
-     Punch=Sound'UnrealI.Mercenary.swat1mr'
-     PunchHit=Sound'UnrealI.Mercenary.hit1mr'
-     Flip=Sound'UnrealI.Mercenary.flip1mr'
-     CheckWeapon=Sound'UnrealI.Mercenary.weapon1mr'
-     WeaponSpray=Sound'UnrealI.Mercenary.spray1mr'
-     syllable1=Sound'UnrealI.Mercenary.syl1mr'
-     syllable2=Sound'UnrealI.Mercenary.syl2mr'
-     syllable3=Sound'UnrealI.Mercenary.syl3mr'
-     syllable4=Sound'UnrealI.Mercenary.syl4mr'
-     syllable5=Sound'UnrealI.Mercenary.syl5mr'
-     syllable6=Sound'UnrealI.Mercenary.syl6mr'
-     Footstep1=Sound'UnrealI.Mercenary.walk2mr'
-     invulnerableCharge=9.000000
-     CarcassType=Class'UnrealI.MercCarcass'
-     Aggressiveness=0.500000
-     RefireRate=0.500000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     bGreenBlood=True
-     RangedProjectile=Class'UnrealI.MercRocket'
-     Acquire=Sound'UnrealI.Mercenary.chlng2mr'
-     Fear=Sound'UnrealI.Mercenary.chlng3mr'
-     Roam=Sound'UnrealI.Mercenary.nearbymr'
-     Threaten=Sound'UnrealI.Mercenary.chlng3mr'
-     bCanStrafe=True
-     MeleeRange=50.000000
-     GroundSpeed=280.000000
-     AirSpeed=300.000000
-     AccelRate=800.000000
-     Health=180
-     UnderWaterTime=-1.000000
-     Intelligence=BRAINS_HUMAN
-     HitSound1=Sound'UnrealI.Mercenary.injur2mr'
-     HitSound2=Sound'UnrealI.Mercenary.injur3mr'
-     Land=Sound'UnrealI.Mercenary.land1mr'
-     Die=Sound'UnrealI.Mercenary.death1mr'
-     CombatStyle=0.500000
-     AmbientSound=Sound'UnrealI.Mercenary.amb1mr'
-     DrawType=DT_Mesh
-     Texture=Texture'UnrealI.Skins.Silver'
-     Mesh=LodMesh'UnrealI.Merc'
-     CollisionRadius=35.000000
-     CollisionHeight=48.000000
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=170
-     LightSaturation=96
-     LightRadius=12
-     Mass=150.000000
-     Buoyancy=150.000000
-     RotationRate=(Pitch=3072,Yaw=65000,Roll=0)
+      PunchDamage=20
+      OrdersGiven=0
+      bButtonPusher=False
+      bTalker=False
+      bSquatter=False
+      bPatroling=False
+      bHasInvulnerableShield=True
+      bCanFireWhileInvulnerable=False
+      bIsInvulnerable=False
+      bAlertedTeam=False
+      Punch=Sound'UnrealI.Mercenary.swat1mr'
+      PunchHit=Sound'UnrealI.Mercenary.hit1mr'
+      Flip=Sound'UnrealI.Mercenary.flip1mr'
+      CheckWeapon=Sound'UnrealI.Mercenary.weapon1mr'
+      WeaponSpray=Sound'UnrealI.Mercenary.spray1mr'
+      syllable1=Sound'UnrealI.Mercenary.syl1mr'
+      syllable2=Sound'UnrealI.Mercenary.syl2mr'
+      syllable3=Sound'UnrealI.Mercenary.syl3mr'
+      syllable4=Sound'UnrealI.Mercenary.syl4mr'
+      syllable5=Sound'UnrealI.Mercenary.syl5mr'
+      syllable6=Sound'UnrealI.Mercenary.syl6mr'
+      Breath=None
+      Footstep1=Sound'UnrealI.Mercenary.walk2mr'
+      phrase="None"
+      phrasesyllable=0
+      VoicePitch=0.000000
+      sprayoffset=0
+      invulnerableTime=0.000000
+      invulnerableCharge=9.000000
+      CarcassType=Class'UnrealI.MercCarcass'
+      Aggressiveness=0.500000
+      RefireRate=0.500000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      bGreenBlood=True
+      RangedProjectile=Class'UnrealI.MercRocket'
+      Acquire=Sound'UnrealI.Mercenary.chlng2mr'
+      Fear=Sound'UnrealI.Mercenary.chlng3mr'
+      Roam=Sound'UnrealI.Mercenary.nearbymr'
+      Threaten=Sound'UnrealI.Mercenary.chlng3mr'
+      bCanStrafe=True
+      MeleeRange=50.000000
+      GroundSpeed=280.000000
+      AirSpeed=300.000000
+      AccelRate=800.000000
+      Health=180
+      UnderWaterTime=-1.000000
+      Intelligence=BRAINS_HUMAN
+      HitSound1=Sound'UnrealI.Mercenary.injur2mr'
+      HitSound2=Sound'UnrealI.Mercenary.injur3mr'
+      Land=Sound'UnrealI.Mercenary.land1mr'
+      Die=Sound'UnrealI.Mercenary.death1mr'
+      CombatStyle=0.500000
+      AmbientSound=Sound'UnrealI.Mercenary.amb1mr'
+      DrawType=DT_Mesh
+      Texture=Texture'UnrealI.Skins.Silver'
+      Mesh=LodMesh'UnrealI.Merc'
+      CollisionRadius=35.000000
+      CollisionHeight=48.000000
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=170
+      LightSaturation=96
+      LightRadius=12
+      Mass=150.000000
+      Buoyancy=150.000000
+      RotationRate=(Pitch=3072,Yaw=65000,Roll=0)
 }

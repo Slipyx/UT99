@@ -21,4 +21,6 @@ function BeforePaint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      Description=None
+      Frame=None
 }

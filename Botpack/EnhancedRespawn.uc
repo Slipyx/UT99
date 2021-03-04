@@ -75,25 +75,25 @@ auto state Explode
 
 defaultproperties
 {
-     EffectSound1=Sound'Botpack.Generic.RespawnSound2'
-     bNetOptional=True
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=1.500000
-     AnimSequence=All
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.DBEffect.de_A00'
-     Skin=Texture'UnrealShare.DBEffect.de_A00'
-     Mesh=LodMesh'UnrealShare.TeleEffect2'
-     DrawScale=1.100000
-     AmbientGlow=255
-     bUnlit=True
-     bParticles=True
-     bMeshEnviroMap=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=210
-     LightHue=30
-     LightSaturation=224
-     LightRadius=6
+      EffectSound1=Sound'Botpack.Generic.RespawnSound2'
+      bNetOptional=True
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=1.500000
+      AnimSequence="All"
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.DBEffect.de_A00'
+      Skin=Texture'UnrealShare.DBEffect.de_A00'
+      Mesh=LodMesh'UnrealShare.TeleEffect2'
+      DrawScale=1.100000
+      AmbientGlow=255
+      bUnlit=True
+      bParticles=True
+      bMeshEnviroMap=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=210
+      LightHue=30
+      LightSaturation=224
+      LightRadius=6
 }

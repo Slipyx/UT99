@@ -56,5 +56,6 @@ simulated function bool DisplayMessages( canvas C )
 
 defaultproperties
 {
-     ESCMessage="Press ESC to begin."
+      ESCMessage="Press ESC to begin."
+      ESCFadeTime=0.000000
 }

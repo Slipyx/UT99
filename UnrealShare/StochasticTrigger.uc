@@ -88,4 +88,17 @@ function Timer ()
 
 defaultproperties
 {
+      Events(0)="None"
+      Events(1)="None"
+      Events(2)="None"
+      Events(3)="None"
+      Events(4)="None"
+      Events(5)="None"
+      triggerProbability=0.000000
+      minReCheckTime=0.000000
+      maxReCheckTime=0.000000
+      bIsActive=False
+      reTriggerTime=0.000000
+      numEvents=0
+      triggerInstigator=None
 }

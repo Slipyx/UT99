@@ -12,7 +12,7 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     DrawScale=0.200000
-     ScaleGlow=1.300000
-     AmbientGlow=0
+      DrawScale=0.200000
+      ScaleGlow=1.300000
+      AmbientGlow=0
 }

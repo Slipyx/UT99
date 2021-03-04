@@ -53,6 +53,10 @@ event bool Build();
 
 defaultproperties
 {
-     BitmapFilename="BBGeneric"
-     ToolTip="Generic Builder"
+      BitmapFilename="BBGeneric"
+      ToolTip="Generic Builder"
+      Vertices=()
+      Polys=()
+      Group="None"
+      MergeCoplanars=False
 }

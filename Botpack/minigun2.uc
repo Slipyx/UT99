@@ -261,8 +261,10 @@ function ProcessTraceHit(Actor Other, Vector HitLocation, Vector HitNormal, Vect
 		if ( Other.IsA('Bot') && (FRand() < 0.2) )
 			Pawn(Other).WarnTarget(Pawn(Owner), 500, X);
 		rndDam = 9 + Rand(6);
-		if ( FRand() < 0.2 )
-			X *= 2.5;
+		if ( Level.Game.NoLockdown == 1 || FRand() >= 0.2 )
+		    X = vect(0, 0, 0);
+		else
+		    X *= 2.5;
 		Other.TakeDamage(rndDam, Pawn(Owner), HitLocation, rndDam*500.0*X, MyDamageType);
 	}
 }
@@ -493,7 +495,7 @@ state ClientFinish
 	}
 }
 
-state ClientAltFiring
+simulated state ClientAltFiring
 {
 	simulated function AnimEnd()
 	{
@@ -520,8 +522,8 @@ state ClientAltFiring
 			if ( PlayerPawn(Owner) != None )
 				PlayerPawn(Owner).ShakeView(ShakeTime, ShakeMag, ShakeVert);
 		}
-		else if ( Pawn(Owner).bFire != 0 )
-			Global.ClientFire(0);
+//		else if ( Pawn(Owner).bFire != 0 )
+//			Global.ClientFire(0);
 		else
 		{
 			PlayUnwind();
@@ -529,18 +531,29 @@ state ClientAltFiring
 			GotoState('ClientFinish');
 		}
 	}
+	
+	simulated function Tick( float DeltaTime)
+	{
+		if ( bFiredShot && (Pawn(Owner) != None) && (Pawn(Owner).bAltFire == 0) )
+			AnimEnd();
+	}
 
 	simulated function BeginState()
 	{
 		bSteadyFlash3rd = true;
 		AmbientSound = FireSound;
+		bFiredShot = false;
 	}
 
 	simulated function EndState()
 	{
 		bSteadyFlash3rd = false;
+		bFiredShot = false;
 		Super.EndState();
 	}
+Begin:
+	Sleep(0.13);
+	bFiredShot = true;
 }
 
 state AltFiring
@@ -617,69 +630,74 @@ Begin:
 
 defaultproperties
 {
-     MuzzleFlashVariations(0)=Texture'Botpack.Skins.Muz1'
-     MuzzleFlashVariations(1)=Texture'Botpack.Skins.Muz2'
-     MuzzleFlashVariations(2)=Texture'Botpack.Skins.Muz3'
-     MuzzleFlashVariations(3)=Texture'Botpack.Skins.Muz4'
-     MuzzleFlashVariations(4)=Texture'Botpack.Skins.Muz5'
-     MuzzleFlashVariations(5)=Texture'Botpack.Skins.Muz6'
-     MuzzleFlashVariations(6)=Texture'Botpack.Skins.Muz7'
-     MuzzleFlashVariations(7)=Texture'Botpack.Skins.Muz8'
-     MuzzleFlashVariations(8)=Texture'Botpack.Skins.Muz9'
-     MuzzleFlashVariations(9)=Texture'Botpack.Skins.Muz9'
-     WeaponDescription="Classification: Gatling Gun\n\nPrimary Fire: Bullets are sprayed forth at a medium to fast rate of fire and good accuracy.\n\nSecondary Fire: Minigun fires twice as fast and is half as accurate.\n\nTechniques: Secondary fire is much more useful at close range, but can eat up tons of ammunition."
-     AmmoName=Class'Botpack.Miniammo'
-     PickupAmmoCount=50
-     bInstantHit=True
-     bAltInstantHit=True
-     bRapidFire=True
-     FireOffset=(X=8.000000,Y=-5.000000,Z=-4.000000)
-     MyDamageType=shot
-     shakemag=135.000000
-     shakevert=8.000000
-     AIRating=0.730000
-     RefireRate=0.990000
-     AltRefireRate=0.990000
-     FireSound=Sound'Botpack.minigun2.M2RegFire'
-     AltFireSound=Sound'Botpack.minigun2.M2AltFire'
-     SelectSound=Sound'UnrealI.Minigun.MiniSelect'
-     Misc1Sound=Sound'Botpack.minigun2.M2WindDown'
-     DeathMessage="%k's %w turned %o into a leaky piece of meat."
-     NameColor=(B=0)
-     bDrawMuzzleFlash=True
-     MuzzleScale=2.000000
-     FlashY=0.180000
-     FlashO=0.022000
-     FlashC=0.006000
-     FlashLength=0.200000
-     FlashS=128
-     MFTexture=Texture'Botpack.Skins.Muz9'
-     AutoSwitchPriority=7
-     InventoryGroup=7
-     PickupMessage="You got the Minigun."
-     ItemName="Minigun"
-     PlayerViewOffset=(X=2.100000,Y=-0.350000,Z=-1.700000)
-     PlayerViewMesh=LodMesh'Botpack.Minigun2m'
-     BobDamping=0.975000
-     PickupViewMesh=LodMesh'Botpack.MinigunPick'
-     ThirdPersonMesh=LodMesh'Botpack.MiniHand'
-     StatusIcon=Texture'Botpack.Icons.UseMini'
-     bMuzzleFlashParticles=True
-     MuzzleFlashStyle=STY_Translucent
-     MuzzleFlashMesh=LodMesh'Botpack.MuzzFlash3'
-     MuzzleFlashScale=0.250000
-     MuzzleFlashTexture=Texture'Botpack.Skins.Muzzy'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseMini'
-     Mesh=LodMesh'Botpack.MinigunPick'
-     bNoSmooth=False
-     SoundRadius=96
-     SoundVolume=255
-     CollisionRadius=34.000000
-     CollisionHeight=8.000000
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=28
-     LightSaturation=32
-     LightRadius=6
+      ShotAccuracy=0.000000
+      LastShellSpawn=0.000000
+      Count=0
+      bOutOfAmmo=False
+      bFiredShot=False
+      MuzzleFlashVariations(0)=Texture'Botpack.Skins.Muz1'
+      MuzzleFlashVariations(1)=Texture'Botpack.Skins.Muz2'
+      MuzzleFlashVariations(2)=Texture'Botpack.Skins.Muz3'
+      MuzzleFlashVariations(3)=Texture'Botpack.Skins.Muz4'
+      MuzzleFlashVariations(4)=Texture'Botpack.Skins.Muz5'
+      MuzzleFlashVariations(5)=Texture'Botpack.Skins.Muz6'
+      MuzzleFlashVariations(6)=Texture'Botpack.Skins.Muz7'
+      MuzzleFlashVariations(7)=Texture'Botpack.Skins.Muz8'
+      MuzzleFlashVariations(8)=Texture'Botpack.Skins.Muz9'
+      MuzzleFlashVariations(9)=Texture'Botpack.Skins.Muz9'
+      WeaponDescription="Classification: Gatling Gun\n\nPrimary Fire: Bullets are sprayed forth at a medium to fast rate of fire and good accuracy.\n\nSecondary Fire: Minigun fires twice as fast and is half as accurate.\n\nTechniques: Secondary fire is much more useful at close range, but can eat up tons of ammunition."
+      AmmoName=Class'Botpack.Miniammo'
+      PickupAmmoCount=50
+      bInstantHit=True
+      bAltInstantHit=True
+      bRapidFire=True
+      FireOffset=(X=8.000000,Y=-5.000000,Z=-4.000000)
+      MyDamageType="shot"
+      shakemag=135.000000
+      shakevert=8.000000
+      AIRating=0.730000
+      RefireRate=0.990000
+      AltRefireRate=0.990000
+      FireSound=Sound'Botpack.minigun2.M2RegFire'
+      AltFireSound=Sound'Botpack.minigun2.M2AltFire'
+      SelectSound=Sound'UnrealI.Minigun.MiniSelect'
+      Misc1Sound=Sound'Botpack.minigun2.M2WindDown'
+      DeathMessage="%k's %w turned %o into a leaky piece of meat."
+      NameColor=(B=0)
+      bDrawMuzzleFlash=True
+      MuzzleScale=2.000000
+      FlashY=0.180000
+      FlashO=0.022000
+      FlashC=0.006000
+      FlashLength=0.200000
+      FlashS=128
+      MFTexture=Texture'Botpack.Skins.Muz9'
+      AutoSwitchPriority=7
+      InventoryGroup=7
+      PickupMessage="You got the Minigun."
+      ItemName="Minigun"
+      PlayerViewOffset=(X=2.100000,Y=-0.350000,Z=-1.700000)
+      PlayerViewMesh=LodMesh'Botpack.Minigun2m'
+      BobDamping=0.975000
+      PickupViewMesh=LodMesh'Botpack.MinigunPick'
+      ThirdPersonMesh=LodMesh'Botpack.MiniHand'
+      StatusIcon=Texture'Botpack.Icons.UseMini'
+      bMuzzleFlashParticles=True
+      MuzzleFlashStyle=STY_Translucent
+      MuzzleFlashMesh=LodMesh'Botpack.MuzzFlash3'
+      MuzzleFlashScale=0.250000
+      MuzzleFlashTexture=Texture'Botpack.Skins.Muzzy'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseMini'
+      Mesh=LodMesh'Botpack.MinigunPick'
+      bNoSmooth=False
+      SoundRadius=96
+      SoundVolume=255
+      CollisionRadius=34.000000
+      CollisionHeight=8.000000
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=28
+      LightSaturation=32
+      LightRadius=6
 }

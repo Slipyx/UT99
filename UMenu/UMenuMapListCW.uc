@@ -156,7 +156,8 @@ function LoadMapList()
 			Log("Unknown map in Map List: "$MapName);
 	}
 
-	Exclude.Sort();
+	// Maplists returned by GetMapName get sorted in C++ as of the Unreal Tournament 469 patch
+	// Exclude.Sort();
 }
 
 function DefaultComboChanged()
@@ -234,11 +235,19 @@ function Notify(UWindowDialogControl C, byte E)
 
 defaultproperties
 {
-     DefaultText="Use Map List: "
-     DefaultHelp="Choose a default map list to load, or choose Custom and configure the map list by hand."
-     CustomText="Custom"
-     ExcludeCaption="Maps Not Cycled"
-     ExcludeHelp="Click and drag a map to the right hand column to include that map in the map cycle list."
-     IncludeCaption="Maps Cycled"
-     IncludeHelp="Click and drag a map to the left hand column to remove it from the map cycle list, or drag it up or down to re-order it in the map cycle list."
+      BotmatchParent=None
+      Splitter=None
+      Exclude=None
+      Include=None
+      FrameExclude=None
+      FrameInclude=None
+      DefaultCombo=None
+      DefaultText="Use Map List: "
+      DefaultHelp="Choose a default map list to load, or choose Custom and configure the map list by hand."
+      CustomText="Custom"
+      ExcludeCaption="Maps Not Cycled"
+      ExcludeHelp="Click and drag a map to the right hand column to include that map in the map cycle list."
+      IncludeCaption="Maps Cycled"
+      IncludeHelp="Click and drag a map to the left hand column to remove it from the map cycle list, or drag it up or down to re-order it in the map cycle list."
+      bChangingDefault=False
 }

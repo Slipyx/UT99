@@ -14,12 +14,12 @@ class Robot extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.RobotM'
-     CollisionRadius=50.000000
-     CollisionHeight=114.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.RobotM'
+      CollisionRadius=50.000000
+      CollisionHeight=114.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
 }

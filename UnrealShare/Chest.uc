@@ -27,6 +27,8 @@ Auto State Still
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteMe)
+		    return;
 		Instigator = InstigatedBy;
 		bBobbing = false;	
 		if (Health<0) Return;
@@ -50,18 +52,18 @@ Begin:
 
 defaultproperties
 {
-     Health=10
-     FragChunks=10
-     Fragsize=1.200000
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.ChestM'
-     CollisionRadius=28.000000
-     CollisionHeight=12.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     Mass=10.000000
-     NetPriority=0.500000
+      Health=10
+      FragChunks=10
+      Fragsize=1.200000
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.ChestM'
+      CollisionRadius=28.000000
+      CollisionHeight=12.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      Mass=10.000000
+      NetPriority=0.500000
 }

@@ -12,18 +12,18 @@ class BulletBox extends TournamentAmmo;
 
 defaultproperties
 {
-     AmmoAmount=10
-     MaxAmmo=50
-     UsedInWeaponSlot(9)=1
-     PickupMessage="You got a box of rifle rounds."
-     ItemName="Box of Rifle Rounds"
-     PickupViewMesh=LodMesh'Botpack.BulletBoxM'
-     MaxDesireability=0.240000
-     Icon=Texture'UnrealI.Icons.I_RIFLEAmmo'
-     Physics=PHYS_Falling
-     Skin=Texture'Botpack.Skins.BulletBoxT'
-     Mesh=LodMesh'Botpack.BulletBoxM'
-     CollisionRadius=15.000000
-     CollisionHeight=10.000000
-     bCollideActors=True
+      AmmoAmount=10
+      MaxAmmo=50
+      UsedInWeaponSlot(9)=1
+      PickupMessage="You got a box of rifle rounds."
+      ItemName="Box of Rifle Rounds"
+      PickupViewMesh=LodMesh'Botpack.BulletBoxM'
+      MaxDesireability=0.240000
+      Icon=Texture'UnrealI.Icons.I_RIFLEAmmo'
+      Physics=PHYS_Falling
+      Skin=Texture'Botpack.Skins.BulletBoxT'
+      Mesh=LodMesh'Botpack.BulletBoxM'
+      CollisionRadius=15.000000
+      CollisionHeight=10.000000
+      bCollideActors=True
 }

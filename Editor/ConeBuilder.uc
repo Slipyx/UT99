@@ -65,13 +65,14 @@ function bool Build()
 
 defaultproperties
 {
-     Height=256.000000
-     CapHeight=256.000000
-     OuterRadius=512.000000
-     InnerRadius=384.000000
-     Sides=8
-     GroupName=Cone
-     AlignToSide=True
-     BitmapFilename="BBCone"
-     ToolTip="Cone"
+      Height=256.000000
+      CapHeight=256.000000
+      OuterRadius=512.000000
+      InnerRadius=384.000000
+      Sides=8
+      GroupName="Cone"
+      AlignToSide=True
+      Hollow=False
+      BitmapFilename="BBCone"
+      ToolTip="Cone"
 }

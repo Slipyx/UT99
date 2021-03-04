@@ -106,10 +106,10 @@ function CheckOpenCondition()
 
 defaultproperties
 {
-     GameType="Botpack.Domination"
-     TrophyMap="EOL_Domination.unr"
-     LadderName="Domination"
-     Ladder=Class'Botpack.LadderDOM'
-     DemoLadder=Class'Botpack.LadderDOMDemo'
-     LadderTrophy=Texture'UTMenu.Skins.TrophyDOM'
+      GameType="Botpack.Domination"
+      TrophyMap="EOL_Domination.unr"
+      LadderName="Domination"
+      Ladder=Class'Botpack.LadderDOM'
+      DemoLadder=Class'Botpack.LadderDOMDemo'
+      LadderTrophy=Texture'UTMenu.Skins.TrophyDOM'
 }

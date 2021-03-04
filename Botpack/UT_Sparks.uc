@@ -41,16 +41,16 @@ simulated function ZoneChange( ZoneInfo NewZone )
 
 defaultproperties
 {
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_None
-     LifeSpan=1.000000
-     AnimSequence=GravSpray
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Effects.Sparky'
-     Mesh=LodMesh'Botpack.SparksM'
-     DrawScale=0.100000
-     bUnlit=True
-     bParticles=True
-     bCollideWorld=True
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_None
+      LifeSpan=1.000000
+      AnimSequence="GravSpray"
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Effects.Sparky'
+      Mesh=LodMesh'Botpack.SparksM'
+      DrawScale=0.100000
+      bUnlit=True
+      bParticles=True
+      bCollideWorld=True
 }

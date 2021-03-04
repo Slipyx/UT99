@@ -13,6 +13,6 @@ class Wreck1 extends UT_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.wreck1M'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.wreck1M'
 }

@@ -13,7 +13,7 @@ class Challenge extends Trophy;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.challengeM'
-     DrawScale=0.200000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.challengeM'
+      DrawScale=0.200000
 }

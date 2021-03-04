@@ -5,6 +5,6 @@ class BlockMonsters extends Keypoint;
 
 defaultproperties
 {
-     bCollideActors=True
-     bBlockActors=True
+      bCollideActors=True
+      bBlockActors=True
 }

@@ -46,9 +46,10 @@ event bool Build()
 
 defaultproperties
 {
-     Height=256.000000
-     Width=256.000000
-     GroupName=Sheet
-     BitmapFilename="BBSheet"
-     ToolTip="Sheet"
+      Height=256.000000
+      Width=256.000000
+      Axis=AX_Horizontal
+      GroupName="Sheet"
+      BitmapFilename="BBSheet"
+      ToolTip="Sheet"
 }

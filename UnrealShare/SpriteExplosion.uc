@@ -48,27 +48,29 @@ simulated function Tick( float DeltaTime )
 
 defaultproperties
 {
-     s_Exp(1)=Texture'UnrealShare.s_Exp001'
-     s_Exp(2)=Texture'UnrealShare.s_Exp002'
-     s_Exp(3)=Texture'UnrealShare.s_Exp003'
-     s_Exp(4)=Texture'UnrealShare.s_Exp004'
-     s_Exp(5)=Texture'UnrealShare.s_Exp005'
-     s_Exp(6)=Texture'UnrealShare.s_Exp006'
-     s_Exp(7)=Texture'UnrealShare.s_Exp007'
-     s_Exp(8)=Texture'UnrealShare.s_Exp008'
-     s_Exp(9)=Texture'UnrealShare.s_Exp009'
-     s_Exp(10)=Texture'UnrealShare.s_Exp010'
-     s_Exp(11)=Texture'UnrealShare.s_Exp011'
-     s_Exp(12)=Texture'UnrealShare.s_Exp012'
-     s_Exp(13)=Texture'UnrealShare.s_Exp013'
-     s_Exp(14)=Texture'UnrealShare.s_Exp014'
-     s_Exp(15)=Texture'UnrealShare.s_Exp015'
-     s_Exp(16)=Texture'UnrealShare.s_Exp016'
-     s_Exp(17)=Texture'UnrealShare.s_Exp017'
-     s_Exp(18)=Texture'UnrealShare.s_Exp018'
-     s_Exp(19)=Texture'UnrealShare.s_Exp019'
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Sprite
-     Texture=Texture'UnrealShare.s_Exp001'
-     AmbientGlow=160
+      s_Exp(0)=None
+      s_Exp(1)=Texture'UnrealShare.s_Exp001'
+      s_Exp(2)=Texture'UnrealShare.s_Exp002'
+      s_Exp(3)=Texture'UnrealShare.s_Exp003'
+      s_Exp(4)=Texture'UnrealShare.s_Exp004'
+      s_Exp(5)=Texture'UnrealShare.s_Exp005'
+      s_Exp(6)=Texture'UnrealShare.s_Exp006'
+      s_Exp(7)=Texture'UnrealShare.s_Exp007'
+      s_Exp(8)=Texture'UnrealShare.s_Exp008'
+      s_Exp(9)=Texture'UnrealShare.s_Exp009'
+      s_Exp(10)=Texture'UnrealShare.s_Exp010'
+      s_Exp(11)=Texture'UnrealShare.s_Exp011'
+      s_Exp(12)=Texture'UnrealShare.s_Exp012'
+      s_Exp(13)=Texture'UnrealShare.s_Exp013'
+      s_Exp(14)=Texture'UnrealShare.s_Exp014'
+      s_Exp(15)=Texture'UnrealShare.s_Exp015'
+      s_Exp(16)=Texture'UnrealShare.s_Exp016'
+      s_Exp(17)=Texture'UnrealShare.s_Exp017'
+      s_Exp(18)=Texture'UnrealShare.s_Exp018'
+      s_Exp(19)=Texture'UnrealShare.s_Exp019'
+      i=0
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Sprite
+      Texture=Texture'UnrealShare.s_Exp001'
+      AmbientGlow=160
 }

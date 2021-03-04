@@ -19,6 +19,6 @@ function PlayTeleportEffect( actor Incoming, bool bOut, bool bSound)
 
 defaultproperties
 {
-     DefaultWeapon=None
-     HUDType=Class'UnrealI.EndgameHud'
+      DefaultWeapon=None
+      HUDType=Class'UnrealI.EndgameHud'
 }

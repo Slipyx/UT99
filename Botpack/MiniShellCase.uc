@@ -20,8 +20,8 @@ Begin:
 
 defaultproperties
 {
-     bOnlyOwnerSee=True
-     RemoteRole=ROLE_None
-     DrawScale=1.200000
-     LightType=LT_None
+      bOnlyOwnerSee=True
+      RemoteRole=ROLE_None
+      DrawScale=1.200000
+      LightType=LT_None
 }

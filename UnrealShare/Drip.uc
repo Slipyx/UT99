@@ -33,15 +33,15 @@ Begin:
 
 defaultproperties
 {
-     DripSound=Sound'UnrealShare.General.Drip1'
-     DripPause=0.000000
-     DripVariance=0.000000
-     DripTexture=None
-     bHidden=False
-     Physics=PHYS_Falling
-     LifeSpan=5.000000
-     Skin=Texture'UnrealShare.Jmisc1'
-     CollisionRadius=0.000000
-     CollisionHeight=0.000000
-     bCollideWorld=True
+      DripSound=Sound'UnrealShare.General.Drip1'
+      DripPause=0.000000
+      DripVariance=0.000000
+      DripTexture=None
+      bHidden=False
+      Physics=PHYS_Falling
+      LifeSpan=5.000000
+      Skin=Texture'UnrealShare.JMisc1'
+      CollisionRadius=0.000000
+      CollisionHeight=0.000000
+      bCollideWorld=True
 }

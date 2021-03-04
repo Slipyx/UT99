@@ -71,6 +71,7 @@ function BeforePaint(Canvas C, float X, float Y)
 function Paint(Canvas C, float X, float Y) 
 {
 	local float OldFov;
+	local Vector Zoom;
 
 	C.Style = GetPlayerOwner().ERenderStyle.STY_Modulated;
 	DrawStretchedTexture(C, 0, 0, WinWidth, WinHeight, Texture'BlackTexture');
@@ -81,9 +82,13 @@ function Paint(Canvas C, float X, float Y)
 		OldFov = GetPlayerOwner().FOVAngle;
 		GetPlayerOwner().SetFOVAngle(30);
 		if (bFace)
-			DrawClippedActor( C, WinWidth/2, WinHeight/2, MeshActor, False, ViewRotator, vect(-10, 0, -3) );
+		{
+			DrawClippedActor( C, WinWidth/2, WinHeight/2, MeshActor, False, ViewRotator, vect(-8, 0, -4) );
+		}
 		else
+		{
 			DrawClippedActor( C, WinWidth/2, WinHeight/2, MeshActor, False, ViewRotator, vect(0, 0, 0) );
+		}
 		GetPlayerOwner().SetFOVAngle(OldFov);
 	}
 }
@@ -199,6 +204,16 @@ function AnimEnd(MeshActor MyMesh)
 
 defaultproperties
 {
-     FaceText="Face"
-     BodyText="Body"
+      FaceButton=None
+      FaceText="Face"
+      BodyText="Body"
+      CenterButton=None
+      LeftButton=None
+      RightButton=None
+      MeshActor=None
+      CenterRotator=(Pitch=0,Yaw=0,Roll=0)
+      ViewRotator=(Pitch=0,Yaw=0,Roll=0)
+      bFace=False
+      bRotate=False
+      bTween=False
 }

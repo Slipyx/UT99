@@ -54,9 +54,10 @@ function PlaySlump()
 
 defaultproperties
 {
-     Scream=Sound'UnrealShare.Male.MDeath4'
-     AnimSequence=Chair1a
-     PrePivot=(Z=0.000000)
-     CollisionRadius=22.000000
-     CollisionHeight=22.000000
+      bChairSlump=False
+      Scream=Sound'UnrealShare.Male.MDeath4'
+      AnimSequence="Chair1a"
+      PrePivot=(Z=0.000000)
+      CollisionRadius=22.000000
+      CollisionHeight=22.000000
 }

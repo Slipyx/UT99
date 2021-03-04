@@ -8,16 +8,7 @@ event playerpawn Login
 	class<playerpawn> SpawnClass
 )
 {
-	local PlayerPawn NewPlayer;
-	local SpectatorCam Cam;
-
-	NewPlayer = Super.Login(Portal, Options, Error, SpawnClass);
-	NewPlayer.bHidden = True;
-
-	foreach AllActors(class'SpectatorCam', Cam) 
-		NewPlayer.ViewTarget = Cam;
-
-	return NewPlayer;
+	return Super.Login(Portal, Options, Error, SpawnClass);
 }
 
 function AcceptInventory(pawn PlayerPawn)

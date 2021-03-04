@@ -22,6 +22,8 @@ Auto State Animate
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteMe)
+		    return;
 		Instigator = InstigatedBy;
 		if (Health<0) Return;
 		if ( Instigator != None )
@@ -41,16 +43,16 @@ Auto State Animate
 
 defaultproperties
 {
-     Health=15
-     FragChunks=9
-     Fragsize=1.200000
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Chair1'
-     CollisionRadius=17.000000
-     CollisionHeight=15.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
+      Health=15
+      FragChunks=9
+      Fragsize=1.200000
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Chair1'
+      CollisionRadius=17.000000
+      CollisionHeight=15.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
 }

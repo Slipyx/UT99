@@ -7,7 +7,7 @@ class ImpactHole expands Scorch;
 
 defaultproperties
 {
-     MultiDecalLevel=2
-     Texture=Texture'Botpack.impactcrack'
-     DrawScale=0.400000
+      MultiDecalLevel=2
+      Texture=Texture'Botpack.impactcrack'
+      DrawScale=0.400000
 }

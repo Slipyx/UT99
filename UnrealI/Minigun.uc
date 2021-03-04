@@ -63,6 +63,8 @@ function GenerateBullet()
 	    LightType = LT_Steady;
 	else
 		LightType = LT_None;
+	if (FiringSpeed>0)
+	    Pawn(Owner).PlayRecoil(FiringSpeed);
 	bFiredShot = true;
 	if ( AmmoType.UseAmmo(1) ) 
 		TraceFire(ShotAccuracy);
@@ -279,39 +281,44 @@ Begin:
 
 defaultproperties
 {
-     AmmoName=Class'UnrealShare.ShellBox'
-     PickupAmmoCount=50
-     bInstantHit=True
-     bAltInstantHit=True
-     FireOffset=(Y=-5.000000,Z=-4.000000)
-     shakemag=135.000000
-     shakevert=8.000000
-     AIRating=0.600000
-     RefireRate=0.900000
-     AltRefireRate=0.930000
-     FireSound=Sound'UnrealI.Minigun.RegF1'
-     AltFireSound=Sound'UnrealI.Minigun.AltF1'
-     SelectSound=Sound'UnrealI.Minigun.MiniSelect'
-     Misc1Sound=Sound'UnrealI.Minigun.WindD2'
-     DeathMessage="%k's %w turned %o into a leaky piece of meat."
-     AutoSwitchPriority=10
-     InventoryGroup=10
-     PickupMessage="You got the Minigun"
-     ItemName="Minigun"
-     PlayerViewOffset=(X=5.600000,Y=-1.500000,Z=-1.800000)
-     PlayerViewMesh=LodMesh'UnrealI.minigunM'
-     PickupViewMesh=LodMesh'UnrealI.minipick'
-     ThirdPersonMesh=LodMesh'UnrealI.SMini3'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealI.minipick'
-     bNoSmooth=False
-     SoundRadius=64
-     SoundVolume=255
-     CollisionRadius=28.000000
-     CollisionHeight=8.000000
-     LightEffect=LE_NonIncidence
-     LightBrightness=250
-     LightHue=28
-     LightSaturation=32
-     LightRadius=6
+      ShotAccuracy=0.000000
+      Count=0.000000
+      bOutOfAmmo=False
+      bFiredShot=False
+      S=None
+      AmmoName=Class'UnrealShare.ShellBox'
+      PickupAmmoCount=50
+      bInstantHit=True
+      bAltInstantHit=True
+      FireOffset=(Y=-5.000000,Z=-4.000000)
+      shakemag=135.000000
+      shakevert=8.000000
+      AIRating=0.600000
+      RefireRate=0.900000
+      AltRefireRate=0.930000
+      FireSound=Sound'UnrealI.Minigun.RegF1'
+      AltFireSound=Sound'UnrealI.Minigun.AltF1'
+      SelectSound=Sound'UnrealI.Minigun.MiniSelect'
+      Misc1Sound=Sound'UnrealI.Minigun.WindD2'
+      DeathMessage="%k's %w turned %o into a leaky piece of meat."
+      AutoSwitchPriority=10
+      InventoryGroup=10
+      PickupMessage="You got the Minigun"
+      ItemName="Minigun"
+      PlayerViewOffset=(X=5.600000,Y=-1.500000,Z=-1.800000)
+      PlayerViewMesh=LodMesh'UnrealI.minigunM'
+      PickupViewMesh=LodMesh'UnrealI.minipick'
+      ThirdPersonMesh=LodMesh'UnrealI.SMini3'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealI.minipick'
+      bNoSmooth=False
+      SoundRadius=64
+      SoundVolume=255
+      CollisionRadius=28.000000
+      CollisionHeight=8.000000
+      LightEffect=LE_NonIncidence
+      LightBrightness=250
+      LightHue=28
+      LightSaturation=32
+      LightRadius=6
 }

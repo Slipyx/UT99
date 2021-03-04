@@ -45,6 +45,12 @@ function OwnerJumped()
 
 function Timer()
 {
+	if ( Charge <= 0 ) // Draining out.
+	{
+		if ( Owner.Physics!=PHYS_Falling || !bActive )
+			OwnerJumped();
+		Return;
+	}
 	if ( !Pawn(Owner).bAutoActivate )
 	{	
 		TimeCharge++;
@@ -56,14 +62,28 @@ state Activated
 {
 	function endstate()
 	{
-		Pawn(Owner).JumpZ = Pawn(Owner).Default.JumpZ * Level.Game.PlayerJumpZScaling();
-		Pawn(Owner).bCountJumps = False;
+		if ( Owner!=None )
+		{
+			Pawn(Owner).JumpZ = Pawn(Owner).Default.JumpZ * Level.Game.PlayerJumpZScaling();
+			Pawn(Owner).bCountJumps = False;
+		}
 		bActive = false;		
 	}
 Begin:
 	Pawn(Owner).bCountJumps = True;
 	Pawn(Owner).JumpZ = Pawn(Owner).Default.JumpZ * 3;
-	Owner.PlaySound(ActivateSound);		
+	Owner.PlaySound(ActivateSound);
+	While( True ) // Fix multiple jumpboots issues.
+	{
+		Sleep(1);
+		if ( !Pawn(Owner).bCountJumps )
+		{
+			Pawn(Owner).bCountJumps = True;
+			Pawn(Owner).JumpZ = Pawn(Owner).Default.JumpZ * 3;
+		}
+		else if ( Pawn(Owner).JumpZ!=(Pawn(Owner).Default.JumpZ*3) )
+			Activate(); // Deactivate if we aren't the active boots.
+	}
 }
 
 state DeActivated
@@ -73,20 +93,21 @@ Begin:
 
 defaultproperties
 {
-     ExpireMessage="The Jump Boots have drained"
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You picked up the jump boots"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'UnrealI.lboot'
-     Charge=3
-     MaxDesireability=0.500000
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealI.Pickups.BootSnd'
-     Icon=Texture'UnrealI.Icons.I_Boots'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealI.lboot'
-     AmbientGlow=64
-     CollisionRadius=22.000000
-     CollisionHeight=7.000000
+      TimeCharge=0
+      ExpireMessage="The Jump Boots have drained"
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You picked up the jump boots"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'UnrealI.lboot'
+      Charge=3
+      MaxDesireability=0.500000
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealI.Pickups.BootSnd'
+      Icon=Texture'UnrealI.Icons.I_Boots'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealI.lboot'
+      AmbientGlow=64
+      CollisionRadius=22.000000
+      CollisionHeight=7.000000
 }

@@ -9,6 +9,6 @@ class StudMetal extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     bMeshEnviroMap=True
+      DrawType=DT_Mesh
+      bMeshEnviroMap=True
 }

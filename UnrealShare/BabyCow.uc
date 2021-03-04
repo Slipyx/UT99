@@ -29,16 +29,17 @@ state Grazing
 	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
-		Mom.Help(self);
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-		if ( health <= 0 )
+		if ( Mom != None && Enemy != None)
+			Mom.Help(self);
+		if ( health <= 0 || bDeleteme)
 			return;
 		if ( NextState == 'TakeHit' )
-			{
-			NextState = 'Attacking'; 
+		{
+			NextState = 'Attacking';
 			NextLabel = 'Begin';
-			GotoState('TakeHit'); 
-			}
+			GotoState('TakeHit');
+		}
 		else
 			GotoState('Attacking');
 	}
@@ -55,7 +56,10 @@ state Grazing
 	function PickDestination()
 	{
 		if ( Mom == None )
+		{
 			Super.PickDestination();
+			return;
+		}
 		if ( !LineOfSightTo(mom) )
 		{
 			MoveTarget = FindPathToward(mom);
@@ -74,7 +78,9 @@ state Grazing
 Begin:
 	//log(class$" Grazing");
 
-Wander: 
+Wander:
+	Acceleration = vect(0,0,0);
+	WaitForLanding();
 	if (!bForage)
 		Goto('Graze');
 	PickDestination();
@@ -83,12 +89,12 @@ Wander:
 	PlayWalking();
 	
 Moving:
-	Enable('HitWall');
 	Enable('Bump');
 	MoveTo(Destination, 0.4);
-	Acceleration = vect(0,0,0);
+
 Graze:
 	Enable('AnimEnd');
+	Acceleration = vect(0,0,0);
 	NextAnim = '';
 	TweenToPatrolStop(0.2);
 	Sleep(4);
@@ -103,15 +109,44 @@ ContinueWander:
 
 Turn:
 	PlayTurning();
-	TurnToward(Mom);
-	Goto('Graze');	
+	if (Mom!=None)
+	    TurnToward(Mom);
+	else
+	{
+	    SetTurn();
+		TurnTo(Destination);
+	}
+	Goto('Graze');
+
+Pausing:
+	Acceleration = vect(0,0,0);
+	if ( NearWall(2 * CollisionRadius + 50) )
+	{
+		PlayTurning();
+		TurnTo(Focus);
+	}
+	Enable('AnimEnd');
+	NextAnim = '';
+	TweenToPatrolStop(0.2);
+	Sleep(1.0);
+	Disable('AnimEnd');
+	FinishAnim();
+	Goto('Moving');
+
+AdjustFromWall:
+	if ( !IsAnimating() )
+		PlayWalking();
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
+	Goto('Moving');
 }
 
 defaultproperties
 {
-     Health=40
-     DrawScale=0.500000
-     CollisionRadius=24.000000
-     CollisionHeight=16.000000
-     Mass=70.000000
+      mom=None
+      Health=40
+      DrawScale=0.500000
+      CollisionRadius=24.000000
+      CollisionHeight=16.000000
+      Mass=70.000000
 }

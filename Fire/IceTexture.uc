@@ -53,9 +53,23 @@ var	transient		int         OldUDisplace;
 var	transient		int         OldVDisplace;
 var transient       texture     OldGlassTex;
 var transient		texture     OldSourceTex;
-var transient       int			LocalSource;
+var transient       pointer		LocalSource;
 var transient       int			ForceRefresh;
 
 defaultproperties
 {
+      GlassTexture=None
+      SourceTexture=None
+      PanningStyle=SLIDE_Linear
+      TimeMethod=TIME_FrameRateSync
+      HorizPanSpeed=0
+      VertPanSpeed=0
+      Frequency=0
+      Amplitude=0
+      MoveIce=False
+      MasterCount=0.000000
+      UDisplace=0.000000
+      VDisplace=0.000000
+      UPosition=0.000000
+      VPosition=0.000000
 }

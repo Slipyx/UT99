@@ -10,5 +10,5 @@ class TriggerLightRad extends Light;
 
 defaultproperties
 {
-     bMovable=True
+      bMovable=True
 }

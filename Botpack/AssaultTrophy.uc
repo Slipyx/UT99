@@ -14,7 +14,7 @@ class AssaultTrophy extends Trophy;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.assaulttrophyM'
-     DrawScale=0.200000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.assaulttrophyM'
+      DrawScale=0.200000
 }

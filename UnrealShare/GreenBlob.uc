@@ -13,7 +13,7 @@ var() texture BlobTypes[5];
 
 simulated function Setup(vector WallNormal)
 {
-	Texture = BlobTypes[int(Frand()*5)];
+	Texture = BlobTypes[Rand(5)];
 	Velocity = VRand()*140*FRand()+WallNormal*250;
 	DrawScale = FRand()*0.3 + 0.2;
 }
@@ -34,22 +34,22 @@ auto state Explode
 
 defaultproperties
 {
-     BlobTypes(0)=Texture'UnrealShare.Effects.GreenBlob1'
-     BlobTypes(1)=Texture'UnrealShare.Effects.GreenBlob2'
-     BlobTypes(2)=Texture'UnrealShare.Effects.GreenBlob3'
-     BlobTypes(3)=Texture'UnrealShare.Effects.GreenBlob4'
-     BlobTypes(4)=Texture'UnrealShare.Effects.GreenBlob5'
-     bHighDetail=True
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=7.000000
-     DrawType=DT_Sprite
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.Effects.GreenBlob1'
-     bUnlit=True
-     CollisionRadius=4.000000
-     CollisionHeight=4.000000
-     bCollideWorld=True
-     bBounce=True
-     NetPriority=2.000000
+      BlobTypes(0)=Texture'UnrealShare.Effects.GreenBlob1'
+      BlobTypes(1)=Texture'UnrealShare.Effects.GreenBlob2'
+      BlobTypes(2)=Texture'UnrealShare.Effects.GreenBlob3'
+      BlobTypes(3)=Texture'UnrealShare.Effects.GreenBlob4'
+      BlobTypes(4)=Texture'UnrealShare.Effects.GreenBlob5'
+      bHighDetail=True
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=7.000000
+      DrawType=DT_Sprite
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.Effects.GreenBlob1'
+      bUnlit=True
+      CollisionRadius=4.000000
+      CollisionHeight=4.000000
+      bCollideWorld=True
+      bBounce=True
+      NetPriority=2.000000
 }

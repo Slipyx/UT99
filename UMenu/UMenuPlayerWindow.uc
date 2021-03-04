@@ -56,6 +56,7 @@ function SaveConfigs()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuPlayerClientWindow'
-     WindowTitle="Player Setup"
+      CloseButton=None
+      ClientClass=Class'UMenu.UMenuPlayerClientWindow'
+      WindowTitle="Player Setup"
 }

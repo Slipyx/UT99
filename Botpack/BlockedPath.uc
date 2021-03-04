@@ -10,5 +10,5 @@ function Trigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
-     ExtraCost=100000000
+      ExtraCost=100000000
 }

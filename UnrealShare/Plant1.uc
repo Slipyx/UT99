@@ -16,9 +16,9 @@ class Plant1 extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Plant1M'
-     CollisionRadius=6.000000
-     CollisionHeight=13.000000
-     bCollideWorld=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Plant1M'
+      CollisionRadius=6.000000
+      CollisionHeight=13.000000
+      bCollideWorld=True
 }

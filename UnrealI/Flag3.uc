@@ -15,7 +15,7 @@ class Flag3 extends Decoration;
 
 defaultproperties
 {
-     Physics=PHYS_Walking
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Flag3M'
+      Physics=PHYS_Walking
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Flag3M'
 }

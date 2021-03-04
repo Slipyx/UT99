@@ -410,10 +410,40 @@ function RemoveWrap(UWindowDynamicTextRow L)
 	}
 }
 
+function bool MouseWheelDown(float ScrollDelta)
+{
+	Super.MouseWheelDown(ScrollDelta);
+	return true;
+}
+
+function bool MouseWheelUp(float ScrollDelta)
+{
+	Super.MouseWheelUp(ScrollDelta);
+	VertSB.Scroll(int(ScrollDelta));
+	return true;
+}
+
 defaultproperties
 {
-     bScrollOnResize=True
-     TextColor=(R=255,G=255,B=255)
-     RowClass=Class'UWindow.UWindowDynamicTextRow'
-     bNoKeyboard=True
+      MaxLines=0
+      bTopCentric=False
+      DefaultTextHeight=0.000000
+      bScrollOnResize=True
+      bVCenter=False
+      bHCenter=False
+      bAutoScrollbar=False
+      bVariableRowHeight=False
+      WrapWidth=0.000000
+      List=None
+      VertSB=None
+      OldW=0.000000
+      OldH=0.000000
+      bDirty=False
+      Count=0
+      VisibleRows=0
+      Font=0
+      AbsoluteFont=None
+      TextColor=(R=255,G=255,B=255,A=0)
+      RowClass=Class'UWindow.UWindowDynamicTextRow'
+      bNoKeyboard=True
 }

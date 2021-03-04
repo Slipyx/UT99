@@ -8,14 +8,14 @@ class DExplosion extends Effects;
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.500000
-     DrawType=DT_Sprite
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.DBEffect.de_A00'
-     Skin=Texture'UnrealShare.Effects.ExplosionPal'
-     bUnlit=True
-     LightType=LT_TexturePaletteOnce
-     LightEffect=LE_NonIncidence
-     LightRadius=8
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.500000
+      DrawType=DT_Sprite
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.DBEffect.de_A00'
+      Skin=Texture'UnrealShare.Effects.ExplosionPal'
+      bUnlit=True
+      LightType=LT_TexturePaletteOnce
+      LightEffect=LE_NonIncidence
+      LightRadius=8
 }

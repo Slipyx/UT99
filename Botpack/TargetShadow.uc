@@ -24,8 +24,8 @@ simulated function Tick(float DeltaTime)
 
 defaultproperties
 {
-     MultiDecalLevel=0
-     Rotation=(Pitch=16384)
-     Texture=Texture'Botpack.energymark'
-     DrawScale=0.200000
+      MultiDecalLevel=0
+      Rotation=(Pitch=16384)
+      Texture=Texture'Botpack.energymark'
+      DrawScale=0.200000
 }

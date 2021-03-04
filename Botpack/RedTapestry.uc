@@ -7,5 +7,5 @@ class RedTapestry extends Tapestry1;
 
 defaultproperties
 {
-     Skin=Texture'Botpack.Skins.JTapR'
+      Skin=Texture'Botpack.Skins.JTapR'
 }

@@ -15,11 +15,11 @@ class TeamGamePlus extends DeathMatchPlus
 #exec TEXTURE IMPORT NAME=JFlag15 FILE=MODELS\flag3.PCX GROUP=Skins
 #exec MESHMAP SCALE MESHMAP=flag1M X=0.1 Y=0.1 Z=0.2
 #exec MESHMAP SETTEXTURE MESHMAP=flag1M NUM=0 TEXTURE=Jflag11
-	
+
 var()		 bool   bSpawnInTeamArea;
 var()		 bool	bScoreTeamKills;
 var() config bool	bNoTeamChanges;
-var			 int	NumSupportingPlayer; 
+var			 int	NumSupportingPlayer;
 var globalconfig	 bool	bBalanceTeams;	// bots balance teams
 var globalconfig	 bool	bPlayersBalanceTeams;	// players balance teams
 var			 bool	bBalancing;
@@ -50,7 +50,7 @@ function PostBeginPlay()
 		Teams[i].TeamIndex = i;
 		TournamentGameReplicationInfo(GameReplicationInfo).Teams[i] = Teams[i];
 	}
-	
+
 	Super.PostBeginPlay();
 
 	if ( bRatedGame )
@@ -81,7 +81,7 @@ function InitRatedGame(LadderInventory LadderObj, PlayerPawn LadderPlayer)
 	local Weapon W;
 
 	GoalTeamScore = LadderObj.CurrentLadder.Default.GoalTeamScore[IDnum];
-	Super.InitRatedGame(LadderObj, LadderPlayer);	
+	Super.InitRatedGame(LadderObj, LadderPlayer);
 	bCoopWeaponMode = true;
 	FriendlyFireScale = 0.0;
 	MaxTeams = 2;
@@ -110,7 +110,7 @@ function LogGameParameters(StatLog StatLog)
 {
 	if (StatLog == None)
 		return;
-	
+
 	Super.LogGameParameters(StatLog);
 
 	StatLog.LogEventString(StatLog.GetTimeStamp()$Chr(9)$"game"$Chr(9)$"GoalTeamScore"$Chr(9)$int(GoalTeamScore));
@@ -140,7 +140,7 @@ function bool SetEndCams(string Reason)
 		{
 			BroadcastLocalizedMessage( DMMessageClass, 0 );
 			return false;
-		}		
+		}
 
 	GameReplicationInfo.GameEndedComments = TeamPrefix@BestTeam.TeamName@GameEndedMessage;
 
@@ -229,7 +229,7 @@ function playerpawn Login
 		}
 	}
 	PlayerTeamNum = NewPlayer.PlayerReplicationInfo.Team;
-		
+
 	return newPlayer;
 }
 
@@ -285,7 +285,7 @@ function ReBalance()
 			smallsize = Teams[i].Size;
 		}
 	}
-	
+
 	bBalancing = true;
 	while ( bigsize - smallsize > 1 )
 	{
@@ -322,7 +322,7 @@ function ReBalance()
 		}
 
 }
-	
+
 function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, optional string incomingName )
 {
 	local PlayerStart Dest, Candidate[16], Best;
@@ -333,7 +333,7 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 	local NavigationPoint N;
 	local byte Team;
 
-	if ( bStartMatch && (Player != None) && Player.IsA('TournamentPlayer') 
+	if ( bStartMatch && (Player != None) && Player.IsA('TournamentPlayer')
 		&& (Level.NetMode == NM_Standalone)
 		&& (TournamentPlayer(Player).StartSpot != None) )
 		return TournamentPlayer(Player).StartSpot;
@@ -350,8 +350,8 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 
 	if ( Team == 255 )
 		Team = 0;
-				
-	//choose candidates	
+
+	//choose candidates
 	for ( N=Level.NavigationPointList; N!=None; N=N.nextNavigationPoint )
 	{
 		Dest = PlayerStart(N);
@@ -368,7 +368,7 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 
 	if (num == 0 )
 	{
-		log("Didn't find any player starts in list for team"@Team@"!!!"); 
+		log("Didn't find any player starts in list for team"@Team@"!!!");
 		foreach AllActors( class'PlayerStart', Dest )
 		{
 			if (num<16)
@@ -381,9 +381,9 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 			return None;
 	}
 
-	if (num>16) 
+	if (num>16)
 		num = 16;
-	
+
 	//assess candidates
 	for (i=0;i<num;i++)
 	{
@@ -391,12 +391,12 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 			Score[i] = -6000.0;
 		else
 			Score[i] = 4000 * FRand(); //randomize
-	}		
-	
-	for ( OtherPlayer=Level.PawnList; OtherPlayer!=None; OtherPlayer=OtherPlayer.NextPawn)	
+	}
+
+	for ( OtherPlayer=Level.PawnList; OtherPlayer!=None; OtherPlayer=OtherPlayer.NextPawn)
 		if ( OtherPlayer.bIsPlayer && (OtherPlayer.Health > 0) && !OtherPlayer.IsA('Spectator') )
 			for (i=0; i<num; i++)
-				if ( OtherPlayer.Region.Zone == Candidate[i].Region.Zone ) 
+				if ( OtherPlayer.Region.Zone == Candidate[i].Region.Zone )
 				{
 					Score[i] -= 1500;
 					NextDist = VSize(OtherPlayer.Location - Candidate[i].Location);
@@ -406,7 +406,7 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 							&& FastTrace(Candidate[i].Location, OtherPlayer.Location) )
 						Score[i] -= (10000.0 - NextDist);
 				}
-	
+
 	BestScore = Score[0];
 	Best = Candidate[0];
 	for (i=1; i<num; i++)
@@ -416,7 +416,7 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 			Best = Candidate[i];
 		}
 	LastStartSpot = Best;
-				
+
 	return Best;
 }
 
@@ -427,11 +427,13 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 function int ReduceDamage(int Damage, name DamageType, pawn injured, pawn instigatedBy)
 {
 	Damage = Super.ReduceDamage(Damage, DamageType, injured, instigatedBy);
-	
+
 	if ( instigatedBy == None )
 		return Damage;
 
-	if ( (instigatedBy != injured) && injured.bIsPlayer && instigatedBy.bIsPlayer 
+	if ( (instigatedBy != injured) && injured.bIsPlayer && instigatedBy.bIsPlayer
+	    && injured.PlayerReplicationInfo != none
+		&& instigatedBy.PlayerReplicationInfo != none
 		&& (injured.PlayerReplicationInfo.Team == instigatedBy.PlayerReplicationInfo.Team) )
 	{
 		if ( injured.IsA('Bot') )
@@ -444,7 +446,7 @@ function int ReduceDamage(int Damage, name DamageType, pawn injured, pawn instig
 
 function ScoreKill(pawn Killer, pawn Other)
 {
-	if ( (Killer == None) || (Killer == Other) || !Other.bIsPlayer || !Killer.bIsPlayer 
+	if ( (Killer == None) || (Killer == Other) || !Other.bIsPlayer || !Killer.bIsPlayer
 		|| (Killer.PlayerReplicationInfo.Team != Other.PlayerReplicationInfo.Team) )
 		Super.ScoreKill(Killer, Other);
 
@@ -463,9 +465,18 @@ function ScoreKill(pawn Killer, pawn Other)
 		}
 	}
 
-	if ( (bOverTime || (GoalTeamScore > 0)) && Killer.bIsPlayer
-		&& (Teams[killer.PlayerReplicationInfo.Team].Score >= GoalTeamScore) )
-		EndGame("teamscorelimit");
+	if ( GoalTeamScore > 0
+	   && Killer.bIsPlayer
+	   && Teams[killer.PlayerReplicationInfo.Team].Score >= GoalTeamScore)
+	{
+	   EndGame("teamscorelimit");
+	}
+	// stijn: 469 fix. Team games did not end when one of
+	// the teams scored a frag in overtime
+	else if ( bOverTime && Killer.bIsPlayer )
+	{
+       EndGame("timelimit");
+	}
 }
 
 function bool ChangeTeam(Pawn Other, int NewTeam)
@@ -505,7 +516,7 @@ function bool ChangeTeam(Pawn Other, int NewTeam)
 			for ( P=Level.PawnList; P!=None; P=P.NextPawn )
 				if ( P.IsA('Bot') )
 					break;
-			
+
 			if ( (P != None) && (P.PlayerReplicationInfo != None) && (P.PlayerReplicationInfo.Team != 255)
 				&& (Teams[P.PlayerReplicationInfo.Team].Size == Teams[Smallest].Size) )
 				NewTeam = P.PlayerReplicationInfo.Team;
@@ -574,8 +585,8 @@ function AddToTeam( int num, Pawn Other )
 	{
 		bSuccess = true;
 		for ( P=Level.PawnList; P!=None; P=P.nextPawn )
-            if ( P.bIsPlayer && (P != Other) 
-				&& (P.PlayerReplicationInfo.Team == Other.PlayerReplicationInfo.Team) 
+            if ( P.bIsPlayer && (P != Other)
+				&& (P.PlayerReplicationInfo.Team == Other.PlayerReplicationInfo.Team)
 				&& (P.PlayerReplicationInfo.TeamId == Other.PlayerReplicationInfo.TeamId) )
 				bSuccess = false;
 		if ( !bSuccess )
@@ -598,7 +609,7 @@ function bool CanSpectate( pawn Viewer, actor ViewTarget )
 		return false;
 	if ( Viewer.PlayerReplicationInfo.bIsSpectator && (Viewer.PlayerReplicationInfo.Team == 255) )
 		return true;
-	return ( (Pawn(ViewTarget) != None) && Pawn(ViewTarget).bIsPlayer 
+	return ( (Pawn(ViewTarget) != None) && Pawn(ViewTarget).bIsPlayer
 		&& (Pawn(ViewTarget).PlayerReplicationInfo.Team == Viewer.PlayerReplicationInfo.Team) );
 }
 
@@ -639,7 +650,7 @@ function bool AddBot()
 			{
 				MinSize = Teams[i].Size;
 				DesiredTeam = i;
-			}	
+			}
 	}
 	else
 		DesiredTeam = NewBot.PlayerReplicationInfo.Team;
@@ -694,7 +705,7 @@ function SetBotOrders(Bot NewBot)
 
 	// only follow players, if there are any
 	if ( (NumSupportingPlayer == 0)
-		 || (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size/2 - 1) ) 
+		 || (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size/2 - 1) )
 	{
 		For ( P=Level.PawnList; P!=None; P= P.NextPawn )
 			if ( P.IsA('PlayerPawn') && (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)
@@ -724,22 +735,22 @@ function SetBotOrders(Bot NewBot)
 					L = P;
 			}
 		}
-				
+
 	if ( (L != None) && (FRand() < float(num)/float(total)) )
 	{
 		NewBot.SetOrders('Follow',L,true);
 		return;
 	}
 	NewBot.SetOrders('Freelance', None,true);
-}				 
+}
 
 function byte AssessBotAttitude(Bot aBot, Pawn Other)
 {
 	if ( (Other.bIsPlayer && (aBot.PlayerReplicationInfo.Team == Other.PlayerReplicationInfo.Team))
-		|| (Other.IsA('TeamCannon') 
-			&& (StationaryPawn(Other).SameTeamAs(aBot.PlayerReplicationInfo.Team))) ) 
+		|| (Other.IsA('TeamCannon')
+			&& (StationaryPawn(Other).SameTeamAs(aBot.PlayerReplicationInfo.Team))) )
 		return 3;
-	else 
+	else
 		return Super.AssessBotAttitude(aBot, Other);
 }
 
@@ -787,9 +798,9 @@ function PickAmbushSpotFor(Bot aBot)
 						|| (DefensePoint(N).priority > DefensePoint(aBot.Ambushspot).priority) )
 						aBot.Ambushspot = Ambushpoint(N);
 					else if ( (DefensePoint(N).priority == DefensePoint(aBot.Ambushspot).priority)
-						&& (FRand() < 0.4) ) 
+						&& (FRand() < 0.4) )
 						aBot.Ambushspot = Ambushpoint(N);
-				}		
+				}
 				else if ( (DefensePoint(aBot.AmbushSpot) == None)
 						&& (VSize(N.Location - aBot.OrderObject.Location) < 1500)
 						&& FastTrace(aBot.OrderObject.Location, N.Location)
@@ -880,34 +891,49 @@ function string GetRules()
 
 defaultproperties
 {
-     bScoreTeamKills=True
-     bBalanceTeams=True
-     bPlayersBalanceTeams=True
-     MaxTeams=2
-     MaxAllowedTeams=4
-     GoalTeamScore=30.000000
-     MaxTeamSize=16
-     StartUpTeamMessage="You are on"
-     TeamChangeMessage="Use Options->Player Setup to change teams."
-     TeamColor(0)="Red"
-     TeamColor(1)="Blue"
-     TeamColor(2)="Green"
-     TeamColor(3)="Gold"
-     TEAM_Blue=1
-     TEAM_Green=2
-     TEAM_Gold=3
-     CurrentOrders(0)=Defend
-     CurrentOrders(1)=Defend
-     CurrentOrders(2)=Defend
-     CurrentOrders(3)=Defend
-     StartupTeamTralier="."
-     StartUpMessage="Work with your teammates against the other teams."
-     bCanChangeSkin=False
-     bTeamGame=True
-     ScoreBoardType=Class'Botpack.TeamScoreBoard'
-     RulesMenuType="UTMenu.UTTeamRSClient"
-     SettingsMenuType="UTMenu.UTTeamSSClient"
-     HUDType=Class'Botpack.ChallengeTeamHUD'
-     BeaconName="TTeam"
-     GameName="Tournament Team Game"
+      bSpawnInTeamArea=False
+      bScoreTeamKills=True
+      bNoTeamChanges=False
+      NumSupportingPlayer=0
+      bBalanceTeams=True
+      bPlayersBalanceTeams=True
+      bBalancing=False
+      FriendlyFireScale=0.000000
+      MaxTeams=2
+      MaxAllowedTeams=4
+      Teams(0)=None
+      Teams(1)=None
+      Teams(2)=None
+      Teams(3)=None
+      GoalTeamScore=20.000000
+      MaxTeamSize=16
+      StartUpTeamMessage="You are on"
+      TeamChangeMessage="Use Options->Player Setup to change teams."
+      TeamPrefix=""
+      TeamColor(0)="Red"
+      TeamColor(1)="Blue"
+      TeamColor(2)="Green"
+      TeamColor(3)="Gold"
+      NextBotTeam=0
+      TEAM_Red=0
+      TEAM_Blue=1
+      TEAM_Green=2
+      TEAM_Gold=3
+      CurrentOrders(0)="Defend"
+      CurrentOrders(1)="Defend"
+      CurrentOrders(2)="Defend"
+      CurrentOrders(3)="Defend"
+      PlayerTeamNum=0
+      StartupTeamTralier="."
+      FragLimit=30
+      TimeLimit=20
+      StartUpMessage="Work with your teammates against the other teams."
+      bCanChangeSkin=False
+      bTeamGame=True
+      ScoreBoardType=Class'Botpack.TeamScoreBoard'
+      RulesMenuType="UTMenu.UTTeamRSClient"
+      SettingsMenuType="UTMenu.UTTeamSSClient"
+      HUDType=Class'Botpack.ChallengeTeamHUD'
+      BeaconName="TTeam"
+      GameName="Tournament Team Game"
 }

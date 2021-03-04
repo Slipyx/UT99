@@ -14,8 +14,8 @@ class UT_FemaleTorso extends UTPlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.femaletorsom'
-     CollisionRadius=25.000000
-     CollisionHeight=6.000000
-     Mass=50.000000
+      Mesh=LodMesh'Botpack.femaletorsom'
+      CollisionRadius=25.000000
+      CollisionHeight=6.000000
+      Mass=50.000000
 }

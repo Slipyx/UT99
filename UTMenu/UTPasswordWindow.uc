@@ -64,7 +64,9 @@ function Close(optional bool bByParent)
 
 defaultproperties
 {
-     OKText="OK"
-     ClientClass=Class'UTMenu.UTPasswordCW'
-     WindowTitle="Enter Server Password"
+      CloseButton=None
+      OKButton=None
+      OKText="OK"
+      ClientClass=Class'UTMenu.UTPasswordCW'
+      WindowTitle="Enter Server Password"
 }

@@ -105,14 +105,16 @@ function bool Build()
 
 defaultproperties
 {
-     InnerRadius=64
-     StepWidth=256
-     StepHeight=16
-     StepThickness=32
-     NumStepsPer360=8
-     NumSteps=8
-     GroupName=Spiral
-     SlopedCeiling=True
-     BitmapFilename="BBSpiralStair"
-     ToolTip="Spiral Staircase"
+      InnerRadius=64
+      StepWidth=256
+      StepHeight=16
+      StepThickness=32
+      NumStepsPer360=8
+      NumSteps=8
+      GroupName="Spiral"
+      SlopedCeiling=True
+      SlopedFloor=False
+      CounterClockwise=False
+      BitmapFilename="BBSpiralStair"
+      ToolTip="Spiral Staircase"
 }

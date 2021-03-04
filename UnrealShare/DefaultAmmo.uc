@@ -27,12 +27,12 @@ Begin:
 
 defaultproperties
 {
-     RechargeDelay=1.100000
-     UsedInWeaponSlot(1)=1
-     UsedInWeaponSlot(4)=0
-     Icon=Texture'UnrealShare.Icons.I_Dispersion'
-     Mesh=None
-     CollisionRadius=30.000000
-     CollisionHeight=30.000000
-     bCollideActors=False
+      RechargeDelay=1.100000
+      UsedInWeaponSlot(1)=1
+      UsedInWeaponSlot(4)=0
+      Icon=Texture'UnrealShare.Icons.I_Dispersion'
+      Mesh=None
+      CollisionRadius=30.000000
+      CollisionHeight=30.000000
+      bCollideActors=False
 }

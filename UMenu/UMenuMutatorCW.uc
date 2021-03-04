@@ -182,11 +182,18 @@ function Notify(UWindowDialogControl C, byte E)
 
 defaultproperties
 {
-     ExcludeCaption="Mutators not Used"
-     ExcludeHelp="Click and drag a mutator to the right hand column to include that mutator in this game."
-     IncludeCaption="Mutators Used"
-     IncludeHelp="Click and drag a mutator to the left hand column to remove it from the mutator list, or drag it up or down to re-order it in the mutator list."
-     KeepText="Always use this Mutator configuration"
-     KeepHelp="If checked, these Mutators will always be used when starting games."
-     MutatorBaseClass="Engine.Mutator"
+      BotmatchParent=None
+      Splitter=None
+      Exclude=None
+      Include=None
+      ExcludeCaption="Mutators not Used"
+      ExcludeHelp="Click and drag a mutator to the right hand column to include that mutator in this game."
+      IncludeCaption="Mutators Used"
+      IncludeHelp="Click and drag a mutator to the left hand column to remove it from the mutator list, or drag it up or down to re-order it in the mutator list."
+      KeepCheck=None
+      KeepText="Always use this Mutator configuration"
+      KeepHelp="If checked, these Mutators will always be used when starting games."
+      FrameExclude=None
+      FrameInclude=None
+      MutatorBaseClass="Engine.Mutator"
 }

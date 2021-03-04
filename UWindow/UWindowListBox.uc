@@ -166,6 +166,19 @@ function SetSelected(float X, float Y)
 	SetSelectedItem(NewSelected);
 }
 
+function bool MouseWheelDown(float ScrollDelta)
+{
+	Super.MouseWheelDown(ScrollDelta);
+	return true;
+}
+
+function bool MouseWheelUp(float ScrollDelta)
+{
+	Super.MouseWheelUp(ScrollDelta);
+	VertSB.Scroll(int(ScrollDelta));
+	return true;
+}
+
 function LMouseDown(float X, float Y)
 {
 	Super.LMouseDown(X, Y);
@@ -277,5 +290,13 @@ function bool ExternalDragOver(UWindowDialogControl ExternalControl, float X, fl
 
 defaultproperties
 {
-     ItemHeight=10.000000
+      ItemHeight=10.000000
+      VertSB=None
+      SelectedItem=None
+      bCanDrag=False
+      bCanDragExternal=False
+      DefaultHelpText=""
+      bDragging=False
+      DragY=0.000000
+      DoubleClickList=None
 }

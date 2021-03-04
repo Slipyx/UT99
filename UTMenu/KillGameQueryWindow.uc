@@ -27,5 +27,5 @@ function Created()
 
 defaultproperties
 {
-     WindowTitle="Verify Delete Game"
+      WindowTitle="Verify Delete Game"
 }

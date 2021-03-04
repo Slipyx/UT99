@@ -167,7 +167,7 @@ function AddRule(string Rule, string Value)
 state Binding
 {
 Begin:
-	if( BindPort(2000, true) == 0 )
+	if( BindPort() == 0 )
 	{
 		Log("UBrowserServerPing: Port failed to bind.  Attempt "$BindAttempts);
 		BindAttempts++;
@@ -487,7 +487,7 @@ state GetInfo
 
 		// Make sure this packet really is for us.
 		Temp = IpAddrToString(Addr);
-		if(Server.IP != Left(Temp, InStr(Temp, ":")))
+		if ( Server.IP != StripPort(Temp) )
 			return;
 
 		ValidateServer();
@@ -607,38 +607,50 @@ Begin:
 
 defaultproperties
 {
-     AdminEmailText="Admin Email"
-     AdminNameText="Admin Name"
-     ChangeLevelsText="Change Levels"
-     MultiplayerBotsText="Bots in Multiplayer"
-     FragLimitText="Frag Limit"
-     TimeLimitText="Time Limit"
-     GameModeText="Game Mode"
-     GameTypeText="Game Type"
-     GameVersionText="Game Version"
-     WorldLogText="ngWorldStats"
-     MutatorsText="Mutators"
-     TrueString="Enabled"
-     FalseString="Disabled"
-     ServerAddressText="Server Address"
-     GoalTeamScoreText="Required Team Score"
-     MinPlayersText="Bots Enter Game for Min. of"
-     PlayersText="Players"
-     MaxTeamsText="Max Teams"
-     BalanceTeamsText="Bots Balance Teams"
-     PlayersBalanceTeamsText="Force Team Balance"
-     FriendlyFireText="Friendly Fire Damage"
-     MinNetVersionText="Min. Compatible Version"
-     BotSkillText="Bot Skill"
-     TournamentText="Tournament Mode"
-     ServerModeText="Server Mode"
-     DedicatedText="Dedicated"
-     NonDedicatedText="Non-Dedicated"
-     WorldLogWorkingText="ngWorldStats Status"
-     WorldLogWorkingTrue="Processing Stats Correctly"
-     WorldLogWorkingFalse="Not Processing Stats Correctly"
-     PasswordText="Requires Password"
-     MaxBindAttempts=5
-     BindRetryTime=10
-     PingTimeout=1
+      Server=None
+      ServerIPAddr=(Addr=0,Port=0)
+      RequestSentTime=0.000000
+      LastDelta=0.000000
+      QueryState="None"
+      bInitial=False
+      bJustThisServer=False
+      bNoSort=False
+      PingAttempts=0
+      AttemptNumber=0
+      BindAttempts=0
+      AdminEmailText="Admin Email"
+      AdminNameText="Admin Name"
+      ChangeLevelsText="Change Levels"
+      MultiplayerBotsText="Bots in Multiplayer"
+      FragLimitText="Frag Limit"
+      TimeLimitText="Time Limit"
+      GameModeText="Game Mode"
+      GameTypeText="Game Type"
+      GameVersionText="Game Version"
+      WorldLogText="ngWorldStats"
+      MutatorsText="Mutators"
+      TrueString="Enabled"
+      FalseString="Disabled"
+      ServerAddressText="Server Address"
+      GoalTeamScoreText="Required Team Score"
+      MinPlayersText="Bots Enter Game for Min. of"
+      PlayersText="Players"
+      MaxTeamsText="Max Teams"
+      BalanceTeamsText="Bots Balance Teams"
+      PlayersBalanceTeamsText="Force Team Balance"
+      FriendlyFireText="Friendly Fire Damage"
+      MinNetVersionText="Min. Compatible Version"
+      BotSkillText="Bot Skill"
+      TournamentText="Tournament Mode"
+      ServerModeText="Server Mode"
+      DedicatedText="Dedicated"
+      NonDedicatedText="Non-Dedicated"
+      WorldLogWorkingText="ngWorldStats Status"
+      WorldLogWorkingTrue="Processing Stats Correctly"
+      WorldLogWorkingFalse="Not Processing Stats Correctly"
+      PasswordText="Requires Password"
+      MaxBindAttempts=5
+      BindRetryTime=10
+      PingTimeout=1
+      bUseMapName=False
 }

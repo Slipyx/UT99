@@ -9,6 +9,8 @@ class PlayerPawn expands Pawn
 	native
 	nativereplication;
 
+const SmoothAdjustLocationTime = 0.35f;
+	
 // Player info.
 var const player Player;
 var	globalconfig string Password;	// for restarting coop savegames
@@ -100,6 +102,7 @@ var globalconfig bool	bNeverAutoSwitch;	// if true, don't automatically switch t
 var bool		bJumpStatus;	// used in net games
 var	bool		bUpdating;
 var bool		bCheatsEnabled;
+var() globalconfig bool bNoMouseSmoothing;
 
 var float		ZoomLevel;
 
@@ -182,13 +185,36 @@ var float 	MinFOV;			// Enforced MinFOV for this server
 var float 	MaxFOV;			// Enforced MaxFOV for this server
 
 var int 	MaxNameChanges;	// Max number of time a player can change their name in the game
-var int		NameChanges;		// Used to track name changes
+var int		NameChanges;	// Used to track name changes
+
+
+//
+// OldUnreal movement code
+//
+var() globalconfig bool bDisableMovementBuffering;
+var transient bool bPausePressed;
+
+// Which version of the physics code does the server/client use?
+var int ServerMovementVersion, ClientMovementVersion;
+
+// Mouse movement
+var transient float AccumulatedHTurn, AccumulatedVTurn; // Discarded fractional parts of horizontal (Yaw) and vertical (Pitch) turns
+
+// Clientside smoothing of position adjustment.
+var transient vector PreAdjustLocation;
+var transient vector AdjustLocationOffset;
+var transient float AdjustLocationAlpha;
+
+// Serverside buffering of position adjustment.
+var transient float LastClientTimestamp;
+var transient vector LastClientLocation;
+
 
 replication
 {
 	// Things the server should send to the client.
 	reliable if( bNetOwner && Role==ROLE_Authority )
-		ViewTarget, ScoringType, HUDType, GameReplicationInfo, bFixedCamera, bCheatsEnabled;
+		ViewTarget, ScoringType, HUDType, GameReplicationInfo, bFixedCamera, bCheatsEnabled, ServerMovementVersion;
 	unreliable if ( bNetOwner && Role==ROLE_Authority )
 		TargetViewRotation, TargetEyeHeight, TargetWeaponViewOffset;
 	reliable if( bDemoRecording && Role==ROLE_Authority )
@@ -196,7 +222,7 @@ replication
 
 	// Things the client should send to the server
 	reliable if ( Role<ROLE_Authority )
-		Password, bReadyToPlay;
+		Password, bReadyToPlay, ClientMovementVersion;
 
 	// Functions client can call.
 	unreliable if( Role<ROLE_Authority )
@@ -209,7 +235,7 @@ replication
 		PrevWeapon, NextWeapon, GetWeapon, ServerReStartGame, ServerUpdateWeapons, ServerTaunt, ServerChangeSkin,
 		SwitchLevel, SwitchCoopLevel, Kick, KickBan, KillAll, Summon, ActivateTranslator, Admin, AdminLogin, AdminLogout, Typing, Mutate, ServerUTrace;
 	unreliable if( Role<ROLE_Authority )
-		ServerMove, Fly, Walk, Ghost;
+		ServerMove, ServerMove_v2, Fly, Walk, Ghost;
 
 	// Functions server can call.
 	reliable if( Role==ROLE_Authority && !bDemoRecording )
@@ -388,8 +414,10 @@ exec function Profile()
 exec function Admin( string CommandLine )
 {
 	local string Result;
+
 	if( bAdmin )
 		Result = ConsoleCommand( CommandLine );
+
 	if( Result!="" )
 		ClientMessage( Result );
 }
@@ -397,8 +425,7 @@ exec function Admin( string CommandLine )
 // Login as the administrator.
 exec function AdminLogin( string Password )
 {
-	if ( (Level.TimeSeconds < NextLoginTime) ||
-		  bLoginDisabled )
+	if ( (Level.TimeSeconds < NextLoginTime) || bLoginDisabled )
 		  return;
 
 	Level.Game.AdminLogin( Self, Password );
@@ -409,17 +436,22 @@ exec function AdminLogin( string Password )
 	}
 
 	LoginAttempts++;
-	NextLoginTime = Level.TimeSeconds + Level.Game.LoginDelaySeconds;
+
 	if (LoginAttempts >= Level.Game.MaxLoginAttempts)
 	{
+		NextLoginTime = Level.TimeSeconds + Level.Game.LoginDelaySeconds;
+	
 		switch (Level.Game.ActionToTake)
 		{
 			case DO_KickBanPlayer:
 				KickBanMe("Too many login attempts."); break;
+
 			case DO_KickPlayer:
 				KickMe("Too many login attempts."); break;
+
 			case DO_DisableLogin:
 				bLoginDisabled = True; break;
+
 			case DO_Log:
 				log(LoginAttempts@"incorrect admin login attempts from"@PlayerReplicationInfo.PlayerName@GetPlayerNetworkAddress());
 		}
@@ -501,6 +533,83 @@ function ClientVoiceMessage(PlayerReplicationInfo Sender, PlayerReplicationInfo 
 
 simulated function PlayBeepSound();
 
+/*-------------------------------------------------------------------------
+                        Movement replication code.
+-------------------------------------------------------------------------*/
+
+
+//
+// Main ServerMove control. (v469)
+//
+function SendServerMove( SavedMove Move, optional SavedMove OldMove)
+{
+	local byte ClientRoll;
+	local float OldTimeDelta;
+	local int OldAccel;
+	local byte MoveFlags;
+	local int View;
+	local EDodgeDir DodgeMove;
+
+	ClientRoll = (Rotation.Roll >> 8) & 255;
+	View = (32767 & (ViewRotation.Pitch/2)) * 32768 + (32767 & (ViewRotation.Yaw/2));
+	
+	// check if need to redundantly send previous move
+	if ( OldMove != None )
+	{
+		// log("Redundant send timestamp "$OldMove.TimeStamp$" accel "$OldMove.Acceleration$" at "$Level.Timeseconds$" New accel "$NewAccel);
+		// old move important to replicate redundantly
+		OldTimeDelta = FMin(255, (Level.TimeSeconds - OldMove.TimeStamp) * 500);
+		OldAccel = OldMove.CompressOld();
+	}
+	
+	// There's no need to send DODGE_Active, Dodge() sets it.
+	DodgeMove = Move.DodgeMove;
+	if ( DodgeMove == DODGE_Active )
+		DodgeMove = DODGE_None;
+	
+	
+	if ( Level.ServerMoveVersion >= 2 )
+	{
+		MoveFlags = Move.CompressFlags();
+		MoveFlags += int(bJumpStatus) * 128;
+		ServerMove_v2
+		(
+			Move.TimeStamp,
+			Move.Acceleration * 10,
+			Location,
+			MoveFlags,
+			Move.MergeCount,
+			DodgeMove,
+			ClientRoll,
+			View,
+			OldTimeDelta,
+			OldAccel
+		);
+	}
+	else
+	{
+		ServerMove
+		(
+			Move.TimeStamp,
+			Move.Acceleration * 10,
+			Location,
+			Move.bRun,
+			Move.bDuck,
+			bJumpStatus,
+			Move.bFire,
+			Move.bAltFire,
+			Move.bForceFire,
+			Move.bForceAltFire,
+			DodgeMove,
+			ClientRoll,
+			View,
+			OldTimeDelta,
+			OldAccel
+		);
+	}
+}
+
+
 //
 // Send movement to the server.
 // Passes acceleration in components so it doesn't get rounded.
@@ -517,72 +626,27 @@ function ServerMove
 	bool bAltFired,
 	bool bForceFire,
 	bool bForceAltFire,
-	eDodgeDir DodgeMove,
+	EDodgeDir DodgeMove,
 	byte ClientRoll,
 	int View,
 	optional byte OldTimeDelta,
 	optional int OldAccel
 )
 {
-	local float DeltaTime, clientErr, OldTimeStamp;
+	local float DeltaTime;
 	local rotator DeltaRot, Rot;
-	local vector Accel, LocDiff;
+	local vector Accel;
 	local int maxPitch, ViewPitch, ViewYaw;
 	local actor OldBase;
-	local bool NewbPressedJump, OldbRun, OldbDuck;
-	local eDodgeDir OldDodgeMove;
+	local bool NewbPressedJump;
 
 	// If this move is outdated, discard it.
 	if ( CurrentTimeStamp >= TimeStamp )
 		return;
 
 	// if OldTimeDelta corresponds to a lost packet, process it first
-	if (  OldTimeDelta != 0 )
-	{
-		OldTimeStamp = TimeStamp - float(OldTimeDelta)/500 - 0.001;
-		if ( CurrentTimeStamp < OldTimeStamp - 0.001 )
-		{
-			// split out components of lost move (approx)
-			Accel.X = OldAccel >>> 23;
-			if ( Accel.X > 127 )
-				Accel.X = -1 * (Accel.X - 128);
-			Accel.Y = (OldAccel >>> 15) & 255;
-			if ( Accel.Y > 127 )
-				Accel.Y = -1 * (Accel.Y - 128);
-			Accel.Z = (OldAccel >>> 7) & 255;
-			if ( Accel.Z > 127 )
-				Accel.Z = -1 * (Accel.Z - 128);
-			Accel *= 20;
-
-			OldbRun = ( (OldAccel & 64) != 0 );
-			OldbDuck = ( (OldAccel & 32) != 0 );
-			NewbPressedJump = ( (OldAccel & 16) != 0 );
-			if ( NewbPressedJump )
-				bJumpStatus = NewbJumpStatus;
-
-			switch (OldAccel & 7)
-			{
-				case 0:
-					OldDodgeMove = DODGE_None;
-					break;
-				case 1:
-					OldDodgeMove = DODGE_Left;
-					break;
-				case 2:
-					OldDodgeMove = DODGE_Right;
-					break;
-				case 3:
-					OldDodgeMove = DODGE_Forward;
-					break;
-				case 4:
-					OldDodgeMove = DODGE_Back;
-					break;
-			}
-			//log("Recovered move from "$OldTimeStamp$" acceleration "$Accel$" from "$OldAccel);
-			MoveAutonomous(OldTimeStamp - CurrentTimeStamp, OldbRun, OldbDuck, NewbPressedJump, OldDodgeMove, Accel, rot(0,0,0));
-			CurrentTimeStamp = OldTimeStamp;
-		}
-	}
+	if ( OldTimeDelta != 0 )
+		OldServerMove( TimeStamp, NewbJumpStatus, OldTimeDelta, OldAccel);
 
 	// View components
 	ViewPitch = View/32768;
@@ -606,7 +670,6 @@ function ServerMove
 	else
 		bFire = 0;
 
-
 	if ( bAltFired )
 	{
 		if ( bForceAltFire && (Weapon != None) )
@@ -623,7 +686,7 @@ function ServerMove
 	if ( ServerTimeStamp > 0 )
 	{
 		// allow 1% error
-		TimeMargin += DeltaTime - 1.01 * (Level.TimeSeconds - ServerTimeStamp);
+		TimeMargin = FMax(0, TimeMargin + DeltaTime - 1.01 * (Level.TimeSeconds - ServerTimeStamp));
 		if ( TimeMargin > MaxTimeMargin )
 		{
 			// player is too far ahead
@@ -665,12 +728,181 @@ function ServerMove
 	if ( (Level.Pauser == "") && (DeltaTime > 0) )
 		MoveAutonomous(DeltaTime, NewbRun, NewbDuck, NewbPressedJump, DodgeMove, Accel, DeltaRot);
 
-	// Accumulate movement error.
-	if ( Level.TimeSeconds - LastUpdateTime > 500.0/Player.CurrentNetSpeed )
-		ClientErr = 10000;
-	else if ( Level.TimeSeconds - LastUpdateTime > 180.0/Player.CurrentNetSpeed )
+	LastClientTimestamp = TimeStamp;
+	LastClientLocation = ClientLoc;
+}
+
+//
+// Send movement to the server. (v469)
+// Passes acceleration in components so it doesn't get rounded.
+//
+function ServerMove_v2
+(
+	float TimeStamp,
+	vector InAccel,
+	vector ClientLoc,
+	byte MoveFlags,
+	byte MergeCount,
+	EDodgeDir DodgeMove,
+	byte ClientRoll,
+	int View,
+	optional byte OldTimeDelta,
+	optional int OldAccel
+)
+{
+	local float DeltaTime;
+	local rotator DeltaRot, Rot;
+	local vector Accel;
+	local int i, maxPitch, ViewPitch, ViewYaw;
+	local actor OldBase;
+	local bool NewbPressedJump;
+	local bool NewbRun, NewbDuck, NewbJumpStatus, bFired, bAltFired, bForceFire, bForceAltFire;
+	
+	// If this move is outdated, discard it.
+	if ( CurrentTimeStamp >= TimeStamp )
+		return;
+		
+	if ( MergeCount > 31 )
+		return;
+		
+	// Decompress move flags.
+	NewbRun        = (MoveFlags & 1) != 0;
+	NewbDuck       = (MoveFlags & 2) != 0;
+	bFired         = (MoveFlags & 4) != 0;
+	bAltFired      = (MoveFlags & 8) != 0;
+	bForceFire     = (MoveFlags & 16) != 0;
+	bForceAltFire  = (MoveFlags & 32) != 0;
+	NewbJumpStatus = (MoveFlags & 128) != 0;
+
+	// if OldTimeDelta corresponds to a lost packet, process it first
+	if ( OldTimeDelta != 0 )
+		OldServerMove( TimeStamp, NewbJumpStatus, OldTimeDelta, OldAccel);
+
+	// View components
+	ViewPitch = View/32768;
+	ViewYaw = 2 * (View - 32768 * ViewPitch);
+	ViewPitch *= 2;
+	// Make acceleration.
+	Accel = InAccel/10;
+
+	NewbPressedJump = (bJumpStatus != NewbJumpStatus);
+	bJumpStatus = NewbJumpStatus;
+
+	// handle firing and alt-firing
+	if ( bFired )
 	{
-		LocDiff = Location - ClientLoc;
+		if ( bForceFire && (Weapon != None) )
+			Weapon.ForceFire();
+		else if ( bFire == 0 )
+			Fire(0);
+		bFire = 1;
+	}
+	else
+		bFire = 0;
+
+	if ( bAltFired )
+	{
+		if ( bForceAltFire && (Weapon != None) )
+			Weapon.ForceAltFire();
+		else if ( bAltFire == 0 )
+			AltFire(0);
+		bAltFire = 1;
+	}
+	else
+		bAltFire = 0;
+
+	// Save move parameters.
+	DeltaTime = TimeStamp - CurrentTimeStamp;
+	if ( ServerTimeStamp > 0 )
+	{
+		// allow 1% error
+		TimeMargin = FMax(0, TimeMargin + DeltaTime - 1.01 * (Level.TimeSeconds - ServerTimeStamp));
+		if ( TimeMargin > MaxTimeMargin )
+		{
+			// player is too far ahead
+			TimeMargin -= DeltaTime;
+			if ( TimeMargin < 0.5 )
+				MaxTimeMargin = Default.MaxTimeMargin;
+			else
+				MaxTimeMargin = 0.5;
+			DeltaTime = 0;
+		}
+	}
+
+	CurrentTimeStamp = TimeStamp;
+	ServerTimeStamp = Level.TimeSeconds;
+	Rot.Roll = 256 * ClientRoll;
+	Rot.Yaw = ViewYaw;
+	if ( (Physics == PHYS_Swimming) || (Physics == PHYS_Flying) )
+		maxPitch = 2;
+	else
+		maxPitch = 1;
+	If ( (ViewPitch > maxPitch * RotationRate.Pitch) && (ViewPitch < 65536 - maxPitch * RotationRate.Pitch) )
+	{
+		If (ViewPitch < 32768)
+			Rot.Pitch = maxPitch * RotationRate.Pitch;
+		else
+			Rot.Pitch = 65536 - maxPitch * RotationRate.Pitch;
+	}
+	else
+		Rot.Pitch = ViewPitch;
+	DeltaRot = (Rotation - Rot);
+	ViewRotation.Pitch = ViewPitch;
+	ViewRotation.Yaw = ViewYaw;
+	ViewRotation.Roll = 0;
+	SetRotation(Rot);
+
+	OldBase = Base;
+
+	// Perform actual movement, reproduced step by step as on client (approximate)
+	if ( (Level.Pauser == "") && (DeltaTime > 0) )
+	{
+		DeltaTime /= float(MergeCount) + 1;
+		while ( MergeCount > 0 )
+		{
+			MoveAutonomous( DeltaTime, NewbRun, NewbDuck, false, DODGE_None, Accel, rot(0,0,0) );
+			MergeCount--;
+		}
+		// Important input is usually the cause for buffer breakup, so it happens last on the client.
+		MoveAutonomous(DeltaTime, NewbRun, NewbDuck, NewbPressedJump, DodgeMove, Accel, DeltaRot);
+	}
+
+	LastClientTimestamp = TimeStamp;
+	LastClientLocation = ClientLoc;
+}
+
+
+
+
+//
+// Evaluate if client needs positional adjustment. (v469)
+//
+// Higor: This is called after the net driver is polled and all clients'
+// movement has been received and processed.
+//
+// Compared to pre-v469, the result is sending an adjustment for the most
+// recent move (with significant position error) instead of the first one.
+//
+event CheckClientError()
+{
+	local float DeltaTime, ClientErr;
+	local vector ClientLocation, LocDiff;
+
+	if ( LastClientTimestamp == 0 )
+		return;
+	
+	// Accumulate movement error.
+	// Higor: game speed fix, mandatory update takes twice as long, netspeed effect capped to 10000
+	DeltaTime = (Level.TimeSeconds - LastUpdateTime) / Level.TimeDilation;
+	if ( DeltaTime > 1000.0/FMin(Player.CurrentNetSpeed,10000) )
+	{
+		LocDiff = Location - LastClientLocation;
+		ClientErr = LocDiff Dot LocDiff;
+		ClientErr = 10000;
+	}
+	else if ( DeltaTime > 180.0/FMin(Player.CurrentNetSpeed,10000) )
+	{
+		LocDiff = Location - LastClientLocation;
 		ClientErr = LocDiff Dot LocDiff;
 	}
 
@@ -678,26 +910,81 @@ function ServerMove
 	if ( ClientErr > 3 )
 	{
 		if ( Mover(Base) != None )
-			ClientLoc = Location - Base.Location;
+			ClientLocation = Location - Base.Location;
 		else
-			ClientLoc = Location;
-		//log("Client Error at "$TimeStamp$" is "$ClientErr$" with acceleration "$Accel$" LocDiff "$LocDiff$" Physics "$Physics);
+			ClientLocation = Location;
+			
+		// Make sure Z is rounded up.
+		if ( Base != None && Base != Level )
+			ClientLocation.Z += float(int(Base.Location.Z + 0.9)) - Base.Location.Z;
+
+		//log("Client Error at "$LastClientTimestamp$" is "$ClientErr$" with acceleration "$Accel$" LocDiff "$LocDiff$" Physics "$Physics);
 		LastUpdateTime = Level.TimeSeconds;
 		ClientAdjustPosition
 		(
-			TimeStamp,
+			LastClientTimestamp,
 			GetStateName(),
 			Physics,
-			ClientLoc.X,
-			ClientLoc.Y,
-			ClientLoc.Z,
+			ClientLocation.X,
+			ClientLocation.Y,
+			ClientLocation.Z,
 			Velocity.X,
 			Velocity.Y,
-			Velocity.Z,
+		    Velocity.Z,
 			Base
 		);
 	}
-	//log("Server "$Role$" moved "$self$" stamp "$TimeStamp$" location "$Location$" Acceleration "$Acceleration$" Velocity "$Velocity);
+	LastClientTimestamp = 0;
+}
+
+
+//
+// Process a lost move.
+//
+final function OldServerMove( float TimeStamp, bool NewbJumpStatus, byte OldTimeDelta, int OldAccel)
+{
+	local float OldTimeStamp;
+	local bool OldbRun, OldbDuck, NewbPressedJump;
+	local vector Accel;
+	local EDodgeDir OldDodgeMove;
+	
+	OldTimeStamp = TimeStamp - float(OldTimeDelta)/500 - 0.001;
+	if ( CurrentTimeStamp < OldTimeStamp - 0.001 )
+	{
+		// split out components of lost move (approx)
+		Accel.X = DecompressAccel( OldAccel >>> 23);
+		Accel.Y = DecompressAccel((OldAccel >>> 15) & 255);
+		Accel.Z = DecompressAccel((OldAccel >>> 7) & 255);
+		Accel *= 20;
+
+		OldbRun = ( (OldAccel & 64) != 0 );
+		OldbDuck = ( (OldAccel & 32) != 0 );
+		NewbPressedJump = ( (OldAccel & 16) != 0 );
+		if ( NewbPressedJump )
+			bJumpStatus = NewbJumpStatus;
+
+		switch (OldAccel & 7)
+		{
+			case 0:
+				OldDodgeMove = DODGE_None;
+				break;
+			case 1:
+				OldDodgeMove = DODGE_Left;
+				break;
+			case 2:
+				OldDodgeMove = DODGE_Right;
+				break;
+			case 3:
+				OldDodgeMove = DODGE_Forward;
+				break;
+			case 4:
+				OldDodgeMove = DODGE_Back;
+				break;
+		}
+//		log("Recovered move from "$OldTimeStamp$" acceleration "$Accel$" from "$OldAccel);
+		MoveAutonomous(OldTimeStamp - CurrentTimeStamp, OldbRun, OldbDuck, NewbPressedJump, OldDodgeMove, Accel, rot(0,0,0));
+		CurrentTimeStamp = OldTimeStamp;
+	}
 }
 
 function ProcessMove ( float DeltaTime, vector newAccel, eDodgeDir DodgeMove, rotator DeltaRot)
@@ -750,7 +1037,8 @@ function ClientAdjustPosition
 )
 {
 	local Decoration Carried;
-	local vector OldLoc, NewLocation;
+	local vector OldLoc, NewLocation, NewVelocity;
+	local SavedMove CurrentMove;
 
 	if ( CurrentTimeStamp > TimeStamp )
 		return;
@@ -759,9 +1047,37 @@ function ClientAdjustPosition
 	NewLocation.X = NewLocX;
 	NewLocation.Y = NewLocY;
 	NewLocation.Z = NewLocZ;
-	Velocity.X = NewVelX;
-	Velocity.Y = NewVelY;
-	Velocity.Z = NewVelZ;
+	NewVelocity.X = NewVelX;
+	NewVelocity.Y = NewVelY;
+	NewVelocity.Z = NewVelZ;
+
+	// Higor: keep track of Position prior to adjustment
+	// and stop current smoothed adjustment (if in progress).
+	PreAdjustLocation = Location;
+	if ( AdjustLocationAlpha > 0 )
+	{
+		AdjustLocationAlpha = 0;
+		AdjustLocationOffset = vect(0,0,0);
+	}
+
+	// stijn: Remove acknowledged moves from the savedmoves list
+	CurrentMove = SavedMoves;
+	while (CurrentMove != None)
+	{
+		if (CurrentMove.TimeStamp <= CurrentTimeStamp)
+		{
+			SavedMoves = CurrentMove.NextMove;
+			CurrentMove.NextMove = FreeMoves;
+			FreeMoves = CurrentMove;
+			FreeMoves.Clear();
+			CurrentMove = SavedMoves;
+		}
+		else
+		{
+			// not yet acknowledged. break out of the loop
+			CurrentMove = None;
+		}
+	}
 
 	SetBase(NewBase);
 	if ( Mover(NewBase) != None )
@@ -773,6 +1089,8 @@ function ClientAdjustPosition
 	bCanTeleport = false;
 	SetLocation(NewLocation);
 	bCanTeleport = true;
+	Velocity = NewVelocity;
+
 	if ( Carried != None )
 	{
 		CarriedDecoration = Carried;
@@ -788,20 +1106,48 @@ function ClientAdjustPosition
 	bUpdatePosition = true;
 }
 
+function ClientReplayMove( SavedMove Move)
+{
+	local int i;
+	local float DeltaTime;
+	
+	SetRotation( Move.Rotation);	
+	ViewRotation = Move.SavedViewRotation;
+
+	// Replay the move in the same amount of ticks they were created+merged.
+	// Important input needs to be processed last (as it's usually the cause of buffer breakup)
+	DeltaTime = Move.Delta;
+	if ( Level.ServerMoveVersion >= 2 )
+	{
+		DeltaTime /= float(Move.MergeCount) + 1;
+		for ( i=0; i<Move.MergeCount; i++)
+			MoveAutonomous( DeltaTime, Move.bRun, Move.bDuck, false, DODGE_None, Move.Acceleration, rot(0,0,0));
+	}
+	MoveAutonomous( DeltaTime, Move.bRun, Move.bDuck, Move.bPressedJump, Move.DodgeMove, Move.Acceleration, rot(0,0,0));
+	Move.SavedLocation = Location;
+	Move.SavedVelocity = Velocity;
+}
+
 function ClientUpdatePosition()
 {
 	local SavedMove CurrentMove;
 	local int realbRun, realbDuck;
 	local bool bRealJump;
+	local rotator RealViewRotation, RealRotation;
 
-	local float TotalTime, AdjPCol;
-	local pawn P;
+	local float TotalTime;
+	local Pawn P;
 	local vector Dir;
+	
+	local float AdjustDistance;
+	local vector PostAdjustLocation;	
 
 	bUpdatePosition = false;
-	realbRun= bRun;
+	realbRun = bRun;
 	realbDuck = bDuck;
 	bRealJump = bPressedJump;
+	RealRotation = Rotation;
+	RealViewRotation = ViewRotation;
 	CurrentMove = SavedMoves;
 	bUpdating = true;
 	while ( CurrentMove != None )
@@ -831,14 +1177,49 @@ function ClientUpdatePosition()
 						}
 					}
 			TotalTime += CurrentMove.Delta;
-			MoveAutonomous(CurrentMove.Delta, CurrentMove.bRun, CurrentMove.bDuck, CurrentMove.bPressedJump, CurrentMove.DodgeMove, CurrentMove.Acceleration, rot(0,0,0));
+			ClientReplayMove(CurrentMove);
 			CurrentMove = CurrentMove.NextMove;
 		}
+	}	
+	// stijn: The original code was not replaying the pending move
+	// here. This was a huge oversight and caused non-stop resynchronizations
+	// because the playerpawn position would be off constantly until the player
+	// stopped moving!
+	if ( PendingMove != none )
+		ClientReplayMove(PendingMove);
+
+	// Higor: evaluate location adjustment and see if we should either
+	// - Discard it
+	// - Negate and process over a certain amount of time.
+	// - Keep adjustment as is (instant relocation)
+	AdjustLocationOffset = (Location - PreAdjustLocation);
+	AdjustDistance = VSize(AdjustLocationOffset);
+	AdjustLocationAlpha = 0;
+	if ( Level.ServerMoveVersion >= 2 &&
+	     AdjustDistance < VSize(Acceleration) ) //Only do this if player is trying to move
+	{
+		if ( AdjustDistance < 2 )
+		{
+			// Discard
+			MoveSmooth( -AdjustLocationOffset);
+		}
+		else if ( (AdjustDistance < 50) && FastTrace(Location,PreAdjustLocation) )
+		{
+			// Undo adjustment and re-enact smoothly
+			PostAdjustLocation = Location;
+			MoveSmooth( -AdjustLocationOffset);
+			AdjustLocationOffset = PostAdjustLocation - Location;
+			AdjustLocationAlpha = 1;
+		}
 	}
+	// Keep as is.
+
 	bUpdating = false;
 	bDuck = realbDuck;
 	bRun = realbRun;
 	bPressedJump = bRealJump;
+	SetRotation( RealRotation);
+	ViewRotation = RealViewRotation;
 	//log("Client adjusted "$self$" stamp "$CurrentTimeStamp$" location "$Location$" dodge "$DodgeDir);
 }
 
@@ -847,22 +1228,32 @@ final function SavedMove GetFreeMove()
 	local SavedMove s;
 
 	if ( FreeMoves == None )
-		return Spawn(class'SavedMove');
+		return Spawn(class'SavedMove',self);
 	else
 	{
 		s = FreeMoves;
 		FreeMoves = FreeMoves.NextMove;
 		s.NextMove = None;
+		if ( s.Owner != self )
+			s.SetOwner(self);
 		return s;
 	}
 }
 
+// Higor: No longer used, kept for compatibility purposes.
 function int CompressAccel(int C)
 {
 	if ( C >= 0 )
 		C = Min(C, 127);
 	else
 		C = Min(abs(C), 127) + 128;
+	return C;
+}
+
+final function float DecompressAccel( int C)
+{
+	if ( C > 127 )
+		C = -1 * (C - 128);
 	return C;
 }
 
@@ -878,61 +1269,106 @@ function ReplicateMove
 )
 {
 	local SavedMove NewMove, OldMove, LastMove;
-	local byte ClientRoll;
-	local int i;
-	local float OldTimeDelta, TotalTime, NetMoveDelta;
-	local int OldAccel;
-	local vector BuildAccel, AccelNorm;
+	local float TotalTime;
+	local float NetMoveDelta;
 
-	local float AdjPCol;
-	local pawn P;
+	local Pawn P;
 	local vector Dir;
+	
+	local float AdjustAlpha;
+
+	// Higor: process smooth adjustment.
+	if ( AdjustLocationAlpha > 0 )
+	{
+		AdjustAlpha = fMin( AdjustLocationAlpha, DeltaTime/SmoothAdjustLocationTime);
+		MoveSmooth( AdjustLocationOffset * AdjustAlpha );
+		AdjustLocationAlpha -= AdjustAlpha;
+	}
+	
+	NetMoveDelta = FMax(64.0/Player.CurrentNetSpeed, 0.011);
 
 	// Get a SavedMove actor to store the movement in.
 	if ( PendingMove != None )
 	{
-		//add this move to the pending move
-		PendingMove.TimeStamp = Level.TimeSeconds;
-		if ( VSize(NewAccel) > 3072 )
-			NewAccel = 3072 * Normal(NewAccel);
-		TotalTime = PendingMove.Delta + DeltaTime;
-		PendingMove.Acceleration = (DeltaTime * NewAccel + PendingMove.Delta * PendingMove.Acceleration)/TotalTime;
+		//
+		// stijn: a lot of the movement glitching in UT99 stems from this
+		// calculation. In essence, this code tries to merge multiple moves
+		// into one "pending" move. The server will only see the pending
+		// move and thus assume that the client has accelerated uniformly
+		// during a period of PendingMove.Delta seconds. Unfortunately,
+		// the assumption that the acceleration was uniform means the
+		// server cannot possibly reconstruct the correct position AND
+		// the correct velocity at the end of the PendingMove.Delta period.
+		// The calculation below will yield the correct velocity on the
+		// server side but _NOT_ the correct position. This means the
+		// server will constantly correct players that send merged moves
+		// (because they quickly accumulate large movement errors).
+		//
+		// Higor: burst previous move if accel is significantly different.
+		//
+		if ( PendingMove.CanMergeAccel(NewAccel) )
+		{
+			//add this move to the pending move
+			PendingMove.TimeStamp = Level.TimeSeconds;
+			if ( VSize(NewAccel) > 3072 )
+				NewAccel = 3072 * Normal(NewAccel);
+			TotalTime = DeltaTime + PendingMove.Delta;
 
-		// Set this move's data.
-		if ( PendingMove.DodgeMove == DODGE_None )
-			PendingMove.DodgeMove = DodgeMove;
-		PendingMove.bRun = (bRun > 0);
-		PendingMove.bDuck = (bDuck > 0);
-		PendingMove.bPressedJump = bPressedJump || PendingMove.bPressedJump;
-		PendingMove.bFire = PendingMove.bFire || bJustFired || (bFire != 0);
-		PendingMove.bForceFire = PendingMove.bForceFire || bJustFired;
-		PendingMove.bAltFire = PendingMove.bAltFire || bJustAltFired || (bAltFire != 0);
-		PendingMove.bForceAltFire = PendingMove.bForceAltFire || bJustFired;
-		PendingMove.Delta = TotalTime;
+			// Set this move's data.
+			if ( PendingMove.DodgeMove == DODGE_None )
+				PendingMove.DodgeMove = DodgeMove;
+
+			PendingMove.Acceleration = (DeltaTime * NewAccel + PendingMove.Delta * PendingMove.Acceleration) / TotalTime;
+			PendingMove.SetRotation( Rotation );
+			PendingMove.SavedViewRotation = ViewRotation;
+			PendingMove.bRun = (bRun > 0);
+			PendingMove.bDuck = (bDuck > 0);
+			PendingMove.bPressedJump = bPressedJump || PendingMove.bPressedJump;
+			PendingMove.bFire = PendingMove.bFire || bJustFired || (bFire != 0);
+			PendingMove.bForceFire = PendingMove.bForceFire || bJustFired;
+			PendingMove.bAltFire = PendingMove.bAltFire || bJustAltFired || (bAltFire != 0);
+			PendingMove.bForceAltFire = PendingMove.bForceAltFire || bJustFired;
+			PendingMove.Delta = TotalTime;
+			PendingMove.MergeCount++;
+		}
+		else
+		{
+			// Burst old move and remove from Pending
+//			Log("Bursting move"@Level.TimeSeconds);
+			SendServerMove(PendingMove);
+			ClientUpdateTime = PendingMove.Delta - NetMoveDelta;
+			if ( SavedMoves == None )
+				SavedMoves = PendingMove;
+			else
+			{
+				for ( LastMove=SavedMoves ; LastMove.NextMove!=None ; LastMove=LastMove.NextMove );
+				LastMove.NextMove = PendingMove;
+			}
+			PendingMove = None;
+		}
 	}
+
 	if ( SavedMoves != None )
 	{
 		NewMove = SavedMoves;
-		AccelNorm = Normal(NewAccel);
 		while ( NewMove.NextMove != None )
 		{
-			// find most recent interesting move to send redundantly
-			if ( NewMove.bPressedJump || ((NewMove.DodgeMove != Dodge_NONE) && (NewMove.DodgeMove < 5))
-				|| ((NewMove.Acceleration != NewAccel) && ((normal(NewMove.Acceleration) Dot AccelNorm) < 0.95)) )
+			// find most recent interesting (and unacknowledged) move to send redundantly
+			if ( NewMove.CanSendRedundantly(NewAccel) )
 				OldMove = NewMove;
 			NewMove = NewMove.NextMove;
 		}
-		if ( NewMove.bPressedJump || ((NewMove.DodgeMove != Dodge_NONE) && (NewMove.DodgeMove < 5))
-			|| ((NewMove.Acceleration != NewAccel) && ((normal(NewMove.Acceleration) Dot AccelNorm) < 0.95)) )
-			OldMove = NewMove;
+ 		if ( NewMove.CanSendRedundantly(NewAccel) )
+		    OldMove = NewMove;
 	}
 
-	LastMove = NewMove;
+	LastMove = NewMove;	
 	NewMove = GetFreeMove();
 	NewMove.Delta = DeltaTime;
 	if ( VSize(NewAccel) > 3072 )
 		NewAccel = 3072 * Normal(NewAccel);
 	NewMove.Acceleration = NewAccel;
+	NewAccel = Acceleration;
 
 	// Set this move's data.
 	NewMove.DodgeMove = DodgeMove;
@@ -967,30 +1403,38 @@ function ReplicateMove
 	ProcessMove(NewMove.Delta, NewMove.Acceleration, NewMove.DodgeMove, DeltaRot);
 	AutonomousPhysics(NewMove.Delta);
 
-	//log("Role "$Role$" repmove at "$Level.TimeSeconds$" Move time "$100 * DeltaTime$" ("$Level.TimeDilation$")");
-
 	// Decide whether to hold off on move
 	// send if dodge, jump, or fire unless really too soon, or if newmove.delta big enough
 	// on client side, save extra buffered time in LastUpdateTime
 	if ( PendingMove == None )
+	{
 		PendingMove = NewMove;
+	}
 	else
 	{
 		NewMove.NextMove = FreeMoves;
 		FreeMoves = NewMove;
 		FreeMoves.Clear();
 		NewMove = PendingMove;
-	}
-	NetMoveDelta = FMax(64.0/Player.CurrentNetSpeed, 0.011);
 
-	if ( !PendingMove.bForceFire && !PendingMove.bForceAltFire && !PendingMove.bPressedJump
-		&& (PendingMove.Delta < NetMoveDelta - ClientUpdateTime) )
+		// stijn: This would be an ideal place to calculate a uniform
+		// acceleration that yields the correct server-side position.
+		// Unfortunately, there are way too many factors to take into
+		// account (e.g., zone friction, braking, air control, initial
+		// velocity and position, ...)
+	}
+	NewMove.SetRotation( Rotation );
+	NewMove.SavedViewRotation = ViewRotation;
+	NewMove.SavedLocation = Location;
+	NewMove.SavedVelocity = Velocity;
+
+	if ( !bDisableMovementBuffering &&
+		PendingMove.CanBuffer(NewAccel) &&
+		(PendingMove.Delta < NetMoveDelta - ClientUpdateTime) )
 	{
 		// save as pending move
 		return;
 	}
-	else if ( (ClientUpdateTime < 0) && (PendingMove.Delta < NetMoveDelta - ClientUpdateTime) )
-		return;
 	else
 	{
 		ClientUpdateTime = PendingMove.Delta - NetMoveDelta;
@@ -1001,49 +1445,11 @@ function ReplicateMove
 		PendingMove = None;
 	}
 
-	// check if need to redundantly send previous move
-	if ( OldMove != None )
-	{
-		// log("Redundant send timestamp "$OldMove.TimeStamp$" accel "$OldMove.Acceleration$" at "$Level.Timeseconds$" New accel "$NewAccel);
-		// old move important to replicate redundantly
-		OldTimeDelta = FMin(255, (Level.TimeSeconds - OldMove.TimeStamp) * 500);
-		BuildAccel = 0.05 * OldMove.Acceleration + vect(0.5, 0.5, 0.5);
-		OldAccel = (CompressAccel(BuildAccel.X) << 23)
-					+ (CompressAccel(BuildAccel.Y) << 15)
-					+ (CompressAccel(BuildAccel.Z) << 7);
-		if ( OldMove.bRun )
-			OldAccel += 64;
-		if ( OldMove.bDuck )
-			OldAccel += 32;
-		if ( OldMove.bPressedJump )
-			OldAccel += 16;
-		OldAccel += OldMove.DodgeMove;
-	}
-	//else
-	//	log("No redundant timestamp at "$Level.TimeSeconds$" with accel "$NewAccel);
-
 	// Send to the server
-	ClientRoll = (Rotation.Roll >> 8) & 255;
 	if ( NewMove.bPressedJump )
 		bJumpStatus = !bJumpStatus;
-	ServerMove
-	(
-		NewMove.TimeStamp,
-		NewMove.Acceleration * 10,
-		Location,
-		NewMove.bRun,
-		NewMove.bDuck,
-		bJumpStatus,
-		NewMove.bFire,
-		NewMove.bAltFire,
-		NewMove.bForceFire,
-		NewMove.bForceAltFire,
-		NewMove.DodgeMove,
-		ClientRoll,
-		(32767 & (ViewRotation.Pitch/2)) * 32768 + (32767 & (ViewRotation.Yaw/2)),
-		OldTimeDelta,
-		OldAccel
-	);
+
+	SendServerMove( NewMove, OldMove);
 	//log("Replicated "$self$" stamp "$NewMove.TimeStamp$" location "$Location$" dodge "$NewMove.DodgeMove$" to "$DodgeDir);
 }
 
@@ -1119,7 +1525,7 @@ function ClientInstantFlash( float scale, vector fog )
 	InstantFog = 0.001 * fog;
 }
 
-//Play a sound client side (so only client will hear it
+//Play a sound client side (so only client will hear it)
 simulated function ClientPlaySound(sound ASound, optional bool bInterrupt, optional bool bVolumeControl )
 {
 	local actor SoundPlayer;
@@ -1131,9 +1537,6 @@ simulated function ClientPlaySound(sound ASound, optional bool bInterrupt, optio
 		SoundPlayer = self;
 
 	SoundPlayer.PlaySound(ASound, SLOT_None, 16.0, bInterrupt);
-	SoundPlayer.PlaySound(ASound, SLOT_Interface, 16.0, bInterrupt);
-	SoundPlayer.PlaySound(ASound, SLOT_Misc, 16.0, bInterrupt);
-	SoundPlayer.PlaySound(ASound, SLOT_Talk, 16.0, bInterrupt);
 }
 
 simulated function ClientReliablePlaySound(sound ASound, optional bool bInterrupt, optional bool bVolumeControl )
@@ -1223,7 +1626,10 @@ exec function ShowSpecialMenu( string ClassName )
 exec function Jump( optional float F )
 {
 	if ( !bShowMenu && (Level.Pauser == PlayerReplicationInfo.PlayerName) )
-		SetPause(False);
+	{
+		if ( Level.NetMode == NM_Standalone )
+			SetPause(False);
+	}
 	else
 		bPressedJump = true;
 }
@@ -1457,6 +1863,11 @@ exec function SetDesiredFOV(float F)
 {
 	if( (F >= 80.0) || Level.bAllowFOV || bAdmin || (Level.Netmode==NM_Standalone) )
 	{
+		// stijn: fix for game types not enforcing FOV limits
+	    MinFOV = FClamp(MinFOV, 1.0  , 80.0  );
+		MaxFOV = FClamp(MaxFOV, 130.0, 360.0 );
+		// end fix
+		
 		DefaultFOV = FClamp(F, MinFOV, MaxFOV);
 		DesiredFOV = DefaultFOV;
 		SaveConfig();
@@ -1660,22 +2071,22 @@ final function KickMe(optional string Reason)
 	Destroy();
 }
 
-final function KickBanMe(optional string Reason)
+final function KickBanMe( optional string Reason)
 {
 	local string IP;
 	local int j;
 
 	IP = GetPlayerNetworkAddress();
-	if(Level.Game.CheckIPPolicy(IP))
+	if ( Level.Game.CheckIPPolicy(IP) )
 	{
-		IP = Left(IP, InStr(IP, ":"));
-		if (Level.Game.bLogAdminActions)
+		IP = class'InternetInfo'.static.StripPort(IP);
+		if ( Level.Game.bLogAdminActions )
 			log(PlayerReplicationInfo.PlayerName@"("$GetPlayerNetworkAddress()$") was banned from the server:"@Reason,'AdminAction');
 		Log("Adding IP Ban for: "$IP);
-		for(j=0;j<ArrayCount(Level.Game.IPPolicies);j++)
-			if(Level.Game.IPPolicies[j] == "")
+		for ( j=0 ; j<ArrayCount(Level.Game.IPPolicies) ; j++ )
+			if ( Level.Game.IPPolicies[j] == "" )
 				break;
-		if(j < ArrayCount(Level.Game.IPPolicies))
+		if ( j < ArrayCount(Level.Game.IPPolicies) )
 			Level.Game.IPPolicies[j] = "DENY,"$IP;
 		Level.Game.SaveConfig();
 	}
@@ -1685,11 +2096,11 @@ final function KickBanMe(optional string Reason)
 exec function KickList()
 {
 	local Pawn P;
-	if (!bAdmin)
+	if (!bAdmin && Level.Netmode != NM_Standalone)
 		return;
 
 	for (P = Level.PawnList; P != None; P = P.NextPawn)
-		if (P.bIsPlayer && PlayerPawn(P) != None && NetConnection(PlayerPawn(P).Player) != None)
+		if (P.bIsPlayer && (PlayerPawn(P) == None || NetConnection(PlayerPawn(P).Player) != None))
 			ClientMessage(Right("   "$P.PlayerReplicationInfo.PlayerId, 3) $ ")" @ P.PlayerReplicationInfo.PlayerName);
 }
 
@@ -1697,7 +2108,7 @@ exec function Kick( string S )
 {
 	local Pawn aPawn;
 
-	if( !bAdmin )
+	if( !bAdmin && Level.NetMode != NM_Standalone )
 		return;
 
 	for( aPawn=Level.PawnList; aPawn!=None; aPawn=aPawn.NextPawn )
@@ -1706,12 +2117,13 @@ exec function Kick( string S )
 		if
 		(	aPawn.bIsPlayer
 			&&	aPawn.PlayerReplicationInfo.PlayerName~=S
-			&&	(PlayerPawn(aPawn)!= None || NetConnection(PlayerPawn(aPawn).Player)!=None ) )
+			&&	(PlayerPawn(aPawn)== None || NetConnection(PlayerPawn(aPawn).Player)!=None ) )
 		{
 			if (Level.Game.bLogAdminActions)
 				log(PlayerReplicationInfo.PlayerName@"kicked"@aPawn.PlayerReplicationInfo.PlayerName@PlayerPawn(aPawn).GetPlayerNetworkAddress()@"from"@Left(string(Level), InStr(string(Level), "."))$".unr",'AdminAction');
 
-			aPawn.Destroy();
+			ClientMessage(PlayerReplicationInfo.PlayerName@"kicked"@aPawn.PlayerReplicationInfo.PlayerName@PlayerPawn(aPawn).GetPlayerNetworkAddress()@"from"@Left(string(Level), InStr(string(Level), "."))$".unr");
+			aPawn.Destroy();			
 			return;
 		}
 	}
@@ -1721,29 +2133,31 @@ exec function KickId(string S)
 {
 	local Pawn P;
 
-	if (!bAdmin)
+	if ( !bAdmin && Level.NetMode != NM_Standalone)
 		return;
 
 	for (P = Level.PawnList; P != None; P = P.NextPawn)
 	{
 		if (P == Self) continue;
-		if (P.bIsPlayer && P.PlayerReplicationInfo != None && PlayerPawn(P)!=None && NetConnection(PlayerPawn(P).Player)!=None &&
+		if (P.bIsPlayer && P.PlayerReplicationInfo != None && (PlayerPawn(P)==None || NetConnection(PlayerPawn(P).Player)!=None) &&
 			string(P.PlayerReplicationInfo.PlayerId) == S)
 		{
 			if (Level.Game.bLogAdminActions)
 				log(PlayerReplicationInfo.PlayerName@"kicked"@P.PlayerReplicationInfo.PlayerName@PlayerPawn(P).GetPlayerNetworkAddress()@"from"@Left(string(Level), InStr(string(Level), "."))$".unr",'AdminAction');
+			ClientMessage(PlayerReplicationInfo.PlayerName@"kicked"@P.PlayerReplicationInfo.PlayerName@PlayerPawn(P).GetPlayerNetworkAddress()@"from"@Left(string(Level), InStr(string(Level), "."))$".unr");
 			P.Destroy();
 			return;
 		}
 	}
 }
 
-exec function KickBan( string S )
+exec function KickBan( string S)
 {
 	local Pawn aPawn;
 	local string IP;
 	local int j;
-	if( !bAdmin )
+	
+	if ( !bAdmin )
 		return;
 	for( aPawn=Level.PawnList; aPawn!=None; aPawn=aPawn.NextPawn )
 	{
@@ -1754,20 +2168,20 @@ exec function KickBan( string S )
 			&&	PlayerPawn(aPawn)!=None && NetConnection(PlayerPawn(aPawn).Player) != None )
 		{
 			IP = PlayerPawn(aPawn).GetPlayerNetworkAddress();
-			if(Level.Game.CheckIPPolicy(IP))
+			if ( Level.Game.CheckIPPolicy(IP) )
 			{
-				IP = Left(IP, InStr(IP, ":"));
+				IP = class'InternetInfo'.static.StripPort(IP);
 				Log("Adding IP Ban for: "$IP);
-				for(j=0;j<ArrayCount(Level.Game.IPPolicies);j++)
+				for( j=0 ; j<ArrayCount(Level.Game.IPPolicies) ; j++ )
 					if(Level.Game.IPPolicies[j] == "")
 						break;
-				if(j < ArrayCount(Level.Game.IPPolicies))
+				if ( j < ArrayCount(Level.Game.IPPolicies) )
 					Level.Game.IPPolicies[j] = "DENY,"$IP;
-				if (Level.Game.bLogAdminActions)
+				if ( Level.Game.bLogAdminActions )
 					log(PlayerReplicationInfo.PlayerName@"banned"@aPawn.PlayerReplicationInfo.PlayerName@PlayerPawn(aPawn).GetPlayerNetworkAddress()@"during"@Left(string(Level), InStr(string(Level), "."))$".unr",'AdminAction');
 				Level.Game.SaveConfig();
 			}
-			else if (Level.Game.bLogAdminActions)
+			else if ( Level.Game.bLogAdminActions )
 				log(PlayerReplicationInfo.PlayerName@"kicked"@aPawn.PlayerReplicationInfo.PlayerName@PlayerPawn(aPawn).GetPlayerNetworkAddress()@"from"@Left(string(Level), InStr(string(Level), "."))$".unr",'AdminAction');
 
 			aPawn.Destroy();
@@ -1776,16 +2190,16 @@ exec function KickBan( string S )
 	}
 }
 
-exec function KickBanId(string S)
+exec function KickBanId( string S)
 {
 	local Pawn P;
 	local string IP;
-	local int i,j;
+	local int j;
 
-	if (!bAdmin)
+	if ( !bAdmin )
 		return;
 
-	for (P = Level.PawnList; P != None; P = P.NextPawn)
+	for ( P=Level.PawnList; P!=None; P=P.NextPawn)
 	{
 		if (P == Self) continue;
 		if (P.bIsPlayer && P.PlayerReplicationInfo != None && PlayerPawn(P)!=None&&NetConnection(PlayerPawn(P).Player)!=None &&
@@ -1794,18 +2208,18 @@ exec function KickBanId(string S)
 			IP = PlayerPawn(P).GetPlayerNetworkAddress();
 			if(Level.Game.CheckIPPolicy(IP))
 			{
-				IP = Left(IP, InStr(IP, ":"));
+				IP = class'InternetInfo'.static.StripPort(IP);
 				Log("Adding IP Ban for: "$IP);
-				for(j=0;j<ArrayCount(Level.Game.IPPolicies);j++)
-					if(Level.Game.IPPolicies[j] == "")
+				for ( j=0 ; j<ArrayCount(Level.Game.IPPolicies) ; j++ )
+					if ( Level.Game.IPPolicies[j] == "" )
 						break;
-				if(j < ArrayCount(Level.Game.IPPolicies))
+				if ( j < ArrayCount(Level.Game.IPPolicies) )
 					Level.Game.IPPolicies[j] = "DENY,"$IP;
-				if (Level.Game.bLogAdminActions)
+				if ( Level.Game.bLogAdminActions )
 					log(PlayerReplicationInfo.PlayerName@"banned"@P.PlayerReplicationInfo.PlayerName@PlayerPawn(P).GetPlayerNetworkAddress()@"during"@Left(string(Level), InStr(string(Level), "."))$".unr",'AdminAction');
 				Level.Game.SaveConfig();
 			}
-			else if (Level.Game.bLogAdminActions)
+			else if ( Level.Game.bLogAdminActions )
 				log(PlayerReplicationInfo.PlayerName@"kicked"@P.PlayerReplicationInfo.PlayerName@PlayerPawn(P).GetPlayerNetworkAddress()@"from"@Left(string(Level), InStr(string(Level), "."))$".unr",'AdminAction');
 			P.Destroy();
 			return;
@@ -1817,6 +2231,8 @@ exec function KickBanId(string S)
 // Try to set the pause state; returns success indicator.
 function bool SetPause( BOOL bPause )
 {
+	if ( (Level.NetMode != NM_Standalone) && !bPausePressed )
+		return false;
 	return (Level.Game != None && Level.Game.SetPause(bPause, self));
 }
 
@@ -1826,9 +2242,25 @@ exec function SetMouseSmoothThreshold( float F )
 	SaveConfig();
 }
 
-exec function SetMaxMouseSmoothing( bool B )
+exec function SetMaxMouseSmoothing( int Mode )
 {
-	bMaxMouseSmoothing = B;
+	if ( Mode < 0 || Mode > 2 )
+		Mode = 1;
+	switch ( Mode )
+	{
+		case 0:
+			bMaxMouseSmoothing = false;
+			bNoMouseSmoothing = true;
+			break;
+		case 1: //Normal pre-v469 behaviour
+			bMaxMouseSmoothing = false;
+			bNoMouseSmoothing = false;
+			break;
+		case 2:
+			bMaxMouseSmoothing = true;
+			bNoMouseSmoothing = false;
+			break;
+	}
 	SaveConfig();
 }
 
@@ -1837,8 +2269,10 @@ exec function Pause()
 {
 	if ( bShowMenu )
 		return;
+	bPausePressed = true;
 	if( !SetPause(Level.Pauser=="") )
 		ClientMessage(NoPauseMessage);
+	bPausePressed = false;
 }
 
 // Activate specific inventory item
@@ -2010,7 +2444,10 @@ exec function Fire( optional float F )
 		if( (Role < ROLE_Authority) && (Weapon!=None) )
 			bJustFired = Weapon.ClientFire(F);
 		if ( !bShowMenu && (Level.Pauser == PlayerReplicationInfo.PlayerName)  )
-			SetPause(False);
+		{
+			if ( Level.NetMode == NM_Standalone )
+				SetPause(False);
+		}
 		return;
 	}
 	if( Weapon!=None )
@@ -2030,7 +2467,10 @@ exec function AltFire( optional float F )
 		if( (Role < ROLE_Authority) && (Weapon!=None) )
 			bJustAltFired = Weapon.ClientAltFire(F);
 		if ( !bShowMenu && (Level.Pauser == PlayerReplicationInfo.PlayerName) )
-			SetPause(False);
+		{
+			if ( Level.NetMode == NM_Standalone )
+				SetPause(False);
+		}
 		return;
 	}
 	if( Weapon!=None )
@@ -2149,11 +2589,17 @@ exec function Name( coerce string S )
 
 function ChangeName( coerce string S )
 {
-	if (MaxNameChanges > 0 && NameChanges < MaxNameChanges)
+	if (MaxNameChanges > 0)
 	{
-		NameChanges++;
-		Level.Game.ChangeName( self, S, false );
+		if (NameChanges < MaxNameChanges)
+		{
+			NameChanges++;
+			Level.Game.ChangeName( self, S, false );
+		}
 	}
+
+	else
+		Level.Game.ChangeName(Self, S, False);
 }
 
 function ChangeTeam( int N )
@@ -2398,7 +2844,7 @@ exec function ShowMenu()
 	bShowMenu = true; // menu is responsible for turning this off
 	Player.Console.GotoState('Menuing');
 
-	if( Level.Netmode == NM_Standalone )
+	if ( Level.Netmode == NM_Standalone )
 		SetPause(true);
 }
 
@@ -2801,60 +3247,70 @@ event PlayerInput( float DeltaTime )
 	//log("X "$aMouseX$" Smooth "$SmoothMouseX$" Borrowed "$BorrowedMouseX$" zero time "$(Level.TimeSeconds - MouseZeroTime)$" vs "$MouseSmoothThreshold);
 	AbsSmoothX = SmoothMouseX;
 	AbsSmoothY = SmoothMouseY;
-	MouseTime = (Level.TimeSeconds - MouseZeroTime)/Level.TimeDilation;
-	if ( bMaxMouseSmoothing && (aMouseX == 0) && (MouseTime < MouseSmoothThreshold) )
+	if ( bNoMouseSmoothing )
 	{
-		SmoothMouseX = 0.5 * (MouseSmoothThreshold - MouseTime) * AbsSmoothX/MouseSmoothThreshold;
-		BorrowedMouseX += SmoothMouseX;
+		SmoothMouseX = aMouseX;
+		SmoothMouseY = aMouseY;
+		BorrowedMouseX = 0;
+		BorrowedMouseY = 0;
 	}
 	else
 	{
-		if ( (SmoothMouseX == 0) || (aMouseX == 0)
-				|| ((SmoothMouseX > 0) != (aMouseX > 0)) )
+		MouseTime = (Level.TimeSeconds - MouseZeroTime)/Level.TimeDilation;
+		if ( bMaxMouseSmoothing && (aMouseX == 0) && (MouseTime < MouseSmoothThreshold) )
 		{
-			SmoothMouseX = aMouseX;
-			BorrowedMouseX = 0;
+			SmoothMouseX = 0.5 * (MouseSmoothThreshold - MouseTime) * AbsSmoothX/MouseSmoothThreshold;
+			BorrowedMouseX += SmoothMouseX;
 		}
 		else
 		{
-			SmoothMouseX = 0.5 * (SmoothMouseX + aMouseX - BorrowedMouseX);
-			if ( (SmoothMouseX > 0) != (aMouseX > 0) )
+			if ( (SmoothMouseX == 0) || (aMouseX == 0)
+					|| ((SmoothMouseX > 0) != (aMouseX > 0)) )
 			{
-				if ( AMouseX > 0 )
-					SmoothMouseX = 1;
-				else
-					SmoothMouseX = -1;
+				SmoothMouseX = aMouseX;
+				BorrowedMouseX = 0;
 			}
-			BorrowedMouseX = SmoothMouseX - aMouseX;
+			else
+			{
+				SmoothMouseX = 0.5 * (SmoothMouseX + aMouseX - BorrowedMouseX);
+				if ( (SmoothMouseX > 0) != (aMouseX > 0) )
+				{
+					if ( AMouseX > 0 )
+						SmoothMouseX = 1;
+					else
+						SmoothMouseX = -1;
+				}
+				BorrowedMouseX = SmoothMouseX - aMouseX;
+			}
+			AbsSmoothX = SmoothMouseX;
 		}
-		AbsSmoothX = SmoothMouseX;
-	}
-	if ( bMaxMouseSmoothing && (aMouseY == 0) && (MouseTime < MouseSmoothThreshold) )
-	{
-		SmoothMouseY = 0.5 * (MouseSmoothThreshold - MouseTime) * AbsSmoothY/MouseSmoothThreshold;
-		BorrowedMouseY += SmoothMouseY;
-	}
-	else
-	{
-		if ( (SmoothMouseY == 0) || (aMouseY == 0)
-				|| ((SmoothMouseY > 0) != (aMouseY > 0)) )
+		if ( bMaxMouseSmoothing && (aMouseY == 0) && (MouseTime < MouseSmoothThreshold) )
 		{
-			SmoothMouseY = aMouseY;
-			BorrowedMouseY = 0;
+			SmoothMouseY = 0.5 * (MouseSmoothThreshold - MouseTime) * AbsSmoothY/MouseSmoothThreshold;
+			BorrowedMouseY += SmoothMouseY;
 		}
 		else
 		{
-			SmoothMouseY = 0.5 * (SmoothMouseY + aMouseY - BorrowedMouseY);
-			if ( (SmoothMouseY > 0) != (aMouseY > 0) )
+			if ( (SmoothMouseY == 0) || (aMouseY == 0)
+					|| ((SmoothMouseY > 0) != (aMouseY > 0)) )
 			{
-				if ( AMouseY > 0 )
-					SmoothMouseY = 1;
-				else
-					SmoothMouseY = -1;
+				SmoothMouseY = aMouseY;
+				BorrowedMouseY = 0;
 			}
-			BorrowedMouseY = SmoothMouseY - aMouseY;
+			else
+			{
+				SmoothMouseY = 0.5 * (SmoothMouseY + aMouseY - BorrowedMouseY);
+				if ( (SmoothMouseY > 0) != (aMouseY > 0) )
+				{
+					if ( AMouseY > 0 )
+						SmoothMouseY = 1;
+					else
+						SmoothMouseY = -1;
+				}
+				BorrowedMouseY = SmoothMouseY - aMouseY;
+			}
+			AbsSmoothY = SmoothMouseY;
 		}
-		AbsSmoothY = SmoothMouseY;
 	}
 	if ( (aMouseX != 0) || (aMouseY != 0) )
 		MouseZeroTime = Level.TimeSeconds;
@@ -3108,6 +3564,13 @@ event PostBeginPlay()
 		HUDType = Level.Game.HUDType;
 		ScoringType = Level.Game.ScoreboardType;
 		MyAutoAim = FMax(MyAutoAim, Level.Game.AutoAim);
+		ServerMovementVersion = Level.ServerMoveVersion;
+		if (Level.NetMode == NM_Standalone)
+		   ClientMovementVersion = ServerMovementVersion;
+	}
+	else
+	{
+		ClientMovementVersion = Level.default.ServerMoveVersion;
 	}
 	bIsPlayer = true;
 	DodgeClickTime = FMin(0.3, DodgeClickTime);
@@ -3287,6 +3750,13 @@ function CalcBehindView(out vector CameraLocation, out rotator CameraRotation, f
 
 event PlayerCalcView(out actor ViewActor, out vector CameraLocation, out rotator CameraRotation )
 {
+	local vector CameraVelocity;
+	PlayerCalcViewEx(ViewActor, CameraLocation, CameraRotation, CameraVelocity);
+}
+
+// stijn: same as playercalcview but returns the camera velocity too
+event PlayerCalcViewEx(out actor ViewActor, out vector CameraLocation, out rotator CameraRotation, out vector CameraVelocity )
+{
 	local Pawn PTarget;
 
 	if ( ViewTarget != None )
@@ -3294,6 +3764,7 @@ event PlayerCalcView(out actor ViewActor, out vector CameraLocation, out rotator
 		ViewActor = ViewTarget;
 		CameraLocation = ViewTarget.Location;
 		CameraRotation = ViewTarget.Rotation;
+		CameraVelocity = ViewTarget.Velocity;
 		PTarget = Pawn(ViewTarget);
 		if ( PTarget != None )
 		{
@@ -3317,6 +3788,7 @@ event PlayerCalcView(out actor ViewActor, out vector CameraLocation, out rotator
 
 	ViewActor = Self;
 	CameraLocation = Location;
+	CameraVelocity = Velocity;
 
 	if( bBehindView ) //up and behind
 		CalcBehindView(CameraLocation, CameraRotation, 150);
@@ -3359,11 +3831,11 @@ function ViewFlash(float DeltaTime)
 		FlashScale.X = 1;
 	FlashScale = FlashScale.X * vect(1,1,1);
 
-	if ( FlashFog.X < 0.019 )
+	if ( FlashFog.X < 0.003 )
 		FlashFog.X = 0;
-	if ( FlashFog.Y < 0.019 )
+	if ( FlashFog.Y < 0.003 )
 		FlashFog.Y = 0;
-	if ( FlashFog.Z < 0.019 )
+	if ( FlashFog.Z < 0.003 )
 		FlashFog.Z = 0;
 }
 
@@ -3435,7 +3907,7 @@ function UpdateRotation(float DeltaTime, float maxPitch)
 	local rotator newRotation;
 
 	DesiredRotation = ViewRotation; //save old rotation
-	ViewRotation.Pitch += 32.0 * DeltaTime * aLookUp;
+	ViewRotation.Pitch += AccumulatedPlayerTurn( 32.0 * DeltaTime * aLookUp, AccumulatedVTurn);
 	ViewRotation.Pitch = ViewRotation.Pitch & 65535;
 	If ((ViewRotation.Pitch > 18000) && (ViewRotation.Pitch < 49152))
 	{
@@ -3444,7 +3916,7 @@ function UpdateRotation(float DeltaTime, float maxPitch)
 		else
 			ViewRotation.Pitch = 49152;
 	}
-	ViewRotation.Yaw += 32.0 * DeltaTime * aTurn;
+	ViewRotation.Yaw += AccumulatedPlayerTurn( 32.0 * DeltaTime * aTurn, AccumulatedHTurn);
 	ViewShake(deltaTime);
 	ViewFlash(deltaTime);
 
@@ -3459,6 +3931,16 @@ function UpdateRotation(float DeltaTime, float maxPitch)
 			newRotation.Pitch = 65536 - maxPitch * RotationRate.Pitch;
 	}
 	setRotation(newRotation);
+}
+
+function int AccumulatedPlayerTurn( float CurrentTurn, out float AccumulatedTurn)
+{
+	local int IntTurn;
+
+	CurrentTurn += AccumulatedTurn;
+	IntTurn = CurrentTurn;
+	AccumulatedTurn = CurrentTurn - IntTurn;
+	return IntTurn;
 }
 
 function SwimAnimUpdate(bool bNotForward)
@@ -3697,6 +4179,24 @@ ignores SeePlayer, HearNoise, Bump;
 		if ( bUpdatePosition )
 			ClientUpdatePosition();
 
+		//
+		// stijn: if the server corrected our position in the middle of
+		// a dodge, we might end up in DODGE_Active state with our
+		// Physics set to PHYS_Walking. If this happened before 469,
+		// the player would not be able to dodge again until triggering
+		// a landed event (which usually meant you had to jump).
+		// Here, we just wait for the dodge animation to play out and
+		// then manually force a dodgedir reset.
+		// 
+		if (DodgeDir == DODGE_Active &&
+		    Physics != PHYS_Falling &&
+			GetAnimGroup(AnimSequence) != 'Dodge' &&
+			GetAnimGroup(AnimSequence) != 'Jumping')
+		{
+			DodgeDir = DODGE_None;
+			DodgeClickTimer = DodgeClickTime;
+		}	
+
 		PlayerMove(DeltaTime);
 	}
 
@@ -3715,11 +4215,12 @@ ignores SeePlayer, HearNoise, Bump;
 		aForward *= 0.4;
 		aStrafe  *= 0.4;
 		aLookup  *= 0.24;
-		aTurn    *= 0.24;
+		aTurn    *= 0.24;		
 
 		// Update acceleration.
 		NewAccel = aForward*X + aStrafe*Y;
 		NewAccel.Z = 0;
+		
 		// Check for Dodge move
 		if ( DodgeDir == DODGE_Active )
 			DodgeMove = DODGE_Active;
@@ -3813,6 +4314,7 @@ ignores SeePlayer, HearNoise, Bump;
 			ReplicateMove(DeltaTime, NewAccel, DodgeMove, OldRotation - Rotation);
 		else
 			ProcessMove(DeltaTime, NewAccel, DodgeMove, OldRotation - Rotation);
+		
 		bPressedJump = bSaveJump;
 	}
 
@@ -4262,7 +4764,6 @@ ignores SeePlayer, HearNoise, Bump;
 
 	function PlayerMove(float DeltaTime)
 	{
-		local rotator newRotation;
 		local vector X,Y,Z;
 
 		GetAxes(Rotation,X,Y,Z);
@@ -4316,7 +4817,6 @@ ignores SeePlayer, HearNoise, Bump, TakeDamage;
 
 	function PlayerMove(float DeltaTime)
 	{
-		local rotator newRotation;
 		local vector X,Y,Z;
 
 		GetAxes(ViewRotation,X,Y,Z);
@@ -4391,7 +4891,6 @@ ignores SeePlayer, HearNoise, Bump, TakeDamage, Died, ZoneChange, FootZoneChange
 
 	function PlayerMove(float DeltaTime)
 	{
-		local rotator newRotation;
 		local vector X,Y,Z;
 
 		GetAxes(ViewRotation,X,Y,Z);
@@ -4431,6 +4930,12 @@ ignores SeePlayer, HearNoise, Bump, TakeDamage, Died, ZoneChange, FootZoneChange
 		SetCollision(false,false,false);
 		EyeHeight = BaseEyeHeight;
 		SetPhysics(PHYS_None);
+	}
+	
+	function StartWalk()
+	{
+		// Prevent AdminLogout from allowing a waiting player to
+		// interact with the Level.
 	}
 }
 
@@ -4483,7 +4988,6 @@ ignores SeePlayer, HearNoise, Bump, TakeDamage, Died, ZoneChange, FootZoneChange
 
 	function PlayerMove(float DeltaTime)
 	{
-		local rotator newRotation;
 		local vector X,Y,Z;
 
 		GetAxes(ViewRotation,X,Y,Z);
@@ -4662,11 +5166,8 @@ ignores SeePlayer, HearNoise, KilledBy, Bump, HitWall, HeadZoneChange, FootZoneC
 					View);
 	}
 
-	function PlayerCalcView(out actor ViewActor, out vector CameraLocation, out rotator CameraRotation )
+	function PlayerCalcView( out Actor ViewActor, out vector CameraLocation, out rotator CameraRotation )
 	{
-		local vector View,HitLocation,HitNormal, FirstHit, spot;
-		local float DesiredDist, ViewDist, WallOutDist;
-		local actor HitActor;
 		local Pawn PTarget;
 
 		if ( ViewTarget != None )
@@ -4742,8 +5243,8 @@ ignores SeePlayer, HearNoise, KilledBy, Bump, HitWall, HeadZoneChange, FootZoneC
 			// Update view rotation.
 			aLookup  *= 0.24;
 			aTurn    *= 0.24;
-			ViewRotation.Yaw += 32.0 * DeltaTime * aTurn;
-			ViewRotation.Pitch += 32.0 * DeltaTime * aLookUp;
+			ViewRotation.Yaw += AccumulatedPlayerTurn( 32.0 * DeltaTime * aTurn, AccumulatedHTurn);
+			ViewRotation.Pitch += AccumulatedPlayerTurn( 32.0 * DeltaTime * aLookUp, AccumulatedVTurn);
 			ViewRotation.Pitch = ViewRotation.Pitch & 65535;
 			If ((ViewRotation.Pitch > 18000) && (ViewRotation.Pitch < 49152))
 			{
@@ -4922,8 +5423,8 @@ ignores SeePlayer, HearNoise, KilledBy, Bump, HitWall, HeadZoneChange, FootZoneC
 		{
 			aLookup  *= 0.24;
 			aTurn    *= 0.24;
-			ViewRotation.Yaw += 32.0 * DeltaTime * aTurn;
-			ViewRotation.Pitch += 32.0 * DeltaTime * aLookUp;
+			ViewRotation.Yaw += AccumulatedPlayerTurn( 32.0 * DeltaTime * aTurn, AccumulatedHTurn);
+			ViewRotation.Pitch += AccumulatedPlayerTurn( 32.0 * DeltaTime * aLookUp, AccumulatedVTurn);
 			ViewRotation.Pitch = ViewRotation.Pitch & 65535;
 			If ((ViewRotation.Pitch > 18000) && (ViewRotation.Pitch < 49152))
 			{
@@ -5049,48 +5550,233 @@ function SetNGSecret(string newSecret)
 
 defaultproperties
 {
-     DodgeClickTime=0.250000
-     Bob=0.016000
-     FlashScale=(X=1.000000,Y=1.000000,Z=1.000000)
-     DesiredFOV=90.000000
-     DefaultFOV=90.000000
-     CdTrack=255
-     MyAutoAim=1.000000
-     Handedness=-1.000000
-     bAlwaysMouseLook=True
-     bKeyboardLook=True
-     bNoFlash=True
-     bMessageBeep=True
-     MouseSensitivity=3.000000
-     WeaponPriority(0)=Translocator
-     WeaponPriority(1)=ChainSaw
-     WeaponPriority(2)=ImpactHammer
-     WeaponPriority(3)=enforcer
-     WeaponPriority(4)=SuperShockRifle
-     WeaponPriority(5)=doubleenforcer
-     WeaponPriority(6)=ShockRifle
-     WeaponPriority(7)=ut_biorifle
-     WeaponPriority(8)=PulseGun
-     WeaponPriority(9)=SniperRifle
-     WeaponPriority(10)=ripper
-     WeaponPriority(11)=minigun2
-     WeaponPriority(12)=UT_FlakCannon
-     WeaponPriority(13)=UT_Eightball
-     WeaponPriority(14)=WarheadLauncher
-     MouseSmoothThreshold=0.070000
-     MaxTimeMargin=3.000000
-     QuickSaveString="Quick Saving"
-     NoPauseMessage="Game is not pauseable"
-     ViewingFrom="Now viewing from"
-     OwnCamera="own camera"
-     FailedView="Failed to change view."
-     ngSecretSet=True
-     bIsPlayer=True
-     bCanJump=True
-     bViewTarget=True
-     DesiredSpeed=0.300000
-     SightRadius=4100.000000
-     bStasis=False
-     bTravel=True
-     NetPriority=3.000000
+      Player=None
+      Password=""
+      DodgeClickTimer=0.000000
+      DodgeClickTime=0.250000
+      Bob=0.016000
+      LandBob=0.000000
+      AppliedBob=0.000000
+      bobtime=0.000000
+      ShowFlags=0
+      RendMap=0
+      Misc1=0
+      Misc2=0
+      ViewTarget=None
+      FlashScale=(X=1.000000,Y=1.000000,Z=1.000000)
+      FlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      myHUD=None
+      Scoring=None
+      HUDType=None
+      ScoringType=None
+      DesiredFlashScale=0.000000
+      ConstantGlowScale=0.000000
+      InstantFlash=0.000000
+      DesiredFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      ConstantGlowFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      InstantFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      DesiredFOV=106.000000
+      DefaultFOV=106.000000
+      Song=None
+      SongSection=0
+      CdTrack=255
+      Transition=MTRAN_None
+      shaketimer=0.000000
+      shakemag=0
+      shakevert=0.000000
+      maxshake=0.000000
+      verttimer=0.000000
+      CarcassType=None
+      MyAutoAim=1.000000
+      Handedness=-1.000000
+      JumpSound=None
+      bAdmin=False
+      bLookUpStairs=False
+      bSnapToLevel=False
+      bAlwaysMouseLook=True
+      bKeyboardLook=True
+      bWasForward=False
+      bWasBack=False
+      bWasLeft=False
+      bWasRight=False
+      bEdgeForward=False
+      bEdgeBack=False
+      bEdgeLeft=False
+      bEdgeRight=False
+      bIsCrouching=False
+      bShakeDir=False
+      bAnimTransition=False
+      bIsTurning=False
+      bFrozen=False
+      bBadConnectionAlert=False
+      bInvertMouse=False
+      bShowScores=False
+      bShowMenu=False
+      bSpecialMenu=False
+      bWokeUp=False
+      bPressedJump=False
+      bUpdatePosition=False
+      bDelayedCommand=False
+      bRising=False
+      bReducedVis=False
+      bCenterView=False
+      bMaxMouseSmoothing=False
+      bMouseZeroed=False
+      bReadyToPlay=False
+      bNoFlash=True
+      bNoVoices=False
+      bMessageBeep=True
+      bZooming=False
+      bSinglePlayer=False
+      bJustFired=False
+      bJustAltFired=False
+      bIsTyping=False
+      bFixedCamera=False
+      bNeverAutoSwitch=False
+      bJumpStatus=False
+      bUpdating=False
+      bCheatsEnabled=False
+      bNoMouseSmoothing=False
+      ZoomLevel=0.000000
+      SpecialMenu=None
+      DelayedCommand=""
+      MouseSensitivity=3.000000
+      WeaponPriority(0)="Translocator"
+      WeaponPriority(1)="ChainSaw"
+      WeaponPriority(2)="ImpactHammer"
+      WeaponPriority(3)="RT"
+      WeaponPriority(4)="TheExecutioner"
+      WeaponPriority(5)="enforcer"
+      WeaponPriority(6)="FlakCannon"
+      WeaponPriority(7)="WRE"
+      WeaponPriority(8)="GESBioRifle"
+      WeaponPriority(9)="ut_biorifle"
+      WeaponPriority(10)="Minigun"
+      WeaponPriority(11)="FlameTracker"
+      WeaponPriority(12)="ShockRifle"
+      WeaponPriority(13)="SuperShockRifle"
+      WeaponPriority(14)="BoltRifle"
+      WeaponPriority(15)="PulseGun"
+      WeaponPriority(16)="SniperRifle"
+      WeaponPriority(17)="Graviton"
+      WeaponPriority(18)="ripper"
+      WeaponPriority(19)="Freezer"
+      WeaponPriority(20)="minigun2"
+      WeaponPriority(21)="Vulcan"
+      WeaponPriority(22)="UT_FlakCannon"
+      WeaponPriority(23)="TheMiner"
+      WeaponPriority(24)="UT_Eightball"
+      WeaponPriority(25)="MultiMissile"
+      WeaponPriority(26)="IRPR"
+      WeaponPriority(27)="WarheadLauncher"
+      WeaponPriority(28)="SuperBoltRifle"
+      WeaponPriority(29)="CybotLauncher"
+      WeaponPriority(30)="NuclearLauncherLevelA"
+      WeaponPriority(31)="NuclearLauncherLevelB"
+      WeaponPriority(32)="NuclearLauncherLevelC"
+      WeaponPriority(33)="Fist"
+      WeaponPriority(34)="Fusion"
+      WeaponPriority(35)="WSTEM"
+      WeaponPriority(36)="Magnum"
+      WeaponPriority(37)="MA75"
+      WeaponPriority(38)="SPNKR"
+      WeaponPriority(39)="AlienWeapon"
+      WeaponPriority(40)="doubleenforcer"
+      WeaponPriority(41)="None"
+      WeaponPriority(42)="None"
+      WeaponPriority(43)="None"
+      WeaponPriority(44)="None"
+      WeaponPriority(45)="None"
+      WeaponPriority(46)="None"
+      WeaponPriority(47)="None"
+      WeaponPriority(48)="None"
+      WeaponPriority(49)="None"
+      SmoothMouseX=0.000000
+      SmoothMouseY=0.000000
+      BorrowedMouseX=0.000000
+      BorrowedMouseY=0.000000
+      MouseSmoothThreshold=0.070000
+      MouseZeroTime=0.000000
+      aBaseX=0.000000
+      aBaseY=0.000000
+      aBaseZ=0.000000
+      aMouseX=0.000000
+      aMouseY=0.000000
+      aForward=0.000000
+      aTurn=0.000000
+      aStrafe=0.000000
+      aUp=0.000000
+      aLookUp=0.000000
+      aExtra4=0.000000
+      aExtra3=0.000000
+      aExtra2=0.000000
+      aExtra1=0.000000
+      aExtra0=0.000000
+      SavedMoves=None
+      FreeMoves=None
+      PendingMove=None
+      CurrentTimeStamp=0.000000
+      LastUpdateTime=0.000000
+      ServerTimeStamp=0.000000
+      TimeMargin=0.000000
+      ClientUpdateTime=0.000000
+      MaxTimeMargin=3.000000
+      ProgressMessage(0)=""
+      ProgressMessage(1)=""
+      ProgressMessage(2)=""
+      ProgressMessage(3)=""
+      ProgressMessage(4)=""
+      ProgressMessage(5)=""
+      ProgressMessage(6)=""
+      ProgressMessage(7)=""
+      ProgressColor(0)=(R=0,G=0,B=0,A=0)
+      ProgressColor(1)=(R=0,G=0,B=0,A=0)
+      ProgressColor(2)=(R=0,G=0,B=0,A=0)
+      ProgressColor(3)=(R=0,G=0,B=0,A=0)
+      ProgressColor(4)=(R=0,G=0,B=0,A=0)
+      ProgressColor(5)=(R=0,G=0,B=0,A=0)
+      ProgressColor(6)=(R=0,G=0,B=0,A=0)
+      ProgressColor(7)=(R=0,G=0,B=0,A=0)
+      ProgressTimeOut=0.000000
+      QuickSaveString="Quick Saving"
+      NoPauseMessage="Game is not pauseable"
+      ViewingFrom="Now viewing from"
+      OwnCamera="own camera"
+      FailedView="Failed to change view."
+      GameReplicationInfo=None
+      ngWorldSecret=""
+      ngSecretSet=True
+      ReceivedSecretChecksum=False
+      TargetViewRotation=(Pitch=0,Yaw=0,Roll=0)
+      TargetEyeHeight=0.000000
+      TargetWeaponViewOffset=(X=0.000000,Y=0.000000,Z=0.000000)
+      DemoViewPitch=0
+      DemoViewYaw=0
+      LastPlaySound=0.000000
+      LastMessageWindow=0.000000
+      LoginAttempts=0
+      bLoginDisabled=False
+      NextLoginTime=0.000000
+      ViewDelay=0.000000
+      TauntDelay=0.000000
+      SpeechDelay=0.000000
+      LastView=0.000000
+      LastTaunt=0.000000
+      LastSpeech=0.000000
+      bCyclingView=False
+      MinFOV=0.000000
+      MaxFOV=0.000000
+      MaxNameChanges=0
+      NameChanges=0
+      bDisableMovementBuffering=False
+      ServerMovementVersion=0
+      ClientMovementVersion=0
+      bIsPlayer=True
+      bCanJump=True
+      bViewTarget=True
+      DesiredSpeed=0.300000
+      SightRadius=4100.000000
+      bStasis=False
+      bTravel=True
+      NetPriority=3.000000
 }

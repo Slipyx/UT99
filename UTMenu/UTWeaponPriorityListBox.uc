@@ -21,6 +21,7 @@ function ReadWeapon(UMenuWeaponPriorityList L, class<Weapon> WeaponClass)
 
 defaultproperties
 {
-     WeaponClassParent="Botpack.TournamentWeapon"
-     ListClass=Class'UTMenu.UTWeaponPriorityList'
+      Description=None
+      WeaponClassParent="Botpack.TournamentWeapon"
+      ListClass=Class'UTMenu.UTWeaponPriorityList'
 }

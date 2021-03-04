@@ -32,14 +32,16 @@ event Update(Actor L);
 
 defaultproperties
 {
-     MultiDecalLevel=4
-     bHighDetail=True
-     bNetTemporary=True
-     bNetOptional=True
-     RemoteRole=ROLE_None
-     DrawType=DT_None
-     bUnlit=True
-     bGameRelevant=True
-     CollisionRadius=0.000000
-     CollisionHeight=0.000000
+      MultiDecalLevel=4
+      LastRenderedTime=0.000000
+      SurfList=()
+      bHighDetail=True
+      bNetTemporary=True
+      bNetOptional=True
+      RemoteRole=ROLE_None
+      DrawType=DT_None
+      bUnlit=True
+      bGameRelevant=True
+      CollisionRadius=0.000000
+      CollisionHeight=0.000000
 }

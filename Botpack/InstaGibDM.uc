@@ -32,7 +32,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
 
 defaultproperties
 {
-     WeaponName=SuperShockRifle
-     AmmoName=SuperShockCore
-     DefaultWeapon=Class'Botpack.SuperShockRifle'
+      WeaponName="SuperShockRifle"
+      AmmoName="SuperShockCore"
+      DefaultWeapon=Class'Botpack.SuperShockRifle'
 }

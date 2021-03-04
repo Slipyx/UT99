@@ -11,5 +11,5 @@ class UTChunk1 extends UTChunk;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.chunkM'
+      Mesh=LodMesh'Botpack.chunkM'
 }

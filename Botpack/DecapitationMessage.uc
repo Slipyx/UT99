@@ -32,12 +32,12 @@ static simulated function ClientReceive(
 
 defaultproperties
 {
-     DecapitationString="Head Shot!!"
-     FontSize=1
-     bIsSpecial=True
-     bIsUnique=True
-     bFadeMessage=True
-     DrawColor=(G=0,B=0)
-     YPos=196.000000
-     bCenter=True
+      DecapitationString="Head Shot!!"
+      FontSize=1
+      bIsSpecial=True
+      bIsUnique=True
+      bFadeMessage=True
+      DrawColor=(G=0,B=0)
+      YPos=196.000000
+      bCenter=True
 }

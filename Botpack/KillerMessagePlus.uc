@@ -28,13 +28,14 @@ static function string GetString(
 
 defaultproperties
 {
-     YouKilled="You killed"
-     ScoreString="Your Score:"
-     FontSize=1
-     bIsSpecial=True
-     bIsUnique=True
-     bFadeMessage=True
-     DrawColor=(R=0,G=128)
-     YPos=196.000000
-     bCenter=True
+      YouKilled="You killed"
+      ScoreString="Your Score:"
+      YouKilledTrailer=""
+      FontSize=1
+      bIsSpecial=True
+      bIsUnique=True
+      bFadeMessage=True
+      DrawColor=(R=0,G=128)
+      YPos=196.000000
+      bCenter=True
 }

@@ -14,9 +14,9 @@ class UT_bosshead extends UTHeads;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.bossheadm'
-     DrawScale=0.220000
-     CollisionRadius=25.000000
-     CollisionHeight=6.000000
-     Mass=40.000000
+      Mesh=LodMesh'Botpack.bossheadm'
+      DrawScale=0.220000
+      CollisionRadius=25.000000
+      CollisionHeight=6.000000
+      Mass=40.000000
 }

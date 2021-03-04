@@ -115,20 +115,23 @@ Begin:
 
 defaultproperties
 {
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You picked up the SCUBA gear"
-     RespawnTime=20.000000
-     PickupViewMesh=LodMesh'UnrealShare.Scuba'
-     Charge=1200
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealShare.Pickups.Scubal1'
-     DeActivateSound=Sound'UnrealShare.Pickups.Scubada1'
-     RespawnSound=Sound'UnrealShare.Pickups.Scubal2'
-     Icon=Texture'UnrealShare.Icons.I_Scuba'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealShare.Scuba'
-     SoundRadius=16
-     CollisionRadius=18.000000
-     CollisionHeight=15.000000
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You picked up the SCUBA gear"
+      RespawnTime=20.000000
+      PickupViewMesh=LodMesh'UnrealShare.Scuba'
+      Charge=1200
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealShare.Pickups.Scubal1'
+      DeActivateSound=Sound'UnrealShare.Pickups.Scubada1'
+      RespawnSound=Sound'UnrealShare.Pickups.Scubal2'
+      Icon=Texture'UnrealShare.Icons.I_Scuba'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealShare.Scuba'
+      SoundRadius=16
+      CollisionRadius=18.000000
+      CollisionHeight=15.000000
 }

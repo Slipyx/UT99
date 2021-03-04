@@ -11,11 +11,19 @@ class Boulder2 extends ut_Decoration;
 #exec MESHMAP SCALE MESHMAP=boulder2M X=0.3 Y=0.3 Z=0.6
 #exec MESHMAP SETTEXTURE MESHMAP=boulder2M NUM=1 TEXTURE=jboulder2
 
+event PostBeginPlay()
+{
+	Super.PostBeginPlay();
+	if ( !bStatic && (Physics == PHYS_Rotating) && (RemoteRole == ROLE_DumbProxy)
+		&& (SkyZoneInfo(Region.Zone) != None) )
+		RemoteRole = ROLE_SimulatedProxy;
+}
+
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.boulder2M'
-     DrawScale=0.250000
-     bBlockActors=True
-     bBlockPlayers=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.boulder2M'
+      DrawScale=0.250000
+      bBlockActors=True
+      bBlockPlayers=True
 }

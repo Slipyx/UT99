@@ -9,12 +9,22 @@ var() name KickedClasses;
 var() bool bKillVelocity;
 var() bool bRandomize;
 
-simulated function Touch( actor Other )
+replication
+{
+	reliable if ( bNetInitial && Role==ROLE_Authority )
+		KickVelocity, KickedClasses, bKillVelocity; //bRandomize cannot be properly simulated
+}
+
+simulated function Touch( Actor Other )
 {
 	local Actor A;
 
 	if ( !Other.IsA(KickedClasses) )
 		return;
+
+	if ( (Level.NetMode == NM_Client) && !SimulateKick(Other) )
+		return;
+	
 	PendingTouch = Other.PendingTouch;
 	Other.PendingTouch = self;
 	if( Event != '' )
@@ -22,7 +32,7 @@ simulated function Touch( actor Other )
 			A.Trigger( Other, Other.Instigator );
 }
 
-simulated function PostTouch( actor Other )
+simulated function PostTouch( Actor Other )
 {
 	local bool bWasFalling;
 	local vector Push;
@@ -50,9 +60,28 @@ simulated function PostTouch( actor Other )
 	Other.Velocity += Push;
 }
 
+
+static function bool SimulateKick( Actor Other)
+{
+	if ( Other.Role == ROLE_DumbProxy ) //Location is updated by server
+		return false;
+
+	if ( (PlayerPawn(Other) != None) && (Other.Role == ROLE_AutonomousProxy) ) //Local Player (Viewport may be detached during DemoPlay!!)
+		return Other.bCanTeleport;
+
+	if ( Other.bIsPawn ) //Simulated pawn receive Location updates
+		return false;
+		
+	return Other.Physics != PHYS_None;
+}
+
 defaultproperties
 {
-     KickedClasses=Pawn
-     RemoteRole=ROLE_SimulatedProxy
-     bDirectional=True
+      KickVelocity=(X=0.000000,Y=0.000000,Z=0.000000)
+      KickedClasses="Pawn"
+      bKillVelocity=False
+      bRandomize=False
+      bAlwaysRelevant=True
+      RemoteRole=ROLE_SimulatedProxy
+      bDirectional=True
 }

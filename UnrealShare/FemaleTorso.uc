@@ -66,8 +66,8 @@ function ReduceCylinder()
 
 defaultproperties
 {
-     MasterReplacement=Class'UnrealShare.femalemasterchunk'
-     flies=4
-     Mesh=LodMesh'UnrealShare.Body1'
-     CollisionHeight=6.000000
+      MasterReplacement=Class'UnrealShare.femalemasterchunk'
+      flies=4
+      Mesh=LodMesh'UnrealShare.Body1'
+      CollisionHeight=6.000000
 }

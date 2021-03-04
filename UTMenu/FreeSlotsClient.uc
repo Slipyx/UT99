@@ -76,6 +76,8 @@ function DonePressed()
 
 defaultproperties
 {
-     QueryText="Free a save slot first!"
-     DoneText="OK"
+      QueryLabel=None
+      DoneButton=None
+      QueryText="Free a save slot first!"
+      DoneText="OK"
 }

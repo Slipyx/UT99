@@ -190,6 +190,7 @@ function Projectile ProjectileFire(class<projectile> ProjClass, float ProjSpeed,
 	}
 	if ( (da != None) && (Mult>1.0) )
 		da.InitSplash(Mult);
+	return da;
 }
 
 function AltFire( float Value )
@@ -383,33 +384,41 @@ function PlaySelect()
 
 defaultproperties
 {
-     AmmoName=Class'UnrealShare.DefaultAmmo'
-     PickupAmmoCount=50
-     bAltWarnTarget=True
-     FireOffset=(X=12.000000,Y=-8.000000,Z=-15.000000)
-     ProjectileClass=Class'UnrealShare.DispersionAmmo'
-     AltProjectileClass=Class'UnrealShare.DispersionAmmo'
-     shakemag=200.000000
-     shaketime=0.130000
-     shakevert=2.000000
-     RefireRate=0.850000
-     AltRefireRate=0.300000
-     FireSound=Sound'UnrealShare.Dispersion.DispShot'
-     AltFireSound=Sound'UnrealShare.Dispersion.DispShot'
-     SelectSound=Sound'UnrealShare.Dispersion.DispPickup'
-     Misc1Sound=Sound'UnrealShare.Dispersion.PowerUp3'
-     DeathMessage="%o was killed by %k's %w.  What a loser!"
-     PickupMessage="You got the Dispersion Pistol"
-     ItemName="Dispersion Pistol"
-     PlayerViewOffset=(X=3.800000,Y=-2.000000,Z=-2.000000)
-     PlayerViewMesh=LodMesh'UnrealShare.DPistol'
-     PickupViewMesh=LodMesh'UnrealShare.DPistolPick'
-     ThirdPersonMesh=LodMesh'UnrealShare.DPistol3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Texture=None
-     Mesh=LodMesh'UnrealShare.DPistolPick'
-     bNoSmooth=False
-     CollisionRadius=28.000000
-     CollisionHeight=8.000000
-     Mass=15.000000
+      PowerLevel=0
+      WeaponPos=(X=0.000000,Y=0.000000,Z=0.000000)
+      Count=0.000000
+      ChargeSize=0.000000
+      cl1=None
+      cl2=None
+      Amp=None
+      PowerUpSound=None
+      AmmoName=Class'UnrealShare.DefaultAmmo'
+      PickupAmmoCount=50
+      bAltWarnTarget=True
+      FireOffset=(X=12.000000,Y=-8.000000,Z=-15.000000)
+      ProjectileClass=Class'UnrealShare.DispersionAmmo'
+      AltProjectileClass=Class'UnrealShare.DispersionAmmo'
+      shakemag=200.000000
+      shaketime=0.130000
+      shakevert=2.000000
+      RefireRate=0.850000
+      AltRefireRate=0.300000
+      FireSound=Sound'UnrealShare.Dispersion.DispShot'
+      AltFireSound=Sound'UnrealShare.Dispersion.DispShot'
+      SelectSound=Sound'UnrealShare.Dispersion.DispPickup'
+      Misc1Sound=Sound'UnrealShare.Dispersion.PowerUp3'
+      DeathMessage="%o was killed by %k's %w.  What a loser!"
+      PickupMessage="You got the Dispersion Pistol"
+      ItemName="Dispersion Pistol"
+      PlayerViewOffset=(X=3.800000,Y=-2.000000,Z=-2.000000)
+      PlayerViewMesh=LodMesh'UnrealShare.DPistol'
+      PickupViewMesh=LodMesh'UnrealShare.DPistolPick'
+      ThirdPersonMesh=LodMesh'UnrealShare.DPistol3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Texture=None
+      Mesh=LodMesh'UnrealShare.DPistolPick'
+      bNoSmooth=False
+      CollisionRadius=28.000000
+      CollisionHeight=8.000000
+      Mass=15.000000
 }

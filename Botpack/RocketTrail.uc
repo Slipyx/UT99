@@ -7,15 +7,15 @@ class RocketTrail extends Effects;
 
 defaultproperties
 {
-     bTrailerSameRotation=True
-     Physics=PHYS_Trailer
-     RemoteRole=ROLE_None
-     DrawType=DT_Sprite
-     Style=STY_Translucent
-     Sprite=Texture'Botpack.JRFlare'
-     Texture=Texture'Botpack.JRFlare'
-     Skin=Texture'Botpack.JRFlare'
-     DrawScale=0.500000
-     bUnlit=True
-     Mass=8.000000
+      bTrailerSameRotation=True
+      Physics=PHYS_Trailer
+      RemoteRole=ROLE_None
+      DrawType=DT_Sprite
+      Style=STY_Translucent
+      Sprite=Texture'Botpack.JRFlare'
+      Texture=Texture'Botpack.JRFlare'
+      Skin=Texture'Botpack.JRFlare'
+      DrawScale=0.500000
+      bUnlit=True
+      Mass=8.000000
 }

@@ -81,8 +81,11 @@ function ReceiveLocalizedMessage( class<LocalMessage> Message, optional int Swit
 
 defaultproperties
 {
-     ReceivedMsgMax=32
-     bClientMessages=True
-     bTeamMessages=True
-     bLocalizedMessages=True
+      MessageList=None
+      ReceivedMsgNum=0
+      ReceivedMsgMax=32
+      bClientMessages=True
+      bTeamMessages=True
+      bVoiceMessages=False
+      bLocalizedMessages=True
 }

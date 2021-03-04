@@ -153,7 +153,7 @@ function ScoreFlag(Pawn Scorer, CTFFlag theFlag)
 		for ( TeamMate=Level.PawnList; TeamMate!=None; TeamMate=TeamMate.NextPawn )
 		{
 			if ( TeamMate.IsA('PlayerPawn') )
-				PlayerPawn(TeamMate).ClientPlaySound(ReturnSound);
+				PlayerPawn(TeamMate).ClientPlaySound(ReturnSound,,true);
 			else if ( TeamMate.IsA('Bot') )
 				Bot(TeamMate).SetOrders(BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrders, BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrderGiver, true);
 		}
@@ -168,7 +168,7 @@ function ScoreFlag(Pawn Scorer, CTFFlag theFlag)
 	for ( TeamMate=Level.PawnList; TeamMate!=None; TeamMate=TeamMate.NextPawn )
 	{
 		if ( TeamMate.IsA('PlayerPawn') )
-			PlayerPawn(TeamMate).ClientPlaySound(CaptureSound[Scorer.PlayerReplicationInfo.Team]);
+			PlayerPawn(TeamMate).ClientPlaySound(CaptureSound[Scorer.PlayerReplicationInfo.Team],,true);
 		else if ( TeamMate.IsA('Bot') )
 			Bot(TeamMate).SetOrders(BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrders, BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrderGiver, true);
 	}
@@ -636,7 +636,9 @@ function bool CanTranslocate(Bot aBot)
 
 function int ReduceDamage(int Damage, name DamageType, pawn injured, pawn instigatedBy)
 {
-	if ( (instigatedBy != None) 
+	if ( (instigatedBy != None)
+	    && injured.PlayerReplicationInfo != none
+		&& instigatedBy.PlayerReplicationInfo != none
 		&& (injured.PlayerReplicationInfo.Team != instigatedBy.PlayerReplicationInfo.Team)
 		&& injured.IsA('Bot') 
 		&& ((injured.health < 35) || (injured.PlayerReplicationInfo.HasFlag != None)) )
@@ -727,30 +729,34 @@ function bool CheckThisTranslocator(Bot aBot, TranslocatorTarget T)
 
 defaultproperties
 {
-     CaptureSound(0)=Sound'Botpack.CTF.CaptureSound2'
-     CaptureSound(1)=Sound'Botpack.CTF.CaptureSound3'
-     CaptureSound(2)=Sound'Botpack.CTF.CaptureSound2'
-     CaptureSound(3)=Sound'Botpack.CTF.CaptureSound3'
-     ReturnSound=Sound'Botpack.CTF.ReturnSound'
-     bSpawnInTeamArea=True
-     bScoreTeamKills=False
-     MaxAllowedTeams=2
-     GoalTeamScore=3.000000
-     CurrentOrders(0)=Freelance
-     CurrentOrders(1)=Freelance
-     CurrentOrders(2)=Freelance
-     CurrentOrders(3)=Freelance
-     bUseTranslocator=True
-     bRatedTranslocator=True
-     StartUpMessage=""
-     gamegoal="captures wins the match!"
-     LadderTypeIndex=2
-     bCoopWeaponMode=True
-     ScoreBoardType=Class'Botpack.UnrealCTFScoreboard'
-     HUDType=Class'Botpack.ChallengeCTFHUD'
-     MapListType=Class'Botpack.CTFMapList'
-     MapPrefix="CTF"
-     BeaconName="CTF"
-     GameName="Capture the Flag"
-     GameReplicationInfoClass=Class'Botpack.CTFReplicationInfo'
+      CaptureSound(0)=Sound'Botpack.CTF.CaptureSound2'
+      CaptureSound(1)=Sound'Botpack.CTF.CaptureSound3'
+      CaptureSound(2)=Sound'Botpack.CTF.CaptureSound2'
+      CaptureSound(3)=Sound'Botpack.CTF.CaptureSound3'
+      ReturnSound=Sound'Botpack.CTF.ReturnSound'
+      LastGotFlag=0.000000
+      LastSeeFlagCarrier=0.000000
+      bSpawnInTeamArea=True
+      bScoreTeamKills=False
+      MaxAllowedTeams=2
+      GoalTeamScore=3.000000
+      CurrentOrders(0)="Freelance"
+      CurrentOrders(1)="Freelance"
+      CurrentOrders(2)="Freelance"
+      CurrentOrders(3)="Freelance"
+      FragLimit=0
+      TimeLimit=0
+      bUseTranslocator=True
+      bRatedTranslocator=True
+      StartUpMessage=""
+      gamegoal="captures wins the match!"
+      LadderTypeIndex=2
+      bCoopWeaponMode=True
+      ScoreBoardType=Class'Botpack.UnrealCTFScoreboard'
+      HUDType=Class'Botpack.ChallengeCTFHUD'
+      MapListType=Class'Botpack.CTFMapList'
+      MapPrefix="CTF"
+      BeaconName="CTF"
+      GameName="Capture the Flag"
+      GameReplicationInfoClass=Class'Botpack.CTFReplicationInfo'
 }

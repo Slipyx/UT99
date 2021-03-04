@@ -15,5 +15,5 @@ function Click(float X, float Y)
 
 defaultproperties
 {
-     CloseText="Close"
+      CloseText="Close"
 }

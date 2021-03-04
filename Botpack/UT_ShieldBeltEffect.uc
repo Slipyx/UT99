@@ -62,7 +62,14 @@ simulated function Tick(float DeltaTime)
 		return;
 	}
 
-	IdealFatness = Owner.Fatness; // Convert to int for safety.
+	if ( Owner != None )
+	{
+	    IdealFatness = Owner.Fatness; // Convert to int for safety.
+		bHidden = Owner.bHidden;
+		PrePivot = Owner.PrePivot;
+		Mesh = Owner.Mesh;
+		DrawScale = Owner.DrawScale;
+	}
 	IdealFatness += FatnessOffset;
 
 	if ( Fatness > IdealFatness )
@@ -73,20 +80,20 @@ simulated function Tick(float DeltaTime)
 
 defaultproperties
 {
-     LowDetailTexture=Texture'UnrealShare.Belt_fx.ShieldBelt.newgold'
-     FatnessOffset=29
-     bAnimByOwner=True
-     bOwnerNoSee=True
-     bNetTemporary=False
-     bTrailerSameRotation=True
-     Physics=PHYS_Trailer
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=FireTexture'UnrealShare.Belt_fx.ShieldBelt.N_Shield'
-     ScaleGlow=0.500000
-     AmbientGlow=64
-     Fatness=157
-     bUnlit=True
-     bMeshEnviroMap=True
+      LowDetailTexture=Texture'UnrealShare.Belt_fx.ShieldBelt.newgold'
+      FatnessOffset=29
+      bAnimByOwner=True
+      bOwnerNoSee=True
+      bNetTemporary=False
+      bTrailerSameRotation=True
+      Physics=PHYS_Trailer
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=FireTexture'UnrealShare.Belt_fx.ShieldBelt.N_Shield'
+      ScaleGlow=0.500000
+      AmbientGlow=64
+      Fatness=157
+      bUnlit=True
+      bMeshEnviroMap=True
 }

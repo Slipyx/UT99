@@ -14,7 +14,7 @@ Begin:
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.PHeartM'
-     CollisionRadius=14.000000
-     CollisionHeight=3.000000
+      Mesh=LodMesh'UnrealShare.PHeartM'
+      CollisionRadius=14.000000
+      CollisionHeight=3.000000
 }

@@ -30,9 +30,9 @@ function DrawNameAndPing(Canvas Canvas, PlayerReplicationInfo PRI, float XOffset
 
 defaultproperties
 {
-     FlagIcon(0)=Texture'Botpack.Icons.RedFlag'
-     FlagIcon(1)=Texture'Botpack.Icons.BlueFlag'
-     FlagIcon(2)=Texture'Botpack.Icons.GreenFlag'
-     FlagIcon(3)=Texture'Botpack.Icons.YellowFlag'
-     FragGoal="Capture Limit:"
+      FlagIcon(0)=Texture'Botpack.Icons.RedFlag'
+      FlagIcon(1)=Texture'Botpack.Icons.BlueFlag'
+      FlagIcon(2)=Texture'Botpack.Icons.GreenFlag'
+      FlagIcon(3)=Texture'Botpack.Icons.YellowFlag'
+      FragGoal="Capture Limit:"
 }

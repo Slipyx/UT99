@@ -129,6 +129,10 @@ var globalconfig float 	PlayerTauntDelay;
 var config float		MinFOV;
 var config float		MaxFOV;
 var config int			MaxNameChanges;
+
+// OldUnreal
+var globalconfig int    NoLockdown; // Disables minigun and pulsegun lockdown. 1 = Like CB12/UTPure (no momentum transfer at all) - 2 = Like LCWeapons (nullify small momentum transfers but allow big transfers such as the initial pushback)
+
 //------------------------------------------------------------------------------
 // Admin
 
@@ -144,7 +148,7 @@ var globalconfig enum ELoginAction
 	DO_KickPlayer,		// Kick this player
 	DO_KickBanPlayer 	// Ban this player by IP address
 } ActionToTake;	// Action to take when MaxAllowedLoginAttempts has been reached
-var() globalconfig string     IPPolicies[256];
+var() globalconfig string     IPPolicies[255];
 
 function AdminLogin( PlayerPawn P, string Password )
 {
@@ -388,18 +392,14 @@ function string GetRules()
 // Return the server's port number.
 function int GetServerPort()
 {
-	local string S;
-	local int i;
-
-	// Figure out the server's port.
-	S = Level.GetAddressURL();
-	i = InStr( S, ":" );
-	assert(i>=0);
-	return int(Mid(S,i+1));
+	return int(class'InternetInfo'.static.GetPort( Level.GetAddressURL() ));
 }
 
 function bool SetPause( BOOL bPause, PlayerPawn P )
 {
+	if ( BaseMutator.HandlePauseRequest(P) )
+		return true;
+
 	if( bPauseable || P.bAdmin || Level.Netmode==NM_Standalone )
 	{
 		if( bPause )
@@ -408,7 +408,8 @@ function bool SetPause( BOOL bPause, PlayerPawn P )
 			Level.Pauser="";
 		return True;
 	}
-	else return False;
+	else
+		return False;
 }
 
 //------------------------------------------------------------------------------
@@ -456,9 +457,9 @@ static function ResetGame();
 //
 event DetailChange()
 {
-	local actor A;
-	local zoneinfo Z;
-	local skyzoneinfo S;
+	local Actor A;
+	local Zoneinfo Z;
+
 	if( !Level.bHighDetailMode )
 	{
 		foreach AllActors(class'Actor', A)
@@ -598,8 +599,8 @@ function string ParseOption( string Options, string InKey )
 //
 event InitGame( string Options, out string Error )
 {
-	local string InOpt, LeftOpt, NextMutator, NextDesc;
-	local int pos, i;
+	local string InOpt, LeftOpt;
+	local int pos;
 	local class<Mutator> MClass;
 
 	log( "InitGame:" @ Options );
@@ -777,9 +778,7 @@ function bool CheckIPPolicy(string Address)
 	local bool bAcceptAddress, bAcceptPolicy;
 
 	// strip port number
-	j = InStr(Address, ":");
-	if(j != -1)
-		Address = Left(Address, j);
+	Address = class'InternetInfo'.static.StripPort(Address);
 
 	bAcceptAddress = True;
 	for(i=0; i<ArrayCount(IPPolicies) && IPPolicies[i] != ""; i++)
@@ -1077,11 +1076,9 @@ function Logout( pawn Exiting )
 // the HUD inventory rendering messed up (AcceptInventory should pick another
 // applicable weapon/item as current).
 //
-event AcceptInventory(pawn PlayerPawn)
+event AcceptInventory( Pawn PlayerPawn)
 {
 	//default accept all inventory except default weapon (spawned explicitly)
-
-	local inventory inv;
 
 	// Initialize the inventory.
 	AddDefaultInventory( PlayerPawn );
@@ -1331,7 +1328,10 @@ function ScoreKill(pawn Killer, pawn Other)
 {
 	Other.DieCount++;
 	if( (killer == Other) || (killer == None) )
-		Other.PlayerReplicationInfo.Score -= 1;
+	{
+		if (Other.PlayerReplicationInfo != None)
+		   Other.PlayerReplicationInfo.Score -= 1;
+	}
 	else if ( killer != None )
 	{
 		killer.killCount++;
@@ -1406,12 +1406,11 @@ function bool ShouldRespawn( actor Other )
 // the pawn touches a weapon pickup). Should return true if
 // he wants to pick it up, false if he does not want it.
 //
-function bool PickupQuery( Pawn Other, Inventory item )
+function bool PickupQuery( Pawn Other, Inventory Item )
 {
-	local Mutator M;
 	local byte bAllowPickup;
 
-	if ( BaseMutator.HandlePickupQuery(Other, item, bAllowPickup) )
+	if ( BaseMutator.HandlePickupQuery(Other, Item, bAllowPickup) )
 		return (bAllowPickup == 1);
 
 	if ( Other.Inventory == None )
@@ -1580,8 +1579,7 @@ function bool AllowsBroadcast( actor broadcaster, int Len )
 //
 function EndGame( string Reason )
 {
-	local actor A;
-	local Mutator M;
+	local Actor A;
 
 	// don't end game if not really ready
 	// mutator can set bOverTime if doesn't want game to end
@@ -1594,14 +1592,12 @@ function EndGame( string Reason )
 
 	bGameEnded = true;
 	foreach AllActors(class'Actor', A, 'EndGame')
-		A.trigger(self, none);
+		A.Trigger(self, none);
 
 	if (LocalLog != None)
 	{
 		LocalLog.LogGameEnd(Reason);
 		LocalLog.StopLog();
-		if (bBatchLocal)
-			LocalLog.ExecuteSilentLogBatcher();
 		LocalLog.Destroy();
 		LocalLog = None;
 	}
@@ -1609,7 +1605,6 @@ function EndGame( string Reason )
 	{
 		WorldLog.LogGameEnd(Reason);
 		WorldLog.StopLog();
-		WorldLog.ExecuteWorldLogBatcher();
 		WorldLog.Destroy();
 		WorldLog = None;
 	}
@@ -1631,45 +1626,355 @@ function bool SetEndCams(string Reason)
 
 defaultproperties
 {
-     Difficulty=1
-     bRestartLevel=True
-     bPauseable=True
-     bCanChangeSkin=True
-     bNoCheating=True
-     bCanViewOthers=True
-     AutoAim=0.930000
-     GameSpeed=1.000000
-     MaxSpectators=2
-     BotMenuType="UMenu.UMenuBotConfigSClient"
-     RulesMenuType="UMenu.UMenuGameRulesSClient"
-     SettingsMenuType="UMenu.UMenuGameSettingsSClient"
-     GameUMenuType="UMenu.UMenuGameMenu"
-     MultiplayerUMenuType="UMenu.UMenuMultiplayerMenu"
-     GameOptionsMenuType="UMenu.UMenuOptionsMenu"
-     SwitchLevelMessage="Switching Levels"
-     DefaultPlayerName="Player"
-     LeftMessage=" left the game."
-     FailedSpawnMessage="Failed to spawn player actor"
-     FailedPlaceMessage="Could not find starting spot (level might need a 'PlayerStart' actor)"
-     FailedTeamMessage="Could not find team for player"
-     NameChangedMessage="Name changed to "
-     EnteredMessage=" entered the game."
-     GameName="Game"
-     MaxedOutMessage="Server is already at capacity."
-     WrongPassword="The password you entered is incorrect."
-     NeedPassword="You need to enter a password to join this game."
-     IPBanned="Your IP address has been banned on this server."
-     MaxPlayers=16
-     DeathMessageClass=Class'Engine.LocalMessage'
-     MutatorClass=Class'Engine.Mutator'
-     DefaultPlayerState=PlayerWalking
-     ServerLogName="server.log"
-     bWorldLog=True
-     StatLogClass=Class'Engine.StatLogFile'
-     PlayerViewDelay=1.000000
-     PlayerSpeechDelay=0.300000
-     PlayerTauntDelay=2.000000
-     MinFOV=80.000000
-     MaxFOV=130.000000
-     IPPolicies(0)="ACCEPT,*"
+      ItemGoals=0
+      KillGoals=0
+      SecretGoals=0
+      Difficulty=1
+      bNoMonsters=False
+      bMuteSpectators=False
+      bHumansOnly=False
+      bRestartLevel=True
+      bPauseable=True
+      bCoopWeaponMode=False
+      bClassicDeathMessages=False
+      bLowGore=False
+      bCanChangeSkin=True
+      bTeamGame=False
+      bVeryLowGore=False
+      bNoCheating=True
+      bAllowFOV=True
+      bDeathMatch=False
+      bGameEnded=False
+      bOverTime=False
+      bAlternateMode=False
+      bCanViewOthers=True
+      bExternalBatcher=False
+      AutoAim=0.930000
+      GameSpeed=1.000000
+      StartTime=0.000000
+      DefaultPlayerClass=None
+      DefaultWeapon=None
+      MaxSpectators=2
+      NumSpectators=0
+      AdminPassword=""
+      GamePassword=""
+      ScoreBoardType=None
+      GameMenuType=None
+      BotMenuType="UMenu.UMenuBotConfigSClient"
+      RulesMenuType="UMenu.UMenuGameRulesSClient"
+      SettingsMenuType="UMenu.UMenuGameSettingsSClient"
+      GameUMenuType="UMenu.UMenuGameMenu"
+      MultiplayerUMenuType="UMenu.UMenuMultiplayerMenu"
+      GameOptionsMenuType="UMenu.UMenuOptionsMenu"
+      HUDType=None
+      MapListType=None
+      MapPrefix=""
+      BeaconName=""
+      SpecialDamageString=""
+      SwitchLevelMessage="Switching Levels"
+      SentText=0
+      DefaultPlayerName="Player"
+      LeftMessage=" left the game."
+      FailedSpawnMessage="Failed to spawn player actor"
+      FailedPlaceMessage="Could not find starting spot (level might need a 'PlayerStart' actor)"
+      FailedTeamMessage="Could not find team for player"
+      NameChangedMessage="Name changed to "
+      EnteredMessage=" entered the game."
+      GameName="Game"
+      MaxedOutMessage="Server is already at capacity."
+      WrongPassword="The password you entered is incorrect."
+      NeedPassword="You need to enter a password to join this game."
+      IPBanned="Your IP address has been banned on this server."
+      MaxPlayers=16
+      NumPlayers=0
+      CurrentID=0
+      DeathMessageClass=Class'Engine.LocalMessage'
+      DMMessageClass=None
+      MutatorClass=Class'Engine.Mutator'
+      BaseMutator=None
+      DamageMutator=None
+      MessageMutator=None
+      WaterZoneType=None
+      DefaultPlayerState="PlayerWalking"
+      GameReplicationInfoClass=None
+      GameReplicationInfo=None
+      ServerLogName="server.log"
+      LocalLog=None
+      WorldLog=None
+      bLocalLog=False
+      bWorldLog=False
+      bBatchLocal=False
+      bLoggingGame=False
+      LocalLogFileName=""
+      WorldLogFileName=""
+      StatLogClass=Class'Engine.StatLogFile'
+      DemoBuild=0
+      DemoHasTuts=0
+      EnabledMutators=""
+      PlayerViewDelay=1.000000
+      PlayerSpeechDelay=0.300000
+      PlayerTauntDelay=2.000000
+      MinFOV=80.000000
+      MaxFOV=130.000000
+      MaxNameChanges=0
+      NoLockdown=1
+      bLogAdminActions=False
+      LoginDelaySeconds=0.000000
+      MaxLoginAttempts=0
+      ActionToTake=DO_Nothing
+      IPPolicies(0)="ACCEPT,*"
+      IPPolicies(1)=""
+      IPPolicies(2)=""
+      IPPolicies(3)=""
+      IPPolicies(4)=""
+      IPPolicies(5)=""
+      IPPolicies(6)=""
+      IPPolicies(7)=""
+      IPPolicies(8)=""
+      IPPolicies(9)=""
+      IPPolicies(10)=""
+      IPPolicies(11)=""
+      IPPolicies(12)=""
+      IPPolicies(13)=""
+      IPPolicies(14)=""
+      IPPolicies(15)=""
+      IPPolicies(16)=""
+      IPPolicies(17)=""
+      IPPolicies(18)=""
+      IPPolicies(19)=""
+      IPPolicies(20)=""
+      IPPolicies(21)=""
+      IPPolicies(22)=""
+      IPPolicies(23)=""
+      IPPolicies(24)=""
+      IPPolicies(25)=""
+      IPPolicies(26)=""
+      IPPolicies(27)=""
+      IPPolicies(28)=""
+      IPPolicies(29)=""
+      IPPolicies(30)=""
+      IPPolicies(31)=""
+      IPPolicies(32)=""
+      IPPolicies(33)=""
+      IPPolicies(34)=""
+      IPPolicies(35)=""
+      IPPolicies(36)=""
+      IPPolicies(37)=""
+      IPPolicies(38)=""
+      IPPolicies(39)=""
+      IPPolicies(40)=""
+      IPPolicies(41)=""
+      IPPolicies(42)=""
+      IPPolicies(43)=""
+      IPPolicies(44)=""
+      IPPolicies(45)=""
+      IPPolicies(46)=""
+      IPPolicies(47)=""
+      IPPolicies(48)=""
+      IPPolicies(49)=""
+      IPPolicies(50)=""
+      IPPolicies(51)=""
+      IPPolicies(52)=""
+      IPPolicies(53)=""
+      IPPolicies(54)=""
+      IPPolicies(55)=""
+      IPPolicies(56)=""
+      IPPolicies(57)=""
+      IPPolicies(58)=""
+      IPPolicies(59)=""
+      IPPolicies(60)=""
+      IPPolicies(61)=""
+      IPPolicies(62)=""
+      IPPolicies(63)=""
+      IPPolicies(64)=""
+      IPPolicies(65)=""
+      IPPolicies(66)=""
+      IPPolicies(67)=""
+      IPPolicies(68)=""
+      IPPolicies(69)=""
+      IPPolicies(70)=""
+      IPPolicies(71)=""
+      IPPolicies(72)=""
+      IPPolicies(73)=""
+      IPPolicies(74)=""
+      IPPolicies(75)=""
+      IPPolicies(76)=""
+      IPPolicies(77)=""
+      IPPolicies(78)=""
+      IPPolicies(79)=""
+      IPPolicies(80)=""
+      IPPolicies(81)=""
+      IPPolicies(82)=""
+      IPPolicies(83)=""
+      IPPolicies(84)=""
+      IPPolicies(85)=""
+      IPPolicies(86)=""
+      IPPolicies(87)=""
+      IPPolicies(88)=""
+      IPPolicies(89)=""
+      IPPolicies(90)=""
+      IPPolicies(91)=""
+      IPPolicies(92)=""
+      IPPolicies(93)=""
+      IPPolicies(94)=""
+      IPPolicies(95)=""
+      IPPolicies(96)=""
+      IPPolicies(97)=""
+      IPPolicies(98)=""
+      IPPolicies(99)=""
+      IPPolicies(100)=""
+      IPPolicies(101)=""
+      IPPolicies(102)=""
+      IPPolicies(103)=""
+      IPPolicies(104)=""
+      IPPolicies(105)=""
+      IPPolicies(106)=""
+      IPPolicies(107)=""
+      IPPolicies(108)=""
+      IPPolicies(109)=""
+      IPPolicies(110)=""
+      IPPolicies(111)=""
+      IPPolicies(112)=""
+      IPPolicies(113)=""
+      IPPolicies(114)=""
+      IPPolicies(115)=""
+      IPPolicies(116)=""
+      IPPolicies(117)=""
+      IPPolicies(118)=""
+      IPPolicies(119)=""
+      IPPolicies(120)=""
+      IPPolicies(121)=""
+      IPPolicies(122)=""
+      IPPolicies(123)=""
+      IPPolicies(124)=""
+      IPPolicies(125)=""
+      IPPolicies(126)=""
+      IPPolicies(127)=""
+      IPPolicies(128)=""
+      IPPolicies(129)=""
+      IPPolicies(130)=""
+      IPPolicies(131)=""
+      IPPolicies(132)=""
+      IPPolicies(133)=""
+      IPPolicies(134)=""
+      IPPolicies(135)=""
+      IPPolicies(136)=""
+      IPPolicies(137)=""
+      IPPolicies(138)=""
+      IPPolicies(139)=""
+      IPPolicies(140)=""
+      IPPolicies(141)=""
+      IPPolicies(142)=""
+      IPPolicies(143)=""
+      IPPolicies(144)=""
+      IPPolicies(145)=""
+      IPPolicies(146)=""
+      IPPolicies(147)=""
+      IPPolicies(148)=""
+      IPPolicies(149)=""
+      IPPolicies(150)=""
+      IPPolicies(151)=""
+      IPPolicies(152)=""
+      IPPolicies(153)=""
+      IPPolicies(154)=""
+      IPPolicies(155)=""
+      IPPolicies(156)=""
+      IPPolicies(157)=""
+      IPPolicies(158)=""
+      IPPolicies(159)=""
+      IPPolicies(160)=""
+      IPPolicies(161)=""
+      IPPolicies(162)=""
+      IPPolicies(163)=""
+      IPPolicies(164)=""
+      IPPolicies(165)=""
+      IPPolicies(166)=""
+      IPPolicies(167)=""
+      IPPolicies(168)=""
+      IPPolicies(169)=""
+      IPPolicies(170)=""
+      IPPolicies(171)=""
+      IPPolicies(172)=""
+      IPPolicies(173)=""
+      IPPolicies(174)=""
+      IPPolicies(175)=""
+      IPPolicies(176)=""
+      IPPolicies(177)=""
+      IPPolicies(178)=""
+      IPPolicies(179)=""
+      IPPolicies(180)=""
+      IPPolicies(181)=""
+      IPPolicies(182)=""
+      IPPolicies(183)=""
+      IPPolicies(184)=""
+      IPPolicies(185)=""
+      IPPolicies(186)=""
+      IPPolicies(187)=""
+      IPPolicies(188)=""
+      IPPolicies(189)=""
+      IPPolicies(190)=""
+      IPPolicies(191)=""
+      IPPolicies(192)=""
+      IPPolicies(193)=""
+      IPPolicies(194)=""
+      IPPolicies(195)=""
+      IPPolicies(196)=""
+      IPPolicies(197)=""
+      IPPolicies(198)=""
+      IPPolicies(199)=""
+      IPPolicies(200)=""
+      IPPolicies(201)=""
+      IPPolicies(202)=""
+      IPPolicies(203)=""
+      IPPolicies(204)=""
+      IPPolicies(205)=""
+      IPPolicies(206)=""
+      IPPolicies(207)=""
+      IPPolicies(208)=""
+      IPPolicies(209)=""
+      IPPolicies(210)=""
+      IPPolicies(211)=""
+      IPPolicies(212)=""
+      IPPolicies(213)=""
+      IPPolicies(214)=""
+      IPPolicies(215)=""
+      IPPolicies(216)=""
+      IPPolicies(217)=""
+      IPPolicies(218)=""
+      IPPolicies(219)=""
+      IPPolicies(220)=""
+      IPPolicies(221)=""
+      IPPolicies(222)=""
+      IPPolicies(223)=""
+      IPPolicies(224)=""
+      IPPolicies(225)=""
+      IPPolicies(226)=""
+      IPPolicies(227)=""
+      IPPolicies(228)=""
+      IPPolicies(229)=""
+      IPPolicies(230)=""
+      IPPolicies(231)=""
+      IPPolicies(232)=""
+      IPPolicies(233)=""
+      IPPolicies(234)=""
+      IPPolicies(235)=""
+      IPPolicies(236)=""
+      IPPolicies(237)=""
+      IPPolicies(238)=""
+      IPPolicies(239)=""
+      IPPolicies(240)=""
+      IPPolicies(241)=""
+      IPPolicies(242)=""
+      IPPolicies(243)=""
+      IPPolicies(244)=""
+      IPPolicies(245)=""
+      IPPolicies(246)=""
+      IPPolicies(247)=""
+      IPPolicies(248)=""
+      IPPolicies(249)=""
+      IPPolicies(250)=""
+      IPPolicies(251)=""
+      IPPolicies(252)=""
+      IPPolicies(253)=""
+      IPPolicies(254)=""
 }

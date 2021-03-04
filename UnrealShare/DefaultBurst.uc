@@ -16,16 +16,16 @@ function PostBeginPlay()
 
 defaultproperties
 {
-     EffectSound1=Sound'UnrealShare.General.Exple03'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.400000
-     DrawType=DT_SpriteAnimOnce
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.DEFBurst.dt_a00'
-     Skin=Texture'UnrealShare.Effects.ExplosionPal'
-     DrawScale=1.500000
-     LightType=LT_TexturePaletteOnce
-     LightEffect=LE_NonIncidence
-     LightRadius=6
-     bCorona=False
+      EffectSound1=Sound'UnrealShare.General.Exple03'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.400000
+      DrawType=DT_SpriteAnimOnce
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.DEFBurst.dt_a00'
+      Skin=Texture'UnrealShare.Effects.ExplosionPal'
+      DrawScale=1.500000
+      LightType=LT_TexturePaletteOnce
+      LightEffect=LE_NonIncidence
+      LightRadius=6
+      bCorona=False
 }

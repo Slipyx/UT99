@@ -20,6 +20,6 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     Skin=FireTexture'UnrealShare.Effect55.fireeffect55'
-     DrawScale=1.250000
+      Skin=FireTexture'UnrealShare.Effect55.fireeffect55'
+      DrawScale=1.250000
 }

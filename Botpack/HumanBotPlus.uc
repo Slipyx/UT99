@@ -629,13 +629,13 @@ State ImpactJumping
 
 defaultproperties
 {
-     Footstep1=Sound'Botpack.FemaleSounds.(All).stone02'
-     Footstep2=Sound'Botpack.FemaleSounds.(All).stone04'
-     Footstep3=Sound'Botpack.FemaleSounds.(All).stone05'
-     bIsHuman=True
-     BaseEyeHeight=27.000000
-     EyeHeight=27.000000
-     CollisionRadius=17.000000
-     CollisionHeight=39.000000
-     Buoyancy=99.000000
+      Footstep1=Sound'Botpack.FemaleSounds.(All).stone02'
+      Footstep2=Sound'Botpack.FemaleSounds.(All).stone04'
+      Footstep3=Sound'Botpack.FemaleSounds.(All).stone05'
+      bIsHuman=True
+      BaseEyeHeight=27.000000
+      EyeHeight=27.000000
+      CollisionRadius=17.000000
+      CollisionHeight=39.000000
+      Buoyancy=99.000000
 }

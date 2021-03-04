@@ -24,5 +24,5 @@ function Trigger(actor Other, pawn EventInstigator)
 
 defaultproperties
 {
-     bCollideActors=True
+      bCollideActors=True
 }

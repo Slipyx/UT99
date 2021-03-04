@@ -20,4 +20,5 @@ function BeforePaint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      TextArea=None
 }

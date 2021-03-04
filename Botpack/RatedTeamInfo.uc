@@ -73,6 +73,16 @@ static function texture GetTeamSymbol()
 	return Default.TeamSymbol;
 }
 
+static function class<TournamentPlayer> GetMaleClass()
+{
+	return Default.MaleClass;
+}
+
+static function class<TournamentPlayer> GetFemaleClass()
+{
+	return Default.FemaleClass;
+}
+
 function Individualize(bot NewBot, int n, int NumBots, bool bEnemy, float BaseDifficulty)
 {
 	if ( (n<0) || (n>7) )
@@ -113,4 +123,107 @@ function Individualize(bot NewBot, int n, int NumBots, bool bEnemy, float BaseDi
 
 defaultproperties
 {
+      TeamName=""
+      TeamSymbol=None
+      TeamBio=""
+      BotNames(0)=""
+      BotNames(1)=""
+      BotNames(2)=""
+      BotNames(3)=""
+      BotNames(4)=""
+      BotNames(5)=""
+      BotNames(6)=""
+      BotNames(7)=""
+      BotClassifications(0)=""
+      BotClassifications(1)=""
+      BotClassifications(2)=""
+      BotClassifications(3)=""
+      BotClassifications(4)=""
+      BotClassifications(5)=""
+      BotClassifications(6)=""
+      BotClassifications(7)=""
+      BotSkills(0)=0.000000
+      BotSkills(1)=0.000000
+      BotSkills(2)=0.000000
+      BotSkills(3)=0.000000
+      BotSkills(4)=0.000000
+      BotSkills(5)=0.000000
+      BotSkills(6)=0.000000
+      BotSkills(7)=0.000000
+      BotAccuracy(0)=0.000000
+      BotAccuracy(1)=0.000000
+      BotAccuracy(2)=0.000000
+      BotAccuracy(3)=0.000000
+      BotAccuracy(4)=0.000000
+      BotAccuracy(5)=0.000000
+      BotAccuracy(6)=0.000000
+      BotAccuracy(7)=0.000000
+      CombatStyle(0)=0.000000
+      CombatStyle(1)=0.000000
+      CombatStyle(2)=0.000000
+      CombatStyle(3)=0.000000
+      CombatStyle(4)=0.000000
+      CombatStyle(5)=0.000000
+      CombatStyle(6)=0.000000
+      CombatStyle(7)=0.000000
+      Camping(0)=0.000000
+      Camping(1)=0.000000
+      Camping(2)=0.000000
+      Camping(3)=0.000000
+      Camping(4)=0.000000
+      Camping(5)=0.000000
+      Camping(6)=0.000000
+      Camping(7)=0.000000
+      FavoriteWeapon(0)=""
+      FavoriteWeapon(1)=""
+      FavoriteWeapon(2)=""
+      FavoriteWeapon(3)=""
+      FavoriteWeapon(4)=""
+      FavoriteWeapon(5)=""
+      FavoriteWeapon(6)=""
+      FavoriteWeapon(7)=""
+      BotClasses(0)=""
+      BotClasses(1)=""
+      BotClasses(2)=""
+      BotClasses(3)=""
+      BotClasses(4)=""
+      BotClasses(5)=""
+      BotClasses(6)=""
+      BotClasses(7)=""
+      BotSkins(0)=""
+      BotSkins(1)=""
+      BotSkins(2)=""
+      BotSkins(3)=""
+      BotSkins(4)=""
+      BotSkins(5)=""
+      BotSkins(6)=""
+      BotSkins(7)=""
+      BotFaces(0)=""
+      BotFaces(1)=""
+      BotFaces(2)=""
+      BotFaces(3)=""
+      BotFaces(4)=""
+      BotFaces(5)=""
+      BotFaces(6)=""
+      BotFaces(7)=""
+      BotBio(0)=""
+      BotBio(1)=""
+      BotBio(2)=""
+      BotBio(3)=""
+      BotBio(4)=""
+      BotBio(5)=""
+      BotBio(6)=""
+      BotBio(7)=""
+      BotJumpy(0)=0
+      BotJumpy(1)=0
+      BotJumpy(2)=0
+      BotJumpy(3)=0
+      BotJumpy(4)=0
+      BotJumpy(5)=0
+      BotJumpy(6)=0
+      BotJumpy(7)=0
+      MaleClass=None
+      MaleSkin=""
+      FemaleClass=None
+      FemaleSkin=""
 }

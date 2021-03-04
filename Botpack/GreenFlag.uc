@@ -5,6 +5,6 @@ class GreenFlag extends CTFFlag;
 
 defaultproperties
 {
-     Skin=Texture'Botpack.Skins.JFlag13'
-     LightHue=80
+      Skin=Texture'Botpack.Skins.JFlag13'
+      LightHue=80
 }

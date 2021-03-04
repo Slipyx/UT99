@@ -13,7 +13,7 @@ class TubeLight2 extends ut_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.tubelight2M'
-     DrawScale=0.500000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.tubelight2M'
+      DrawScale=0.500000
 }

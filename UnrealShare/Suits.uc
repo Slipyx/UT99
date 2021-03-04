@@ -23,16 +23,16 @@ function PickupFunction(Pawn Other)
 
 defaultproperties
 {
-     bDisplayableInv=True
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'UnrealShare.Suit'
-     ProtectionType1=ProtectNone
-     ProtectionType2=ProtectNone
-     MaxDesireability=1.700000
-     Icon=Texture'UnrealShare.Icons.I_Suit'
-     RemoteRole=ROLE_DumbProxy
-     DrawType=DT_None
-     AmbientGlow=64
-     CollisionRadius=26.000000
-     CollisionHeight=39.000000
+      bDisplayableInv=True
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'UnrealShare.Suit'
+      ProtectionType1="ProtectNone"
+      ProtectionType2="ProtectNone"
+      MaxDesireability=1.700000
+      Icon=Texture'UnrealShare.Icons.I_Suit'
+      RemoteRole=ROLE_DumbProxy
+      DrawType=DT_None
+      AmbientGlow=64
+      CollisionRadius=26.000000
+      CollisionHeight=39.000000
 }

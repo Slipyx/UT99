@@ -14,7 +14,7 @@ var string Password;
 var int ContentLength;
 var string ContentType;
 var ERequestType RequestType;
-var private native const int VariableMap[5];	// TMultiMap<FString, FString>!
+var private native const pointer VariableMap[5];	// TMultiMap<FString, FString>!
 
 native final function string DecodeBase64(string Encoded);
 native final function AddVariable(string VariableName, string Value);
@@ -112,4 +112,10 @@ function int GetHexDigit(string D)
 
 defaultproperties
 {
+      URI=""
+      Username=""
+      Password=""
+      ContentLength=0
+      ContentType=""
+      RequestType=Request_GET
 }

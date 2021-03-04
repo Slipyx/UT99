@@ -13,7 +13,7 @@ class CTFTrophy extends Trophy;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.ctftrophyM'
-     DrawScale=0.200000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.ctftrophyM'
+      DrawScale=0.200000
 }

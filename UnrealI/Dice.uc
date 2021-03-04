@@ -39,6 +39,15 @@ auto state Playing
 	{
 		local vector landspot;
 
+		if (bDeleteMe)
+		    return;
+		if (bStatic)
+		{
+			SetPhysics(PHYS_None);
+			bBounce = false;
+			return;
+        }
+
 		numBounces++;
 		if ( (instigator == None) || (numBounces > 20) )
 		{
@@ -68,14 +77,16 @@ auto state Playing
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.DiceM'
-     CollisionRadius=3.000000
-     CollisionHeight=3.000000
-     bCollideWorld=True
-     bBounce=True
-     bFixedRotationDir=True
-     bRotateToDesired=True
-     RotationRate=(Pitch=60000)
+      bHasBounced=False
+      numBounces=0
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.DiceM'
+      CollisionRadius=3.000000
+      CollisionHeight=3.000000
+      bCollideWorld=True
+      bBounce=True
+      bFixedRotationDir=True
+      bRotateToDesired=True
+      RotationRate=(Pitch=60000)
 }

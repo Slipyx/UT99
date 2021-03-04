@@ -13,13 +13,13 @@ class TorchFlame extends Light;
 
 defaultproperties
 {
-     bStatic=False
-     bHidden=False
-     AnimRate=1.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.FlameM'
-     bUnlit=True
-     LightEffect=LE_FireWaver
-     LightBrightness=40
-     LightRadius=32
+      bStatic=False
+      bHidden=False
+      AnimRate=1.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.FlameM'
+      bUnlit=True
+      LightEffect=LE_FireWaver
+      LightBrightness=40
+      LightRadius=32
 }

@@ -329,29 +329,65 @@ function ShowScores( canvas Canvas )
 
 defaultproperties
 {
-     MapTitle="in"
-     Author="by"
-     Restart="You are dead.  Hit [Fire] to respawn!"
-     Continue=" Hit [Fire] to continue!"
-     Ended="The match has ended."
-     ElapsedTime="Elapsed Time: "
-     RemainingTime="Remaining Time: "
-     FragGoal="Frag Limit:"
-     TimeLimit="Time Limit:"
-     PlayerString="Player"
-     FragsString="Frags"
-     DeathsString="Deaths"
-     PingString="Ping"
-     TimeString="Time"
-     LossString="Loss"
-     FPHString="FPH"
-     GreenColor=(G=255)
-     WhiteColor=(R=255,G=255,B=255)
-     GoldColor=(R=255,G=255)
-     BlueColor=(B=255)
-     LightCyanColor=(R=128,G=255,B=255)
-     SilverColor=(R=138,G=164,B=166)
-     BronzeColor=(R=203,G=147,B=52)
-     CyanColor=(G=128,B=255)
-     RedColor=(R=255)
+      MapTitle="in"
+      Author="by"
+      Restart="You are dead.  Hit [Fire] to respawn!"
+      Continue=" Hit [Fire] to continue!"
+      Ended="The match has ended."
+      ElapsedTime="Elapsed Time: "
+      RemainingTime="Remaining Time: "
+      FragGoal="Frag Limit:"
+      TimeLimit="Time Limit:"
+      PlayerString="Player"
+      FragsString="Frags"
+      DeathsString="Deaths"
+      PingString="Ping"
+      TimeString="Time"
+      LossString="Loss"
+      FPHString="FPH"
+      GreenColor=(R=0,G=255,B=0,A=0)
+      WhiteColor=(R=255,G=255,B=255,A=0)
+      GoldColor=(R=255,G=255,B=0,A=0)
+      BlueColor=(R=0,G=0,B=255,A=0)
+      LightCyanColor=(R=128,G=255,B=255,A=0)
+      SilverColor=(R=138,G=164,B=166,A=0)
+      BronzeColor=(R=203,G=147,B=52,A=0)
+      CyanColor=(R=0,G=128,B=255,A=0)
+      RedColor=(R=255,G=0,B=0,A=0)
+      Ordered(0)=None
+      Ordered(1)=None
+      Ordered(2)=None
+      Ordered(3)=None
+      Ordered(4)=None
+      Ordered(5)=None
+      Ordered(6)=None
+      Ordered(7)=None
+      Ordered(8)=None
+      Ordered(9)=None
+      Ordered(10)=None
+      Ordered(11)=None
+      Ordered(12)=None
+      Ordered(13)=None
+      Ordered(14)=None
+      Ordered(15)=None
+      Ordered(16)=None
+      Ordered(17)=None
+      Ordered(18)=None
+      Ordered(19)=None
+      Ordered(20)=None
+      Ordered(21)=None
+      Ordered(22)=None
+      Ordered(23)=None
+      Ordered(24)=None
+      Ordered(25)=None
+      Ordered(26)=None
+      Ordered(27)=None
+      Ordered(28)=None
+      Ordered(29)=None
+      Ordered(30)=None
+      Ordered(31)=None
+      ScoreStart=0.000000
+      bTimeDown=False
+      MyFonts=None
+      MapTitleQuote=""
 }

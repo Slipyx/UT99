@@ -106,9 +106,14 @@ function OKPressed()
 
 defaultproperties
 {
-     DescriptionText="Description"
-     UpdateDescriptionText="Auto-Update Description"
-     IPText="Server IP Address"
-     GamePortText="Server Port Number"
-     QueryPortText="Query Port Number"
+      DescriptionEdit=None
+      DescriptionText="Description"
+      UpdateDescriptionCheck=None
+      UpdateDescriptionText="Auto-Update Description"
+      IPEdit=None
+      IPText="Server IP Address"
+      GamePortEdit=None
+      GamePortText="Server Port Number"
+      QueryPortEdit=None
+      QueryPortText="Query Port Number"
 }

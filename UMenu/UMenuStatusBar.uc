@@ -49,6 +49,7 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
-     DefaultHelp="Press ESC to return to the game"
-     DefaultIntroHelp="Use the Game menu to start a new game."
+      ContextHelp=""
+      DefaultHelp="Press ESC to return to the game"
+      DefaultIntroHelp="Use the Game menu to start a new game."
 }

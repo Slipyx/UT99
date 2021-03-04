@@ -52,5 +52,7 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     LifeSpan=10.000000
+      Seeking=None
+      InitialDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      LifeSpan=10.000000
 }

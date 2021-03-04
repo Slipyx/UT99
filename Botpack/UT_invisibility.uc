@@ -26,6 +26,7 @@ state Activated
 		PlaySound(DeActivateSound);
 
 		Owner.SetDefaultDisplayProperties();
+		Pawn(Owner).Visibility = Pawn(Owner).default.Visibility;
 		S = Pawn(Owner).FindInventoryType(class'UT_ShieldBelt');
 		if ( (S != None) && (UT_Shieldbelt(S).MyEffect != None) )
 			UT_Shieldbelt(S).MyEffect.bHidden = false;
@@ -41,13 +42,21 @@ state Activated
 	{
 		if ( !bActive )
 			return;
-		Owner.SetDisplayProperties(ERenderStyle.STY_Translucent, 
+
+		//Prevent SetOwnerDisplay being run twice (and infinite if coupled with UT_Stealth)
+		if ( Pawn(Owner) != None && !Pawn(Owner).bUpdatingDisplay )
+		{
+			Pawn(Owner).bUpdatingDisplay = true; 
+			Owner.SetDisplayProperties(ERenderStyle.STY_Translucent, 
 							 FireTexture'unrealshare.Belt_fx.Invis',
 							 true,
 							 true);
+		}
+
 		if( Inventory != None )
 			Inventory.SetOwnerDisplay();
 	}
+
 
 	function ChangedWeapon()
 	{
@@ -97,21 +106,21 @@ Begin:
 
 defaultproperties
 {
-     ExpireMessage="Invisibility has worn off."
-     bAutoActivate=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You have Invisibility."
-     ItemName="Invisibility"
-     RespawnTime=120.000000
-     PickupViewMesh=LodMesh'Botpack.invis2M'
-     Charge=100
-     MaxDesireability=1.200000
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealI.Pickups.Invisible'
-     RemoteRole=ROLE_DumbProxy
-     Texture=FireTexture'UnrealShare.Belt_fx.Invis.Invis'
-     Mesh=LodMesh'Botpack.invis2M'
-     CollisionRadius=15.000000
-     CollisionHeight=20.000000
+      ExpireMessage="Invisibility has worn off."
+      bAutoActivate=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You have Invisibility."
+      ItemName="Invisibility"
+      RespawnTime=120.000000
+      PickupViewMesh=LodMesh'Botpack.invis2M'
+      Charge=100
+      MaxDesireability=1.200000
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealI.Pickups.Invisible'
+      RemoteRole=ROLE_DumbProxy
+      Texture=FireTexture'UnrealShare.Belt_fx.Invis.Invis'
+      Mesh=LodMesh'Botpack.invis2M'
+      CollisionRadius=15.000000
+      CollisionHeight=20.000000
 }

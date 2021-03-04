@@ -17,5 +17,5 @@ simulated function SpawnEffects()
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.UTsRingex'
+      Mesh=LodMesh'Botpack.UTsRingex'
 }

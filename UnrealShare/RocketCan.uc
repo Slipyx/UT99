@@ -57,17 +57,18 @@ auto state Pickup
 
 defaultproperties
 {
-     AmmoAmount=12
-     MaxAmmo=48
-     UsedInWeaponSlot(5)=1
-     PickupMessage="You picked up 12 Eightballs"
-     PickupViewMesh=LodMesh'UnrealShare.RocketCanMesh'
-     MaxDesireability=0.300000
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Icon=Texture'UnrealShare.Icons.I_RocketAmmo'
-     Physics=PHYS_Falling
-     Mesh=LodMesh'UnrealShare.RocketCanMesh'
-     CollisionRadius=27.000000
-     CollisionHeight=12.000000
-     bCollideActors=True
+      bOpened=False
+      AmmoAmount=12
+      MaxAmmo=48
+      UsedInWeaponSlot(5)=1
+      PickupMessage="You picked up 12 Eightballs"
+      PickupViewMesh=LodMesh'UnrealShare.RocketCanMesh'
+      MaxDesireability=0.300000
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Icon=Texture'UnrealShare.Icons.I_RocketAmmo'
+      Physics=PHYS_Falling
+      Mesh=LodMesh'UnrealShare.RocketCanMesh'
+      CollisionRadius=27.000000
+      CollisionHeight=12.000000
+      bCollideActors=True
 }

@@ -33,7 +33,8 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     bUnlit=True
+      PuffNum=0
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      bUnlit=True
 }

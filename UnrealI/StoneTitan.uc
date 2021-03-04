@@ -7,5 +7,5 @@ class StoneTitan extends Titan;
 
 defaultproperties
 {
-     Skin=Texture'UnrealI.Skins.Jtitan2'
+      Skin=Texture'UnrealI.Skins.Jtitan2'
 }

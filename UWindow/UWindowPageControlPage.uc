@@ -14,4 +14,5 @@ function UWindowPageControlPage NextPage()
 
 defaultproperties
 {
+      Page=None
 }

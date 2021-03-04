@@ -21,14 +21,14 @@ class EditorEngine extends Engine
 #exec Texture Import File=Textures\BkgndHi.pcx
 
 // Objects.
-var const int         NotifyVtbl;
+var const pointer     NotifyVtbl;
 var const level       Level;
 var const model       TempModel;
 var const texture     CurrentTexture;
 var const class       CurrentClass;
 var const transbuffer Trans;
 var const textbuffer  Results;
-var const int         Pad[8];
+var const pointer     Pad[8];
 
 // Icons.
 var const texture MenuUp, MenuDn;
@@ -55,7 +55,7 @@ var const array<Object> Tools;
 var const class BrowseClass;
 
 // Grid.
-var const int ConstraintsVtbl;
+var const pointer ConstraintsVtbl;
 var(Grid) config bool GridEnabled;
 var(Grid) config bool SnapVertices;
 var(Grid) config bool AffectRegion;
@@ -107,50 +107,97 @@ var(Colors) config color
 	C_Mover,
 	C_OrthoBackground;
 
+var Font ScaledSmallFont, ScaledMedFont, ScaledBigFont, ScaledLargeFont;
+
+var const native pointer VertexEditingInternal[7];
+
 defaultproperties
 {
-     MenuUp=Texture'Editor.B_MenuUp'
-     MenuDn=Texture'Editor.B_MenuDn'
-     CollOn=Texture'Editor.B_CollOn'
-     CollOff=Texture'Editor.B_CollOf'
-     PlyrOn=Texture'Editor.B_PlyrOn'
-     PlyrOff=Texture'Editor.B_PlyrOf'
-     LiteOn=Texture'Editor.B_LiteOn'
-     Bad=Texture'Editor.Bad'
-     Bkgnd=Texture'Editor.Bkgnd'
-     BkgndHi=Texture'Editor.BkgndHi'
-     AutoSaveIndex=6
-     GridEnabled=True
-     SnapVertices=True
-     SnapDistance=10.000000
-     GridSize=(X=16.000000,Y=16.000000,Z=16.000000)
-     RotGridEnabled=True
-     RotGridSize=(Pitch=1024,Yaw=1024,Roll=1024)
-     FovAngleDegrees=90.000000
-     GodMode=True
-     AutosaveTimeMinutes=5
-     GameCommandLine="-log"
-     EditPackages=("Core","Engine","Editor","UWindow","Fire","IpDrv","UWeb","UBrowser","UnrealShare","UnrealI","UMenu","IpServer","Botpack","UTServerAdmin","UTMenu","UTBrowser","SlMod")
-     C_WorldBox=(B=107)
-     C_GroundPlane=(B=63)
-     C_GroundHighlight=(B=127)
-     C_BrushWire=(R=255,G=63,B=63)
-     C_Pivot=(G=255)
-     C_Select=(B=127)
-     C_AddWire=(R=127,G=127,B=255)
-     C_SubtractWire=(R=255,G=192,B=63)
-     C_GreyWire=(R=163,G=163,B=163)
-     C_Invalid=(R=163,G=163,B=163)
-     C_ActorWire=(R=127,G=63)
-     C_ActorHiWire=(R=255,G=127)
-     C_White=(R=255,G=255,B=255)
-     C_SemiSolidWire=(R=127,G=255)
-     C_NonSolidWire=(R=63,G=192,B=32)
-     C_WireGridAxis=(R=119,G=119,B=119)
-     C_ActorArrow=(R=163)
-     C_ScaleBox=(R=151,G=67,B=11)
-     C_ScaleBoxHi=(R=223,G=149,B=157)
-     C_Mover=(R=255,B=255)
-     C_OrthoBackground=(R=163,G=163,B=163)
-     CacheSizeMegs=6
+      NotifyVtbl=
+      Level=None
+      TempModel=None
+      CurrentTexture=None
+      CurrentClass=None
+      Trans=None
+      Results=None
+      Pad(0)=
+      Pad(1)=
+      Pad(2)=
+      Pad(3)=
+      Pad(4)=
+      Pad(5)=
+      Pad(6)=
+      Pad(7)=
+      MenuUp=Texture'Editor.B_MenuUp'
+      MenuDn=Texture'Editor.B_MenuDn'
+      CollOn=Texture'Editor.B_CollOn'
+      CollOff=Texture'Editor.B_CollOf'
+      PlyrOn=Texture'Editor.B_PlyrOn'
+      PlyrOff=Texture'Editor.B_PlyrOf'
+      LiteOn=Texture'Editor.B_LiteOn'
+      LiteOff=None
+      Bad=Texture'Editor.Bad'
+      Bkgnd=Texture'Editor.Bkgnd'
+      BkgndHi=Texture'Editor.BkgndHi'
+      bFastRebuild=False
+      bBootstrapping=False
+      AutoSaveIndex=6
+      AutoSaveCount=0
+      Mode=0
+      ClickFlags=0
+      MovementSpeed=0.000000
+      PackageContext=None
+      AddLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      AddPlane=(W=0.000000,X=0.000000,Y=0.000000,Z=0.000000)
+      Tools=()
+      BrowseClass=None
+      ConstraintsVtbl=
+      GridEnabled=True
+      SnapVertices=True
+      AffectRegion=False
+      TextureLock=False
+      SelectionLock=False
+      SnapDistance=10.000000
+      GridSize=(X=16.000000,Y=16.000000,Z=16.000000)
+      RotGridEnabled=True
+      RotGridSize=(Pitch=1024,Yaw=1024,Roll=1024)
+      FovAngleDegrees=90.000000
+      GodMode=True
+      AutoSave=False
+      AutosaveTimeMinutes=5
+      GameCommandLine="-log"
+      EditPackages=("Core","Engine","Editor","UWindow","Fire","IpDrv","UWeb","UBrowser","UnrealShare","UnrealI","UMenu","IpServer","Botpack","UTServerAdmin","UTMenu","UTBrowser","SlMod")
+      C_WorldBox=(R=0,G=0,B=107,A=0)
+      C_GroundPlane=(R=0,G=0,B=63,A=0)
+      C_GroundHighlight=(R=0,G=0,B=127,A=0)
+      C_BrushWire=(R=255,G=63,B=63,A=0)
+      C_Pivot=(R=0,G=255,B=0,A=0)
+      C_Select=(R=0,G=0,B=127,A=0)
+      C_Current=(R=0,G=0,B=0,A=0)
+      C_AddWire=(R=127,G=127,B=255,A=0)
+      C_SubtractWire=(R=255,G=192,B=63,A=0)
+      C_GreyWire=(R=163,G=163,B=163,A=0)
+      C_BrushVertex=(R=0,G=0,B=0,A=0)
+      C_BrushSnap=(R=0,G=0,B=0,A=0)
+      C_Invalid=(R=163,G=163,B=163,A=0)
+      C_ActorWire=(R=127,G=63,B=0,A=0)
+      C_ActorHiWire=(R=255,G=127,B=0,A=0)
+      C_Black=(R=0,G=0,B=0,A=0)
+      C_White=(R=255,G=255,B=255,A=0)
+      C_Mask=(R=0,G=0,B=0,A=0)
+      C_SemiSolidWire=(R=127,G=255,B=0,A=0)
+      C_NonSolidWire=(R=63,G=192,B=32,A=0)
+      C_WireBackground=(R=0,G=0,B=0,A=0)
+      C_WireGridAxis=(R=119,G=119,B=119,A=0)
+      C_ActorArrow=(R=163,G=0,B=0,A=0)
+      C_ScaleBox=(R=151,G=67,B=11,A=0)
+      C_ScaleBoxHi=(R=223,G=149,B=157,A=0)
+      C_ZoneWire=(R=0,G=0,B=0,A=0)
+      C_Mover=(R=255,G=0,B=255,A=0)
+      C_OrthoBackground=(R=163,G=163,B=163,A=0)
+      ScaledSmallFont=None
+      ScaledMedFont=None
+      ScaledBigFont=None
+      ScaledLargeFont=None
+      CacheSizeMegs=6
 }

@@ -24,10 +24,10 @@ simulated function EndAnim()
 
 defaultproperties
 {
-     bHighDetail=True
-     LifeSpan=5.000000
-     AnimSequence=Explo
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.BSpot'
-     AmbientGlow=100
+      bHighDetail=True
+      LifeSpan=5.000000
+      AnimSequence="Explo"
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.BSpot'
+      AmbientGlow=100
 }

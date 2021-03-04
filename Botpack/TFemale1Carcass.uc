@@ -6,5 +6,5 @@ class TFemale1Carcass extends TFemaleBody;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.FCommando'
+      Mesh=LodMesh'Botpack.FCommando'
 }

@@ -14,6 +14,6 @@ class Flame extends Effects;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     bUnlit=True
+      DrawType=DT_Mesh
+      bUnlit=True
 }

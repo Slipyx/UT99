@@ -178,7 +178,9 @@ Repeater:
 	{
 		if ( PlayerPawn(Owner) != None )
 			PlayerPawn(Owner).ShakeView(ShakeTime, ShakeMag, ShakeVert);
-		ClipCount++;	
+		ClipCount++;
+		if ( FiringSpeed>0 )
+			Pawn(Owner).PlayRecoil(FiringSpeed);
 		TraceFire(AltAccuracy);
 		PlayAltFiring();	
 		FinishAnim();
@@ -287,36 +289,38 @@ Begin:
 
 defaultproperties
 {
-     hitdamage=17
-     AmmoName=Class'UnrealShare.ShellBox'
-     PickupAmmoCount=20
-     bInstantHit=True
-     bAltInstantHit=True
-     FireOffset=(Y=-10.000000,Z=-4.000000)
-     shakemag=200.000000
-     shakevert=4.000000
-     AIRating=0.200000
-     RefireRate=0.700000
-     AltRefireRate=0.900000
-     FireSound=Sound'UnrealShare.AutoMag.shot'
-     AltFireSound=Sound'UnrealShare.AutoMag.shot'
-     CockingSound=Sound'UnrealShare.AutoMag.Cocking'
-     SelectSound=Sound'UnrealShare.AutoMag.Cocking'
-     Misc1Sound=Sound'UnrealShare.flak.Click'
-     Misc2Sound=Sound'UnrealShare.AutoMag.Reload'
-     DeathMessage="%o got gatted by %k's %w."
-     AutoSwitchPriority=2
-     InventoryGroup=2
-     PickupMessage="You got the AutoMag"
-     ItemName="Automag"
-     PlayerViewOffset=(X=4.800000,Y=-1.700000,Z=-2.700000)
-     PlayerViewMesh=LodMesh'UnrealShare.AutoMagL'
-     PickupViewMesh=LodMesh'UnrealShare.AutoMagPickup'
-     ThirdPersonMesh=LodMesh'UnrealShare.auto3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealShare.AutoMagPickup'
-     bNoSmooth=False
-     CollisionRadius=25.000000
-     CollisionHeight=10.000000
-     Mass=15.000000
+      hitdamage=17
+      AltAccuracy=0.000000
+      ClipCount=0
+      AmmoName=Class'UnrealShare.ShellBox'
+      PickupAmmoCount=20
+      bInstantHit=True
+      bAltInstantHit=True
+      FireOffset=(Y=-10.000000,Z=-4.000000)
+      shakemag=200.000000
+      shakevert=4.000000
+      AIRating=0.200000
+      RefireRate=0.700000
+      AltRefireRate=0.900000
+      FireSound=Sound'UnrealShare.AutoMag.shot'
+      AltFireSound=Sound'UnrealShare.AutoMag.shot'
+      CockingSound=Sound'UnrealShare.AutoMag.Cocking'
+      SelectSound=Sound'UnrealShare.AutoMag.Cocking'
+      Misc1Sound=Sound'UnrealShare.flak.Click'
+      Misc2Sound=Sound'UnrealShare.AutoMag.Reload'
+      DeathMessage="%o got gatted by %k's %w."
+      AutoSwitchPriority=2
+      InventoryGroup=2
+      PickupMessage="You got the AutoMag"
+      ItemName="Automag"
+      PlayerViewOffset=(X=4.800000,Y=-1.700000,Z=-2.700000)
+      PlayerViewMesh=LodMesh'UnrealShare.AutoMagL'
+      PickupViewMesh=LodMesh'UnrealShare.AutoMagPickup'
+      ThirdPersonMesh=LodMesh'UnrealShare.auto3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealShare.AutoMagPickup'
+      bNoSmooth=False
+      CollisionRadius=25.000000
+      CollisionHeight=10.000000
+      Mass=15.000000
 }

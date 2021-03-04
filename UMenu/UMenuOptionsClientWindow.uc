@@ -4,7 +4,7 @@ class UMenuOptionsClientWindow extends UWindowDialogClientWindow
 var UMenuPageControl Pages;
 var UWindowSmallCloseButton CloseButton;
 
-var localized string GamePlayTab, InputTab, ControlsTab, AudioTab, VideoTab, NetworkTab, HUDTab;
+var localized string GamePlayTab, InputTab, ControlsTab, AudioTab, VideoTab, NetworkTab, HUDTab, AdvancedTab;
 var UWindowPageControlPage Network;
 
 function Created() 
@@ -17,6 +17,8 @@ function Created()
 	Pages.AddPage(ControlsTab, class'UMenuCustomizeScrollClient');
 	Pages.AddPage(InputTab, class'UMenuInputOptionsScrollClient');
 	Pages.AddPage(HUDTab, class'UMenuHUDConfigScrollClient');
+	if (!(GetPlayerOwner().ConsoleCommand("RELAUNCHSUPPORT") ~= "ENABLED"))
+	    Pages.AddPage(AdvancedTab, class 'UMenuAdvancedScrollClient');
 	Network = Pages.AddPage(NetworkTab, class'UMenuNetworkScrollClient');
 	CloseButton = UWindowSmallCloseButton(CreateControl(class'UWindowSmallCloseButton', WinWidth-56, WinHeight-24, 48, 16));
 	Super.Created();
@@ -51,11 +53,15 @@ function GetDesiredDimensions(out float W, out float H)
 
 defaultproperties
 {
-     GamePlayTab="Game"
-     InputTab="Input"
-     ControlsTab="Controls"
-     AudioTab="Audio"
-     VideoTab="Video"
-     NetworkTab="Network"
-     HUDTab="HUD"
+      Pages=None
+      CloseButton=None
+      GamePlayTab="Game"
+      InputTab="Input"
+      ControlsTab="Controls"
+      AudioTab="Audio"
+      VideoTab="Video"
+      NetworkTab="Network"
+      HUDTab="HUD"
+      AdvancedTab="Advanced"
+      Network=None
 }

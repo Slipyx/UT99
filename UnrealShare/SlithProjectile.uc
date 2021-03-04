@@ -83,7 +83,12 @@ auto state Flying
 		i=-1;
 		if (FRand() < 0.5)
 			DrawScale = 0.3 + 0.7 * FRand();
-		Velocity = Vector(Rotation) * speed;	
+		if ( Role == ROLE_Authority )
+		{
+		    Velocity = Vector(Rotation) * speed;
+			if (Region.Zone.bWaterZone)
+			    Velocity = Velocity * 0.7;
+		}
 		SetTimer(0.2,True);
 		RotationRate.Yaw = Int(200000 * FRand()) - 100000;
 		RotationRate.Pitch = Int(FRand() * (200000 - Abs(RotationRate.Yaw))) 
@@ -92,8 +97,6 @@ auto state Flying
 		SurfaceNormal = Vect(0,0,0);
 		bInAir=True;
 		PlaySound(SpawnSound);
-		if( Region.zone.bWaterZone )
-			Velocity=Velocity*0.7;
 	}
 }
 
@@ -122,23 +125,28 @@ Begin:
 
 defaultproperties
 {
-     speed=750.000000
-     Damage=40.000000
-     MomentumTransfer=20000
-     SpawnSound=Sound'UnrealShare.Slith.SliSpawn'
-     ImpactSound=Sound'UnrealShare.Slith.SliImpact'
-     bNetTemporary=False
-     Mesh=LodMesh'UnrealShare.ngel'
-     DrawScale=0.500000
-     bUnlit=True
-     CollisionRadius=6.000000
-     CollisionHeight=4.000000
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=101
-     LightHue=88
-     LightSaturation=9
-     LightRadius=4
-     bBounce=True
-     bFixedRotationDir=True
+      RandRot=(Pitch=0,Yaw=0,Roll=0)
+      SurfaceNormal=(X=0.000000,Y=0.000000,Z=0.000000)
+      bInAir=False
+      DotProduct=0.000000
+      i=0
+      speed=750.000000
+      Damage=40.000000
+      MomentumTransfer=20000
+      SpawnSound=Sound'UnrealShare.Slith.SliSpawn'
+      ImpactSound=Sound'UnrealShare.Slith.SliImpact'
+      bNetTemporary=False
+      Mesh=LodMesh'UnrealShare.ngel'
+      DrawScale=0.500000
+      bUnlit=True
+      CollisionRadius=6.000000
+      CollisionHeight=4.000000
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=101
+      LightHue=88
+      LightSaturation=9
+      LightRadius=4
+      bBounce=True
+      bFixedRotationDir=True
 }

@@ -105,12 +105,12 @@ event bool Build()
 
 defaultproperties
 {
-     Height=256.000000
-     Width=256.000000
-     Breadth=512.000000
-     WidthSegments=4
-     DepthSegments=2
-     GroupName=Terrain
-     BitmapFilename="BBTerrain"
-     ToolTip="BSP Based Terrain"
+      Height=256.000000
+      Width=256.000000
+      Breadth=512.000000
+      WidthSegments=4
+      DepthSegments=2
+      GroupName="Terrain"
+      BitmapFilename="BBTerrain"
+      ToolTip="BSP Based Terrain"
 }

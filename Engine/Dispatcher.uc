@@ -46,5 +46,22 @@ Begin:
 
 defaultproperties
 {
-     Texture=Texture'Engine.S_Dispatcher'
+      OutEvents(0)="None"
+      OutEvents(1)="None"
+      OutEvents(2)="None"
+      OutEvents(3)="None"
+      OutEvents(4)="None"
+      OutEvents(5)="None"
+      OutEvents(6)="None"
+      OutEvents(7)="None"
+      OutDelays(0)=0.000000
+      OutDelays(1)=0.000000
+      OutDelays(2)=0.000000
+      OutDelays(3)=0.000000
+      OutDelays(4)=0.000000
+      OutDelays(5)=0.000000
+      OutDelays(6)=0.000000
+      OutDelays(7)=0.000000
+      i=0
+      Texture=Texture'Engine.S_Dispatcher'
 }

@@ -86,17 +86,19 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     MenuLength=5
-     HelpMessage(1)="Hit enter to modify game options, including loading and saving games, changing difficulty level, and starting a BotMatch."
-     HelpMessage(2)="Hit enter to modify Multiplayer setup options, including starting or joining a network game, and changing your appearance, name, or team."
-     HelpMessage(3)="Hit enter to customize controls."
-     HelpMessage(4)="Change sound and display options"
-     HelpMessage(5)="Hit enter to quit game."
-     HelpMessage(7)="Call TOLL FREE 1-877-4UNREAL to Order UNREAL!"
-     MenuList(1)="GAME"
-     MenuList(2)="MULTIPLAYER"
-     MenuList(3)="OPTIONS"
-     MenuList(4)="AUDIO/VIDEO"
-     MenuList(5)="QUIT"
-     MenuList(7)="ORDER INFO"
+      bBegun=False
+      bShareware=False
+      MenuLength=5
+      HelpMessage(1)="Hit enter to modify game options, including loading and saving games, changing difficulty level, and starting a BotMatch."
+      HelpMessage(2)="Hit enter to modify Multiplayer setup options, including starting or joining a network game, and changing your appearance, name, or team."
+      HelpMessage(3)="Hit enter to customize controls."
+      HelpMessage(4)="Change sound and display options"
+      HelpMessage(5)="Hit enter to quit game."
+      HelpMessage(7)="Call TOLL FREE 1-877-4UNREAL to Order UNREAL!"
+      MenuList(1)="GAME"
+      MenuList(2)="MULTIPLAYER"
+      MenuList(3)="OPTIONS"
+      MenuList(4)="AUDIO/VIDEO"
+      MenuList(5)="QUIT"
+      MenuList(7)="ORDER INFO"
 }

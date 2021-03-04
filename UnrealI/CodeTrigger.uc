@@ -46,4 +46,8 @@ function Touch( actor Other )
 
 defaultproperties
 {
+      Code=0
+      CodeMasterTag="None"
+      cdMaster=None
+      elMover=None
 }

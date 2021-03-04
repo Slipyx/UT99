@@ -348,12 +348,20 @@ function PlayVictoryDance()
 	
 function ClawDamageTarget()
 {
+	if (Target == None)
+	    return;
 	MeleeDamageTarget(ClawDamage, (ClawDamage * 1000.0 * Normal(Target.Location - Location)));
 }
 	
 function PlayMeleeAttack()
 {
 	local float decision;
+
+	if (Target == None)
+	{
+		PlayChallenge();
+		return;
+	}
 	
 	decision = FRand();
 	Acceleration = AccelRate * Normal(Target.Location - Location);
@@ -393,6 +401,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal, EnemyDir, projStart;
 	local actor HitActor;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+	    return false;
 
 	EnemyDir = Enemy.Location - Location + Enemy.CollisionHeight * vect(0,0,0.8);	
 	EnemyDist = VSize(EnemyDir);
@@ -458,48 +469,52 @@ ignores SeePlayer, HearNoise, Bump;
 
 defaultproperties
 {
-     ClawDamage=25
-     Die2=Sound'UnrealShare.Slith.deathWsl'
-     SLASH=Sound'UnrealShare.Slith.yell4sl'
-     SLITHER=Sound'UnrealShare.Slith.slithr1sl'
-     Swim=Sound'UnrealShare.Slith.swim1sl'
-     DIVE=Sound'UnrealShare.Slith.dive2sl'
-     Surface=Sound'UnrealShare.Slith.surf1sl'
-     SCRATCH=Sound'UnrealShare.Slith.scratch1sl'
-     CarcassType=Class'UnrealShare.SlithCarcass'
-     TimeBetweenAttacks=1.200000
-     Aggressiveness=0.700000
-     RefireRate=0.400000
-     WalkingSpeed=0.300000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     RangedProjectile=Class'UnrealShare.SlithProjectile'
-     ProjectileSpeed=750.000000
-     Acquire=Sound'UnrealShare.Slith.yell1sl'
-     Fear=Sound'UnrealShare.Slith.yell3sl'
-     Roam=Sound'UnrealShare.Slith.roam1sl'
-     Threaten=Sound'UnrealShare.Slith.yell2sl'
-     MeleeRange=50.000000
-     GroundSpeed=250.000000
-     WaterSpeed=280.000000
-     AccelRate=850.000000
-     JumpZ=120.000000
-     Visibility=150
-     SightRadius=2000.000000
-     Health=210
-     ReducedDamageType=Corroded
-     ReducedDamagePct=1.000000
-     UnderWaterTime=-1.000000
-     HitSound1=Sound'UnrealShare.Slith.injur1sl'
-     HitSound2=Sound'UnrealShare.Slith.injur2sl'
-     Die=Sound'UnrealShare.Slith.deathLsl'
-     CombatStyle=0.850000
-     AmbientSound=Sound'UnrealShare.Slith.amb1sl'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Slith1'
-     CollisionRadius=48.000000
-     CollisionHeight=44.000000
-     Mass=200.000000
-     Buoyancy=200.000000
-     RotationRate=(Pitch=3072,Yaw=40000,Roll=6000)
+      ClawDamage=25
+      bFirstAttack=False
+      Die2=Sound'UnrealShare.Slith.deathWsl'
+      SLICK=None
+      SLASH=Sound'UnrealShare.Slith.yell4sl'
+      slice=None
+      SLITHER=Sound'UnrealShare.Slith.slithr1sl'
+      Swim=Sound'UnrealShare.Slith.swim1sl'
+      DIVE=Sound'UnrealShare.Slith.dive2sl'
+      Surface=Sound'UnrealShare.Slith.surf1sl'
+      SCRATCH=Sound'UnrealShare.Slith.scratch1sl'
+      Charge=None
+      CarcassType=Class'UnrealShare.SlithCarcass'
+      TimeBetweenAttacks=1.200000
+      Aggressiveness=0.700000
+      RefireRate=0.400000
+      WalkingSpeed=0.300000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      RangedProjectile=Class'UnrealShare.SlithProjectile'
+      ProjectileSpeed=750.000000
+      Acquire=Sound'UnrealShare.Slith.yell1sl'
+      Fear=Sound'UnrealShare.Slith.yell3sl'
+      Roam=Sound'UnrealShare.Slith.roam1sl'
+      Threaten=Sound'UnrealShare.Slith.yell2sl'
+      MeleeRange=50.000000
+      GroundSpeed=250.000000
+      WaterSpeed=280.000000
+      AccelRate=850.000000
+      JumpZ=120.000000
+      Visibility=150
+      SightRadius=2000.000000
+      Health=210
+      ReducedDamageType="Corroded"
+      ReducedDamagePct=1.000000
+      UnderWaterTime=-1.000000
+      HitSound1=Sound'UnrealShare.Slith.injur1sl'
+      HitSound2=Sound'UnrealShare.Slith.injur2sl'
+      Die=Sound'UnrealShare.Slith.deathLsl'
+      CombatStyle=0.850000
+      AmbientSound=Sound'UnrealShare.Slith.amb1sl'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Slith1'
+      CollisionRadius=48.000000
+      CollisionHeight=44.000000
+      Mass=200.000000
+      Buoyancy=200.000000
+      RotationRate=(Pitch=3072,Yaw=40000,Roll=6000)
 }

@@ -135,37 +135,22 @@ simulated function AnimEnd()
 // set which hand is holding weapon
 function setHand(float Hand)
 {
-	if ( Hand == 2 )
+	if ( Hand != 2 ) //Not center
 	{
-		FireOffset.Y = 0;
-		bHideWeapon = true;
-		if ( PlasmaBeam != None )
-			PlasmaBeam.bCenter = true;
-		return;
-	}
-	else
-		bHideWeapon = false;
-	PlayerViewOffset = Default.PlayerViewOffset * 100;
-	if ( Hand == 1 )
-	{
-		if ( PlasmaBeam != None )
+		if ( Hand == 1 ) //Left
+			Mesh = Mesh(DynamicLoadObject("Botpack.PulseGunL", class'Mesh'));
+		else
 		{
-			PlasmaBeam.bCenter = false;
-			PlasmaBeam.bRight = false;
+			Hand = -1; //Force right
+			Mesh = Mesh'PulseGunR';
 		}
-		FireOffset.Y = Default.FireOffset.Y;
-		Mesh = mesh(DynamicLoadObject("Botpack.PulseGunL", class'Mesh'));
 	}
-	else
+	if ( PlasmaBeam != None )
 	{
-		if ( PlasmaBeam != None )
-		{
-			PlasmaBeam.bCenter = false;
-			PlasmaBeam.bRight = true;
-		}
-		FireOffset.Y = -1 * Default.FireOffset.Y;
-		Mesh = mesh'PulseGunR';
+		PlasmaBeam.bCenter = (Hand == 2);
+		PlasmaBeam.bRight = (Hand == -1);
 	}
+	Super.SetHand( Hand );
 }
 
 // return delta to combat style
@@ -250,18 +235,17 @@ function AltFire( float Value )
 	}
 }
 
-simulated event RenderTexture(ScriptedTexture Tex)
+simulated event RenderTexture( ScriptedTexture Tex)
 {
 	local Color C;
 	local string Temp;
 	
-	Temp = String(AmmoType.AmmoAmount);
-
-	while(Len(Temp) < 3) Temp = "0"$Temp;
+	if ( AmmoType == None ) //!!
+		return;
 
 	Tex.DrawTile( 30, 100, (Min(AmmoType.AmmoAmount,AmmoType.Default.AmmoAmount)*196)/AmmoType.Default.AmmoAmount, 10, 0, 0, 1, 1, Texture'AmmoCountBar', False );
 
-	if(AmmoType.AmmoAmount < 10)
+	if ( AmmoType.AmmoAmount < 10 )
 	{
 		C.R = 255;
 		C.G = 0;
@@ -273,7 +257,9 @@ simulated event RenderTexture(ScriptedTexture Tex)
 		C.G = 0;
 		C.B = 255;
 	}
-
+	Temp = string(AmmoType.AmmoAmount);
+	while( Len(Temp) < 3 )
+		Temp = "0"$Temp;
 	Tex.DrawColoredText( 56, 14, Temp, Font'LEDFont', C );	
 }
 
@@ -297,7 +283,7 @@ state NormalFire
 
 	function Tick( float DeltaTime )
 	{
-		if (Owner==None) 
+		if ( Owner==None ) 
 			GotoState('Pickup');
 	}
 
@@ -331,9 +317,22 @@ simulated function PlaySpinDown()
 	}
 }	
 
-state ClientFiring
+simulated state ClientFiring
 {
-	simulated function Tick( float DeltaTime )
+	simulated event BeginState()
+	{
+		Super.BeginState();
+		AmbientGlow = 200;
+	}
+	
+	simulated event EndState()
+	{
+		Super.EndState();
+		AmbientSound = None;
+		AmbientGlow = 0;
+	}
+
+	simulated event Tick( float DeltaTime )
 	{
 		if ( (Pawn(Owner) != None) && (Pawn(Owner).bFire != 0) )
 			AmbientSound = FireSound;
@@ -341,7 +340,7 @@ state ClientFiring
 			AmbientSound = None;
 	}
 
-	simulated function AnimEnd()
+	simulated event AnimEnd()
 	{
 		if ( (AmmoType != None) && (AmmoType.AmmoAmount <= 0) )
 		{
@@ -365,12 +364,45 @@ state ClientFiring
 			GotoState('');
 		}
 	}
+Begin:
+	Sleep(0.18);
+	if ( (Pawn(Owner) != None) && (Pawn(Owner).bFire != 0) )
+		Goto('Begin');
+	AnimEnd();
 }
 
 ///////////////////////////////////////////////////////////////
 state ClientAltFiring
 {
-	simulated function AnimEnd()
+	simulated event BeginState()
+	{
+		Super.BeginState();
+		Count = 0;
+		AmbientGlow = 200;
+	}
+	
+	simulated event EndState()
+	{
+		Super.EndState();
+		AmbientSound = None;
+		AmbientGlow = 0;
+	}
+
+	simulated event Tick( float DeltaTime)
+	{
+		if ( Pawn(Owner) == None || Pawn(Owner).bAltFire == 0 )
+			AnimEnd();
+
+		Count += DeltaTime;
+		if ( Count > 0.24 )
+		{
+			if ( Affector != None )
+				Affector.FireEffect();
+			Count -= 0.24;
+		}
+	}
+
+	simulated event AnimEnd()
 	{
 		if ( AmmoType.AmmoAmount <= 0 )
 		{
@@ -410,8 +442,8 @@ state AltFiring
 			GotoState('Pickup');
 			return;
 		}
-		if ( (P.bAltFire == 0) || (P.IsA('Bot')
-					&& ((P.Enemy == None) || (Level.TimeSeconds - Bot(P).LastSeenTime > 5))) )
+		if ( (P.bAltFire == 0) 
+		|| (P.IsA('Bot') && ((P.Enemy == None) || (Level.TimeSeconds - Bot(P).LastSeenTime > 5))) )
 		{
 			P.bAltFire = 0;
 			Finish();
@@ -484,48 +516,51 @@ simulated function TweenDown()
 
 defaultproperties
 {
-     DownSound=Sound'Botpack.PulseGun.PulseDown'
-     WeaponDescription="Classification: Plasma Rifle\n\nPrimary Fire: Medium sized, fast moving plasma balls are fired at a fast rate of fire.\n\nSecondary Fire: A bolt of green lightning is expelled for 100 meters, which will shock all opponents.\n\nTechniques: Firing and keeping the secondary fire's lightning on an opponent will melt them in seconds."
-     InstFlash=-0.150000
-     InstFog=(X=139.000000,Y=218.000000,Z=72.000000)
-     AmmoName=Class'Botpack.PAmmo'
-     PickupAmmoCount=60
-     bRapidFire=True
-     FireOffset=(X=15.000000,Y=-15.000000,Z=2.000000)
-     ProjectileClass=Class'Botpack.PlasmaSphere'
-     AltProjectileClass=Class'Botpack.StarterBolt'
-     shakemag=135.000000
-     shakevert=8.000000
-     AIRating=0.700000
-     RefireRate=0.950000
-     AltRefireRate=0.990000
-     FireSound=Sound'Botpack.PulseGun.PulseFire'
-     AltFireSound=Sound'Botpack.PulseGun.PulseBolt'
-     SelectSound=Sound'Botpack.PulseGun.PulsePickup'
-     MessageNoAmmo=" has no Plasma."
-     DeathMessage="%o ate %k's burning plasma death."
-     NameColor=(R=128,B=128)
-     FlashLength=0.020000
-     AutoSwitchPriority=5
-     InventoryGroup=5
-     PickupMessage="You got a Pulse Gun"
-     ItemName="Pulse Gun"
-     PlayerViewOffset=(X=1.500000,Z=-2.000000)
-     PlayerViewMesh=LodMesh'Botpack.PulseGunR'
-     PickupViewMesh=LodMesh'Botpack.PulsePickup'
-     ThirdPersonMesh=LodMesh'Botpack.PulseGun3rd'
-     ThirdPersonScale=0.400000
-     StatusIcon=Texture'Botpack.Icons.UsePulse'
-     bMuzzleFlashParticles=True
-     MuzzleFlashStyle=STY_Translucent
-     MuzzleFlashMesh=LodMesh'Botpack.muzzPF3'
-     MuzzleFlashScale=0.400000
-     MuzzleFlashTexture=Texture'Botpack.Skins.MuzzyPulse'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UsePulse'
-     Mesh=LodMesh'Botpack.PulsePickup'
-     bNoSmooth=False
-     SoundRadius=64
-     SoundVolume=255
-     CollisionRadius=32.000000
+      Angle=0.000000
+      Count=0.000000
+      PlasmaBeam=None
+      DownSound=Sound'Botpack.PulseGun.PulseDown'
+      WeaponDescription="Classification: Plasma Rifle\n\nPrimary Fire: Medium sized, fast moving plasma balls are fired at a fast rate of fire.\n\nSecondary Fire: A bolt of green lightning is expelled for 100 meters, which will shock all opponents.\n\nTechniques: Firing and keeping the secondary fire's lightning on an opponent will melt them in seconds."
+      InstFlash=-0.150000
+      InstFog=(X=139.000000,Y=218.000000,Z=72.000000)
+      AmmoName=Class'Botpack.PAmmo'
+      PickupAmmoCount=60
+      bRapidFire=True
+      FireOffset=(X=15.000000,Y=-15.000000,Z=2.000000)
+      ProjectileClass=Class'Botpack.PlasmaSphere'
+      AltProjectileClass=Class'Botpack.StarterBolt'
+      shakemag=135.000000
+      shakevert=8.000000
+      AIRating=0.700000
+      RefireRate=0.950000
+      AltRefireRate=0.990000
+      FireSound=Sound'Botpack.PulseGun.PulseFire'
+      AltFireSound=Sound'Botpack.PulseGun.PulseBolt'
+      SelectSound=Sound'Botpack.PulseGun.PulsePickup'
+      MessageNoAmmo=" has no Plasma."
+      DeathMessage="%o ate %k's burning plasma death."
+      NameColor=(R=128,B=128)
+      FlashLength=0.020000
+      AutoSwitchPriority=5
+      InventoryGroup=5
+      PickupMessage="You got a Pulse Gun"
+      ItemName="Pulse Gun"
+      PlayerViewOffset=(X=1.500000,Z=-2.000000)
+      PlayerViewMesh=LodMesh'Botpack.PulseGunR'
+      PickupViewMesh=LodMesh'Botpack.PulsePickup'
+      ThirdPersonMesh=LodMesh'Botpack.PulseGun3rd'
+      ThirdPersonScale=0.400000
+      StatusIcon=Texture'Botpack.Icons.UsePulse'
+      bMuzzleFlashParticles=True
+      MuzzleFlashStyle=STY_Translucent
+      MuzzleFlashMesh=LodMesh'Botpack.muzzPF3'
+      MuzzleFlashScale=0.400000
+      MuzzleFlashTexture=Texture'Botpack.Skins.MuzzyPulse'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UsePulse'
+      Mesh=LodMesh'Botpack.PulsePickup'
+      bNoSmooth=False
+      SoundRadius=64
+      SoundVolume=255
+      CollisionRadius=32.000000
 }

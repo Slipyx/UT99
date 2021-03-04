@@ -15,5 +15,5 @@ class SquareStud extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.SquareStud'
+      Mesh=LodMesh'Botpack.SquareStud'
 }

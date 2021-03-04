@@ -30,16 +30,16 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.TBurst'
-     AmbientGlow=157
-     bUnlit=True
-     bNoSmooth=True
-     LightType=LT_Steady
-     LightBrightness=140
-     LightHue=29
-     LightSaturation=160
-     LightRadius=3
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.TBurst'
+      AmbientGlow=157
+      bUnlit=True
+      bNoSmooth=True
+      LightType=LT_Steady
+      LightBrightness=140
+      LightHue=29
+      LightSaturation=160
+      LightRadius=3
 }

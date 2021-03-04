@@ -100,17 +100,22 @@ Begin:
 
 defaultproperties
 {
-     bCanHaveMultipleCopies=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You got the Nali fruit seeds"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'UnrealI.Seed'
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     Icon=Texture'UnrealI.Icons.I_Seed'
-     Mesh=LodMesh'UnrealI.Seed'
-     CollisionRadius=12.000000
-     CollisionHeight=4.000000
-     bCollideWorld=True
-     bProjTarget=True
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      F=None
+      ShrinkTime=0.000000
+      bCanHaveMultipleCopies=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You got the Nali fruit seeds"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'UnrealI.Seed'
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      Icon=Texture'UnrealI.Icons.I_Seed'
+      Mesh=LodMesh'UnrealI.Seed'
+      CollisionRadius=12.000000
+      CollisionHeight=4.000000
+      bCollideWorld=True
+      bProjTarget=True
 }

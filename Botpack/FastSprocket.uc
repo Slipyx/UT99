@@ -15,5 +15,5 @@ class FastSprocket extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.FastSprocket'
+      Mesh=LodMesh'Botpack.FastSprocket'
 }

@@ -395,62 +395,62 @@ simulated function PlayPostSelect()
 
 defaultproperties
 {
-     WeaponDescription="Classification: Heavy Shrapnel\n\nPrimary Fire: White hot chunks of scrap metal are sprayed forth, shotgun style.\n\nSecondary Fire: A grenade full of shrapnel is lobbed at the enemy.\n\nTechniques: The Flak Cannon is far more useful in close range combat situations."
-     InstFlash=-0.400000
-     InstFog=(X=650.000000,Y=450.000000,Z=190.000000)
-     AmmoName=Class'Botpack.FlakAmmo'
-     PickupAmmoCount=10
-     bWarnTarget=True
-     bAltWarnTarget=True
-     bSplashDamage=True
-     FiringSpeed=1.000000
-     FireOffset=(X=10.000000,Y=-11.000000,Z=-15.000000)
-     ProjectileClass=Class'Botpack.UTChunk'
-     AltProjectileClass=Class'Botpack.flakslug'
-     aimerror=700.000000
-     shakemag=350.000000
-     shaketime=0.150000
-     shakevert=8.500000
-     AIRating=0.750000
-     FireSound=Sound'UnrealShare.flak.shot1'
-     AltFireSound=Sound'UnrealShare.flak.Explode1'
-     CockingSound=Sound'UnrealI.flak.load1'
-     SelectSound=Sound'UnrealI.flak.pdown'
-     Misc2Sound=Sound'UnrealI.flak.Hidraul2'
-     DeathMessage="%o was ripped to shreds by %k's %w."
-     NameColor=(G=96,B=0)
-     bDrawMuzzleFlash=True
-     MuzzleScale=2.000000
-     FlashY=0.160000
-     FlashO=0.015000
-     FlashC=0.100000
-     FlashLength=0.020000
-     FlashS=256
-     MFTexture=Texture'Botpack.Skins.Flakmuz'
-     AutoSwitchPriority=8
-     InventoryGroup=8
-     PickupMessage="You got the Flak Cannon."
-     ItemName="Flak Cannon"
-     PlayerViewOffset=(X=1.500000,Y=-1.000000,Z=-1.650000)
-     PlayerViewMesh=LodMesh'Botpack.flakm'
-     PlayerViewScale=1.200000
-     BobDamping=0.972000
-     PickupViewMesh=LodMesh'Botpack.Flak2Pick'
-     ThirdPersonMesh=LodMesh'Botpack.FlakHand'
-     StatusIcon=Texture'Botpack.Icons.UseFlak'
-     bMuzzleFlashParticles=True
-     MuzzleFlashStyle=STY_Translucent
-     MuzzleFlashMesh=LodMesh'Botpack.muzzFF3'
-     MuzzleFlashScale=0.400000
-     MuzzleFlashTexture=Texture'Botpack.Skins.MuzzyFlak'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseFlak'
-     Mesh=LodMesh'Botpack.Flak2Pick'
-     bNoSmooth=False
-     CollisionRadius=32.000000
-     CollisionHeight=23.000000
-     LightBrightness=228
-     LightHue=30
-     LightSaturation=71
-     LightRadius=14
+      WeaponDescription="Classification: Heavy Shrapnel\n\nPrimary Fire: White hot chunks of scrap metal are sprayed forth, shotgun style.\n\nSecondary Fire: A grenade full of shrapnel is lobbed at the enemy.\n\nTechniques: The Flak Cannon is far more useful in close range combat situations."
+      InstFlash=-0.400000
+      InstFog=(X=650.000000,Y=450.000000,Z=190.000000)
+      AmmoName=Class'Botpack.FlakAmmo'
+      PickupAmmoCount=10
+      bWarnTarget=True
+      bAltWarnTarget=True
+      bSplashDamage=True
+      FiringSpeed=1.000000
+      FireOffset=(X=10.000000,Y=-11.000000,Z=-15.000000)
+      ProjectileClass=Class'Botpack.UTChunk'
+      AltProjectileClass=Class'Botpack.flakslug'
+      aimerror=700.000000
+      shakemag=350.000000
+      shaketime=0.150000
+      shakevert=8.500000
+      AIRating=0.750000
+      FireSound=Sound'UnrealShare.flak.shot1'
+      AltFireSound=Sound'UnrealShare.flak.Explode1'
+      CockingSound=Sound'UnrealI.flak.load1'
+      SelectSound=Sound'UnrealI.flak.pdown'
+      Misc2Sound=Sound'UnrealI.flak.Hidraul2'
+      DeathMessage="%o was ripped to shreds by %k's %w."
+      NameColor=(G=96,B=0)
+      bDrawMuzzleFlash=True
+      MuzzleScale=2.000000
+      FlashY=0.160000
+      FlashO=0.015000
+      FlashC=0.100000
+      FlashLength=0.020000
+      FlashS=256
+      MFTexture=Texture'Botpack.Skins.Flakmuz'
+      AutoSwitchPriority=8
+      InventoryGroup=8
+      PickupMessage="You got the Flak Cannon."
+      ItemName="Flak Cannon"
+      PlayerViewOffset=(X=1.500000,Y=-1.000000,Z=-1.650000)
+      PlayerViewMesh=LodMesh'Botpack.flakm'
+      PlayerViewScale=1.200000
+      BobDamping=0.972000
+      PickupViewMesh=LodMesh'Botpack.Flak2Pick'
+      ThirdPersonMesh=LodMesh'Botpack.FlakHand'
+      StatusIcon=Texture'Botpack.Icons.UseFlak'
+      bMuzzleFlashParticles=True
+      MuzzleFlashStyle=STY_Translucent
+      MuzzleFlashMesh=LodMesh'Botpack.muzzFF3'
+      MuzzleFlashScale=0.400000
+      MuzzleFlashTexture=Texture'Botpack.Skins.MuzzyFlak'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseFlak'
+      Mesh=LodMesh'Botpack.Flak2Pick'
+      bNoSmooth=False
+      CollisionRadius=32.000000
+      CollisionHeight=23.000000
+      LightBrightness=228
+      LightHue=30
+      LightSaturation=71
+      LightRadius=14
 }

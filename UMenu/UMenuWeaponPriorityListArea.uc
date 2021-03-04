@@ -72,7 +72,10 @@ function SaveConfigs()
 
 defaultproperties
 {
-     PriorityListClass=Class'UMenu.UMenuWeaponPriorityListBox'
-     AutoSwitchText="Auto-Switch Weapons"
-     AutoSwitchHelp="Automatically switch to a higher priority weapon when you pick it up.  If unchecked, you must switch to the new weapon manually."
+      PriorityList=None
+      PriorityListClass=Class'UMenu.UMenuWeaponPriorityListBox'
+      Frame=None
+      AutoSwitchCheck=None
+      AutoSwitchText="Auto-Switch Weapons"
+      AutoSwitchHelp="Automatically switch to a higher priority weapon when you pick it up.  If unchecked, you must switch to the new weapon manually."
 }

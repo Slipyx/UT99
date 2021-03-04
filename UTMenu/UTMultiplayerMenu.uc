@@ -52,6 +52,12 @@ function Created()
 	{
 		if(OnlineServices[i] == "")
 			break;
+
+		// stijn: skip over deprecated online services
+		if(OnlineServices[i] == "LOCALIZE,MPlayer" ||
+		   OnlineServices[i] == "LOCALIZE,Heat" ||
+		   OnlineServices[i] == "LOCALIZE,WON")
+		   continue;
 	
 		if(ParseOption(OnlineServices[i], 0) == "LOCALIZE")
 			S = Localize("OnlineServices", ParseOption(OnlineServices[i], 1), "UTMenu");
@@ -117,9 +123,57 @@ function Select(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     OnlineServices(0)="LOCALIZE,MPlayer"
-     OnlineServices(1)="LOCALIZE,Heat"
-     OnlineServices(2)="LOCALIZE,WON"
-     UBrowserClassName="UTBrowser.UTBrowserMainWindow"
-     StartGameClassName="UTMenu.UTStartGameWindow"
+      OnlineServices(0)="LOCALIZE,MPlayer"
+      OnlineServices(1)="LOCALIZE,Heat"
+      OnlineServices(2)="LOCALIZE,WON"
+      OnlineServices(3)=""
+      OnlineServices(4)=""
+      OnlineServices(5)=""
+      OnlineServices(6)=""
+      OnlineServices(7)=""
+      OnlineServices(8)=""
+      OnlineServices(9)=""
+      OnlineServiceItems(0)=None
+      OnlineServiceItems(1)=None
+      OnlineServiceItems(2)=None
+      OnlineServiceItems(3)=None
+      OnlineServiceItems(4)=None
+      OnlineServiceItems(5)=None
+      OnlineServiceItems(6)=None
+      OnlineServiceItems(7)=None
+      OnlineServiceItems(8)=None
+      OnlineServiceItems(9)=None
+      OnlineServiceCmdType(0)=""
+      OnlineServiceCmdType(1)=""
+      OnlineServiceCmdType(2)=""
+      OnlineServiceCmdType(3)=""
+      OnlineServiceCmdType(4)=""
+      OnlineServiceCmdType(5)=""
+      OnlineServiceCmdType(6)=""
+      OnlineServiceCmdType(7)=""
+      OnlineServiceCmdType(8)=""
+      OnlineServiceCmdType(9)=""
+      OnlineServiceCmdAction(0)=""
+      OnlineServiceCmdAction(1)=""
+      OnlineServiceCmdAction(2)=""
+      OnlineServiceCmdAction(3)=""
+      OnlineServiceCmdAction(4)=""
+      OnlineServiceCmdAction(5)=""
+      OnlineServiceCmdAction(6)=""
+      OnlineServiceCmdAction(7)=""
+      OnlineServiceCmdAction(8)=""
+      OnlineServiceCmdAction(9)=""
+      OnlineServiceHelp(0)=""
+      OnlineServiceHelp(1)=""
+      OnlineServiceHelp(2)=""
+      OnlineServiceHelp(3)=""
+      OnlineServiceHelp(4)=""
+      OnlineServiceHelp(5)=""
+      OnlineServiceHelp(6)=""
+      OnlineServiceHelp(7)=""
+      OnlineServiceHelp(8)=""
+      OnlineServiceHelp(9)=""
+      OnlineServiceCount=0
+      UBrowserClassName="UTBrowser.UTBrowserMainWindow"
+      StartGameClassName="UTMenu.UTStartGameWindow"
 }

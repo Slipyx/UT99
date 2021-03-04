@@ -11,18 +11,18 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     bNetTemporary=False
-     RemoteRole=ROLE_SimulatedProxy
-     AnimSequence=Shoot
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Skins.Muzzy'
-     Mesh=LodMesh'Botpack.MuzzFlash3'
-     DrawScale=0.100000
-     bUnlit=True
-     bParticles=True
-     LightBrightness=255
-     LightHue=39
-     LightSaturation=204
-     LightRadius=7
+      bNetTemporary=False
+      RemoteRole=ROLE_SimulatedProxy
+      AnimSequence="Shoot"
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Skins.Muzzy'
+      Mesh=LodMesh'Botpack.MuzzFlash3'
+      DrawScale=0.100000
+      bUnlit=True
+      bParticles=True
+      LightBrightness=255
+      LightHue=39
+      LightSaturation=204
+      LightRadius=7
 }

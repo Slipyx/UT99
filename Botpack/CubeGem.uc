@@ -15,5 +15,5 @@ class CubeGem extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.CubeGem'
+      Mesh=LodMesh'Botpack.CubeGem'
 }

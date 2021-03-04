@@ -5,6 +5,6 @@ class Spotlight extends Light;
 
 defaultproperties
 {
-     bDirectional=True
-     LightEffect=LE_Spotlight
+      bDirectional=True
+      LightEffect=LE_Spotlight
 }

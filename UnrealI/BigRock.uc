@@ -182,19 +182,19 @@ Begin:
 
 defaultproperties
 {
-     speed=900.000000
-     MaxSpeed=1000.000000
-     Damage=40.000000
-     ImpactSound=Sound'UnrealI.Titan.Rockhit'
-     bNetTemporary=False
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=20.000000
-     AnimSequence=Pos1
-     Mesh=LodMesh'UnrealI.TBoulder'
-     DrawScale=7.500000
-     CollisionRadius=30.000000
-     CollisionHeight=30.000000
-     bBounce=True
-     bFixedRotationDir=True
+      speed=900.000000
+      MaxSpeed=1000.000000
+      Damage=40.000000
+      ImpactSound=Sound'UnrealI.Titan.Rockhit'
+      bNetTemporary=False
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=20.000000
+      AnimSequence="Pos1"
+      Mesh=LodMesh'UnrealI.TBoulder'
+      DrawScale=7.500000
+      CollisionRadius=30.000000
+      CollisionHeight=30.000000
+      bBounce=True
+      bFixedRotationDir=True
 }

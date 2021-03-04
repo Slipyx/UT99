@@ -88,13 +88,19 @@ Begin:
 
 defaultproperties
 {
-     CubeDimensions=(X=50.000000,Y=50.000000,Z=50.000000)
-     TimeLength=10.000000
-     MinBetweenTime=1.000000
-     MaxBetweenTime=3.000000
-     MinScaleFactor=0.500000
-     MaxScaleFactor=1.000000
-     bStatic=False
-     Tag=Event1
-     Texture=Texture'UnrealShare.S_Bubble2'
+      CubeDimensions=(X=50.000000,Y=50.000000,Z=50.000000)
+      TimeLimit=False
+      TimeLength=10.000000
+      MinBetweenTime=1.000000
+      MaxBetweenTime=3.000000
+      MinScaleFactor=0.500000
+      MaxScaleFactor=1.000000
+      InitialDirection=(Pitch=0,Yaw=0,Roll=0)
+      minInitialSpeed=0.000000
+      maxInitialSpeed=0.000000
+      NextRockTime=0.000000
+      TotalPassedTime=0.000000
+      bStatic=False
+      Tag="Event1"
+      Texture=Texture'UnrealShare.S_Bubble2'
 }

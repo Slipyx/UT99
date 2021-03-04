@@ -108,8 +108,8 @@ exec function Say( string Msg )
 			}
 		return;
 	}
-	if ( Len(Msg) > 63 )
-		Msg = Left(Msg,63);
+//	if ( Len(Msg) > 63 )
+//		Msg = Left(Msg,63);
 	if ( !Level.Game.bMuteSpectators )
 		BroadcastMessage( PlayerReplicationInfo.PlayerName$":"$Msg, true );
 }
@@ -184,15 +184,15 @@ function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 
 defaultproperties
 {
-     bChaseCam=True
-     AirSpeed=400.000000
-     Visibility=0
-     AttitudeToPlayer=ATTITUDE_Friendly
-     MenuName="Spectator"
-     bHidden=True
-     bCollideActors=False
-     bCollideWorld=False
-     bBlockActors=False
-     bBlockPlayers=False
-     bProjTarget=False
+      bChaseCam=True
+      AirSpeed=400.000000
+      Visibility=0
+      AttitudeToPlayer=ATTITUDE_Friendly
+      MenuName="Spectator"
+      bHidden=True
+      bCollideActors=False
+      bCollideWorld=False
+      bBlockActors=False
+      bBlockPlayers=False
+      bProjTarget=False
 }

@@ -25,4 +25,5 @@ function Trigger( Actor Other, Pawn EventInstigator )
 
 defaultproperties
 {
+      Offset=(X=0.000000,Y=0.000000,Z=0.000000)
 }

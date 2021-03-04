@@ -14,8 +14,8 @@ class UT_FemaleFoot extends UTPlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.femalefootm'
-     CollisionRadius=25.000000
-     CollisionHeight=6.000000
-     Mass=40.000000
+      Mesh=LodMesh'Botpack.femalefootm'
+      CollisionRadius=25.000000
+      CollisionHeight=6.000000
+      Mass=40.000000
 }

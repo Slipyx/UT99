@@ -32,5 +32,5 @@ ignores EnemyNotVisible;
 
 defaultproperties
 {
-     bOnlyIfEnemy=False
+      bOnlyIfEnemy=False
 }

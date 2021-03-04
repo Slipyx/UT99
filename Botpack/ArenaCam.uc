@@ -56,8 +56,10 @@ Begin:
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.ArenaCam'
-     DrawScale=9.500000
+      ArmDown=None
+      ArmLoop=None
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.ArenaCam'
+      DrawScale=9.500000
 }

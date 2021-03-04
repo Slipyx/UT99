@@ -87,7 +87,7 @@ state AltFiring
 		Start = Owner.Location + CalcDrawOffset() + FireOffset.X * X + FireOffset.Y * Y + FireOffset.Z * Z; 
 		AdjustedAim = pawn(owner).AdjustAim(ProjSpeed, Start, AimError, True, bWarn);	
 		AdjustedAim.Roll += 12768;		
-		RazorBlade(Spawn(ProjClass,,, Start,AdjustedAim));
+		return RazorBlade(Spawn(ProjClass,,, Start,AdjustedAim));
 	}
 
 Begin:
@@ -134,30 +134,30 @@ function PlayIdleAnim()
 
 defaultproperties
 {
-     AmmoName=Class'UnrealI.RazorAmmo'
-     PickupAmmoCount=15
-     FireOffset=(X=16.000000,Z=-15.000000)
-     ProjectileClass=Class'UnrealI.RazorBlade'
-     AltProjectileClass=Class'UnrealI.RazorBladeAlt'
-     shakemag=120.000000
-     AIRating=0.500000
-     RefireRate=0.830000
-     AltRefireRate=0.830000
-     SelectSound=Sound'UnrealI.Razorjack.beam'
-     DeathMessage="%k took a bloody chunk out of %o with the %w."
-     AutoSwitchPriority=7
-     InventoryGroup=7
-     PickupMessage="You got the RazorJack"
-     ItemName="Razorjack"
-     PlayerViewOffset=(X=2.000000,Z=-0.900000)
-     PlayerViewMesh=LodMesh'UnrealI.Razor'
-     BobDamping=0.970000
-     PickupViewMesh=LodMesh'UnrealI.RazPick'
-     ThirdPersonMesh=LodMesh'UnrealI.Razor3rd'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealI.RazPick'
-     bNoSmooth=False
-     CollisionRadius=28.000000
-     CollisionHeight=7.000000
-     Mass=17.000000
+      AmmoName=Class'UnrealI.RazorAmmo'
+      PickupAmmoCount=15
+      FireOffset=(X=16.000000,Z=-15.000000)
+      ProjectileClass=Class'UnrealI.RazorBlade'
+      AltProjectileClass=Class'UnrealI.RazorBladeAlt'
+      shakemag=120.000000
+      AIRating=0.500000
+      RefireRate=0.830000
+      AltRefireRate=0.830000
+      SelectSound=Sound'UnrealI.Razorjack.beam'
+      DeathMessage="%k took a bloody chunk out of %o with the %w."
+      AutoSwitchPriority=7
+      InventoryGroup=7
+      PickupMessage="You got the RazorJack"
+      ItemName="Razorjack"
+      PlayerViewOffset=(X=2.000000,Z=-0.900000)
+      PlayerViewMesh=LodMesh'UnrealI.Razor'
+      BobDamping=0.970000
+      PickupViewMesh=LodMesh'UnrealI.RazPick'
+      ThirdPersonMesh=LodMesh'UnrealI.Razor3rd'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealI.RazPick'
+      bNoSmooth=False
+      CollisionRadius=28.000000
+      CollisionHeight=7.000000
+      Mass=17.000000
 }

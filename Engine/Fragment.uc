@@ -166,16 +166,28 @@ state Dying
 
 defaultproperties
 {
-     bFirstHit=True
-     bNetTemporary=False
-     bNetOptional=True
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=20.000000
-     CollisionRadius=18.000000
-     CollisionHeight=4.000000
-     bCollideActors=False
-     bBounce=True
-     bFixedRotationDir=True
-     NetPriority=1.400000
+      Fragments(0)=None
+      Fragments(1)=None
+      Fragments(2)=None
+      Fragments(3)=None
+      Fragments(4)=None
+      Fragments(5)=None
+      Fragments(6)=None
+      Fragments(7)=None
+      Fragments(8)=None
+      Fragments(9)=None
+      Fragments(10)=None
+      numFragmentTypes=0
+      bFirstHit=True
+      bNetTemporary=False
+      bNetOptional=True
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=20.000000
+      CollisionRadius=18.000000
+      CollisionHeight=4.000000
+      bCollideActors=False
+      bBounce=True
+      bFixedRotationDir=True
+      NetPriority=1.400000
 }

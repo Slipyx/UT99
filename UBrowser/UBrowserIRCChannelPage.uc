@@ -126,5 +126,9 @@ function ChangeVoice(string Nick, bool bVoice)
 
 defaultproperties
 {
-     RightClickMenuClass=Class'UBrowser.UBrowserIRCChannelMenu'
+      ChannelName=""
+      SystemPage=None
+      UserList=None
+      Splitter=None
+      RightClickMenuClass=Class'UBrowser.UBrowserIRCChannelMenu'
 }

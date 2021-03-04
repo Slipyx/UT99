@@ -25,7 +25,7 @@ function AddDefaultInventory(pawn aPlayer)
 
 defaultproperties
 {
-     MapListType=Class'UnrealI.DKmaplist'
-     MapPrefix="DK"
-     GameName="DarkMatch"
+      MapListType=Class'UnrealI.DKmaplist'
+      MapPrefix="DK"
+      GameName="DarkMatch"
 }

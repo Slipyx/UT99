@@ -29,17 +29,17 @@ class UnrealMenu extends Menu;
 
 simulated function PlaySelectSound()
 {
-	PlayerOwner.PlaySound(sound'updown3');
+	PlayerOwner.PlaySound(sound'updown3', SLOT_Interface);
 }
 
 simulated function PlayModifySound()
 {
-	PlayerOwner.PlaySound(sound'Select4',,2.0);
+	PlayerOwner.PlaySound(sound'Select4', SLOT_Interface, 2.0);
 }
 
 simulated function PlayEnterSound() 
 {
-	PlayerOwner.PlaySound(sound'Select4',,2.0);
+	PlayerOwner.PlaySound(sound'Select4', SLOT_Interface, 2.0);
 }
 
 function DrawTitle(canvas Canvas)

@@ -14,5 +14,5 @@ class UT_HeadFemale extends UTHeads;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.HeadFemaleM'
+      Mesh=LodMesh'Botpack.HeadFemaleM'
 }

@@ -15,5 +15,5 @@ class ArrowStud extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.ArrowStud'
+      Mesh=LodMesh'Botpack.ArrowStud'
 }

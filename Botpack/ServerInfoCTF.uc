@@ -92,5 +92,5 @@ function DrawLeaderBoard( canvas C, GameReplicationInfo GRI )
 
 defaultproperties
 {
-     FlagsCapturedText="Flags Captured:"
+      FlagsCapturedText="Flags Captured:"
 }

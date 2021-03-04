@@ -105,6 +105,7 @@ var Enforcer SlaveEnforcer;		// The left (second) Enforcer is a slave to the rig
 var bool bIsSlave;
 var bool bSetup;				// used for setting display properties
 var bool bFirstFire, bBringingUp;
+var travel bool bHasSlave;	//v469: Double enforcer travel
 var() localized string DoubleName;
 var() texture MuzzleFlashVariations[5];
 var int DoubleSwitchPriority;
@@ -113,6 +114,26 @@ replication
 {
 	reliable if ( bNetOwner && (Role == ROLE_Authority) )
 		SlaveEnforcer, bIsSlave, bBringingUp;
+}
+
+event TravelPostAccept()
+{
+	Super.TravelPostAccept();
+	if ( Pawn(Owner) == None )
+		return;
+	if ( bHasSlave )
+	{
+		SlaveEnforcer = Spawn( Class, Owner);
+		if ( SlaveEnforcer != None )
+		{
+			SlaveEnforcer.BecomeItem();
+			SetTwoHands();
+			AIRating = 0.4;
+			SlaveEnforcer.SetUpSlave( Pawn(Owner).Weapon == self );
+			SlaveEnforcer.SetDisplayProperties( Style, Texture, bUnlit, bMeshEnviromap);
+			SetTwoHands();
+		}
+	}
 }
 
 function Destroyed()
@@ -144,7 +165,6 @@ function bool WeaponSet(Pawn Other)
 function SetSwitchPriority(pawn Other)
 {
 	local int i;
-	local name temp, carried;
 
 	if ( PlayerPawn(Other) != None )
 	{
@@ -165,7 +185,6 @@ function SetSwitchPriority(pawn Other)
 // modified by environment (or by other factors for bots)
 function float SwitchPriority() 
 {
-	local float temp;
 	local int bTemp;
 
 	if ( bIsSlave )
@@ -193,6 +212,7 @@ function DropFrom(vector StartLocation)
 		SlaveEnforcer.Destroy();
 	AIRating = Default.AIRating;
 	SlaveEnforcer = None;
+	bHasSlave = false;
 	Super.DropFrom(StartLocation);
 }
 
@@ -328,6 +348,7 @@ function SetTwoHands()
 	if ( SlaveEnforcer == None )
 		return;
 
+	bHasSlave = true;
 	if ( (PlayerPawn(Owner) != None) && (PlayerPawn(Owner).Handedness == 2) )
 	{
 		SetHand(2);
@@ -342,8 +363,6 @@ function SetTwoHands()
 
 function setHand(float Hand)
 {
-	local rotator newRot;
-
 	if ( Hand == 2 )
 	{
 		bHideWeapon = true;
@@ -427,13 +446,15 @@ simulated function PlayAltFiring()
 
 simulated function PlayRepeatFiring()
 {
-	if ( Affector != None )
-		Affector.FireEffect();
-	if ( PlayerPawn(Owner) != None )
+	if ( (PlayerPawn(Owner) != None) 
+		&& ((Level.NetMode == NM_Standalone) || PlayerPawn(Owner).Player.IsA('ViewPort')) )
 	{
-		PlayerPawn(Owner).ClientInstantFlash( -0.2, vect(325, 225, 95));
+		if ( InstFlash != 0.0 )
+			PlayerPawn(Owner).ClientInstantFlash( -0.2, vect(325, 225, 95));
 		PlayerPawn(Owner).ShakeView(ShakeTime, ShakeMag, ShakeVert);
 	}
+	if ( Affector != None )
+		Affector.FireEffect();
 	bMuzzleFlash++;
 	PlayOwnedSound(FireSound, SLOT_None,2.0*Pawn(Owner).SoundDampening);
 	PlayAnim('Shot2', 0.7 + 0.3 * FireAdjust, 0.05);
@@ -458,6 +479,18 @@ function AltFire( float Value )
 		ClientAltFire(value);
 		GotoState('AltFiring');
 	}
+}
+
+simulated function bool ClientAltFire( float Value )
+{
+	if ( bCanClientFire && ((Role == ROLE_Authority) || (AmmoType == None) || (AmmoType.AmmoAmount > 0)) )
+	{
+		PlayAltFiring();
+		if ( Role < ROLE_Authority )
+			GotoState('ClientAltFiring');
+		return true;
+	}
+	return false;
 }
 
 state Active
@@ -568,13 +601,10 @@ state ClientFiring
 		}
 		else if ( !bIsSlave && !bCanClientFire )
 			GotoState('');
-		else if ( bFirstFire || (Pawn(Owner).bAltFire != 0) )
-		{
-			PlayRepeatFiring();
-			bFirstFire = false;
-		}
 		else if ( Pawn(Owner).bFire != 0 )
 			Global.ClientFire(0);
+		else if ( Pawn(Owner).bAltFire != 0 )
+			Global.ClientAltFire(0);
 		else
 		{
 			PlayIdleAnim();
@@ -628,15 +658,27 @@ state ClientAltFiring
 			GotoState('');
 		else if ( bFirstFire || (Pawn(Owner).bAltFire != 0) )
 		{
-			PlayRepeatFiring();
-			bFirstFire = false;
+			if ( AnimSequence == 'T2' )
+				PlayAltFiring();
+			else
+			{
+				PlayRepeatFiring();
+				bFirstFire = false;
+			}
 		}
 		else if ( Pawn(Owner).bFire != 0 )
-			Global.ClientFire(0);
+		{
+			if ( HasAnim('T2') && (AnimSequence != 'T2') )
+				PlayAnim('T2', 0.9, 0.05);	
+			else
+				Global.ClientFire(0);
+		}
 		else
 		{
-			PlayAnim('T2', 0.9, 0.05);	
-			GotoState('');
+			if ( HasAnim('T2') && (AnimSequence != 'T2') )
+				PlayAnim('T2', 0.9, 0.05);	
+			else
+				GotoState('');
 		}
 	}
 
@@ -864,63 +906,70 @@ State ClientDown
 
 defaultproperties
 {
-     hitdamage=17
-     DoubleName="Double Enforcer"
-     MuzzleFlashVariations(0)=Texture'Botpack.Skins.Muz1'
-     MuzzleFlashVariations(1)=Texture'Botpack.Skins.Muz2'
-     MuzzleFlashVariations(2)=Texture'Botpack.Skins.Muz3'
-     MuzzleFlashVariations(3)=Texture'Botpack.Skins.Muz4'
-     MuzzleFlashVariations(4)=Texture'Botpack.Skins.Muz5'
-     DoubleSwitchPriority=2
-     WeaponDescription="Classification: Light Pistol\n\nPrimary Fire: Accurate but slow firing instant hit.\n\nSecondary Fire: Sideways, or 'Gangsta' firing mode, shoots twice as fast and half as accurate as the primary fire.\n\nTechniques: Collect two for twice the damage."
-     InstFlash=-0.200000
-     InstFog=(X=325.000000,Y=225.000000,Z=95.000000)
-     AmmoName=Class'Botpack.Miniammo'
-     PickupAmmoCount=30
-     bInstantHit=True
-     bAltInstantHit=True
-     FiringSpeed=1.500000
-     FireOffset=(Y=-10.000000,Z=-4.000000)
-     MyDamageType=shot
-     shakemag=200.000000
-     shakevert=4.000000
-     AIRating=0.250000
-     RefireRate=0.800000
-     AltRefireRate=0.870000
-     FireSound=Sound'Botpack.enforcer.E_Shot'
-     AltFireSound=Sound'UnrealShare.AutoMag.shot'
-     CockingSound=Sound'Botpack.enforcer.Cocking'
-     SelectSound=Sound'Botpack.enforcer.Cocking'
-     DeathMessage="%k riddled %o full of holes with the %w."
-     NameColor=(R=200,G=200)
-     bDrawMuzzleFlash=True
-     MuzzleScale=1.000000
-     FlashY=0.100000
-     FlashO=0.020000
-     FlashC=0.035000
-     FlashLength=0.020000
-     FlashS=128
-     MFTexture=Texture'Botpack.Skins.Muz1'
-     AutoSwitchPriority=2
-     InventoryGroup=2
-     PickupMessage="You picked up another Enforcer!"
-     ItemName="Enforcer"
-     PlayerViewOffset=(X=3.300000,Y=-2.000000,Z=-3.000000)
-     PlayerViewMesh=LodMesh'Botpack.AutoML'
-     PickupViewMesh=LodMesh'Botpack.MagPick'
-     ThirdPersonMesh=LodMesh'Botpack.AutoHand'
-     StatusIcon=Texture'Botpack.Icons.UseAutoM'
-     bMuzzleFlashParticles=True
-     MuzzleFlashStyle=STY_Translucent
-     MuzzleFlashMesh=LodMesh'Botpack.muzzEF3'
-     MuzzleFlashScale=0.080000
-     MuzzleFlashTexture=Texture'Botpack.Skins.Muzzy2'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseAutoM'
-     bHidden=True
-     Mesh=LodMesh'Botpack.MagPick'
-     bNoSmooth=False
-     CollisionRadius=24.000000
-     CollisionHeight=12.000000
-     Mass=15.000000
+      hitdamage=17
+      AltAccuracy=0.000000
+      SlaveEnforcer=None
+      bIsSlave=False
+      bSetUp=False
+      bFirstFire=False
+      bBringingUp=False
+      bHasSlave=False
+      DoubleName="Double Enforcer"
+      MuzzleFlashVariations(0)=Texture'Botpack.Skins.Muz1'
+      MuzzleFlashVariations(1)=Texture'Botpack.Skins.Muz2'
+      MuzzleFlashVariations(2)=Texture'Botpack.Skins.Muz3'
+      MuzzleFlashVariations(3)=Texture'Botpack.Skins.Muz4'
+      MuzzleFlashVariations(4)=Texture'Botpack.Skins.Muz5'
+      DoubleSwitchPriority=2
+      WeaponDescription="Classification: Light Pistol\n\nPrimary Fire: Accurate but slow firing instant hit.\n\nSecondary Fire: Sideways, or 'Gangsta' firing mode, shoots twice as fast and half as accurate as the primary fire.\n\nTechniques: Collect two for twice the damage."
+      InstFlash=-0.200000
+      InstFog=(X=325.000000,Y=225.000000,Z=95.000000)
+      AmmoName=Class'Botpack.Miniammo'
+      PickupAmmoCount=30
+      bInstantHit=True
+      bAltInstantHit=True
+      FiringSpeed=1.500000
+      FireOffset=(Y=-10.000000,Z=-4.000000)
+      MyDamageType="shot"
+      shakemag=200.000000
+      shakevert=4.000000
+      AIRating=0.250000
+      RefireRate=0.800000
+      AltRefireRate=0.870000
+      FireSound=Sound'Botpack.enforcer.E_Shot'
+      AltFireSound=Sound'UnrealShare.AutoMag.shot'
+      CockingSound=Sound'Botpack.enforcer.Cocking'
+      SelectSound=Sound'Botpack.enforcer.Cocking'
+      DeathMessage="%k riddled %o full of holes with the %w."
+      NameColor=(R=200,G=200)
+      bDrawMuzzleFlash=True
+      MuzzleScale=1.000000
+      FlashY=0.100000
+      FlashO=0.020000
+      FlashC=0.035000
+      FlashLength=0.020000
+      FlashS=128
+      MFTexture=Texture'Botpack.Skins.Muz1'
+      AutoSwitchPriority=2
+      InventoryGroup=2
+      PickupMessage="You picked up another Enforcer!"
+      ItemName="Enforcer"
+      PlayerViewOffset=(X=3.300000,Y=-2.000000,Z=-3.000000)
+      PlayerViewMesh=LodMesh'Botpack.AutoML'
+      PickupViewMesh=LodMesh'Botpack.MagPick'
+      ThirdPersonMesh=LodMesh'Botpack.AutoHand'
+      StatusIcon=Texture'Botpack.Icons.UseAutoM'
+      bMuzzleFlashParticles=True
+      MuzzleFlashStyle=STY_Translucent
+      MuzzleFlashMesh=LodMesh'Botpack.muzzEF3'
+      MuzzleFlashScale=0.080000
+      MuzzleFlashTexture=Texture'Botpack.Skins.Muzzy2'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseAutoM'
+      bHidden=True
+      Mesh=LodMesh'Botpack.MagPick'
+      bNoSmooth=False
+      CollisionRadius=24.000000
+      CollisionHeight=12.000000
+      Mass=15.000000
 }

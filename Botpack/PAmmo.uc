@@ -14,13 +14,13 @@ class PAmmo extends TournamentAmmo;
 
 defaultproperties
 {
-     AmmoAmount=25
-     MaxAmmo=199
-     UsedInWeaponSlot(3)=1
-     PickupMessage="You picked up a Pulse Cell."
-     ItemName="Pulse Cell"
-     PickupViewMesh=LodMesh'Botpack.PAmmo'
-     Mesh=LodMesh'Botpack.PAmmo'
-     CollisionRadius=20.000000
-     CollisionHeight=12.000000
+      AmmoAmount=25
+      MaxAmmo=199
+      UsedInWeaponSlot(3)=1
+      PickupMessage="You picked up a Pulse Cell."
+      ItemName="Pulse Cell"
+      PickupViewMesh=LodMesh'Botpack.PAmmo'
+      Mesh=LodMesh'Botpack.PAmmo'
+      CollisionRadius=20.000000
+      CollisionHeight=12.000000
 }

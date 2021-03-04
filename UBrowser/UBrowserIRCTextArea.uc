@@ -95,6 +95,6 @@ function float DrawTextLine(Canvas C, UWindowDynamicTextRow L, float Y)
 
 defaultproperties
 {
-     IndentSize=4
-     MaxLines=500
+      IndentSize=4
+      MaxLines=500
 }

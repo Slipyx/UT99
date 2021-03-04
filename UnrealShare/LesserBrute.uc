@@ -71,19 +71,19 @@ ignores SeePlayer, HearNoise;
 
 defaultproperties
 {
-     WhipDamage=14
-     CarcassType=Class'UnrealShare.LesserBruteCarcass'
-     RefireRate=0.200000
-     GroundSpeed=130.000000
-     AccelRate=400.000000
-     Health=180
-     ReducedDamageType=None
-     ReducedDamagePct=0.000000
-     Skin=Texture'UnrealShare.Skins.Brute3'
-     DrawScale=0.800000
-     Fatness=110
-     CollisionRadius=42.000000
-     CollisionHeight=42.000000
-     Mass=250.000000
-     Buoyancy=240.000000
+      WhipDamage=14
+      CarcassType=Class'UnrealShare.LesserBruteCarcass'
+      RefireRate=0.200000
+      GroundSpeed=130.000000
+      AccelRate=400.000000
+      Health=180
+      ReducedDamageType="None"
+      ReducedDamagePct=0.000000
+      Skin=Texture'UnrealShare.Skins.Brute3'
+      DrawScale=0.800000
+      Fatness=110
+      CollisionRadius=42.000000
+      CollisionHeight=42.000000
+      Mass=250.000000
+      Buoyancy=240.000000
 }

@@ -99,7 +99,12 @@ function NoPressed()
 
 defaultproperties
 {
-     QueryText="Are you sure you want to remove this save game?"
-     YesText="Yes"
-     NoText="No"
+      QueryLabel=None
+      YesButton=None
+      NoButton=None
+      QueryText="Are you sure you want to remove this save game?"
+      YesText="Yes"
+      NoText="No"
+      SlotWindow=None
+      SlotIndex=0
 }

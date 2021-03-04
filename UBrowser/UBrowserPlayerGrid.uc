@@ -15,6 +15,7 @@ var localized string ngSecretText;
 var localized string EnabledText;
 var localized string DisabledText;
 var localized string BotText;
+var localized string HumanText;
 var int ngSecretWidth;
 var UWindowGridColumn ngSecretColumn;
 
@@ -62,22 +63,10 @@ function PaintColumn(Canvas C, UWindowGridColumn Column, float MouseX, float Mou
 	if(PlayerList == None)
 		return;
 	Count = PlayerList.Count();
-	if( Server.GameVer >= 406 )
+	if( ngSecretColumn.WinWidth <= 1 )
 	{
-		if( ngSecretColumn.WinWidth <= 1 )
-		{
-			ngSecretColumn.ShowWindow();
-			ngSecretColumn.WinWidth = ngSecretWidth;
-		}
-	}
-	else
-	{
-		if( ngSecretColumn.WinWidth > 1 )
-		{
-			ngSecretWidth = ngSecretColumn.WinWidth;
-			ngSecretColumn.WinWidth = 0;
-			ngSecretColumn.HideWindow();
-		}
+		ngSecretColumn.ShowWindow();
+		ngSecretColumn.WinWidth = ngSecretWidth;
 	}
 
 	C.Font = Root.Fonts[F_Normal];
@@ -120,14 +109,11 @@ function PaintColumn(Canvas C, UWindowGridColumn Column, float MouseX, float Mou
 			case 7:
 				Column.ClipText( C, 2, Y + TopMargin, l.PlayerID );
 				break;
-			case 8:
+			case 8: // the column formerly known as the ngworldstats status
 				if( l.PlayerStats ~= "bot" )
 					Column.ClipText( C, 2, Y + TopMargin, BotText );
 				else
-				if( l.PlayerStats ~= "true" )
-					Column.ClipText( C, 2, Y + TopMargin, EnabledText );
-				else
-					Column.ClipText( C, 2, Y + TopMargin, DisabledText );
+					Column.ClipText( C, 2, Y + TopMargin, HumanText );
 				break;
 			}
 
@@ -167,17 +153,20 @@ function SelectRow(int Row)
 
 defaultproperties
 {
-     NameText="Name"
-     FragsText="Frags"
-     PingText="Ping"
-     TeamText="Team"
-     MeshText="Mesh"
-     SkinText="Skin"
-     FaceText="Face"
-     IDText="ID"
-     ngSecretText="ngWorldStats Status"
-     EnabledText="Registered"
-     DisabledText="Unregistered"
-     BotText="Bot"
-     bNoKeyboard=True
+      NameText="Name"
+      FragsText="Frags"
+      PingText="Ping"
+      TeamText="Team"
+      MeshText="Mesh"
+      SkinText="Skin"
+      FaceText="Face"
+      IDText="ID"
+      ngSecretText="Player type"
+      EnabledText=""
+      DisabledText=""
+      BotText="Bot"
+      HumanText="Human"
+      ngSecretWidth=0
+      ngSecretColumn=None
+      bNoKeyboard=True
 }

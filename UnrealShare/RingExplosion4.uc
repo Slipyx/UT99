@@ -53,6 +53,9 @@ simulated function Timer()
 
 defaultproperties
 {
-     LifeSpan=0.400000
-     DrawScale=0.200000
+      MoveAmount=(X=0.000000,Y=0.000000,Z=0.000000)
+      NumPuffs=0
+      numwaits=0
+      LifeSpan=0.400000
+      DrawScale=0.200000
 }

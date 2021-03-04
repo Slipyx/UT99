@@ -14,9 +14,9 @@ class UT_bossthigh extends UTPlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.bossthighm'
-     DrawScale=0.400000
-     CollisionRadius=25.000000
-     CollisionHeight=6.000000
-     Mass=40.000000
+      Mesh=LodMesh'Botpack.bossthighm'
+      DrawScale=0.400000
+      CollisionRadius=25.000000
+      CollisionHeight=6.000000
+      Mass=40.000000
 }

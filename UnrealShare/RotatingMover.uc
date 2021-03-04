@@ -27,4 +27,5 @@ function UnTrigger( Actor other, Pawn EventInstigator )
 
 defaultproperties
 {
+      RotateRate=(Pitch=0,Yaw=0,Roll=0)
 }

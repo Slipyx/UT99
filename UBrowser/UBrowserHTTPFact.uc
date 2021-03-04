@@ -40,8 +40,9 @@ function Shutdown(optional bool bBySuperset)
 
 defaultproperties
 {
-     MasterServerAddress="master.telefragged.com"
-     MasterServerURI="/servers.txt"
-     MasterServerTCPPort=80
-     MasterServerTimeout=10
+      Link=None
+      MasterServerAddress="master.telefragged.com"
+      MasterServerURI="/servers.txt"
+      MasterServerTCPPort=80
+      MasterServerTimeout=10
 }

@@ -232,4 +232,10 @@ function Cleanup()
 
 defaultproperties
 {
+      WebServer=None
+      ReceivedData=""
+      Request=None
+      Response=None
+      Application=None
+      RawBytesExpecting=0
 }

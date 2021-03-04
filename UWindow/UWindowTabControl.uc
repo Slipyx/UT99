@@ -143,5 +143,11 @@ function DeleteTab( UWindowTabControlItem Tab )
 
 defaultproperties
 {
-     ListClass=Class'UWindow.UWindowTabControlItem'
+      LeftButton=None
+      RightButton=None
+      TabArea=None
+      SelectedTab=None
+      bMultiLine=False
+      bSelectNearestTabOnRemove=False
+      ListClass=Class'UWindow.UWindowTabControlItem'
 }

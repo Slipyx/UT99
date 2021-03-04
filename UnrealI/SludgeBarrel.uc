@@ -23,6 +23,8 @@ Auto State Animate
 	singular function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteMe)
+		    return;
 		DamageTypeb = DamageType;
 		Instigator = InstigatedBy;
 		if (Health<0) Return;
@@ -51,6 +53,9 @@ state exploding
 	{
 		local int i;
 		local BarrelSludge b;
+
+		if (bStatic || bDeleteMe)
+		    return;
 		
 		HurtRadius(200, 100, 'burned', 0, Location);
 		SetCollision(False,False,False);
@@ -72,24 +77,25 @@ Begin:
 
 defaultproperties
 {
-     Health=2
-     bPushable=True
-     PushSound=Sound'UnrealI.General.ObjectPush'
-     EndPushSound=Sound'UnrealI.General.Endpush'
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.sbarrel'
-     AmbientGlow=96
-     CollisionRadius=17.000000
-     CollisionHeight=26.299999
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     LightType=LT_Steady
-     LightEffect=LE_TorchWaver
-     LightBrightness=64
-     LightHue=88
-     LightRadius=10
-     Mass=100.000000
+      Health=2
+      DamageTypeb="None"
+      bPushable=True
+      PushSound=Sound'UnrealI.General.ObjectPush'
+      EndPushSound=Sound'UnrealI.General.Endpush'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.sbarrel'
+      AmbientGlow=96
+      CollisionRadius=17.000000
+      CollisionHeight=26.299999
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      LightType=LT_Steady
+      LightEffect=LE_TorchWaver
+      LightBrightness=64
+      LightHue=88
+      LightRadius=10
+      Mass=100.000000
 }

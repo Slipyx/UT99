@@ -50,4 +50,6 @@ function Close(optional bool bByParent)
 
 defaultproperties
 {
+      MeshActor=None
+      R=(Pitch=0,Yaw=0,Roll=0)
 }

@@ -30,11 +30,11 @@ function SpawnBelch()
 
 defaultproperties
 {
-     PunchDamage=40
-     PoundDamage=65
-     Health=600
-     CombatStyle=0.500000
-     DrawScale=3.000000
-     CollisionRadius=160.000000
-     CollisionHeight=108.000000
+      PunchDamage=40
+      PoundDamage=65
+      Health=600
+      CombatStyle=0.500000
+      DrawScale=3.000000
+      CollisionRadius=160.000000
+      CollisionHeight=108.000000
 }

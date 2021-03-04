@@ -108,15 +108,18 @@ function SkillChanged()
 
 defaultproperties
 {
-     StartMap="..\maps\Vortex2.unr"
-     SkillText="Skill Level:"
-     Skills(0)="Easy"
-     Skills(1)="Medium"
-     Skills(2)="Hard"
-     Skills(3)="Unreal"
-     SkillStrings(0)="Tourist mode."
-     SkillStrings(1)="Ready for some action!"
-     SkillStrings(2)="Not for the faint of heart."
-     SkillStrings(3)="Death wish."
-     SkillHelp="Select the difficulty you wish to play at."
+      StartMap="..\maps\Vortex2.unr"
+      SkillCombo=None
+      SkillLabel=None
+      SkillText="Skill Level:"
+      Skills(0)="Easy"
+      Skills(1)="Medium"
+      Skills(2)="Hard"
+      Skills(3)="Unreal"
+      SkillStrings(0)="Tourist mode."
+      SkillStrings(1)="Ready for some action!"
+      SkillStrings(2)="Not for the faint of heart."
+      SkillStrings(3)="Death wish."
+      SkillHelp="Select the difficulty you wish to play at."
+      OKButton=None
 }

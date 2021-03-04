@@ -191,15 +191,16 @@ function AddDefaultInventory( pawn PlayerPawn )
 
 defaultproperties
 {
-     bNoFriendlyFire=True
-     bHumansOnly=True
-     bRestartLevel=False
-     bPauseable=False
-     bCoopWeaponMode=True
-     ScoreBoardType=Class'UnrealShare.UnrealScoreBoard'
-     GameMenuType=Class'UnrealShare.UnrealCoopGameOptions'
-     RulesMenuType="UMenu.UMenuCoopGameRulesSClient"
-     SettingsMenuType="UMenu.UMenuCoopGameRulesSClient"
-     BeaconName="Coop"
-     GameName="Coop Game"
+      bNoFriendlyFire=True
+      bSpecialFallDamage=False
+      bHumansOnly=True
+      bRestartLevel=False
+      bPauseable=False
+      bCoopWeaponMode=True
+      ScoreBoardType=Class'UnrealShare.UnrealScoreBoard'
+      GameMenuType=Class'UnrealShare.UnrealCoopGameOptions'
+      RulesMenuType="UMenu.UMenuCoopGameRulesSClient"
+      SettingsMenuType="UMenu.UMenuCoopGameRulesSClient"
+      BeaconName="Coop"
+      GameName="Coop Game"
 }

@@ -38,13 +38,13 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Style=STY_Masked
-     Texture=Texture'UnrealShare.Skins.BloodSpot'
-     Mesh=LodMesh'UnrealShare.blood2M'
-     DrawScale=0.250000
-     AmbientGlow=56
-     bUnlit=True
-     bParticles=True
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Style=STY_Masked
+      Texture=Texture'UnrealShare.Skins.BloodSpot'
+      Mesh=LodMesh'UnrealShare.blood2M'
+      DrawScale=0.250000
+      AmbientGlow=56
+      bUnlit=True
+      bParticles=True
 }

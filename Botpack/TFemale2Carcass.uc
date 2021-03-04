@@ -6,5 +6,5 @@ class TFemale2Carcass extends TFemaleBody;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.SGirl'
+      Mesh=LodMesh'Botpack.SGirl'
 }

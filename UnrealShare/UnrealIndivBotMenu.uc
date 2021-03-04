@@ -109,7 +109,7 @@ function ProcessMenuUpdate( coerce string InputString )
 function Menu ExitMenu()
 {
 	SetOwner(RealOwner);
-	Super.ExitMenu();
+	return Super.ExitMenu();
 }
 
 function bool ProcessLeft()
@@ -403,32 +403,83 @@ function ChangeMesh()
 
 defaultproperties
 {
-     Teams(0)="Red"
-     Teams(1)="Blue"
-     Teams(2)="Green"
-     Teams(3)="Gold"
-     MenuLength=6
-     HelpMessage(1)="Which Bot Configuration is being edited. Use left and right arrows to change."
-     HelpMessage(2)="Hit enter to edit the name of this bot."
-     HelpMessage(3)="Use the left and right arrow keys to change the class of this bot."
-     HelpMessage(4)="Use the left and right arrow keys to change the skin of this bot."
-     HelpMessage(5)="Adjust the overall skill of this bot by this amount (relative to the base skill for bots)."
-     HelpMessage(6)="Type in which team this bot plays on (Red, Blue, Green, or Yellow)."
-     MenuList(1)="Configuration"
-     MenuList(2)="Name"
-     MenuList(3)="Class"
-     MenuList(4)="Skin"
-     MenuList(5)="Skill Adjust"
-     MenuList(6)="Team"
-     MenuTitle="Artificial Intelligence Configuration"
-     bHidden=False
-     bOnlyOwnerSee=True
-     Physics=PHYS_Rotating
-     AnimSequence=Walk
-     DrawType=DT_Mesh
-     DrawScale=0.100000
-     bUnlit=True
-     bFixedRotationDir=True
-     RotationRate=(Yaw=8000)
-     DesiredRotation=(Yaw=30000)
+      RealOwner=None
+      bSetUp=False
+      bPulseDown=False
+      Num=0
+      PlayerClassNum=0
+      RealName=""
+      RealTeam=0
+      CurrentTeam=0
+      Teams(0)="Red"
+      Teams(1)="Blue"
+      Teams(2)="Green"
+      Teams(3)="Gold"
+      SkinNum=0
+      MenuValues(0)=""
+      MenuValues(1)=""
+      MenuValues(2)=""
+      MenuValues(3)=""
+      MenuValues(4)=""
+      MenuValues(5)=""
+      MenuValues(6)=""
+      MenuValues(7)=""
+      MenuValues(8)=""
+      MenuValues(9)=""
+      MenuValues(10)=""
+      MenuValues(11)=""
+      MenuValues(12)=""
+      MenuValues(13)=""
+      MenuValues(14)=""
+      MenuValues(15)=""
+      MenuValues(16)=""
+      MenuValues(17)=""
+      MenuValues(18)=""
+      MenuValues(19)=""
+      ValuesFadeTimes(0)=0.000000
+      ValuesFadeTimes(1)=0.000000
+      ValuesFadeTimes(2)=0.000000
+      ValuesFadeTimes(3)=0.000000
+      ValuesFadeTimes(4)=0.000000
+      ValuesFadeTimes(5)=0.000000
+      ValuesFadeTimes(6)=0.000000
+      ValuesFadeTimes(7)=0.000000
+      ValuesFadeTimes(8)=0.000000
+      ValuesFadeTimes(9)=0.000000
+      ValuesFadeTimes(10)=0.000000
+      ValuesFadeTimes(11)=0.000000
+      ValuesFadeTimes(12)=0.000000
+      ValuesFadeTimes(13)=0.000000
+      ValuesFadeTimes(14)=0.000000
+      ValuesFadeTimes(15)=0.000000
+      ValuesFadeTimes(16)=0.000000
+      ValuesFadeTimes(17)=0.000000
+      ValuesFadeTimes(18)=0.000000
+      ValuesFadeTimes(19)=0.000000
+      BotConfig=None
+      GameType=None
+      MenuLength=6
+      HelpMessage(1)="Which Bot Configuration is being edited. Use left and right arrows to change."
+      HelpMessage(2)="Hit enter to edit the name of this bot."
+      HelpMessage(3)="Use the left and right arrow keys to change the class of this bot."
+      HelpMessage(4)="Use the left and right arrow keys to change the skin of this bot."
+      HelpMessage(5)="Adjust the overall skill of this bot by this amount (relative to the base skill for bots)."
+      HelpMessage(6)="Type in which team this bot plays on (Red, Blue, Green, or Yellow)."
+      MenuList(1)="Configuration"
+      MenuList(2)="Name"
+      MenuList(3)="Class"
+      MenuList(4)="Skin"
+      MenuList(5)="Skill Adjust"
+      MenuList(6)="Team"
+      MenuTitle="Artificial Intelligence Configuration"
+      bHidden=False
+      bOnlyOwnerSee=True
+      Physics=PHYS_Rotating
+      AnimSequence="Walk"
+      DrawType=DT_Mesh
+      DrawScale=0.100000
+      bUnlit=True
+      bFixedRotationDir=True
+      RotationRate=(Yaw=8000)
+      DesiredRotation=(Yaw=30000)
 }

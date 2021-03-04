@@ -14,13 +14,13 @@ class Shells extends Ammo;
 
 defaultproperties
 {
-     AmmoAmount=10
-     MaxAmmo=100
-     PickupMessage="You picked up 15 shells"
-     PickupViewMesh=LodMesh'UnrealShare.ShellsM'
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Mesh=LodMesh'UnrealShare.ShellsM'
-     CollisionRadius=12.000000
-     CollisionHeight=5.000000
-     bCollideActors=True
+      AmmoAmount=10
+      MaxAmmo=100
+      PickupMessage="You picked up 15 shells"
+      PickupViewMesh=LodMesh'UnrealShare.ShellsM'
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Mesh=LodMesh'UnrealShare.ShellsM'
+      CollisionRadius=12.000000
+      CollisionHeight=5.000000
+      bCollideActors=True
 }

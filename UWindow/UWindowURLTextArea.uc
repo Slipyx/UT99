@@ -174,5 +174,6 @@ function ProcessText(Canvas C, out string Text, out string NextBlock, out float 
 
 defaultproperties
 {
-     bIgnoreLDoubleClick=True
+      bReleased=False
+      bIgnoreLDoubleClick=True
 }

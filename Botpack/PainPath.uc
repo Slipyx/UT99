@@ -38,5 +38,6 @@ function Actor SpecialHandling(Pawn Other)
 
 defaultproperties
 {
-     bSpecialCost=True
+      DamageType="None"
+      bSpecialCost=True
 }

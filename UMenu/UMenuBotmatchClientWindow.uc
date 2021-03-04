@@ -159,10 +159,20 @@ function SaveConfigs()
 
 defaultproperties
 {
-     GameType="UnrealShare.DeathMatchGame"
-     StartMatchTab="Match"
-     RulesTab="Rules"
-     SettingsTab="Settings"
-     BotConfigTab="Bots"
-     StartText="Start"
+      Map=""
+      GameType="UnrealShare.DeathMatchGame"
+      GameClass=None
+      bNetworkGame=False
+      Pages=None
+      CloseButton=None
+      StartButton=None
+      ScreenshotWindow=None
+      Splitter=None
+      StartMatchTab="Match"
+      RulesTab="Rules"
+      SettingsTab="Settings"
+      BotConfigTab="Bots"
+      StartText="Start"
+      MutatorList=""
+      bKeepMutators=False
 }

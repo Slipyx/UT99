@@ -81,4 +81,11 @@ Begin:
 
 defaultproperties
 {
+      bInitiallyOn=False
+      AmbSound=None
+      rePlayTime=0.000000
+      rePlayVariance=0.000000
+      bPlayOnceOnly=False
+      bIsOn=False
+      bPlayedOnce=False
 }

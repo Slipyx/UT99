@@ -75,8 +75,8 @@ Begin:
 
 defaultproperties
 {
-     Physics=PHYS_None
-     LifeSpan=0.000000
-     AnimSequence=HeadDown
-     Mesh=LodMesh'UnrealShare.CrossNali'
+      Physics=PHYS_None
+      LifeSpan=0.000000
+      AnimSequence="HeadDown"
+      Mesh=LodMesh'UnrealShare.CrossNali'
 }

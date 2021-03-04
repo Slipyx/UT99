@@ -155,17 +155,22 @@ simulated function Tick(float DeltaTime)
 
 defaultproperties
 {
-     StartError=0.500000
-     SpriteAnim(0)=Texture'Botpack.Skins.sbolt0'
-     SpriteAnim(1)=Texture'Botpack.Skins.sbolt1'
-     SpriteAnim(2)=Texture'Botpack.Skins.sbolt2'
-     SpriteAnim(3)=Texture'Botpack.Skins.sbolt3'
-     SpriteAnim(4)=Texture'Botpack.Skins.sbolt4'
-     RemoteRole=ROLE_SimulatedProxy
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=83
-     LightSaturation=50
-     LightRadius=5
+      OldError=0.000000
+      NewError=0.000000
+      StartError=0.500000
+      aimerror=0.000000
+      AimRotation=(Pitch=0,Yaw=0,Roll=0)
+      AnimTime=0.000000
+      SpriteAnim(0)=Texture'Botpack.Skins.sbolt0'
+      SpriteAnim(1)=Texture'Botpack.Skins.sbolt1'
+      SpriteAnim(2)=Texture'Botpack.Skins.sbolt2'
+      SpriteAnim(3)=Texture'Botpack.Skins.sbolt3'
+      SpriteAnim(4)=Texture'Botpack.Skins.sbolt4'
+      RemoteRole=ROLE_SimulatedProxy
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=83
+      LightSaturation=50
+      LightRadius=5
 }

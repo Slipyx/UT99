@@ -47,7 +47,6 @@ function PostBeginPlay()
 	Log("Assigned player a LadderInventory.");
 
 	// Clear all slots.
-	Owner.PlaySound(sound'LadderSounds.ladvance', SLOT_None, 0.1);
 	Owner.PlaySound(sound'LadderSounds.ladvance', SLOT_Misc, 0.1);
 	Owner.PlaySound(sound'LadderSounds.ladvance', SLOT_Pain, 0.1);
 	Owner.PlaySound(sound'LadderSounds.ladvance', SLOT_Interact, 0.1);
@@ -60,5 +59,5 @@ function PostBeginPlay()
 
 defaultproperties
 {
-     GameWindowType="UTMenu.NewCharacterWindow"
+      GameWindowType="UTMenu.NewCharacterWindow"
 }

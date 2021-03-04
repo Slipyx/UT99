@@ -5,6 +5,6 @@ class NullAmmo extends Ammo;
 
 defaultproperties
 {
-     AmmoAmount=1
-     MaxAmmo=1
+      AmmoAmount=1
+      MaxAmmo=1
 }

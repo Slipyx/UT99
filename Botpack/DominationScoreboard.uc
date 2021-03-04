@@ -5,5 +5,5 @@ class DominationScoreBoard extends TeamScoreBoard;
 
 defaultproperties
 {
-     FragGoal="Score Limit:"
+      FragGoal="Score Limit:"
 }

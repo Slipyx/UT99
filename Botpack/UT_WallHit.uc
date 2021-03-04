@@ -79,9 +79,10 @@ Auto State StartUp
 
 defaultproperties
 {
-     MaxChips=2
-     MaxSparks=3
-     ChipOdds=0.200000
-     bNetOptional=True
-     RemoteRole=ROLE_SimulatedProxy
+      MaxChips=2
+      MaxSparks=3
+      ChipOdds=0.200000
+      RealRotation=(Pitch=0,Yaw=0,Roll=0)
+      bNetOptional=True
+      RemoteRole=ROLE_SimulatedProxy
 }

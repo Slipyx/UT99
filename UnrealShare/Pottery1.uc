@@ -13,7 +13,7 @@ class Pottery1 extends Vase;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.Pottery1M'
-     CollisionRadius=14.000000
-     CollisionHeight=19.500000
+      Mesh=LodMesh'UnrealShare.Pottery1M'
+      CollisionRadius=14.000000
+      CollisionHeight=19.500000
 }

@@ -115,25 +115,27 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     speed=1600.000000
-     Damage=14.000000
-     MomentumTransfer=4000
-     ImpactSound=Sound'UnrealShare.Stinger.Ricochet'
-     MiscSound=Sound'UnrealShare.Razorjack.BladeHit'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=6.000000
-     AnimRate=1.000000
-     Mesh=LodMesh'UnrealShare.TarydiumProjectile'
-     AmbientGlow=215
-     bUnlit=True
-     bNoSmooth=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=80
-     LightHue=152
-     LightSaturation=32
-     LightRadius=5
-     LightPeriod=50
-     bBounce=True
-     Mass=2.000000
+      bLighting=False
+      DelayTime=0.000000
+      speed=1600.000000
+      Damage=14.000000
+      MomentumTransfer=4000
+      ImpactSound=Sound'UnrealShare.Stinger.Ricochet'
+      MiscSound=Sound'UnrealShare.Razorjack.BladeHit'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=6.000000
+      AnimRate=1.000000
+      Mesh=LodMesh'UnrealShare.TarydiumProjectile'
+      AmbientGlow=215
+      bUnlit=True
+      bNoSmooth=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=80
+      LightHue=152
+      LightSaturation=32
+      LightRadius=5
+      LightPeriod=50
+      bBounce=True
+      Mass=2.000000
 }

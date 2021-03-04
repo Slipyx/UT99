@@ -15,5 +15,5 @@ class FlatMirror extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.FlatMirror'
+      Mesh=LodMesh'Botpack.FlatMirror'
 }

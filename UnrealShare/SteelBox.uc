@@ -21,6 +21,8 @@ Auto State Animate
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteme)
+			return;	
 		Instigator = InstigatedBy;
 		SetPhysics(PHYS_Falling);
 		Momentum.Z = 1000;
@@ -30,17 +32,17 @@ Auto State Animate
 
 defaultproperties
 {
-     bPushable=True
-     PushSound=Sound'UnrealShare.General.ObjectPush'
-     EndPushSound=Sound'UnrealShare.General.Endpush'
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.SteelBoxM'
-     CollisionRadius=29.000000
-     CollisionHeight=26.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     Mass=60.000000
+      bPushable=True
+      PushSound=Sound'UnrealShare.General.ObjectPush'
+      EndPushSound=Sound'UnrealShare.General.Endpush'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.SteelBoxM'
+      CollisionRadius=29.000000
+      CollisionHeight=26.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      Mass=60.000000
 }

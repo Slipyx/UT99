@@ -2,5 +2,5 @@ class UMenuServerSetupSC expands UWindowScrollingDialogClient;
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuServerSetupPage'
+      ClientClass=Class'UMenu.UMenuServerSetupPage'
 }

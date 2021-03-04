@@ -50,10 +50,10 @@ function bool Build()
 
 defaultproperties
 {
-     Height=128.000000
-     Radius=64.000000
-     NumSheets=2
-     GroupName=Volumetric
-     BitmapFilename="BBVolumetric"
-     ToolTip="Volumetric (Torches, Chains, etc)"
+      Height=128.000000
+      Radius=64.000000
+      NumSheets=2
+      GroupName="Volumetric"
+      BitmapFilename="BBVolumetric"
+      ToolTip="Volumetric (Torches, Chains, etc)"
 }

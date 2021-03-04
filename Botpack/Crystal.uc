@@ -15,5 +15,5 @@ class Crystal extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.Crystal'
+      Mesh=LodMesh'Botpack.Crystal'
 }

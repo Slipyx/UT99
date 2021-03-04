@@ -63,4 +63,12 @@ function UWindowMenuBar GetMenuBar()
 
 defaultproperties
 {
+      Caption=""
+      Graphic=None
+      HotKey=0
+      SubMenu=None
+      bChecked=False
+      bDisabled=False
+      Owner=None
+      ItemTop=0.000000
 }

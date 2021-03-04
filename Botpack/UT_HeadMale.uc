@@ -13,5 +13,5 @@ class UT_HeadMale extends UTHeads;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.headmalem'
+      Mesh=LodMesh'Botpack.headmalem'
 }

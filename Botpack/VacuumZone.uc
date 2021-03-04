@@ -10,6 +10,7 @@ var() float  EndFlashScale;
 var() Vector EndFlashFog;
 var() float  DieFOV;					// Field of view when dead (interpolates)
 var() float  DieDrawScale;				// Drawscale when dead
+var   float  FatnessAccumulator;
 
 function BeginPlay()
 {
@@ -18,7 +19,7 @@ function BeginPlay()
 	DieFOV = FClamp( DieFOV, 1, 170 );
 }
 
-event ActorEntered( actor Other )
+event ActorEntered( Actor Other )
 {
 	local Pawn P;
 
@@ -47,20 +48,30 @@ function Tick( float DeltaTime )
 	local Pawn P;
 	local bool bActive;
 	local int OldFatness;
+	local int AddFatness;
 
+	// Should be done per pawn.
+	FatnessAccumulator += 128.f * DeltaTime/KillTime;
+	AddFatness = int(FatnessAccumulator - (FatnessAccumulator % 1));
+	FatnessAccumulator -= float(AddFatness);
+	
 	for ( P=Level.PawnList; P!=None; P=P.NextPawn )
 	{
 		// Ensure player hasn't been dispatched through other means already (suicide?)
 		if( (P.Region.Zone == self) && (P.Health > 0) )
 		{
-			ratio = FMax(0.01,float(Max(P.Fatness,128) - P.Default.Fatness)/FMax(1,(255 - P.Default.Fatness)));
-			ratio += DeltaTime/KillTime;
 			bActive = true;
+			P.Fatness = Clamp( int(P.Fatness) + AddFatness, 0, 255);
+			ratio = FMax( 0.01, (float(P.Fatness)-float(P.default.Fatness)) / FMax(1,255-P.Default.Fatness) );
+
+			// old pre-v469 code.
+//			ratio = FMax(0.01,float(Max(P.Fatness,128) - P.Default.Fatness)/FMax(1,(255 - P.Default.Fatness)));
+//			ratio += DeltaTime/KillTime;
 			// Fatness
-			OldFatness = P.Fatness;
-			P.Fatness = Max(P.Fatness,128) + Max(1, ratio * (255 - P.Default.Fatness) - (P.Fatness - P.Default.Fatness));
-			if ( P.Fatness < Max(OldFatness,P.Default.Fatness) )
-				P.Fatness = 255;
+//			OldFatness = P.Fatness;
+//			P.Fatness = Max(P.Fatness,128) + Max(1, ratio * (255 - P.Default.Fatness) - (P.Fatness - P.Default.Fatness));
+//			if ( P.Fatness < Max(OldFatness,P.Default.Fatness) )
+//				P.Fatness = 255;
 
 			// Fog & Field of view
 			pPawn = PlayerPawn(P);
@@ -69,7 +80,6 @@ function Tick( float DeltaTime )
 				curScale = (EndFlashScale-StartFlashScale)*ratio + StartFlashScale;
 				curFog   = (EndFlashFog  -StartFlashFog  )*ratio + StartFlashFog;
 				pPawn.ClientFlash( curScale, 1000 * curFog );
-
 				pPawn.SetFOVAngle( (DieFOV-pPawn.default.FOVAngle)*ratio + pPawn.default.FOVAngle);
 			}
 			if ( P.Fatness > 250 )
@@ -113,12 +123,15 @@ event ActorLeaving( actor Other )
 
 defaultproperties
 {
-     KillTime=2.500000
-     StartFlashScale=1.000000
-     EndFlashScale=1.000000
-     DieFOV=90.000000
-     DieDrawScale=1.000000
-     DamageType=SpecialDamage
-     DamageString="%o was depressurized"
-     bStatic=False
+      KillTime=2.500000
+      StartFlashScale=1.000000
+      StartFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      EndFlashScale=1.000000
+      EndFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      DieFOV=90.000000
+      DieDrawScale=1.000000
+      FatnessAccumulator=0.000000
+      DamageType="SpecialDamage"
+      DamageString="%o was depressurized"
+      bStatic=False
 }

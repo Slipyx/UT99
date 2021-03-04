@@ -26,5 +26,7 @@ function Resized()
 
 defaultproperties
 {
-     ListAreaClass="UTMenu.UTWeaponPriorityListArea"
+      VSplitter=None
+      InfoWindow=None
+      ListAreaClass="UTMenu.UTWeaponPriorityListArea"
 }

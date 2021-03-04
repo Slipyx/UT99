@@ -198,28 +198,33 @@ state OnSurface
 
 defaultproperties
 {
-     numBio=7
-     speed=800.000000
-     MaxSpeed=1500.000000
-     Damage=40.000000
-     MomentumTransfer=20000
-     ImpactSound=Sound'UnrealShare.BioRifle.GelHit'
-     MiscSound=Sound'UnrealShare.General.Explg02'
-     bNetTemporary=False
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=12.000000
-     AnimSequence=Flying
-     Mesh=LodMesh'UnrealShare.BioRGel'
-     bUnlit=True
-     CollisionRadius=2.000000
-     CollisionHeight=2.000000
-     bProjTarget=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=70
-     LightHue=91
-     LightRadius=3
-     bBounce=True
-     Buoyancy=170.000000
+      SurfaceNormal=(X=0.000000,Y=0.000000,Z=0.000000)
+      bOnGround=False
+      bCheckedSurface=False
+      numBio=7
+      wallTime=0.000000
+      BaseOffset=0.000000
+      speed=800.000000
+      MaxSpeed=1500.000000
+      Damage=40.000000
+      MomentumTransfer=20000
+      ImpactSound=Sound'UnrealShare.BioRifle.GelHit'
+      MiscSound=Sound'UnrealShare.General.Explg02'
+      bNetTemporary=False
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=12.000000
+      AnimSequence="Flying"
+      Mesh=LodMesh'UnrealShare.BioRGel'
+      bUnlit=True
+      CollisionRadius=2.000000
+      CollisionHeight=2.000000
+      bProjTarget=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=70
+      LightHue=91
+      LightRadius=3
+      bBounce=True
+      Buoyancy=170.000000
 }

@@ -2,5 +2,5 @@ class UTServerSetupSC expands UWindowScrollingDialogClient;
 
 defaultproperties
 {
-     ClientClass=Class'UTMenu.UTServerSetupPage'
+      ClientClass=Class'UTMenu.UTServerSetupPage'
 }

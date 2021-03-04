@@ -515,13 +515,13 @@ function TweenToSwimming(float tweentime)
 
 defaultproperties
 {
-     Footstep1=Sound'UnrealShare.Female.stwalk1'
-     Footstep2=Sound'UnrealShare.Female.stwalk2'
-     Footstep3=Sound'UnrealShare.Female.stwalk3'
-     bIsHuman=True
-     BaseEyeHeight=23.000000
-     EyeHeight=23.000000
-     CollisionRadius=17.000000
-     CollisionHeight=39.000000
-     Buoyancy=99.000000
+      Footstep1=Sound'UnrealShare.Female.stwalk1'
+      Footstep2=Sound'UnrealShare.Female.stwalk2'
+      Footstep3=Sound'UnrealShare.Female.stwalk3'
+      bIsHuman=True
+      BaseEyeHeight=23.000000
+      EyeHeight=23.000000
+      CollisionRadius=17.000000
+      CollisionHeight=39.000000
+      Buoyancy=99.000000
 }

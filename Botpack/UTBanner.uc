@@ -20,8 +20,8 @@ function beginPlay()
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.utbannerM'
-     DrawScale=0.500000
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.utbannerM'
+      DrawScale=0.500000
 }

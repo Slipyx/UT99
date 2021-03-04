@@ -106,17 +106,17 @@ Begin:
 
 defaultproperties
 {
-     AirSpeed=200.000000
-     Land=None
-     AmbientSound=Sound'UnrealShare.flies.flybuzz'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Firefly'
-     SoundRadius=7
-     SoundVolume=64
-     CollisionRadius=0.000000
-     CollisionHeight=0.000000
-     bCollideActors=False
-     bBlockActors=False
-     bBlockPlayers=False
-     bProjTarget=False
+      AirSpeed=200.000000
+      Land=None
+      AmbientSound=Sound'UnrealShare.flies.flybuzz'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Firefly'
+      SoundRadius=7
+      SoundVolume=64
+      CollisionRadius=0.000000
+      CollisionHeight=0.000000
+      bCollideActors=False
+      bBlockActors=False
+      bBlockPlayers=False
+      bProjTarget=False
 }

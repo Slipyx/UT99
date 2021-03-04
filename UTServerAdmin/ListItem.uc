@@ -205,4 +205,9 @@ function RunTest()
 
 defaultproperties
 {
+      Next=None
+      Prev=None
+      Tag=""
+      Data=""
+      bJustMoved=False
 }

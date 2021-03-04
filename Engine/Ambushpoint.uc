@@ -19,7 +19,10 @@ function PreBeginPlay()
 
 defaultproperties
 {
-     SightRadius=5000.000000
-     bDirectional=True
-     SoundVolume=128
+      lookDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      survivecount=0
+      SightRadius=5000.000000
+      bSniping=False
+      bDirectional=True
+      SoundVolume=128
 }

@@ -15,6 +15,6 @@ class Car03 extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.car03M'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.car03M'
 }

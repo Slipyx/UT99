@@ -19,15 +19,19 @@ function int Main( string Parms )
 		log( "You specified intparm=" $ intparm );
 	if( strparm!="" )
 		log( "You specified strparm=" $ strparm );
+
+	return 0;
 }
 
 defaultproperties
 {
-     HelpCmd="HelloWorld"
-     HelpOneLiner="Sample"
-     HelpUsage="HelloWorld"
-     HelpParm(0)="IntParm"
-     HelpParm(1)="StrParm"
-     HelpDesc(0)="An integer parameter"
-     HelpDesc(1)="A string parameter"
+      intparm=0
+      strparm=""
+      HelpCmd="HelloWorld"
+      HelpOneLiner="Sample"
+      HelpUsage="HelloWorld"
+      HelpParm(0)="IntParm"
+      HelpParm(1)="StrParm"
+      HelpDesc(0)="An integer parameter"
+      HelpDesc(1)="A string parameter"
 }

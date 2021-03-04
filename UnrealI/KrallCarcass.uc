@@ -69,12 +69,12 @@ function InitFor(actor Other)
 
 defaultproperties
 {
-     bodyparts(0)=LodMesh'UnrealI.KrallWeapon'
-     bodyparts(1)=LodMesh'UnrealI.KrallHand'
-     bodyparts(2)=LodMesh'UnrealI.KrallFoot'
-     bodyparts(3)=LodMesh'UnrealI.KrallPiece'
-     bodyparts(4)=LodMesh'UnrealI.KrallHead'
-     Mesh=LodMesh'UnrealI.KrallM'
-     Mass=140.000000
-     Buoyancy=130.000000
+      bodyparts(0)=LodMesh'UnrealI.KrallWeapon'
+      bodyparts(1)=LodMesh'UnrealI.KrallHand'
+      bodyparts(2)=LodMesh'UnrealI.KrallFoot'
+      bodyparts(3)=LodMesh'UnrealI.KrallPiece'
+      bodyparts(4)=LodMesh'UnrealI.KrallHead'
+      Mesh=LodMesh'UnrealI.KrallM'
+      Mass=140.000000
+      Buoyancy=130.000000
 }

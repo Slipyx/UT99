@@ -40,4 +40,8 @@ function int Compare(UWindowList T, UWindowList B)
 
 defaultproperties
 {
+      NickName=""
+      bChOp=False
+      bVoice=False
+      bHalfOp=False
 }

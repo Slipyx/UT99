@@ -29,8 +29,8 @@ Auto State Waver
 
 defaultproperties
 {
-     WeedType=Waver2
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.SeaWeedM'
+      WeedType=Waver2
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.SeaWeedM'
 }

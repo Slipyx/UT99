@@ -33,6 +33,9 @@ function ExecuteItem(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     RefreshName="&Refresh Info"
-     CloseName="&Close"
+      Refresh=None
+      CloseItem=None
+      RefreshName="&Refresh Info"
+      CloseName="&Close"
+      Info=None
 }

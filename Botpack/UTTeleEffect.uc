@@ -22,10 +22,10 @@ function PostBeginPlay()
 
 defaultproperties
 {
-     RemoteRole=ROLE_None
-     LifeSpan=1.000000
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Mesh=LodMesh'Botpack.Tele2'
-     bUnlit=True
+      RemoteRole=ROLE_None
+      LifeSpan=1.000000
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Mesh=LodMesh'Botpack.Tele2'
+      bUnlit=True
 }

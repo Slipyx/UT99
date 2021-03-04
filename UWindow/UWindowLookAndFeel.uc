@@ -3,7 +3,17 @@ class UWindowLookAndFeel extends UWindowBase;
 var() Texture	Active;			// Active widgets, window frames, etc.
 var() Texture	Inactive;		// Inactive Widgets, window frames, etc.
 var() Texture	ActiveS;		
-var() Texture	InactiveS;		
+var() Texture	InactiveS;
+
+// OldUnreal hires support
+var() Texture   ActiveHiRes;
+var() Texture   InactiveHiRes;
+var() Texture   ActiveSHiRes;
+var() Texture   InactiveSHiRes;
+var() float     ActiveHiResScale;
+var() float     InactiveHiResScale;
+var() float     ActiveSHiResScale;
+var() float     InactiveSHiResScale;
 
 var() Texture	Misc;			// Miscellaneous: backgrounds, bevels, etc.
 
@@ -102,6 +112,54 @@ function Texture GetTexture(UWindowFramedWindow W)
 	}
 }
 
+function Texture GetTextureEx(UWindowFramedWindow W, out float ScaleFactor)
+{
+	ScaleFactor = 1.0;
+	
+	if(W.bStatusBar)
+	{
+		if(W.IsActive())
+		{
+			if (ActiveSHiRes != none)
+			{
+				ScaleFactor = Max(ActiveSHiResScale, 1.0);
+				return ActiveSHiRes;
+			}
+			return ActiveS;
+		}
+		else
+		{
+			if (InactiveSHiRes != none)
+			{
+				ScaleFactor = Max(InactiveSHiResScale, 1.0);
+				return InactiveSHiRes;
+			}
+			return InactiveS;
+		}
+	}
+	else
+	{
+		if(W.IsActive())
+		{
+			if (ActiveHiRes != none)
+			{
+				ScaleFactor = Max(ActiveHiResScale, 1.0);
+				return ActiveHiRes;
+			}
+			return Active;
+		}
+		else
+		{
+			if (InactiveHiRes != none)
+			{
+				ScaleFactor = Max(InactiveHiResScale, 1.0);
+				return InactiveHiRes;
+			}
+			return Inactive;
+		}
+	}
+}
+
 /* Setup Functions */
 function Setup();
 function FW_DrawWindowFrame(UWindowFramedWindow W, Canvas C);
@@ -143,4 +201,101 @@ function ControlFrame_Draw(UWindowControlFrame W, Canvas C);
 
 defaultproperties
 {
+      Active=None
+      Inactive=None
+      ActiveS=None
+      InactiveS=None
+      ActiveHiRes=None
+      InactiveHiRes=None
+      ActiveSHiRes=None
+      InactiveSHiRes=None
+      ActiveHiResScale=0.000000
+      InactiveHiResScale=0.000000
+      ActiveSHiResScale=0.000000
+      InactiveSHiResScale=0.000000
+      Misc=None
+      FrameTL=(X=0,Y=0,W=0,H=0)
+      FrameT=(X=0,Y=0,W=0,H=0)
+      FrameTR=(X=0,Y=0,W=0,H=0)
+      FrameL=(X=0,Y=0,W=0,H=0)
+      FrameR=(X=0,Y=0,W=0,H=0)
+      FrameBL=(X=0,Y=0,W=0,H=0)
+      FrameB=(X=0,Y=0,W=0,H=0)
+      FrameBR=(X=0,Y=0,W=0,H=0)
+      FrameActiveTitleColor=(R=0,G=0,B=0,A=0)
+      FrameInactiveTitleColor=(R=0,G=0,B=0,A=0)
+      HeadingActiveTitleColor=(R=0,G=0,B=0,A=0)
+      HeadingInActiveTitleColor=(R=0,G=0,B=0,A=0)
+      FrameTitleX=0
+      FrameTitleY=0
+      BevelUpTL=(X=0,Y=0,W=0,H=0)
+      BevelUpT=(X=0,Y=0,W=0,H=0)
+      BevelUpTR=(X=0,Y=0,W=0,H=0)
+      BevelUpL=(X=0,Y=0,W=0,H=0)
+      BevelUpR=(X=0,Y=0,W=0,H=0)
+      BevelUpBL=(X=0,Y=0,W=0,H=0)
+      BevelUpB=(X=0,Y=0,W=0,H=0)
+      BevelUpBR=(X=0,Y=0,W=0,H=0)
+      BevelUpArea=(X=0,Y=0,W=0,H=0)
+      MiscBevelTL(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelTL(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelTL(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelTL(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelT(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelT(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelT(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelT(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelTR(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelTR(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelTR(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelTR(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelL(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelL(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelL(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelL(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelR(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelR(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelR(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelR(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBL(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBL(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBL(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBL(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelB(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelB(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelB(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelB(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBR(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBR(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBR(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelBR(3)=(X=0,Y=0,W=0,H=0)
+      MiscBevelArea(0)=(X=0,Y=0,W=0,H=0)
+      MiscBevelArea(1)=(X=0,Y=0,W=0,H=0)
+      MiscBevelArea(2)=(X=0,Y=0,W=0,H=0)
+      MiscBevelArea(3)=(X=0,Y=0,W=0,H=0)
+      ComboBtnUp=(X=0,Y=0,W=0,H=0)
+      ComboBtnDown=(X=0,Y=0,W=0,H=0)
+      ComboBtnDisabled=(X=0,Y=0,W=0,H=0)
+      ColumnHeadingHeight=0
+      HLine=(X=0,Y=0,W=0,H=0)
+      EditBoxTextColor=(R=0,G=0,B=0,A=0)
+      EditBoxBevel=0
+      TabSelectedL=(X=0,Y=0,W=0,H=0)
+      TabSelectedM=(X=0,Y=0,W=0,H=0)
+      TabSelectedR=(X=0,Y=0,W=0,H=0)
+      TabUnselectedL=(X=0,Y=0,W=0,H=0)
+      TabUnselectedM=(X=0,Y=0,W=0,H=0)
+      TabUnselectedR=(X=0,Y=0,W=0,H=0)
+      TabBackground=(X=0,Y=0,W=0,H=0)
+      Size_ScrollbarWidth=0.000000
+      Size_ScrollbarButtonHeight=0.000000
+      Size_MinScrollbarHeight=0.000000
+      Size_TabAreaHeight=0.000000
+      Size_TabAreaOverhangHeight=0.000000
+      Size_TabSpacing=0.000000
+      Size_TabXOffset=0.000000
+      Pulldown_ItemHeight=0.000000
+      Pulldown_VBorder=0.000000
+      Pulldown_HBorder=0.000000
+      Pulldown_TextBorder=0.000000
 }

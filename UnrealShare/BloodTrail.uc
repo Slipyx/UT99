@@ -31,11 +31,11 @@ function AnimEnd()
 
 defaultproperties
 {
-     bNetTemporary=False
-     Physics=PHYS_Trailer
-     LifeSpan=5.000000
-     AnimSequence=trail
-     Mesh=LodMesh'UnrealShare.BloodTrl'
-     DrawScale=0.200000
-     AmbientGlow=0
+      bNetTemporary=False
+      Physics=PHYS_Trailer
+      LifeSpan=5.000000
+      AnimSequence="trail"
+      Mesh=LodMesh'UnrealShare.BloodTrl'
+      DrawScale=0.200000
+      AmbientGlow=0
 }

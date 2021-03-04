@@ -453,67 +453,47 @@ function Editbox_Draw(UWindowEditControl W, Canvas C)
 	}
 }
 
-function Tab_DrawTab(UWindowTabControlTabArea Tab, Canvas C, bool bActiveTab, bool bLeftmostTab, float X, float Y, float W, float H, string Text, bool bShowText)
+function Tab_DrawTab( UWindowTabControlTabArea Tab, Canvas C, bool bActiveTab, bool bLeftmostTab, float X, float Y, float W, float H, string Text, bool bShowText)
 {
-	local Region R;
-	local Texture T;
-	local float TW, TH;
+	local Region TabL, TabM, TabR;
+	local Texture Tex;
+	local float TW, TH, S;
+	local int FontMode;
 
 	C.DrawColor.R = 255;
 	C.DrawColor.G = 255;
 	C.DrawColor.B = 255;
 
-	T = Tab.GetLookAndFeelTexture();
-	
-	if(bActiveTab)
+	S = float(Max(Tab.Root.GUIScale,1)) / Tab.Root.GUIScale;
+	Tex = Tab.GetLookAndFeelTexture();
+	if ( bActiveTab )
 	{
-		R = TabSelectedL;
-		Tab.DrawStretchedTextureSegment( C, X, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
-
-		R = TabSelectedM;
-		Tab.DrawStretchedTextureSegment( C, X+TabSelectedL.W, Y, 
-										W - TabSelectedL.W
-										- TabSelectedR.W,
-										R.H, R.X, R.Y, R.W, R.H, T );
-
-		R = TabSelectedR;
-		Tab.DrawStretchedTextureSegment( C, X + W - R.W, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
-
-		C.Font = Tab.Root.Fonts[Tab.F_Bold];
-		C.DrawColor.R = 0;
-		C.DrawColor.G = 0;
-		C.DrawColor.B = 0;
-
-		if(bShowText)
-		{
-			Tab.TextSize(C, Text, TW, TH);
-			Tab.ClipText(C, X + (W-TW)/2, Y + 3, Text, True);
-		}
+		TabL = TabSelectedL;
+		TabM = TabSelectedM;
+		TabR = TabSelectedR;
+		FontMode = F_Bold; //1
 	}
 	else
 	{
-		R = TabUnselectedL;
-		Tab.DrawStretchedTextureSegment( C, X, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
+		TabL = TabUnselectedL;
+		TabM = TabUnselectedM;
+		TabR = TabUnselectedR;
+		FontMode = F_Normal; //0
+	}
 
-		R = TabUnselectedM;
-		Tab.DrawStretchedTextureSegment( C, X+TabUnselectedL.W, Y, 
-										W - TabUnselectedL.W
-										- TabUnselectedR.W,
-										R.H, R.X, R.Y, R.W, R.H, T );
+	Tab.DrawStretchedTextureSegment( C, X             , Y, (TabL.W)*S         , TabL.H, TabL.X, TabL.Y, TabL.W, TabL.H, Tex );
+	Tab.DrawStretchedTextureSegment( C, X+(TabL.W)*S  , Y, W-(TabL.W+TabR.W)*S, TabM.H, TabM.X, TabM.Y, TabM.W, TabM.H, Tex );
+	Tab.DrawStretchedTextureSegment( C, X+W-(TabR.W)*S, Y, (TabR.W)*S         , TabR.H, TabR.X, TabR.Y, TabR.W, TabR.H, Tex );
 
-		R = TabUnselectedR;
-		Tab.DrawStretchedTextureSegment( C, X + W - R.W, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
+	C.Font = Tab.Root.Fonts[FontMode];
+	C.DrawColor.R = 0;
+	C.DrawColor.G = 0;
+	C.DrawColor.B = 0;
 
-		C.Font = Tab.Root.Fonts[Tab.F_Normal];
-		C.DrawColor.R = 0;
-		C.DrawColor.G = 0;
-		C.DrawColor.B = 0;
-
-		if(bShowText)
-		{
-			Tab.TextSize(C, Text, TW, TH);
-			Tab.ClipText(C, X + (W-TW)/2, Y + 4, Text, True);
-		}
+	if( bShowText )
+	{
+		Tab.TextSize(C, Text, TW, TH);
+		Tab.ClipText(C, X + (W-TW)/2, Y + 4-FontMode, Text, True); //Bold text starts 1 more pixel to the left
 	}
 }
 
@@ -784,101 +764,101 @@ function Menu_DrawPulldownMenuItem(UWindowPulldownMenu M, UWindowPulldownMenuIte
 
 defaultproperties
 {
-     SBUpUp=(X=20,Y=16,W=12,H=10)
-     SBUpDown=(X=32,Y=16,W=12,H=10)
-     SBUpDisabled=(X=44,Y=16,W=12,H=10)
-     SBDownUp=(X=20,Y=26,W=12,H=10)
-     SBDownDown=(X=32,Y=26,W=12,H=10)
-     SBDownDisabled=(X=44,Y=26,W=12,H=10)
-     SBLeftUp=(X=20,Y=48,W=10,H=12)
-     SBLeftDown=(X=30,Y=48,W=10,H=12)
-     SBLeftDisabled=(X=40,Y=48,W=10,H=12)
-     SBRightUp=(X=20,Y=36,W=10,H=12)
-     SBRightDown=(X=30,Y=36,W=10,H=12)
-     SBRightDisabled=(X=40,Y=36,W=10,H=12)
-     SBBackground=(X=4,Y=79,W=1,H=1)
-     FrameSBL=(Y=112,W=2,H=16)
-     FrameSB=(X=32,Y=112,W=1,H=16)
-     FrameSBR=(X=112,Y=112,W=16,H=16)
-     CloseBoxUp=(X=4,Y=32,W=11,H=11)
-     CloseBoxDown=(X=4,Y=43,W=11,H=11)
-     CloseBoxOffsetX=3
-     CloseBoxOffsetY=5
-     Active=Texture'UWindow.Icons.ActiveFrame'
-     Inactive=Texture'UWindow.Icons.InactiveFrame'
-     ActiveS=Texture'UWindow.Icons.ActiveFrameS'
-     InactiveS=Texture'UWindow.Icons.InactiveFrameS'
-     Misc=Texture'UWindow.Icons.Misc'
-     FrameTL=(W=2,H=16)
-     FrameT=(X=32,W=1,H=16)
-     FrameTR=(X=126,W=2,H=16)
-     FrameL=(Y=32,W=2,H=1)
-     FrameR=(X=126,Y=32,W=2,H=1)
-     FrameBL=(Y=125,W=2,H=3)
-     FrameB=(X=32,Y=125,W=1,H=3)
-     FrameBR=(X=126,Y=125,W=2,H=3)
-     FrameActiveTitleColor=(R=255,G=255,B=255)
-     FrameInactiveTitleColor=(R=255,G=255,B=255)
-     FrameTitleX=6
-     FrameTitleY=4
-     BevelUpTL=(X=4,Y=16,W=2,H=2)
-     BevelUpT=(X=10,Y=16,W=1,H=2)
-     BevelUpTR=(X=18,Y=16,W=2,H=2)
-     BevelUpL=(X=4,Y=20,W=2,H=1)
-     BevelUpR=(X=18,Y=20,W=2,H=1)
-     BevelUpBL=(X=4,Y=30,W=2,H=2)
-     BevelUpB=(X=10,Y=30,W=1,H=2)
-     BevelUpBR=(X=18,Y=30,W=2,H=2)
-     BevelUpArea=(X=8,Y=20,W=1,H=1)
-     MiscBevelTL(0)=(Y=17,W=3,H=3)
-     MiscBevelTL(1)=(W=3,H=3)
-     MiscBevelTL(2)=(Y=33,W=2,H=2)
-     MiscBevelT(0)=(X=3,Y=17,W=116,H=3)
-     MiscBevelT(1)=(X=3,W=116,H=3)
-     MiscBevelT(2)=(X=2,Y=33,W=1,H=2)
-     MiscBevelTR(0)=(X=119,Y=17,W=3,H=3)
-     MiscBevelTR(1)=(X=119,W=3,H=3)
-     MiscBevelTR(2)=(X=11,Y=33,W=2,H=2)
-     MiscBevelL(0)=(Y=20,W=3,H=10)
-     MiscBevelL(1)=(Y=3,W=3,H=10)
-     MiscBevelL(2)=(Y=36,W=2,H=1)
-     MiscBevelR(0)=(X=119,Y=20,W=3,H=10)
-     MiscBevelR(1)=(X=119,Y=3,W=3,H=10)
-     MiscBevelR(2)=(X=11,Y=36,W=2,H=1)
-     MiscBevelBL(0)=(Y=30,W=3,H=3)
-     MiscBevelBL(1)=(Y=14,W=3,H=3)
-     MiscBevelBL(2)=(Y=44,W=2,H=2)
-     MiscBevelB(0)=(X=3,Y=30,W=116,H=3)
-     MiscBevelB(1)=(X=3,Y=14,W=116,H=3)
-     MiscBevelB(2)=(X=2,Y=44,W=1,H=2)
-     MiscBevelBR(0)=(X=119,Y=30,W=3,H=3)
-     MiscBevelBR(1)=(X=119,Y=14,W=3,H=3)
-     MiscBevelBR(2)=(X=11,Y=44,W=2,H=2)
-     MiscBevelArea(0)=(X=3,Y=20,W=116,H=10)
-     MiscBevelArea(1)=(X=3,Y=3,W=116,H=10)
-     MiscBevelArea(2)=(X=2,Y=35,W=9,H=9)
-     ComboBtnUp=(X=20,Y=60,W=12,H=12)
-     ComboBtnDown=(X=32,Y=60,W=12,H=12)
-     ComboBtnDisabled=(X=44,Y=60,W=12,H=12)
-     ColumnHeadingHeight=13
-     HLine=(X=5,Y=78,W=1,H=2)
-     EditBoxBevel=2
-     TabSelectedL=(X=4,Y=80,W=3,H=17)
-     TabSelectedM=(X=7,Y=80,W=1,H=17)
-     TabSelectedR=(X=55,Y=80,W=2,H=17)
-     TabUnselectedL=(X=57,Y=80,W=3,H=15)
-     TabUnselectedM=(X=60,Y=80,W=1,H=15)
-     TabUnselectedR=(X=109,Y=80,W=2,H=15)
-     TabBackground=(X=4,Y=79,W=1,H=1)
-     Size_ScrollbarWidth=12.000000
-     Size_ScrollbarButtonHeight=10.000000
-     Size_MinScrollbarHeight=6.000000
-     Size_TabAreaHeight=15.000000
-     Size_TabAreaOverhangHeight=2.000000
-     Size_TabSpacing=20.000000
-     Size_TabXOffset=1.000000
-     Pulldown_ItemHeight=15.000000
-     Pulldown_VBorder=3.000000
-     Pulldown_HBorder=3.000000
-     Pulldown_TextBorder=9.000000
+      SBUpUp=(X=20,Y=16,W=12,H=10)
+      SBUpDown=(X=32,Y=16,W=12,H=10)
+      SBUpDisabled=(X=44,Y=16,W=12,H=10)
+      SBDownUp=(X=20,Y=26,W=12,H=10)
+      SBDownDown=(X=32,Y=26,W=12,H=10)
+      SBDownDisabled=(X=44,Y=26,W=12,H=10)
+      SBLeftUp=(X=20,Y=48,W=10,H=12)
+      SBLeftDown=(X=30,Y=48,W=10,H=12)
+      SBLeftDisabled=(X=40,Y=48,W=10,H=12)
+      SBRightUp=(X=20,Y=36,W=10,H=12)
+      SBRightDown=(X=30,Y=36,W=10,H=12)
+      SBRightDisabled=(X=40,Y=36,W=10,H=12)
+      SBBackground=(X=4,Y=79,W=1,H=1)
+      FrameSBL=(X=0,Y=112,W=2,H=16)
+      FrameSB=(X=32,Y=112,W=1,H=16)
+      FrameSBR=(X=112,Y=112,W=16,H=16)
+      CloseBoxUp=(X=4,Y=32,W=11,H=11)
+      CloseBoxDown=(X=4,Y=43,W=11,H=11)
+      CloseBoxOffsetX=3
+      CloseBoxOffsetY=5
+      Active=Texture'UWindow.Icons.ActiveFrame'
+      Inactive=Texture'UWindow.Icons.InactiveFrame'
+      ActiveS=Texture'UWindow.Icons.ActiveFrameS'
+      InactiveS=Texture'UWindow.Icons.InactiveFrameS'
+      Misc=Texture'UWindow.Icons.Misc'
+      FrameTL=(W=2,H=16)
+      FrameT=(X=32,W=1,H=16)
+      FrameTR=(X=126,W=2,H=16)
+      FrameL=(Y=32,W=2,H=1)
+      FrameR=(X=126,Y=32,W=2,H=1)
+      FrameBL=(Y=125,W=2,H=3)
+      FrameB=(X=32,Y=125,W=1,H=3)
+      FrameBR=(X=126,Y=125,W=2,H=3)
+      FrameActiveTitleColor=(R=255,G=255,B=255)
+      FrameInactiveTitleColor=(R=255,G=255,B=255)
+      FrameTitleX=6
+      FrameTitleY=4
+      BevelUpTL=(X=4,Y=16,W=2,H=2)
+      BevelUpT=(X=10,Y=16,W=1,H=2)
+      BevelUpTR=(X=18,Y=16,W=2,H=2)
+      BevelUpL=(X=4,Y=20,W=2,H=1)
+      BevelUpR=(X=18,Y=20,W=2,H=1)
+      BevelUpBL=(X=4,Y=30,W=2,H=2)
+      BevelUpB=(X=10,Y=30,W=1,H=2)
+      BevelUpBR=(X=18,Y=30,W=2,H=2)
+      BevelUpArea=(X=8,Y=20,W=1,H=1)
+      MiscBevelTL(0)=(Y=17,W=3,H=3)
+      MiscBevelTL(1)=(W=3,H=3)
+      MiscBevelTL(2)=(Y=33,W=2,H=2)
+      MiscBevelT(0)=(X=3,Y=17,W=116,H=3)
+      MiscBevelT(1)=(X=3,W=116,H=3)
+      MiscBevelT(2)=(X=2,Y=33,W=1,H=2)
+      MiscBevelTR(0)=(X=119,Y=17,W=3,H=3)
+      MiscBevelTR(1)=(X=119,W=3,H=3)
+      MiscBevelTR(2)=(X=11,Y=33,W=2,H=2)
+      MiscBevelL(0)=(Y=20,W=3,H=10)
+      MiscBevelL(1)=(Y=3,W=3,H=10)
+      MiscBevelL(2)=(Y=36,W=2,H=1)
+      MiscBevelR(0)=(X=119,Y=20,W=3,H=10)
+      MiscBevelR(1)=(X=119,Y=3,W=3,H=10)
+      MiscBevelR(2)=(X=11,Y=36,W=2,H=1)
+      MiscBevelBL(0)=(Y=30,W=3,H=3)
+      MiscBevelBL(1)=(Y=14,W=3,H=3)
+      MiscBevelBL(2)=(Y=44,W=2,H=2)
+      MiscBevelB(0)=(X=3,Y=30,W=116,H=3)
+      MiscBevelB(1)=(X=3,Y=14,W=116,H=3)
+      MiscBevelB(2)=(X=2,Y=44,W=1,H=2)
+      MiscBevelBR(0)=(X=119,Y=30,W=3,H=3)
+      MiscBevelBR(1)=(X=119,Y=14,W=3,H=3)
+      MiscBevelBR(2)=(X=11,Y=44,W=2,H=2)
+      MiscBevelArea(0)=(X=3,Y=20,W=116,H=10)
+      MiscBevelArea(1)=(X=3,Y=3,W=116,H=10)
+      MiscBevelArea(2)=(X=2,Y=35,W=9,H=9)
+      ComboBtnUp=(X=20,Y=60,W=12,H=12)
+      ComboBtnDown=(X=32,Y=60,W=12,H=12)
+      ComboBtnDisabled=(X=44,Y=60,W=12,H=12)
+      ColumnHeadingHeight=13
+      HLine=(X=5,Y=78,W=1,H=2)
+      EditBoxBevel=2
+      TabSelectedL=(X=4,Y=80,W=3,H=17)
+      TabSelectedM=(X=7,Y=80,W=1,H=17)
+      TabSelectedR=(X=55,Y=80,W=2,H=17)
+      TabUnselectedL=(X=57,Y=80,W=3,H=15)
+      TabUnselectedM=(X=60,Y=80,W=1,H=15)
+      TabUnselectedR=(X=109,Y=80,W=2,H=15)
+      TabBackground=(X=4,Y=79,W=1,H=1)
+      Size_ScrollbarWidth=12.000000
+      Size_ScrollbarButtonHeight=10.000000
+      Size_MinScrollbarHeight=6.000000
+      Size_TabAreaHeight=15.000000
+      Size_TabAreaOverhangHeight=2.000000
+      Size_TabSpacing=20.000000
+      Size_TabXOffset=1.000000
+      Pulldown_ItemHeight=15.000000
+      Pulldown_VBorder=3.000000
+      Pulldown_HBorder=3.000000
+      Pulldown_TextBorder=9.000000
 }

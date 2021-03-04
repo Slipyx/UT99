@@ -12,11 +12,11 @@ class RifleRound extends RifleAmmo;
 
 defaultproperties
 {
-     AmmoAmount=1
-     ParentAmmo=Class'UnrealI.RifleAmmo'
-     PickupMessage="You got a Rifle Round."
-     PickupViewMesh=LodMesh'UnrealI.RifleRoundM'
-     Mesh=LodMesh'UnrealI.RifleRoundM'
-     CollisionRadius=5.000000
-     CollisionHeight=15.000000
+      AmmoAmount=1
+      ParentAmmo=Class'UnrealI.RifleAmmo'
+      PickupMessage="You got a Rifle Round."
+      PickupViewMesh=LodMesh'UnrealI.RifleRoundM'
+      Mesh=LodMesh'UnrealI.RifleRoundM'
+      CollisionRadius=5.000000
+      CollisionHeight=15.000000
 }

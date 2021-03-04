@@ -286,4 +286,8 @@ function MenuCmd(int Menu, int Item)
 
 defaultproperties
 {
+      Selected=None
+      Over=None
+      bAltDown=False
+      Spacing=0
 }

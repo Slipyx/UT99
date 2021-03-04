@@ -18,7 +18,7 @@ class Sign1 extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Sign1M'
-     bProjTarget=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Sign1M'
+      bProjTarget=True
 }

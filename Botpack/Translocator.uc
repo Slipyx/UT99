@@ -1,7 +1,8 @@
 //=============================================================================
 // Translocator.
 //=============================================================================
-class Translocator extends TournamentWeapon;
+class Translocator extends TournamentWeapon
+	  config(User);
 
 #exec MESH  IMPORT MESH=Transloc ANIVFILE=MODELS\Translocator_a.3D DATAFILE=MODELS\Translocator_d.3D UNMIRROR=1
 #exec MESH ORIGIN MESH=Transloc X=0 Y=0 Z=0 YAW=-61 PITCH=0 ROLL=-5
@@ -68,6 +69,11 @@ var Weapon PreviousWeapon;
 var Actor DesiredTarget;
 var float MaxTossForce;
 var bool bBotMoveFire, bTTargetOut;
+
+// stijn: OldUnreal feature added upon popular request. Before 469, you automatically
+// switched to your previous weapon if you simultaneously pressed fire+altfire while
+// holding the translocator. This config var allows you to override the default behavior.
+var config bool bEnableDualButtonSwitch;
 
 replication
 {
@@ -192,8 +198,6 @@ function Fire( float Value )
 				Level.Game.WorldLog.LogSpecialEvent("translocate_gib", Pawn(Owner).PlayerReplicationInfo.PlayerID);
 
 			Pawn(Owner).PlaySound(sound'TDisrupt', SLOT_None, 4.0);
-			Pawn(Owner).PlaySound(sound'TDisrupt', SLOT_Misc, 4.0);
-			Pawn(Owner).PlaySound(sound'TDisrupt', SLOT_Interact, 4.0);
 			Pawn(Owner).gibbedBy(TTarget.disruptor);
 			return;
 		}
@@ -395,7 +399,7 @@ Begin:
 	if ( Owner.IsA('Bot') )
 		Bot(Owner).SwitchToBestWeapon();
 	Sleep(0.1);
-	if ( (Pawn(Owner).bFire != 0) && (Pawn(Owner).bAltFire != 0) )
+	if ( bEnableDualButtonSwitch && (Pawn(Owner).bFire != 0) && (Pawn(Owner).bAltFire != 0) )
 	 	ReturnToPreviousWeapon();
 	GotoState('Idle');
 }
@@ -484,29 +488,37 @@ simulated function PlayPostSelect()
 
 defaultproperties
 {
-     MaxTossForce=830.000000
-     WeaponDescription="Classification: Personal Teleportation Device\n\nPrimary Fire: Launches the destination module.  Throw the module to the location you would like to teleport to.\n\nSecondary Fire: Activates the translocator and teleports the user to the destination module.\n\nTechniques: Throw your destination module at another player and then activate the secondary fire, and you will telefrag your opponent!  If you press your primary fire button when activating your translocator with the secondary fire, the last weapon you had selected will automatically return once you have translocated."
-     PickupAmmoCount=1
-     bCanThrow=False
-     FiringSpeed=1.000000
-     FireOffset=(X=15.000000,Y=-13.000000,Z=-7.000000)
-     AIRating=-1.000000
-     FireSound=Sound'Botpack.Translocator.ThrowTarget'
-     AltFireSound=Sound'Botpack.Translocator.ReturnTarget'
-     DeathMessage="%k telefragged %o!"
-     AutoSwitchPriority=0
-     PickupMessage="You got the Translocator Source Module."
-     ItemName="Translocator"
-     RespawnTime=0.000000
-     PlayerViewOffset=(X=5.000000,Y=-4.200000,Z=-7.000000)
-     PlayerViewMesh=LodMesh'Botpack.Transloc'
-     PickupViewMesh=LodMesh'Botpack.Trans3loc'
-     ThirdPersonMesh=LodMesh'Botpack.Trans3loc'
-     StatusIcon=Texture'Botpack.Icons.UseTrans'
-     Icon=Texture'Botpack.Icons.UseTrans'
-     Mesh=LodMesh'Botpack.Trans3loc'
-     bNoSmooth=False
-     CollisionRadius=8.000000
-     CollisionHeight=3.000000
-     Mass=10.000000
+      TTarget=None
+      TossForce=0.000000
+      FireDelay=0.000000
+      PreviousWeapon=None
+      DesiredTarget=None
+      MaxTossForce=830.000000
+      bBotMoveFire=False
+      bTTargetOut=False
+      bEnableDualButtonSwitch=True
+      WeaponDescription="Classification: Personal Teleportation Device\n\nPrimary Fire: Launches the destination module.  Throw the module to the location you would like to teleport to.\n\nSecondary Fire: Activates the translocator and teleports the user to the destination module.\n\nTechniques: Throw your destination module at another player and then activate the secondary fire, and you will telefrag your opponent!  If you press your primary fire button when activating your translocator with the secondary fire, the last weapon you had selected will automatically return once you have translocated."
+      PickupAmmoCount=1
+      bCanThrow=False
+      FiringSpeed=1.000000
+      FireOffset=(X=15.000000,Y=-13.000000,Z=-7.000000)
+      AIRating=-1.000000
+      FireSound=Sound'Botpack.Translocator.ThrowTarget'
+      AltFireSound=Sound'Botpack.Translocator.ReturnTarget'
+      DeathMessage="%k telefragged %o!"
+      AutoSwitchPriority=0
+      PickupMessage="You got the Translocator Source Module."
+      ItemName="Translocator"
+      RespawnTime=0.000000
+      PlayerViewOffset=(X=5.000000,Y=-4.200000,Z=-7.000000)
+      PlayerViewMesh=LodMesh'Botpack.Transloc'
+      PickupViewMesh=LodMesh'Botpack.Trans3loc'
+      ThirdPersonMesh=LodMesh'Botpack.Trans3loc'
+      StatusIcon=Texture'Botpack.Icons.UseTrans'
+      Icon=Texture'Botpack.Icons.UseTrans'
+      Mesh=LodMesh'Botpack.Trans3loc'
+      bNoSmooth=False
+      CollisionRadius=8.000000
+      CollisionHeight=3.000000
+      Mass=10.000000
 }

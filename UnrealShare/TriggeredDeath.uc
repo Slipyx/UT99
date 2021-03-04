@@ -45,11 +45,11 @@ auto state Enabled
 					VNum++;
 				Victim[Vnum] = PlayerPawn(Other);
 				TimePassed[VNum] = 0;
+				P.Health = 1;
 			}
 			else
 				KillVictim(P);
 
-			P.Health = 1;
 			if ( P.bIsPlayer )
 			{
 				if( P.bIsFemale )
@@ -118,4 +118,29 @@ auto state Enabled
 
 defaultproperties
 {
+      MaleDeathSound=None
+      FemaleDeathSound=None
+      StartFlashScale=0.000000
+      StartFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      EndFlashScale=0.000000
+      EndFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      ChangeTime=0.000000
+      DeathName="None"
+      bDestroyItems=False
+      TimePassed(0)=0.000000
+      TimePassed(1)=0.000000
+      TimePassed(2)=0.000000
+      TimePassed(3)=0.000000
+      TimePassed(4)=0.000000
+      TimePassed(5)=0.000000
+      TimePassed(6)=0.000000
+      TimePassed(7)=0.000000
+      Victim(0)=None
+      Victim(1)=None
+      Victim(2)=None
+      Victim(3)=None
+      Victim(4)=None
+      Victim(5)=None
+      Victim(6)=None
+      Victim(7)=None
 }

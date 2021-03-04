@@ -126,12 +126,16 @@ function SpeedChanged()
 
 defaultproperties
 {
-     ControlOffset=20.000000
-     StyleText="Game Style:"
-     Styles(0)="Classic"
-     Styles(1)="Hardcore"
-     Styles(2)="Turbo"
-     StyleHelp="Choose your game style. Hardcore is 10% faster with a 50% damage increase. Turbo also adds ultra fast player movement."
-     SpeedText="Game Speed"
-     SpeedHelp="Adjust the speed of the game."
+      BotmatchParent=None
+      Initialized=False
+      ControlOffset=20.000000
+      StyleCombo=None
+      StyleText="Game Style:"
+      Styles(0)="Classic"
+      Styles(1)="Hardcore"
+      Styles(2)="Turbo"
+      StyleHelp="Choose your game style. Hardcore is 10% faster with a 50% damage increase. Turbo also adds ultra fast player movement."
+      SpeedSlider=None
+      SpeedText="Game Speed"
+      SpeedHelp="Adjust the speed of the game."
 }

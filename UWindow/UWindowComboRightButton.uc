@@ -22,5 +22,5 @@ function LMouseDown(float X, float Y)
 
 defaultproperties
 {
-     bNoKeyboard=True
+      bNoKeyboard=True
 }

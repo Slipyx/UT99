@@ -34,7 +34,7 @@ static simulated function ClientReceive(
 
 defaultproperties
 {
-     FirstBloodString="drew first blood!"
-     bBeep=False
-     DrawColor=(R=255,G=0,B=0)
+      FirstBloodString="drew first blood!"
+      bBeep=False
+      DrawColor=(R=255,G=0,B=0)
 }

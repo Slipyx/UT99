@@ -87,6 +87,8 @@ function AltFire( float Value )
 			PlayerPawn(Owner).ClientInstantFlash( -0.4, vect(0, 0, 800));
 			PlayerPawn(Owner).ShakeView(ShakeTime, ShakeMag, ShakeVert);
 		}
+		if ( FiringSpeed>0 )
+			Pawn(Owner).PlayRecoil(FiringSpeed);
 		bPointing=True;
 		ProjectileFire(AltProjectileClass, AltProjectileSpeed, bAltWarnTarget);
 		PlayAltFiring();
@@ -232,6 +234,7 @@ function Projectile ProjectileFire(class<projectile> ProjClass, float ProjSpeed,
 	bSplashDamage = true;
 	Tracked = Spawn(ProjClass,,, Start,AdjustedAim);
 	Tracked.Damage = Tracked.Damage*Mult;
+	return Tracked;
 }
 
 function ProcessTraceHit(Actor Other, Vector HitLocation, Vector HitNormal, Vector X, Vector Y, Vector Z)
@@ -369,33 +372,36 @@ Begin:
 
 defaultproperties
 {
-     hitdamage=35
-     AmmoName=Class'UnrealShare.ASMDAmmo'
-     PickupAmmoCount=20
-     bInstantHit=True
-     bAltWarnTarget=True
-     bSplashDamage=True
-     FireOffset=(X=12.000000,Y=-6.000000,Z=-7.000000)
-     AltProjectileClass=Class'UnrealShare.TazerProj'
-     AIRating=0.600000
-     AltRefireRate=0.700000
-     FireSound=Sound'UnrealShare.ASMD.TazerFire'
-     AltFireSound=Sound'UnrealShare.ASMD.TazerAltFire'
-     SelectSound=Sound'UnrealShare.ASMD.TazerSelect'
-     Misc1Sound=Sound'UnrealShare.ASMD.Vapour'
-     DeathMessage="%k inflicted mortal damage upon %o with the %w."
-     AutoSwitchPriority=4
-     InventoryGroup=4
-     PickupMessage="You got the ASMD"
-     ItemName="ASMD"
-     PlayerViewOffset=(X=3.500000,Y=-1.800000,Z=-2.000000)
-     PlayerViewMesh=LodMesh'UnrealShare.ASMDM'
-     PickupViewMesh=LodMesh'UnrealShare.ASMDPick'
-     ThirdPersonMesh=LodMesh'UnrealShare.ASMD3'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealShare.ASMDPick'
-     bNoSmooth=False
-     CollisionRadius=28.000000
-     CollisionHeight=8.000000
-     Mass=50.000000
+      hitdamage=35
+      Amp=None
+      Tracked=None
+      bBotSpecialMove=False
+      AmmoName=Class'UnrealShare.ASMDAmmo'
+      PickupAmmoCount=20
+      bInstantHit=True
+      bAltWarnTarget=True
+      bSplashDamage=True
+      FireOffset=(X=12.000000,Y=-6.000000,Z=-7.000000)
+      AltProjectileClass=Class'UnrealShare.TazerProj'
+      AIRating=0.600000
+      AltRefireRate=0.700000
+      FireSound=Sound'UnrealShare.ASMD.TazerFire'
+      AltFireSound=Sound'UnrealShare.ASMD.TazerAltFire'
+      SelectSound=Sound'UnrealShare.ASMD.TazerSelect'
+      Misc1Sound=Sound'UnrealShare.ASMD.Vapour'
+      DeathMessage="%k inflicted mortal damage upon %o with the %w."
+      AutoSwitchPriority=4
+      InventoryGroup=4
+      PickupMessage="You got the ASMD"
+      ItemName="ASMD"
+      PlayerViewOffset=(X=3.500000,Y=-1.800000,Z=-2.000000)
+      PlayerViewMesh=LodMesh'UnrealShare.ASMDM'
+      PickupViewMesh=LodMesh'UnrealShare.ASMDPick'
+      ThirdPersonMesh=LodMesh'UnrealShare.ASMD3'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealShare.ASMDPick'
+      bNoSmooth=False
+      CollisionRadius=28.000000
+      CollisionHeight=8.000000
+      Mass=50.000000
 }

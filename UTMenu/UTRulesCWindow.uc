@@ -192,8 +192,10 @@ function SaveConfigs()
 
 defaultproperties
 {
-     TourneyText="Tournament"
-     TourneyHelp="If checked, each player must indicate they are ready by clicking their fire button before the match begins."
-     ForceRespawnText="Force Respawn"
-     ForceRespawnHelp="If checked, players will be automatically respawned when they die, without waiting for the user to press Fire."
+      TourneyCheck=None
+      TourneyText="Tournament"
+      TourneyHelp="If checked, each player must indicate they are ready by clicking their fire button before the match begins."
+      ForceRespawnCheck=None
+      ForceRespawnText="Force Respawn"
+      ForceRespawnHelp="If checked, players will be automatically respawned when they die, without waiting for the user to press Fire."
 }

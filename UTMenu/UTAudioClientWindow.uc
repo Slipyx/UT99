@@ -270,6 +270,8 @@ function MessageBoxDone(UWindowMessageBox W, MessageBoxResult Result)
 			break;
 		}
 	}
+
+	Super.MessageBoxDone(W, Result);
 }
 
 function VoiceMessagesChecked()
@@ -299,24 +301,32 @@ function SaveConfigs()
 
 defaultproperties
 {
-     AnnouncerVolumeText="Announcer Volume"
-     AnnouncerVolumeHelp="Adjusts the volume of the in-game announcer."
-     AutoTauntText="Auto Taunt"
-     AutoTauntHelp="If checked, your player will send automatic taunts to your victims, whenever you score a frag."
-     Use3DHardwareText="Use Hardware 3D Sound"
-     Use3DHardwareHelp="If checked, UT will use your 3D audio hardware for richer environmental effects."
-     UseSurroundSoundText="Use Surround Sound"
-     UseSurroundSoundHelp="If checked, UT will use your digital receiver for better surround sound."
-     MessageSettingsText="Play Voice Messages"
-     MessageSettingsHelp="This setting controls which voice messages sent from other players will be heard."
-     MessageSettings(0)="All"
-     MessageSettings(1)="No Auto-Taunts"
-     MessageSettings(2)="No Taunts"
-     MessageSettings(3)="None"
-     ConfirmHardwareTitle="Confirm Use 3D Sound Hardware"
-     ConfirmHardwareText="The hardware 3D sound feature requires you have a 3D sound card supporting A3D or EAX.  Enabling this option can also cause your performance to degrade severely in some cases.\n\nAre you sure you want to enable this feature?"
-     ConfirmSurroundTitle="Confirm Use Surround Sound"
-     ConfirmSurroundText="The surround sound feature requires you have a compatible surround sound receiver connected to your sound card.  Enabling this option without the appropriate receiver can cause anomalies in sound performance.\n\nAre you sure you want to enable this feature?"
-     NoMatureLanguageText="No Mature Taunts"
-     NoMatureLanguageHelp="If checked, voice taunts with mature language will not be played."
+      AnnouncerVolumeSlider=None
+      AnnouncerVolumeText="Announcer Volume"
+      AnnouncerVolumeHelp="Adjusts the volume of the in-game announcer."
+      AutoTauntCheck=None
+      AutoTauntText="Auto Taunt"
+      AutoTauntHelp="If checked, your player will send automatic taunts to your victims, whenever you score a frag."
+      Use3DHardwareCheck=None
+      Use3DHardwareText="Use Hardware 3D Sound"
+      Use3DHardwareHelp="If checked, UT will use your 3D audio hardware for richer environmental effects."
+      UseSurroundSoundCheck=None
+      UseSurroundSoundText="Use Surround Sound"
+      UseSurroundSoundHelp="If checked, UT will use your digital receiver for better surround sound."
+      MessageSettingsCombo=None
+      MessageSettingsText="Play Voice Messages"
+      MessageSettingsHelp="This setting controls which voice messages sent from other players will be heard."
+      MessageSettings(0)="All"
+      MessageSettings(1)="No Auto-Taunts"
+      MessageSettings(2)="No Taunts"
+      MessageSettings(3)="None"
+      ConfirmHardware=None
+      ConfirmHardwareTitle="Confirm Use 3D Sound Hardware"
+      ConfirmHardwareText="The hardware 3D sound feature requires you have a 3D sound card supporting A3D or EAX.  Enabling this option can also cause your performance to degrade severely in some cases.\n\nAre you sure you want to enable this feature?"
+      ConfirmSurround=None
+      ConfirmSurroundTitle="Confirm Use Surround Sound"
+      ConfirmSurroundText="The surround sound feature requires you have a compatible surround sound receiver connected to your sound card.  Enabling this option without the appropriate receiver can cause anomalies in sound performance.\n\nAre you sure you want to enable this feature?"
+      NoMatureLanguageCheck=None
+      NoMatureLanguageText="No Mature Taunts"
+      NoMatureLanguageHelp="If checked, voice taunts with mature language will not be played."
 }

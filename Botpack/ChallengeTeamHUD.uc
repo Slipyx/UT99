@@ -176,26 +176,34 @@ function DrawTalkFace(Canvas Canvas, int i, float YPos)
 
 defaultproperties
 {
-     TeamIcon(0)=Texture'Botpack.Icons.I_TeamR'
-     TeamIcon(1)=Texture'Botpack.Icons.I_TeamB'
-     TeamIcon(2)=Texture'Botpack.Icons.I_TeamG'
-     TeamIcon(3)=Texture'Botpack.Icons.I_TeamY'
-     TeamColor(0)=(R=255)
-     TeamColor(1)=(G=128,B=255)
-     TeamColor(2)=(G=255)
-     TeamColor(3)=(R=255,G=255)
-     AltTeamColor(0)=(R=200)
-     AltTeamColor(1)=(G=94,B=187)
-     AltTeamColor(2)=(G=128)
-     AltTeamColor(3)=(R=255,G=255,B=128)
-     OrderNames(0)=Defend
-     OrderNames(1)=Hold
-     OrderNames(2)=Attack
-     OrderNames(3)=Follow
-     OrderNames(4)=Freelance
-     OrderNames(5)=Point
-     OrderNames(10)=Attack
-     OrderNames(11)=Freelance
-     NumOrders=5
-     ServerInfoClass=Class'Botpack.ServerInfoTeam'
+      TeamIcon(0)=Texture'Botpack.Icons.I_TeamR'
+      TeamIcon(1)=Texture'Botpack.Icons.I_TeamB'
+      TeamIcon(2)=Texture'Botpack.Icons.I_TeamG'
+      TeamIcon(3)=Texture'Botpack.Icons.I_TeamY'
+      TeamColor(0)=(R=255,G=0,B=0,A=0)
+      TeamColor(1)=(R=0,G=128,B=255,A=0)
+      TeamColor(2)=(R=0,G=255,B=0,A=0)
+      TeamColor(3)=(R=255,G=255,B=0,A=0)
+      AltTeamColor(0)=(R=200,G=0,B=0,A=0)
+      AltTeamColor(1)=(R=0,G=94,B=187,A=0)
+      AltTeamColor(2)=(R=0,G=128,B=0,A=0)
+      AltTeamColor(3)=(R=255,G=255,B=128,A=0)
+      OrderNames(0)="Defend"
+      OrderNames(1)="Hold"
+      OrderNames(2)="Attack"
+      OrderNames(3)="Follow"
+      OrderNames(4)="Freelance"
+      OrderNames(5)="Point"
+      OrderNames(6)="None"
+      OrderNames(7)="None"
+      OrderNames(8)="None"
+      OrderNames(9)="None"
+      OrderNames(10)="Attack"
+      OrderNames(11)="Freelance"
+      OrderNames(12)="None"
+      OrderNames(13)="None"
+      OrderNames(14)="None"
+      OrderNames(15)="None"
+      NumOrders=5
+      ServerInfoClass=Class'Botpack.ServerInfoTeam'
 }

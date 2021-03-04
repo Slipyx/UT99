@@ -253,7 +253,7 @@ function CheckEndGame()
 function ScoreKill(pawn Killer, pawn Other)
 {
 	Other.DieCount++;
-	if (Other.PlayerReplicationInfo.Score > 0)
+	if (Other.PlayerReplicationInfo != none && Other.PlayerReplicationInfo.Score > 0)
 		Other.PlayerReplicationInfo.Score -= 1;
 	if( (killer != Other) && (killer != None) )
 		killer.killCount++;
@@ -385,10 +385,16 @@ function bool OneOnOne()
 
 defaultproperties
 {
-     bAlwaysForceRespawn=True
-     StartUpMessage="Last Man Standing.  How long can you live?"
-     ScoreBoardType=Class'Botpack.LMSScoreboard'
-     RulesMenuType="UTMenu.UTLMSRulesSC"
-     BeaconName="LMS"
-     GameName="Last Man Standing"
+      bHighDetailGhosts=False
+      Lives=0
+      TotalKills=0
+      NumGhosts=0
+      AltStartupMessage=""
+      LocalPlayer=None
+      bAlwaysForceRespawn=True
+      StartUpMessage="Last Man Standing.  How long can you live?"
+      ScoreBoardType=Class'Botpack.LMSScoreboard'
+      RulesMenuType="UTMenu.UTLMSRulesSC"
+      BeaconName="LMS"
+      GameName="Last Man Standing"
 }

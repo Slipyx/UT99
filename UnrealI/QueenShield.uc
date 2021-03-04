@@ -21,16 +21,16 @@ function touch( Actor Other )
 
 defaultproperties
 {
-     bNetTemporary=False
-     LifeSpan=5.000000
-     DrawType=DT_Mesh
-     Skin=Texture'UnrealShare.Effects.ExplosionPal3'
-     Mesh=LodMesh'UnrealI.spot'
-     bUnlit=True
-     CollisionRadius=80.000000
-     CollisionHeight=80.000000
-     bCollideActors=True
-     bProjTarget=True
-     LightType=LT_TexturePaletteOnce
-     LightEffect=LE_NonIncidence
+      bNetTemporary=False
+      LifeSpan=5.000000
+      DrawType=DT_Mesh
+      Skin=Texture'UnrealShare.Effects.ExplosionPal3'
+      Mesh=LodMesh'UnrealI.Spot'
+      bUnlit=True
+      CollisionRadius=80.000000
+      CollisionHeight=80.000000
+      bCollideActors=True
+      bProjTarget=True
+      LightType=LT_TexturePaletteOnce
+      LightEffect=LE_NonIncidence
 }

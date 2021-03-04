@@ -42,15 +42,16 @@ simulated function Timer()
 
 defaultproperties
 {
-     numBlobs=3
-     SSprites(0)=Texture'Botpack.GoopEx.g1r_a00'
-     SSprites(1)=Texture'Botpack.GoopEx.g2r_a00'
-     SSprites(2)=Texture'Botpack.GoopEx.g3r_a00'
-     SSprites(3)=None
-     RisingRate=20.000000
-     NumSets=3
-     Pause=0.070000
-     LifeSpan=1.000000
-     Texture=Texture'Botpack.GoopEx.g1r_a00'
-     DrawScale=1.400000
+      numBlobs=3
+      SurfaceNormal=(X=0.000000,Y=0.000000,Z=0.000000)
+      SSprites(0)=Texture'Botpack.GoopEx.g1r_a00'
+      SSprites(1)=Texture'Botpack.GoopEx.g2r_a00'
+      SSprites(2)=Texture'Botpack.GoopEx.g3r_a00'
+      SSprites(3)=None
+      RisingRate=20.000000
+      NumSets=3
+      Pause=0.070000
+      LifeSpan=1.000000
+      Texture=Texture'Botpack.GoopEx.g1r_a00'
+      DrawScale=1.400000
 }

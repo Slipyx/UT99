@@ -117,8 +117,15 @@ function QueryFinished(bool bSuccess, optional string ErrorMsg)
 
 defaultproperties
 {
-     Ping=9999.000000
-     SupersetTag=All
-     NotFoundError="Could not find the window: "
-     NotReadyError="Window is not ready: "
+      GameMode=""
+      GameType=""
+      Ping=9999.000000
+      SupersetTag="All"
+      bLocalServersOnly=False
+      bCompatibleServersOnly=False
+      MinPlayers=0
+      MaxPing=0
+      NotFoundError="Could not find the window: "
+      NotReadyError="Window is not ready: "
+      SupersetWindow=None
 }

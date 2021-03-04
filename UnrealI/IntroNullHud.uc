@@ -60,5 +60,5 @@ simulated function PostRender( canvas Canvas )
 
 defaultproperties
 {
-     ESCMessage="Press ESC to begin"
+      ESCMessage="Press ESC to begin"
 }

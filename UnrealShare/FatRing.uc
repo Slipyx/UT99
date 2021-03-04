@@ -40,15 +40,15 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     EffectSound1=Sound'UnrealShare.General.FatRingSound'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=4.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.FatRingM'
-     AmbientGlow=97
-     LightType=LT_Steady
-     LightBrightness=255
-     LightHue=25
-     LightSaturation=53
-     LightRadius=19
+      EffectSound1=Sound'UnrealShare.General.FatRingSound'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=4.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.FatRingM'
+      AmbientGlow=97
+      LightType=LT_Steady
+      LightBrightness=255
+      LightHue=25
+      LightSaturation=53
+      LightRadius=19
 }

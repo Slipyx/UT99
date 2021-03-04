@@ -22,6 +22,7 @@ function Execute()
 
 defaultproperties
 {
-     MenuCaption="&My Mod"
-     MenuHelp="This text goes on the status bar"
+      MenuCaption="&My Mod"
+      MenuHelp="This text goes on the status bar"
+      MenuItem=None
 }

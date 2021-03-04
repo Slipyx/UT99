@@ -44,6 +44,6 @@ event ReceivedBinary( IpAddr Addr, int Count, byte B[255] );
 
 defaultproperties
 {
-     BroadcastAddr=-1
-     bAlwaysTick=True
+      BroadcastAddr=-1
+      bAlwaysTick=True
 }

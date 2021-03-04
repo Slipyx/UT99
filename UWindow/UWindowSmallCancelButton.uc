@@ -10,5 +10,5 @@ function Created()
 
 defaultproperties
 {
-     CancelText="Cancel"
+      CancelText="Cancel"
 }

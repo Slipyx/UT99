@@ -113,8 +113,11 @@ function Created()
 				Selection = MaxGames;
 			}
 			TempClass = Class<GameInfo>(DynamicLoadObject(Games[MaxGames], class'Class'));
-			GameCombo.AddItem(TempClass.Default.GameName);
-			MaxGames++;
+			if (TempClass != none)
+			{
+			    GameCombo.AddItem(TempClass.Default.GameName);
+			    MaxGames++;
+			}
 		}
 	}
 
@@ -200,6 +203,13 @@ function CategoryChanged()
 
 	CurCategory = CategoryCombo.GetValue();
 	LastCategory = CurCategory;
+
+	if (CurCategory == LastCategory)
+	{
+		Initialized = true;
+		return;
+	}
+
 	GameCombo.Clear();
 
 	for (i=0; i<256; i++)
@@ -309,9 +319,12 @@ function ChangeLevelsChanged()
 
 defaultproperties
 {
-     ChangeLevelsText="Auto Change Levels"
-     ChangeLevelsHelp="If this setting is checked, the server will change levels according to the map list for this game type."
-     CategoryText="Category:"
-     CategoryHelp="Select a category of gametype!"
-     GeneralText="Unreal Tournament"
+      ChangeLevelsCheck=None
+      ChangeLevelsText="Auto Change Levels"
+      ChangeLevelsHelp="If this setting is checked, the server will change levels according to the map list for this game type."
+      CategoryCombo=None
+      CategoryText="Category:"
+      CategoryHelp="Select a category of gametype!"
+      GeneralText="Unreal Tournament"
+      LastCategory="Unreal Tournament"
 }

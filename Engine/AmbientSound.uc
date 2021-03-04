@@ -9,7 +9,7 @@ class AmbientSound extends Keypoint;
 
 defaultproperties
 {
-     Texture=Texture'Engine.S_Ambient'
-     SoundRadius=64
-     SoundVolume=190
+      Texture=Texture'Engine.S_Ambient'
+      SoundRadius=64
+      SoundVolume=190
 }

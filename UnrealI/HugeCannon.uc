@@ -25,10 +25,10 @@ class HugeCannon extends Cannon;
 
 defaultproperties
 {
-     TrackingRate=7000
-     Drop=220.000000
-     Health=500.000000
-     Mesh=LodMesh'UnrealI.HugeCannonM'
-     CollisionRadius=88.000000
-     CollisionHeight=88.000000
+      TrackingRate=7000
+      Drop=220.000000
+      Health=500.000000
+      Mesh=LodMesh'UnrealI.HugeCannonM'
+      CollisionRadius=88.000000
+      CollisionHeight=88.000000
 }

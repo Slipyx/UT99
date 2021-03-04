@@ -34,6 +34,7 @@ function Touch( actor Other )
 
 defaultproperties
 {
-     RemoteRole=ROLE_None
-     CollisionRadius=200.000000
+      bInitiallyActive=False
+      RemoteRole=ROLE_None
+      CollisionRadius=200.000000
 }

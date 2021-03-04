@@ -29,9 +29,10 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     bNetOptional=True
-     RemoteRole=ROLE_SimulatedProxy
-     AnimSequence=burst
-     DrawType=DT_Mesh
-     AmbientGlow=79
+      bSpawnOnce=False
+      bNetOptional=True
+      RemoteRole=ROLE_SimulatedProxy
+      AnimSequence="burst"
+      DrawType=DT_Mesh
+      AmbientGlow=79
 }

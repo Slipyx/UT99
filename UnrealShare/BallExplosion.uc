@@ -39,15 +39,15 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     EffectSound1=Sound'UnrealShare.flak.expl2'
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.b1exp'
-     AmbientGlow=159
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=192
-     LightHue=29
-     LightSaturation=177
-     LightRadius=9
+      EffectSound1=Sound'UnrealShare.flak.expl2'
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.b1exp'
+      AmbientGlow=159
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=192
+      LightHue=29
+      LightSaturation=177
+      LightRadius=9
 }

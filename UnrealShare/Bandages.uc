@@ -13,10 +13,10 @@ class Bandages extends Health;
 
 defaultproperties
 {
-     HealingAmount=5
-     PickupMessage="You got some bandages +"
-     PickupViewMesh=LodMesh'UnrealShare.bandage'
-     Mesh=LodMesh'UnrealShare.bandage'
-     CollisionRadius=14.000000
-     CollisionHeight=4.000000
+      HealingAmount=5
+      PickupMessage="You got some bandages +"
+      PickupViewMesh=LodMesh'UnrealShare.bandage'
+      Mesh=LodMesh'UnrealShare.bandage'
+      CollisionRadius=14.000000
+      CollisionHeight=4.000000
 }

@@ -98,9 +98,18 @@ function UnTouch( actor Other )
 
 defaultproperties
 {
-     NewMessageSound=Sound'UnrealShare.Pickups.TransA3'
-     ReTriggerDelay=0.250000
-     M_NewMessage="New Translator Message"
-     M_TransMessage="Translator Message"
-     Texture=Texture'UnrealShare.S_Message'
+      Message=""
+      AltMessage=""
+      Hint=""
+      bTriggerOnly=False
+      NewMessageSound=Sound'UnrealShare.Pickups.TransA3'
+      bTriggerAltMessage=False
+      bHitOnce=False
+      bHitDelay=False
+      ReTriggerDelay=0.250000
+      TriggerTime=0.000000
+      Trans=None
+      M_NewMessage="New Translator Message"
+      M_TransMessage="Translator Message"
+      Texture=Texture'UnrealShare.S_Message'
 }

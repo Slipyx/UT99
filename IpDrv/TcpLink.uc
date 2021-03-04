@@ -86,5 +86,9 @@ event ReceivedBinary( int Count, byte B[255] );
 
 defaultproperties
 {
-     bAlwaysTick=True
+      LinkState=STATE_Initialized
+      RemoteAddr=(Addr=0,Port=0)
+      AcceptClass=None
+      SendFIFO=()
+      bAlwaysTick=True
 }

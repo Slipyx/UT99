@@ -202,5 +202,19 @@ State DelayedWarp
 
 defaultproperties
 {
-     MaxCarcasses=0
+      OtherSideURL=""
+      ThisTag="None"
+      bNoTeleFrag=False
+      iWarpZone=0
+      WarpCoords=(Origin=(X=0.000000,Y=0.000000,Z=0.000000),XAxis=(X=0.000000,Y=0.000000,Z=0.000000),YAxis=(X=0.000000,Y=0.000000,Z=0.000000),ZAxis=(X=0.000000,Y=0.000000,Z=0.000000))
+      Destinations(0)=""
+      Destinations(1)=""
+      Destinations(2)=""
+      Destinations(3)=""
+      Destinations(4)=""
+      Destinations(5)=""
+      Destinations(6)=""
+      Destinations(7)=""
+      numDestinations=0
+      MaxCarcasses=0
 }

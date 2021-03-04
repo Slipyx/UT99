@@ -83,5 +83,15 @@ function Notify(byte E)
 
 defaultproperties
 {
-     bIgnoreLDoubleClick=False
+      NotifyWindow=None
+      MyFont=None
+      TextColor=(R=0,G=0,B=0,A=0)
+      Text=""
+      bDontSetLabel=False
+      LabelWidth=0.000000
+      LabelHeight=0.000000
+      bLeftJustify=False
+      XOffset=0.000000
+      OtherTexture=None
+      bIgnoreLDoubleClick=False
 }

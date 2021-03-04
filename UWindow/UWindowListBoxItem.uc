@@ -5,4 +5,6 @@ var string HelpText;
 
 defaultproperties
 {
+      bSelected=False
+      HelpText=""
 }

@@ -4,6 +4,6 @@ class NuclearMark expands Scorch;
 
 defaultproperties
 {
-     Texture=Texture'Botpack.bigblast'
-     DrawScale=4.000000
+      Texture=Texture'Botpack.bigblast'
+      DrawScale=4.000000
 }

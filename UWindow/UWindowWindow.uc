@@ -38,6 +38,7 @@ var bool				bAcceptsHotKeys;		// Does this window accept hotkeys?
 var bool				bIgnoreLDoubleClick;
 var bool				bIgnoreMDoubleClick;
 var bool				bIgnoreRDoubleClick;
+var bool                bHandledEvent;
 
 var float				ClickTime;
 var float				MClickTime;
@@ -74,7 +75,9 @@ enum WinMessage
 	WM_KeyUp,
 	WM_KeyDown,
 	WM_KeyType,
-	WM_Paint	// Window needs painting
+	WM_Paint,	// Window needs painting
+	WM_MouseWheelDown,
+	WM_MouseWheelUp
 };
 
 // Dialog messages
@@ -98,6 +101,8 @@ const DE_WheelDownPressed = 15;
 // Ideally Key would be a EInputKey but I can't see that class here.
 function WindowEvent(WinMessage Msg, Canvas C, float X, float Y, int Key) 
 {
+	bHandledEvent = true;
+	
 	switch(Msg)
 	{
 	case WM_Paint:
@@ -105,31 +110,37 @@ function WindowEvent(WinMessage Msg, Canvas C, float X, float Y, int Key)
 		PaintClients(C, X, Y);
 		break;
 	case WM_LMouseDown:
-		if(!Root.CheckCaptureMouseDown())
-		{
-			if(!MessageClients(Msg, C, X, Y, Key)) 
-				LMouseDown(X, Y);
-		}
+		if(!Root.CheckCaptureMouseDown() && !MessageClients(Msg, C, X, Y, Key))
+			LMouseDown(X, Y);
 		break;	
 	case WM_LMouseUp:
-		if(!Root.CheckCaptureMouseUp())
-		{
-			if(!MessageClients(Msg, C, X, Y, Key))
-				LMouseUp(X, Y);
-		}
+		if(!Root.CheckCaptureMouseUp() && !MessageClients(Msg, C, X, Y, Key))
+			LMouseUp(X, Y);
 		break;	
 	case WM_RMouseDown:
-		if(!MessageClients(Msg, C, X, Y, Key)) RMouseDown(X, Y);
+		if(!MessageClients(Msg, C, X, Y, Key))
+			RMouseDown(X, Y);
 		break;	
 	case WM_RMouseUp:
-		if(!MessageClients(Msg, C, X, Y, Key)) RMouseUp(X, Y);
+		if(!MessageClients(Msg, C, X, Y, Key))
+			RMouseUp(X, Y);
 		break;	
 	case WM_MMouseDown:
-		if(!MessageClients(Msg, C, X, Y, Key)) MMouseDown(X, Y);
+		if(!MessageClients(Msg, C, X, Y, Key))
+			MMouseDown(X, Y);
 		break;	
 	case WM_MMouseUp:
-		if(!MessageClients(Msg, C, X, Y, Key)) MMouseUp(X, Y);
-		break;	
+		if(!MessageClients(Msg, C, X, Y, Key))
+			MMouseUp(X, Y);
+		break;
+	case WM_MouseWheelDown:
+		if(!MessageClients(Msg, C, X, Y, Key))
+			bHandledEvent = MouseWheelDown(float(Key));
+		break;
+	case WM_MouseWheelUp:
+		if(!MessageClients(Msg, C, X, Y, Key))
+			bHandledEvent = MouseWheelUp(float(Key));
+		break;		
 	case WM_KeyDown:
 		if(!PropagateKey(Msg, C, X, Y, Key))
 			KeyDown(Key, X, Y);
@@ -393,6 +404,19 @@ function LMouseUp(float X, float Y)
 	bMouseDown = False;
 }
 
+function bool MouseWheelDown(float ScrollDelta)
+{
+	ActivateWindow(0, False);
+	bMouseDown = True;
+	return false;
+}
+
+function bool MouseWheelUp(float ScrollDelta)
+{
+	bMouseDown = False;
+	return false;
+}
+
 function FocusWindow()
 {
 	if(Root.FocusedWindow != None && Root.FocusedWindow != Self)
@@ -495,8 +519,8 @@ final function PaintClients(Canvas C, float X, float Y)
 		if(bUWindowActive || Child.bLeaveOnscreen)
 		{
 
-			C.OrgX = C.OrgX + Child.WinLeft*Root.GUIScale;
-			C.OrgY = C.OrgY + Child.WinTop*Root.GUIScale;
+			C.OrgX = int(C.OrgX + Child.WinLeft*Root.GUIScale);
+			C.OrgY = int(C.OrgY + Child.WinTop*Root.GUIScale);
 
 			if(!Child.bNoClip)
 			{
@@ -664,7 +688,7 @@ final function bool MessageClients(WinMessage Msg, Canvas C, float X, float Y, i
 			   (!Child.CheckMousePassThrough(X-Child.WinLeft, Y-Child.WinTop))) 
 			{
 				Child.WindowEvent(Msg, C, X - Child.WinLeft, Y - Child.WinTop, Key);
-				return True;
+				return Child.bHandledEvent;
 			}
 		}
 	
@@ -1104,6 +1128,58 @@ final function DrawStretchedTextureSegment( Canvas C, float X, float Y, float W,
 	C.SetOrigin(OrgX, OrgY);
 }
 
+//Higor: added in v469 to draw elements with clean and sharp borders.
+//The space between OuterRect and InnerRect represents the integer-scaled borders.
+final function DrawIntegerScaledBorders( Canvas C, float X, float Y, float W, float H, Region OuterRect, Region InnerRect, Texture Tex, optional bool bDrawInner)
+{
+	local float OrgX, OrgY, ClipX, ClipY;
+	local int S, LX, RX, TY, BY;
+
+	OrgX = C.OrgX;
+	OrgY = C.OrgY;
+	ClipX = C.ClipX;
+	ClipY = C.ClipY;
+	S = Max( Root.GUIScale, 1);
+	LX = InnerRect.X - OuterRect.X;
+	RX = OuterRect.W - (LX + InnerRect.W);
+	TY = InnerRect.Y - OuterRect.Y;
+	BY = OuterRect.H - (TY + InnerRect.H);
+	
+	C.SetOrigin( OrgX + ClippingRegion.X*Root.GUIScale, OrgY + ClippingRegion.Y*Root.GUIScale);
+	C.SetClip( ClippingRegion.W*Root.GUIScale, ClippingRegion.H*Root.GUIScale);
+
+	X = (X-ClippingRegion.X) * Root.GUIScale;
+	Y = (Y-ClippingRegion.Y) * Root.GUIScale;
+	W *= Root.GUIScale;
+	H *= Root.GUIScale;
+	
+	C.SetPos( X         , Y); 
+	C.DrawTileClipped( Tex, LX*S       , TY*S       , OuterRect.X   , OuterRect.Y   , LX         , TY); //Top Left
+	C.SetPos( X + LX*S  , Y); 
+	C.DrawTileClipped( Tex, W-(LX+RX)*S, TY*S       , InnerRect.X   , OuterRect.Y   , InnerRect.W, TY); //Top
+	C.SetPos( X + W-RX*S, Y); 
+	C.DrawTileClipped( Tex, RX*S       , TY*S       , OuterRect.W-RX, OuterRect.Y   , RX         , TY); //Top Right
+	C.SetPos( X + W-RX*S, Y + TY*S); 
+	C.DrawTileClipped( Tex, RX*S       , H-(TY+BY)*S, OuterRect.W-RX, InnerRect.Y   , RX         , InnerRect.H); //Right
+	C.SetPos( X + W-RX*S, Y + H-BY*S);
+	C.DrawTileClipped( Tex, RX*S       , BY*S       , OuterRect.W-RX, OuterRect.H-BY, RX         , BY); //Bottom Right
+	C.SetPos( X + LX*S  , Y + H-BY*S);
+	C.DrawTileClipped( Tex, W-(LX+RX)*S, BY*S       , InnerRect.X   , OuterRect.H-BY, InnerRect.W, BY); //Bottom
+	C.SetPos( X         , Y + H-BY*S);
+	C.DrawTileClipped( Tex, LX*S       , BY*S       , OuterRect.X   , OuterRect.H-BY, LX         , BY); //Bottom Left
+	C.SetPos( X         , Y + TY*S);
+	C.DrawTileClipped( Tex, LX*S       , H-(TY+BY)*S, OuterRect.X   , InnerRect.Y   , LX         , InnerRect.H); //Left
+	
+	if ( bDrawInner )
+	{
+		C.SetPos( X + LX*S, Y + TY*S);
+		C.DrawTileClipped( Tex, W-(LX+RX)*S, H-(TY+BY)*S, InnerRect.X, InnerRect.Y, InnerRect.W, InnerRect.H); //Center
+	}
+	
+	C.SetClip( ClipX, ClipY);
+	C.SetOrigin( OrgX, OrgY);
+}
+
 final function ClipText(Canvas C, float X, float Y, coerce string S, optional bool bCheckHotkey)
 {
 	local float OrgX, OrgY, ClipX, ClipY;
@@ -1189,6 +1265,8 @@ final function int WrapClipText(Canvas C, float X, float Y, coerce string S, opt
 			TextSize(C, Padding, pW, pH);
 			if(W + X + pW > WinWidth && X > 0)
 			{
+				if (H <= 0)
+					TextSize(C, "A", W, H);
 				X = 0;
 				Y += H;
 				NumLines++;
@@ -1199,6 +1277,8 @@ final function int WrapClipText(Canvas C, float X, float Y, coerce string S, opt
 			if(W + X > WinWidth && X > 0)
 			{
 				X = 0;
+				if (H <= 0)
+					TextSize(C, "A", W, H);
 				Y += H;
 				NumLines++;
 			}
@@ -1213,6 +1293,8 @@ final function int WrapClipText(Canvas C, float X, float Y, coerce string S, opt
 		if(bCR)
 		{
 			X =0;
+			if (H <= 0)
+				TextSize(C, "A", W, H);
 			Y += H;
 			NumLines++;
 		}
@@ -1234,8 +1316,9 @@ final function DrawClippedActor( Canvas C, float X, float Y, Actor A, bool WireF
 	local float FOV;
 
 	FOV = GetPlayerOwner().FOVAngle * Pi / 180;
-	
-	MeshLoc.X = 4 / tan(FOV/2);
+
+	// (Anth) Adjusted the mesh projection calculation because it didn't account for widescreen resolutions
+	MeshLoc.X = 5 * ClippingRegion.W / ClippingRegion.H / tan(FOV/2);
 	MeshLoc.Y = 0;
 	MeshLoc.Z = 0;
 
@@ -1245,113 +1328,69 @@ final function DrawClippedActor( Canvas C, float X, float Y, Actor A, bool WireF
 	C.DrawClippedActor(A, WireFrame, ClippingRegion.W * Root.GUIScale, ClippingRegion.H * Root.GUIScale, C.OrgX + ClippingRegion.X * Root.GUIScale, C.OrgY + ClippingRegion.Y * Root.GUIScale, True);
 }
 
-final function DrawUpBevel( Canvas C, float X, float Y, float W, float H, Texture T)
+final function DrawUpBevel( Canvas C, float X, float Y, float W, float H, Texture Tex)
 {
-	local Region R;
+	//Higor: The borders of the bevel will be drawn in integer scale so they won't look ugly
+	local float S;
+	local Region TL, T, TR, L, R, BL, B, BR, Area;
 
-	R = LookAndFeel.BevelUpTL;
-	DrawStretchedTextureSegment( C, X, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
+	if ( Root.GUIScale > 1 )
+		S = float(int(Root.GUIScale)) / Root.GUIScale;
+	else
+		S = 1;
 
-	R = LookAndFeel.BevelUpT;
-	DrawStretchedTextureSegment( C, X+LookAndFeel.BevelUpTL.W, Y, 
-									W - LookAndFeel.BevelUpTL.W
-									- LookAndFeel.BevelUpTR.W,
-									R.H, R.X, R.Y, R.W, R.H, T );
-
-	R = LookAndFeel.BevelUpTR;
-	DrawStretchedTextureSegment( C, X + W - R.W, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
-	
-	R = LookAndFeel.BevelUpL;
-	DrawStretchedTextureSegment( C, X, Y + LookAndFeel.BevelUpTL.H,
-									R.W,  
-									H - LookAndFeel.BevelUpTL.H
-									- LookAndFeel.BevelUpBL.H,
-									R.X, R.Y, R.W, R.H, T );
-
+	TL = LookAndFeel.BevelUpTL;
+	T = LookAndFeel.BevelUpT;
+	TR = LookAndFeel.BevelUpTR;
+	L = LookAndFeel.BevelUpL;
 	R = LookAndFeel.BevelUpR;
-	DrawStretchedTextureSegment( C, X + W - R.W, Y + LookAndFeel.BevelUpTL.H,
-									R.W,  
-									H - LookAndFeel.BevelUpTL.H
-									- LookAndFeel.BevelUpBL.H,
-									R.X, R.Y, R.W, R.H, T );
+	BL = LookAndFeel.BevelUpBL;
+	B = LookAndFeel.BevelUpB;
+	BR = LookAndFeel.BevelUpBR;
+	Area = LookAndFeel.BevelUpArea;
 
-	
-	R = LookAndFeel.BevelUpBL;
-	DrawStretchedTextureSegment( C, X, Y + H - R.H, R.W, R.H, R.X, R.Y, R.W, R.H, T );
-
-	R = LookAndFeel.BevelUpB;
-	DrawStretchedTextureSegment( C, X + LookAndFeel.BevelUpBL.W, Y + H - R.H, 
-									W - LookAndFeel.BevelUpBL.W
-									- LookAndFeel.BevelUpBR.W,
-									R.H, R.X, R.Y, R.W, R.H, T );
-
-	R = LookAndFeel.BevelUpBR;
-	DrawStretchedTextureSegment( C, X + W - R.W, Y + H - R.H, R.W, R.H, R.X, R.Y, 
-									R.W, R.H, T );
-
-	R = LookAndFeel.BevelUpArea;
-	DrawStretchedTextureSegment( C, X + LookAndFeel.BevelUpTL.W,
-	                                Y + LookAndFeel.BevelUpTL.H,
-									W - LookAndFeel.BevelUpBL.W
-									- LookAndFeel.BevelUpBR.W,
-									H - LookAndFeel.BevelUpTL.H
-									- LookAndFeel.BevelUpBL.H,
-									R.X, R.Y, R.W, R.H, T );
-	
+	DrawStretchedTextureSegment( C, X             , Y             ,     (TL.W)*S     ,     (TL.H)*S     , TL.X, TL.Y, TL.W, TL.H, Tex );
+	DrawStretchedTextureSegment( C, X   + (TL.W)*S, Y             , W - (TL.W+TR.W)*S,     (T.H)*S      ,  T.X,  T.Y,  T.W,  T.H, Tex );
+	DrawStretchedTextureSegment( C, X+W - (TR.W)*S, Y             ,     (TR.W)*S     ,     (TR.H)*S     , TR.X, TR.Y, TR.W, TR.H, Tex );
+	DrawStretchedTextureSegment( C, X             , Y   + (TL.H)*S,     (L.W)*S      , H - (TL.H+BL.H)*S,  L.X,  L.Y,  L.W,  L.H, Tex );
+	DrawStretchedTextureSegment( C, X+W - ( R.W)*S, Y   + (TL.H)*S,     (R.W)*S      , H - (TL.H+BL.H)*S,  R.X,  R.Y,  R.W,  R.H, Tex );
+	DrawStretchedTextureSegment( C, X             , Y+H - (BL.H)*S,     (BL.W)*S     ,     (BL.H)*S     , BL.X, BL.Y, BL.W, BL.H, Tex );
+	DrawStretchedTextureSegment( C, X   + (BL.W)*S, Y+H - ( B.H)*S, W - (BL.W+BR.W)*S,     (B.H)*S      ,  B.X,  B.Y,  B.W,  B.H, Tex );
+	DrawStretchedTextureSegment( C, X+W - (BR.W)*S, Y+H - (BR.H)*S,     (BR.W)*S     ,     (BR.H)*S     , BR.X, BR.Y, BR.W, BR.H, Tex );
+	DrawStretchedTextureSegment( C, X   + (TL.W)*S, Y   + (TL.H)*S, W - (BL.W+BR.W)*S, H - (TL.H+BL.H)*S, Area.X, Area.Y, Area.W, Area.H, Tex );
 }
 
-final function DrawMiscBevel( Canvas C, float X, float Y, float W, float H, Texture T, int BevelType)
+final function DrawMiscBevel( Canvas C, float X, float Y, float W, float H, Texture Tex, int BevelType)
 {
-	local Region R;
+	//Higor: The borders of the bevel will be drawn in integer scale so they won't look ugly
+	local float S;
+	local Region TL, T, TR, L, R, BL, B, BR, Area;
 
-	R = LookAndFeel.MiscBevelTL[BevelType];
-	DrawStretchedTextureSegment( C, X, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
+	if ( Root.GUIScale > 1 )
+		S = float(int(Root.GUIScale)) / Root.GUIScale;
+	else
+		S = 1;
 
-	R = LookAndFeel.MiscBevelT[BevelType];
-	DrawStretchedTextureSegment( C, X+LookAndFeel.MiscBevelTL[BevelType].W, Y, 
-									W - LookAndFeel.MiscBevelTL[BevelType].W
-									- LookAndFeel.MiscBevelTR[BevelType].W,
-									R.H, R.X, R.Y, R.W, R.H, T );
-
-	R = LookAndFeel.MiscBevelTR[BevelType];
-	DrawStretchedTextureSegment( C, X + W - R.W, Y, R.W, R.H, R.X, R.Y, R.W, R.H, T );
-	
-	R = LookAndFeel.MiscBevelL[BevelType];
-	DrawStretchedTextureSegment( C, X, Y + LookAndFeel.MiscBevelTL[BevelType].H,
-									R.W,  
-									H - LookAndFeel.MiscBevelTL[BevelType].H
-									- LookAndFeel.MiscBevelBL[BevelType].H,
-									R.X, R.Y, R.W, R.H, T );
-
+	TL = LookAndFeel.MiscBevelTL[BevelType];
+	T = LookAndFeel.MiscBevelT[BevelType];
+	TR = LookAndFeel.MiscBevelTR[BevelType];
+	L = LookAndFeel.MiscBevelL[BevelType];
 	R = LookAndFeel.MiscBevelR[BevelType];
-	DrawStretchedTextureSegment( C, X + W - R.W, Y + LookAndFeel.MiscBevelTL[BevelType].H,
-									R.W,  
-									H - LookAndFeel.MiscBevelTL[BevelType].H
-									- LookAndFeel.MiscBevelBL[BevelType].H,
-									R.X, R.Y, R.W, R.H, T );
+	BL = LookAndFeel.MiscBevelBL[BevelType];
+	B = LookAndFeel.MiscBevelB[BevelType];
+	BR = LookAndFeel.MiscBevelBR[BevelType];
+	Area = LookAndFeel.MiscBevelArea[BevelType];
 
-	
-	R = LookAndFeel.MiscBevelBL[BevelType];
-	DrawStretchedTextureSegment( C, X, Y + H - R.H, R.W, R.H, R.X, R.Y, R.W, R.H, T );
 
-	R = LookAndFeel.MiscBevelB[BevelType];
-	DrawStretchedTextureSegment( C, X + LookAndFeel.MiscBevelBL[BevelType].W, Y + H - R.H, 
-									W - LookAndFeel.MiscBevelBL[BevelType].W
-									- LookAndFeel.MiscBevelBR[BevelType].W,
-									R.H, R.X, R.Y, R.W, R.H, T );
-
-	R = LookAndFeel.MiscBevelBR[BevelType];
-	DrawStretchedTextureSegment( C, X + W - R.W, Y + H - R.H, R.W, R.H, R.X, R.Y, 
-									R.W, R.H, T );
-
-	R = LookAndFeel.MiscBevelArea[BevelType];
-	DrawStretchedTextureSegment( C, X + LookAndFeel.MiscBevelTL[BevelType].W,
-	                                Y + LookAndFeel.MiscBevelTL[BevelType].H,
-									W - LookAndFeel.MiscBevelBL[BevelType].W
-									- LookAndFeel.MiscBevelBR[BevelType].W,
-									H - LookAndFeel.MiscBevelTL[BevelType].H
-									- LookAndFeel.MiscBevelBL[BevelType].H,
-									R.X, R.Y, R.W, R.H, T );
+	DrawStretchedTextureSegment( C, X             , Y             ,     (TL.W)*S     ,     (TL.H)*S     , TL.X, TL.Y, TL.W, TL.H, Tex );
+	DrawStretchedTextureSegment( C, X   + (TL.W)*S, Y             , W - (TL.W+TR.W)*S,     (T.H)*S      ,  T.X,  T.Y,  T.W,  T.H, Tex );
+	DrawStretchedTextureSegment( C, X+W - (TR.W)*S, Y             ,     (TR.W)*S     ,     (TR.H)*S     , TR.X, TR.Y, TR.W, TR.H, Tex );
+	DrawStretchedTextureSegment( C, X             , Y   + (TL.H)*S,     (L.W)*S      , H - (TL.H+BL.H)*S,  L.X,  L.Y,  L.W,  L.H, Tex );
+	DrawStretchedTextureSegment( C, X+W - ( R.W)*S, Y   + (TL.H)*S,     (R.W)*S      , H - (TL.H+BL.H)*S,  R.X,  R.Y,  R.W,  R.H, Tex );
+	DrawStretchedTextureSegment( C, X             , Y+H - (BL.H)*S,     (BL.W)*S     ,     (BL.H)*S     , BL.X, BL.Y, BL.W, BL.H, Tex );
+	DrawStretchedTextureSegment( C, X   + (BL.W)*S, Y+H - ( B.H)*S, W - (BL.W+BR.W)*S,     (B.H)*S      ,  B.X,  B.Y,  B.W,  B.H, Tex );
+	DrawStretchedTextureSegment( C, X+W - (BR.W)*S, Y+H - (BR.H)*S,     (BR.W)*S     ,     (BR.H)*S     , BR.X, BR.Y, BR.W, BR.H, Tex );
+	DrawStretchedTextureSegment( C, X   + (TL.W)*S, Y   + (TL.H)*S, W - (BL.W+BR.W)*S, H - (TL.H+BL.H)*S, Area.X, Area.Y, Area.W, Area.H, Tex );
 }
 
 final function string RemoveAmpersand(string S)
@@ -1438,6 +1477,11 @@ function Texture GetLookAndFeelTexture()
 	return ParentWindow.GetLookAndFeelTexture();
 }
 
+function Texture GetLookAndFeelTextureEx(out float ScaleFactor)
+{
+	return ParentWindow.GetLookAndFeelTextureEx(ScaleFactor);
+}
+
 function bool IsActive()
 {
 	return ParentWindow.IsActive();
@@ -1502,7 +1546,7 @@ final function UWindowWindow FindChildWindow(class<UWindowWindow> ChildClass, op
 function GetDesiredDimensions(out float W, out float H)
 {
 	local float MaxW, MaxH, TW, TH;
-	local UWindowWindow Child, Found;
+	local UWindowWindow Child;
 	
 	MaxW = 0;
 	MaxH = 0;
@@ -1676,4 +1720,45 @@ function StripCRLF(out string Text)
 
 defaultproperties
 {
+      WinLeft=0.000000
+      WinTop=0.000000
+      WinWidth=0.000000
+      WinHeight=0.000000
+      ParentWindow=None
+      FirstChildWindow=None
+      LastChildWindow=None
+      NextSiblingWindow=None
+      PrevSiblingWindow=None
+      ActiveWindow=None
+      Root=None
+      OwnerWindow=None
+      ModalWindow=None
+      bWindowVisible=False
+      bNoClip=False
+      bMouseDown=False
+      bRMouseDown=False
+      bMMouseDown=False
+      bAlwaysBehind=False
+      bAcceptsFocus=False
+      bAlwaysOnTop=False
+      bLeaveOnscreen=False
+      bUWindowActive=False
+      bTransient=False
+      bAcceptsHotKeys=False
+      bIgnoreLDoubleClick=False
+      bIgnoreMDoubleClick=False
+      bIgnoreRDoubleClick=False
+      bHandledEvent=False
+      ClickTime=0.000000
+      MClickTime=0.000000
+      RClickTime=0.000000
+      ClickX=0.000000
+      ClickY=0.000000
+      MClickX=0.000000
+      MClickY=0.000000
+      RClickX=0.000000
+      RClickY=0.000000
+      LookAndFeel=None
+      ClippingRegion=(X=0,Y=0,W=0,H=0)
+      Cursor=(Tex=None,HotX=0,HotY=0,WindowsCursor=0)
 }

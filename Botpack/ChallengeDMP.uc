@@ -24,7 +24,7 @@ function InitRatedGame(LadderInventory LadderObj, PlayerPawn LadderPlayer)
 
 defaultproperties
 {
-     LadderTypeIndex=5
-     BeaconName="CTDM"
-     GameName="Lightning DeathMatch"
+      LadderTypeIndex=5
+      BeaconName="CTDM"
+      GameName="Lightning DeathMatch"
 }

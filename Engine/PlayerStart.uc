@@ -28,12 +28,13 @@ function PlayTeleportEffect(actor Incoming, bool bOut)
 
 defaultproperties
 {
-     bSinglePlayerStart=True
-     bCoopStart=True
-     bEnabled=True
-     bDirectional=True
-     Texture=Texture'Engine.S_Player'
-     SoundVolume=128
-     CollisionRadius=18.000000
-     CollisionHeight=40.000000
+      TeamNumber=0
+      bSinglePlayerStart=True
+      bCoopStart=True
+      bEnabled=True
+      bDirectional=True
+      Texture=Texture'Engine.S_Player'
+      SoundVolume=128
+      CollisionRadius=18.000000
+      CollisionHeight=40.000000
 }

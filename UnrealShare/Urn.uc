@@ -17,6 +17,8 @@ auto state active
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+	    if (bStatic || bDeleteMe)
+		    return;
 		skinnedFrag(class'Fragment1', texture'JUrn1', Momentum,0.5, 5);
 		Instigator = InstigatedBy;
 		if ( Instigator != None )
@@ -28,13 +30,13 @@ Begin:
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.UrnM'
-     CollisionRadius=19.000000
-     CollisionHeight=11.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bProjTarget=True
-     Mass=100.000000
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.UrnM'
+      CollisionRadius=19.000000
+      CollisionHeight=11.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bProjTarget=True
+      Mass=100.000000
 }

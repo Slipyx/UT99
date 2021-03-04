@@ -461,9 +461,20 @@ function RePing()
 
 defaultproperties
 {
-     ServerName="Server"
-     PingName="Ping"
-     MapNameName="Map Name"
-     PlayersName="Players"
-     AutoPingInterval=5
+      Menu=None
+      Server=None
+      Ping=None
+      MapName=None
+      Players=None
+      SortByColumn=None
+      bSortDescending=False
+      ServerName="Server"
+      PingName="Ping"
+      MapNameName="Map Name"
+      PlayersName="Players"
+      SelectedServer=None
+      Count=0
+      TimePassed=0.000000
+      AutoPingInterval=5
+      OldPingServer=None
 }

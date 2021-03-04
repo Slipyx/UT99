@@ -47,13 +47,13 @@ simulated function SpawnEffects()
 
 defaultproperties
 {
-     ExploSound=Sound'UnrealShare.General.Expl03'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.800000
-     DrawType=DT_Mesh
-     Style=STY_None
-     Mesh=LodMesh'UnrealShare.Ringex'
-     DrawScale=0.700000
-     ScaleGlow=1.100000
-     bUnlit=True
+      ExploSound=Sound'UnrealShare.General.Expl03'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.800000
+      DrawType=DT_Mesh
+      Style=STY_None
+      Mesh=LodMesh'UnrealShare.Ringex'
+      DrawScale=0.700000
+      ScaleGlow=1.100000
+      bUnlit=True
 }

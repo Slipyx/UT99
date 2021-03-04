@@ -27,8 +27,8 @@ simulated function Timer()
 
 defaultproperties
 {
-     bImportant=False
-     MultiDecalLevel=0
-     Texture=Texture'Botpack.energymark'
-     DrawScale=0.200000
+      bImportant=False
+      MultiDecalLevel=0
+      Texture=Texture'Botpack.energymark'
+      DrawScale=0.200000
 }

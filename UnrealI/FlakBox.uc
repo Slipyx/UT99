@@ -15,16 +15,16 @@ class FlakBox extends Ammo;
 
 defaultproperties
 {
-     AmmoAmount=10
-     MaxAmmo=50
-     UsedInWeaponSlot(6)=1
-     PickupMessage="You picked up 10 Flak Shells"
-     PickupViewMesh=LodMesh'UnrealI.flakboxMesh'
-     MaxDesireability=0.320000
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Icon=Texture'UnrealI.Icons.I_FlakAmmo'
-     Mesh=LodMesh'UnrealI.flakboxMesh'
-     CollisionRadius=16.000000
-     CollisionHeight=11.000000
-     bCollideActors=True
+      AmmoAmount=10
+      MaxAmmo=50
+      UsedInWeaponSlot(6)=1
+      PickupMessage="You picked up 10 Flak Shells"
+      PickupViewMesh=LodMesh'UnrealI.flakboxMesh'
+      MaxDesireability=0.320000
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Icon=Texture'UnrealI.Icons.I_FlakAmmo'
+      Mesh=LodMesh'UnrealI.flakboxMesh'
+      CollisionRadius=16.000000
+      CollisionHeight=11.000000
+      bCollideActors=True
 }

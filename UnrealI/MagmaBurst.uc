@@ -77,20 +77,20 @@ auto state() Triggered
 
 defaultproperties
 {
-     MinSpawnedAtOnce=1
-     MaxSpawnedAtOnce=4
-     MinSpawnSpeed=200.000000
-     MaxSpawnSpeed=1000.000000
-     MinBurnTime=20.000000
-     MaxBurnTime=25.000000
-     MinBrightness=190.000000
-     MaxBrightness=240.000000
-     SpawnCenterDir=(Pitch=20000)
-     AngularDeviation=36000
-     CubeDimensions=(X=60.000000,Y=60.000000,Z=60.000000)
-     MinBetweenTime=0.700000
-     MaxBetweenTime=1.700000
-     MinScaleFactor=0.600000
-     MaxScaleFactor=1.300000
-     Tag=MagmaTest1
+      MinSpawnedAtOnce=1
+      MaxSpawnedAtOnce=4
+      MinSpawnSpeed=200.000000
+      MaxSpawnSpeed=1000.000000
+      MinBurnTime=20.000000
+      MaxBurnTime=25.000000
+      MinBrightness=190.000000
+      MaxBrightness=240.000000
+      SpawnCenterDir=(Pitch=20000,Yaw=0,Roll=0)
+      AngularDeviation=36000
+      CubeDimensions=(X=60.000000,Y=60.000000,Z=60.000000)
+      MinBetweenTime=0.700000
+      MaxBetweenTime=1.700000
+      MinScaleFactor=0.600000
+      MaxScaleFactor=1.300000
+      Tag="MagmaTest1"
 }

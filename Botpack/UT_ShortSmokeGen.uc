@@ -53,15 +53,17 @@ function UnTrigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
-     SmokeDelay=0.120000
-     SizeVariance=1.000000
-     BasePuffSize=1.500000
-     TotalNumPuffs=10
-     RisingVelocity=40.000000
-     GenerationType=Class'Botpack.UT_SpriteSmokePuff'
-     bHidden=True
-     bNetTemporary=False
-     RemoteRole=ROLE_None
-     Style=STY_Masked
-     Texture=None
+      SmokeDelay=0.120000
+      SizeVariance=1.000000
+      BasePuffSize=1.500000
+      TotalNumPuffs=10
+      RisingVelocity=40.000000
+      GenerationType=Class'Botpack.UT_SpriteSmokePuff'
+      bRepeating=False
+      i=0
+      bHidden=True
+      bNetTemporary=False
+      RemoteRole=ROLE_None
+      Style=STY_Masked
+      Texture=None
 }

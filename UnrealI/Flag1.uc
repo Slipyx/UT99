@@ -20,10 +20,10 @@ function PostBeginPlay()
 
 defaultproperties
 {
-     bStatic=False
-     Physics=PHYS_Walking
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Texture=Texture'UnrealI.Skins.JFlag11'
-     Mesh=LodMesh'UnrealI.Flag1M'
+      bStatic=False
+      Physics=PHYS_Walking
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Texture=Texture'UnrealI.Skins.JFlag11'
+      Mesh=LodMesh'UnrealI.Flag1M'
 }

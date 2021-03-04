@@ -52,6 +52,7 @@ simulated function Timer()
 
 defaultproperties
 {
-     bAttached=True
-     bImportant=True
+      bAttached=True
+      bStartedLife=False
+      bImportant=True
 }

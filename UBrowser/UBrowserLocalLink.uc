@@ -13,8 +13,6 @@ var int							ServerBeaconPort;
 
 function Start()
 {
-	local int p;
-
 	if( BindPort() == 0 )
 	{
 		OwnerFactory.QueryFinished(False, "UBrowserLocalLink: Could not bind to a free port.");
@@ -52,12 +50,14 @@ event ReceivedText( IpAddr Addr, string Text )
 	if( Left(Text,n+1) ~= (BeaconProduct$" ") )
 	{
 		QueryPort = int(Mid(Text, n+1));
-		Address = IpAddrToString(Addr);
-		Address = Left(Address, InStr(Address, ":"));
+		Address = StripPort( IpAddrToString(Addr) );
 		OwnerFactory.FoundServer(Address, QueryPort, "", BeaconProduct);
 	}
 }
 
 defaultproperties
 {
+      OwnerFactory=None
+      BeaconProduct=""
+      ServerBeaconPort=0
 }

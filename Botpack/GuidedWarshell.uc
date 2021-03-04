@@ -375,7 +375,7 @@ simulated function PostRender( canvas Canvas )
 		Canvas.Style = ERenderStyle.STY_Translucent;
 	else
 		Canvas.Style = ERenderStyle.STY_Normal;
-	foreach visiblecollidingactors(class'Pawn', P, 2000,, true)
+	foreach visiblecollidingactors(class'Pawn', P, 2000,, true, true)
 	{
 		Dir = P.Location - Location;
 		Dist = VSize(Dir);
@@ -429,6 +429,19 @@ auto state Flying
 
 defaultproperties
 {
-     RemoteRole=ROLE_DumbProxy
-     NetPriority=3.000000
+      Guider=None
+      OldGuiderRotation=(Pitch=0,Yaw=0,Roll=0)
+      GuidedRotation=(Pitch=0,Yaw=0,Roll=0)
+      CurrentTimeStamp=0.000000
+      LastUpdateTime=0.000000
+      ClientBuffer=0.000000
+      ServerUpdate=0.000000
+      bUpdatePosition=False
+      bDestroyed=False
+      SavedMoves=None
+      FreeMoves=None
+      RealLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      RealVelocity=(X=0.000000,Y=0.000000,Z=0.000000)
+      RemoteRole=ROLE_DumbProxy
+      NetPriority=3.000000
 }

@@ -5,5 +5,5 @@ class SilentBallExplosion extends SpriteBallExplosion;
 
 defaultproperties
 {
-     EffectSound1=None
+      EffectSound1=None
 }

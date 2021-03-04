@@ -41,6 +41,11 @@ function Texture GetLookAndFeelTexture()
 	return LookAndFeel.GetTexture(Self);
 }
 
+function Texture GetLookAndFeelTextureEx(out float ScaleFactor)
+{
+	return LookAndFeel.GetTextureEx(Self, ScaleFactor);
+}
+
 function bool IsActive()
 {
 	return ParentWindow.ActiveWindow == Self;
@@ -286,5 +291,24 @@ function WindowHidden()
 
 defaultproperties
 {
-     ClientClass=Class'UWindow.UWindowClientWindow'
+      ClientClass=Class'UWindow.UWindowClientWindow'
+      ClientArea=None
+      WindowTitle=""
+      StatusBarText=""
+      MoveX=0.000000
+      MoveY=0.000000
+      MinWinWidth=0.000000
+      MinWinHeight=0.000000
+      bTLSizing=False
+      bTSizing=False
+      bTRSizing=False
+      bLSizing=False
+      bRSizing=False
+      bBLSizing=False
+      bBSizing=False
+      bBRSizing=False
+      bMoving=False
+      bSizable=False
+      bStatusBar=False
+      CloseBox=None
 }

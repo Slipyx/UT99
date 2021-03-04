@@ -9,7 +9,7 @@ class StatLogFile extends StatLog
 var bool bWatermark;
 
 // Internal
-var int LogAr; // C++ FArchive*.
+var pointer LogAr; // C++ FArchive*.
 
 // Configs
 var string StatLogFile;
@@ -102,5 +102,8 @@ function LogGameEnd( string Reason )
 
 defaultproperties
 {
-     StatLogFile="../Logs/unreal.ngStats.Unknown.log"
+      bWatermark=False
+      LogAr=
+      StatLogFile="../Logs/unreal.ngStats.Unknown.log"
+      StatLogFinal=""
 }

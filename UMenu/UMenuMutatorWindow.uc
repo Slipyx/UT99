@@ -40,6 +40,7 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuMutatorCW'
-     WindowTitle="Configure Mutators"
+      CloseButton=None
+      ClientClass=Class'UMenu.UMenuMutatorCW'
+      WindowTitle="Configure Mutators"
 }

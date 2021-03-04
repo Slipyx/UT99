@@ -82,15 +82,21 @@ function Paint(Canvas C, float MouseX, float MouseY)
 function Resized()
 {
 	Super.Resized();
-	
-	MenuBar.WinLeft = 0;;
-	MenuBar.WinTop = 0;
-	MenuBar.WinWidth = WinWidth;;
-	MenuBar.WinHeight = 16;
 
-	StatusBar.WinLeft = 0;
-	StatusBar.WinTop = WinHeight - StatusBar.WinHeight;
-	StatusBar.WinWidth = WinWidth;
+	if (MenuBar != none)
+	{
+		MenuBar.WinLeft = 0;;
+		MenuBar.WinTop = 0;
+		MenuBar.WinWidth = WinWidth;;
+		MenuBar.WinHeight = 16;
+	}
+
+	if (StatusBar != none)
+	{
+		StatusBar.WinLeft = 0;
+		StatusBar.WinTop = WinHeight - StatusBar.WinHeight;
+		StatusBar.WinWidth = WinWidth;
+	}
 }
 
 function DoQuitGame()
@@ -106,5 +112,8 @@ function DoQuitGame()
 
 defaultproperties
 {
-     LookAndFeelClass="UMenu.UMenuBlueLookAndFeel"
+      MenuBar=None
+      StatusBar=None
+      BetaFont=None
+      LookAndFeelClass="UMenu.UMenuBlueLookAndFeel"
 }

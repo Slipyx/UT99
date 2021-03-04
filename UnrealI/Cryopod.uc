@@ -49,10 +49,12 @@ Begin:
 
 defaultproperties
 {
-     bStatic=False
-     bDirectional=True
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.CryopodM'
-     CollisionRadius=40.000000
-     bCollideActors=True
+      CryoOpen=None
+      CryoClose=None
+      bStatic=False
+      bDirectional=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.CryopodM'
+      CollisionRadius=40.000000
+      bCollideActors=True
 }

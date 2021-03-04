@@ -7,5 +7,5 @@ class BlueTapestry extends Tapestry1;
 
 defaultproperties
 {
-     Skin=Texture'Botpack.Skins.JTapB'
+      Skin=Texture'Botpack.Skins.JTapB'
 }

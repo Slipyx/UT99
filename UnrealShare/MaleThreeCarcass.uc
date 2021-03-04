@@ -12,8 +12,8 @@ function ForceMeshToExist()
 
 defaultproperties
 {
-     Physics=PHYS_Falling
-     Mesh=LodMesh'UnrealShare.Male3'
-     bBlockActors=True
-     bBlockPlayers=True
+      Physics=PHYS_Falling
+      Mesh=LodMesh'UnrealShare.Male3'
+      bBlockActors=True
+      bBlockPlayers=True
 }

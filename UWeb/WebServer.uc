@@ -21,7 +21,7 @@ function BeginPlay()
 	local IpAddr l;
 	local string s;
 
-	if(!bEnabled)
+	if ( !bEnabled )
 	{
 		Log("Webserver is not enabled.  Set bEnabled to True in Advanced Options.");
 		Destroy();
@@ -30,13 +30,13 @@ function BeginPlay()
 
 	Super.BeginPlay();
 	
-	for(i=0;i<10;i++)
+	for ( i=0 ; i<10 ; i++ )
 	{
-		if(Applications[i] == "")
+		if ( Applications[i] == "" )
 			break;
 
 		ApplicationClass = class<WebApplication>(DynamicLoadObject(Applications[i], class'Class'));
-		if(ApplicationClass != None)
+		if ( ApplicationClass != None )
 		{
 			ApplicationObjects[i] = New(None) ApplicationClass;
 			ApplicationObjects[i].Level = Level;
@@ -46,13 +46,10 @@ function BeginPlay()
 		}
 	}
 
-	if(ServerName == "")
+	if ( ServerName == "" )
 	{
 		GetLocalIP(l);
-		s = IpAddrToString(l);
-		i = InStr(s, ":");
-		if(i != -1)
-			s = Left(s, i);
+		s = StripPort( IpAddrToString(l) );
 		ServerURL = "http://"$s;
 	}
 	else
@@ -129,12 +126,43 @@ function WebApplication GetApplication(string URI, out string SubURI)
 
 defaultproperties
 {
-     Applications(0)="UTServerAdmin.UTServerAdmin"
-     Applications(1)="UTServerAdmin.UTImageServer"
-     ApplicationPaths(0)="/ServerAdmin"
-     ApplicationPaths(1)="/images"
-     ListenPort=80
-     MaxConnections=30
-     ExpirationSeconds=86400
-     AcceptClass=Class'UWeb.WebConnection'
+      Applications(0)="UTServerAdmin.UTServerAdmin"
+      Applications(1)="UTServerAdmin.UTImageServer"
+      Applications(2)=""
+      Applications(3)=""
+      Applications(4)=""
+      Applications(5)=""
+      Applications(6)=""
+      Applications(7)=""
+      Applications(8)=""
+      Applications(9)=""
+      ApplicationPaths(0)="/ServerAdmin"
+      ApplicationPaths(1)="/images"
+      ApplicationPaths(2)=""
+      ApplicationPaths(3)=""
+      ApplicationPaths(4)=""
+      ApplicationPaths(5)=""
+      ApplicationPaths(6)=""
+      ApplicationPaths(7)=""
+      ApplicationPaths(8)=""
+      ApplicationPaths(9)=""
+      ListenPort=80
+      MaxConnections=30
+      ServerName=""
+      bEnabled=False
+      DefaultApplication=0
+      ExpirationSeconds=86400
+      ServerURL=""
+      ApplicationObjects(0)=None
+      ApplicationObjects(1)=None
+      ApplicationObjects(2)=None
+      ApplicationObjects(3)=None
+      ApplicationObjects(4)=None
+      ApplicationObjects(5)=None
+      ApplicationObjects(6)=None
+      ApplicationObjects(7)=None
+      ApplicationObjects(8)=None
+      ApplicationObjects(9)=None
+      ConnectionCount=0
+      AcceptClass=Class'UWeb.WebConnection'
 }

@@ -9,12 +9,12 @@ class EClip extends Miniammo;
 
 defaultproperties
 {
-     AmmoAmount=20
-     ParentAmmo=Class'Botpack.Miniammo'
-     PickupMessage="You picked up a clip."
-     PickupViewMesh=LodMesh'Botpack.EClipM'
-     Icon=Texture'UnrealShare.Icons.I_ClipAmmo'
-     Mesh=LodMesh'Botpack.EClipM'
-     CollisionRadius=20.000000
-     CollisionHeight=4.000000
+      AmmoAmount=20
+      ParentAmmo=Class'Botpack.Miniammo'
+      PickupMessage="You picked up a clip."
+      PickupViewMesh=LodMesh'Botpack.EClipM'
+      Icon=Texture'UnrealShare.Icons.I_ClipAmmo'
+      Mesh=LodMesh'Botpack.EClipM'
+      CollisionRadius=20.000000
+      CollisionHeight=4.000000
 }

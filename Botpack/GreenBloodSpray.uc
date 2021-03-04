@@ -10,5 +10,5 @@ simulated function SpawnCloud()
 
 defaultproperties
 {
-     Texture=Texture'UnrealShare.Skins.BloodSGrn'
+      Texture=Texture'UnrealShare.Skins.BloodSGrn'
 }

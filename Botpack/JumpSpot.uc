@@ -114,5 +114,8 @@ State PendingImpact
 
 defaultproperties
 {
-     bSpecialCost=True
+      bImpactJump=False
+      bAlwaysAccel=False
+      PendingBot=None
+      bSpecialCost=True
 }

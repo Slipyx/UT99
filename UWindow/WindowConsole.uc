@@ -11,6 +11,7 @@ var float				OldClipY;
 var bool				bCreatedRoot;
 var float				MouseX;
 var float				MouseY;
+var float               MouseW; // stijn: OldUnreal scroll wheel support
 
 var class<UWindowConsoleWindow> ConsoleClass;
 var config float		MouseScale;
@@ -155,6 +156,11 @@ state UWindow
 				if(Root != None)
 					Root.WindowEvent(WM_MMouseUp, None, MouseX, MouseY, k);
 				break;
+			case EInputKey.IK_MouseWheelDown:
+			case EInputKey.IK_MouseWheelUp:
+				if (Root != None)
+					Root.WindowEvent(WM_MouseWheelUp, None, MouseX, MouseY, int(MouseW));
+				break;
 			default:
 				if(Root != None)
 					Root.WindowEvent(WM_KeyUp, None, MouseX, MouseY, k);
@@ -199,6 +205,11 @@ state UWindow
 				if(Root != None)
 					Root.WindowEvent(WM_MMouseDown, None, MouseX, MouseY, k);
 				break;
+			case EInputKey.IK_MouseWheelDown:
+			case EInputKey.IK_MouseWheelUp:
+				if (Root != None)
+					Root.WindowEvent(WM_MouseWheelDown, None, MouseX, MouseY, int(MouseW));
+				break;
 			default:
 				if(Root != None)
 					Root.WindowEvent(WM_KeyDown, None, MouseX, MouseY, k);
@@ -213,7 +224,13 @@ state UWindow
 				break;
 			case IK_MouseY:
 				MouseY = MouseY - (MouseScale * Delta);
-				break;					
+				break;
+			case IK_MouseW:
+				if (Delta > 0)
+					MouseW = -1;
+				else
+					MouseW = 1;
+				break;
 			}
 		default:
 			break;
@@ -464,8 +481,26 @@ function NotifyLevelChange()
 
 defaultproperties
 {
-     RootWindow="UWindow.UWindowRootWindow"
-     ConsoleClass=Class'UWindow.UWindowConsoleWindow'
-     MouseScale=0.600000
-     ConsoleKey=192
+      Root=None
+      RootWindow="UWindow.UWindowRootWindow"
+      OldClipX=0.000000
+      OldClipY=0.000000
+      bCreatedRoot=False
+      MouseX=0.000000
+      MouseY=0.000000
+      MouseW=0.000000
+      ConsoleClass=Class'UWindow.UWindowConsoleWindow'
+      MouseScale=0.600000
+      ShowDesktop=False
+      bShowConsole=False
+      bBlackout=False
+      bUWindowType=False
+      bUWindowActive=False
+      bQuickKeyEnable=False
+      bLocked=False
+      bLevelChange=False
+      OldLevel=""
+      ConsoleKey=192
+      UWindowKey=IK_None
+      ConsoleWindow=None
 }

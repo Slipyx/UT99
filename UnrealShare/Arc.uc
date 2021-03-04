@@ -48,14 +48,18 @@ var vector X,Y,Z;
 
 defaultproperties
 {
-     SpriteAnim(0)=Texture'UnrealShare.Effects.Arc1'
-     SpriteAnim(1)=Texture'UnrealShare.Effects.Arc2'
-     SpriteAnim(2)=Texture'UnrealShare.Effects.Arc3'
-     SpriteAnim(3)=Texture'UnrealShare.Effects.Arc4'
-     SpriteAnim(4)=Texture'UnrealShare.Effects.Arc5'
-     SpriteAnim(5)=Texture'UnrealShare.Effects.Arc6'
-     SpriteAnim(6)=Texture'UnrealShare.Effects.Arc7'
-     SpriteAnim(7)=Texture'UnrealShare.Effects.Arc8'
-     Skin=Texture'UnrealShare.Effects.Arc1'
-     Mesh=LodMesh'UnrealShare.arcM'
+      SpriteAnim(0)=Texture'UnrealShare.Effects.Arc1'
+      SpriteAnim(1)=Texture'UnrealShare.Effects.Arc2'
+      SpriteAnim(2)=Texture'UnrealShare.Effects.Arc3'
+      SpriteAnim(3)=Texture'UnrealShare.Effects.Arc4'
+      SpriteAnim(4)=Texture'UnrealShare.Effects.Arc5'
+      SpriteAnim(5)=Texture'UnrealShare.Effects.Arc6'
+      SpriteAnim(6)=Texture'UnrealShare.Effects.Arc7'
+      SpriteAnim(7)=Texture'UnrealShare.Effects.Arc8'
+      i=0
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      Skin=Texture'UnrealShare.Effects.Arc1'
+      Mesh=LodMesh'UnrealShare.arcM'
 }

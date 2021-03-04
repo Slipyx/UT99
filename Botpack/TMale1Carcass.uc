@@ -6,5 +6,5 @@ class TMale1Carcass extends TMaleBody;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.Commando'
+      Mesh=LodMesh'Botpack.Commando'
 }

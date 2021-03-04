@@ -60,4 +60,6 @@ function AddMessage( string NewMessage )
 
 defaultproperties
 {
+      TextArea=None
+      TextColor=(R=0,G=0,B=0,A=0)
 }

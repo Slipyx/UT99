@@ -98,6 +98,6 @@ simulated function bool SpecialIdentify(Canvas Canvas, Actor Other )
 
 defaultproperties
 {
-     IdentifyAssault=" !! Assault Target !! "
-     ServerInfoClass=Class'Botpack.ServerInfoAS'
+      IdentifyAssault=" !! Assault Target !! "
+      ServerInfoClass=Class'Botpack.ServerInfoAS'
 }

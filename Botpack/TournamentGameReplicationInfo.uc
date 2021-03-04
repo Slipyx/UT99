@@ -85,11 +85,32 @@ simulated function string GetOrderString(PlayerReplicationInfo PRI)
 
 defaultproperties
 {
-     HumanString="*Human*"
-     CommanderString="*Commander*"
-     SupportString="supporting"
-     DefendString="defending"
-     AttackString="attacking"
-     HoldString="holding"
-     FreelanceString="freelancing"
+      HumanString="*Human*"
+      CommanderString="*Commander*"
+      SupportString="supporting"
+      DefendString="defending"
+      AttackString="attacking"
+      HoldString="holding"
+      FreelanceString="freelancing"
+      Teams(0)=None
+      Teams(1)=None
+      Teams(2)=None
+      Teams(3)=None
+      GoalTeamScore=0
+      FragLimit=0
+      TimeLimit=0
+      TotalGames=0
+      TotalFrags=0
+      TotalDeaths=0
+      TotalFlags=0
+      BestPlayers(0)=""
+      BestPlayers(1)=""
+      BestPlayers(2)=""
+      BestFPHs(0)=0
+      BestFPHs(1)=0
+      BestFPHs(2)=0
+      BestRecordDate(0)=""
+      BestRecordDate(1)=""
+      BestRecordDate(2)=""
+      SupportStringTrailer=""
 }

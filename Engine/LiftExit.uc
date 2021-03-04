@@ -47,4 +47,9 @@ function Actor SpecialHandling(Pawn Other)
 
 defaultproperties
 {
+      LiftTag="None"
+      MyLift=None
+      LiftTrigger="None"
+      RecommendedTrigger=None
+      LastTriggerTime=0.000000
 }

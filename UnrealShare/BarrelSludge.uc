@@ -59,13 +59,13 @@ auto state Flying
 
 defaultproperties
 {
-     speed=200.000000
-     MaxSpeed=1000.000000
-     Damage=20.000000
-     MomentumTransfer=15000
-     RemoteRole=ROLE_DumbProxy
-     LifeSpan=140.000000
-     DrawScale=2.000000
-     CollisionHeight=3.000000
-     Buoyancy=0.000000
+      speed=200.000000
+      MaxSpeed=1000.000000
+      Damage=20.000000
+      MomentumTransfer=15000
+      RemoteRole=ROLE_DumbProxy
+      LifeSpan=140.000000
+      DrawScale=2.000000
+      CollisionHeight=3.000000
+      Buoyancy=0.000000
 }

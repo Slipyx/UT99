@@ -8,6 +8,6 @@ class PurpleLight extends WeaponLight;
 
 defaultproperties
 {
-     LifeSpan=1.000000
-     Skin=Texture'UnrealShare.Effects.ExploPurple'
+      LifeSpan=1.000000
+      Skin=Texture'UnrealShare.Effects.ExploPurple'
 }

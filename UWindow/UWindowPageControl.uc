@@ -171,5 +171,5 @@ function UWindowPageControlPage FirstPage()
 
 defaultproperties
 {
-     ListClass=Class'UWindow.UWindowPageControlPage'
+      ListClass=Class'UWindow.UWindowPageControlPage'
 }

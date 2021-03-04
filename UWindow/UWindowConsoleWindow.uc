@@ -54,6 +54,8 @@ function Close(optional bool bByParent)
 
 defaultproperties
 {
-     ClientClass=Class'UWindow.UWindowConsoleClientWindow'
-     WindowTitle="System Console"
+      OldParentWidth=0.000000
+      OldParentHeight=0.000000
+      ClientClass=Class'UWindow.UWindowConsoleClientWindow'
+      WindowTitle="System Console"
 }

@@ -41,7 +41,10 @@ function Shutdown(optional bool bBySuperset)
 
 defaultproperties
 {
-     MasterServerTCPPort=28900
-     MasterServerTimeout=10
-     GameName="unreal"
+      Link=None
+      MasterServerAddress=""
+      MasterServerTCPPort=28900
+      Region=0
+      MasterServerTimeout=10
+      GameName="unreal"
 }

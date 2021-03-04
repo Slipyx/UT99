@@ -18,11 +18,11 @@ simulated function Timer()
 
 defaultproperties
 {
-     Physics=PHYS_None
-     Rotation=(Roll=0)
-     Style=STY_Modulated
-     DrawScale=0.300000
-     bFixedRotationDir=False
-     RotationRate=(Roll=0)
-     DesiredRotation=(Roll=0)
+      Physics=PHYS_None
+      Rotation=(Roll=0)
+      Style=STY_Modulated
+      DrawScale=0.300000
+      bFixedRotationDir=False
+      RotationRate=(Roll=0)
+      DesiredRotation=(Roll=0)
 }

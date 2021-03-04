@@ -41,7 +41,11 @@ function Died(pawn Killer, name damageType, vector HitLocation)
 {
 	PlaySound(Die);
 	SetCollision(false,false, false);
-	parentBlob.shrink(self);
+	if (parentBlob != none)
+	{
+	    parentBlob.shrink(self);
+		parentBlob = none;
+	}
 	GotoState('DiedState');
 }
 
@@ -224,25 +228,28 @@ Begin:
 
 defaultproperties
 {
-     GroundSpeed=450.000000
-     AccelRate=1200.000000
-     JumpZ=-1.000000
-     SightRadius=3000.000000
-     Health=120
-     ReducedDamageType=exploded
-     ReducedDamagePct=0.250000
-     HitSound1=Sound'UnrealI.Blob.BlobInjur'
-     Land=Sound'UnrealShare.BioRifle.GelHit'
-     Die=Sound'UnrealI.Blob.BlobDeath'
-     Tag=blob1
-     DrawType=DT_Mesh
-     Texture=Texture'UnrealI.Skins.JBlob1'
-     Mesh=LodMesh'UnrealI.MiniBlob'
-     bMeshEnviroMap=True
-     CollisionRadius=6.000000
-     CollisionHeight=6.000000
-     bBlockActors=False
-     bBlockPlayers=False
-     Mass=40.000000
-     RotationRate=(Pitch=0,Yaw=0,Roll=0)
+      ParentBlob=None
+      Orientation=(X=0.000000,Y=0.000000,Z=0.000000)
+      LastParentTime=0.000000
+      GroundSpeed=450.000000
+      AccelRate=1200.000000
+      JumpZ=-1.000000
+      SightRadius=3000.000000
+      Health=120
+      ReducedDamageType="exploded"
+      ReducedDamagePct=0.250000
+      HitSound1=Sound'UnrealI.Blob.BlobInjur'
+      Land=Sound'UnrealShare.BioRifle.GelHit'
+      Die=Sound'UnrealI.Blob.BlobDeath'
+      Tag="blob1"
+      DrawType=DT_Mesh
+      Texture=Texture'UnrealI.Skins.JBlob1'
+      Mesh=LodMesh'UnrealI.MiniBlob'
+      bMeshEnviroMap=True
+      CollisionRadius=6.000000
+      CollisionHeight=6.000000
+      bBlockActors=False
+      bBlockPlayers=False
+      Mass=40.000000
+      RotationRate=(Pitch=0,Yaw=0,Roll=0)
 }

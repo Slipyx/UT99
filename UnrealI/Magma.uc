@@ -59,12 +59,17 @@ Begin:
 
 defaultproperties
 {
-     LifeSpan=15.000000
-     bBlockActors=True
-     bBlockPlayers=True
-     LightType=LT_Steady
-     LightBrightness=130
-     LightHue=120
-     LightSaturation=200
-     LightRadius=30
+      DelaySmoke=0.000000
+      BurnTime=0.000000
+      InitialBrightness=0.000000
+      LastSmokeTime=0.000000
+      PassedTime=0.000000
+      LifeSpan=15.000000
+      bBlockActors=True
+      bBlockPlayers=True
+      LightType=LT_Steady
+      LightBrightness=130
+      LightHue=120
+      LightSaturation=200
+      LightRadius=30
 }

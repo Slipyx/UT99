@@ -22,6 +22,15 @@ Auto State Animate
 
 	function HitWall (vector HitNormal, actor Wall)
 	{
+		if (bDeleteme)
+			return;
+		if (bStatic )
+		{
+			SetPhysics(PHYS_None);
+			bBounce = False;
+			return;
+		}
+	
 		if (VSize(Velocity)>200) PlayAnim('Crush');
 		Velocity = 0.8*(( Velocity dot HitNormal ) * HitNormal * (-1.8 + FRand()*0.8) + Velocity);   // Reflect off Wall w/damping
 		Velocity.Z = Velocity.Z*0.6;
@@ -34,10 +43,13 @@ Auto State Animate
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
-			SetPhysics(PHYS_Falling);
-			bBounce = True;
-			Momentum.Z = 1000;
-			Velocity=Momentum*0.01;
+		if (bStatic || bDeleteme)
+			return;
+	
+		SetPhysics(PHYS_Falling);
+		bBounce = True;
+		Momentum.Z = 1000;
+		Velocity=Momentum*0.01;
 	}
 
 
@@ -47,20 +59,20 @@ Begin:
 
 defaultproperties
 {
-     Health=100
-     bPushable=True
-     PushSound=Sound'UnrealShare.General.ObjectPush'
-     EndPushSound=Sound'UnrealShare.General.Endpush'
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.steelbarrelM'
-     CollisionRadius=14.000000
-     CollisionHeight=23.500000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     bProjTarget=True
-     Mass=100.000000
-     Buoyancy=1.000000
+      Health=100
+      bPushable=True
+      PushSound=Sound'UnrealShare.General.ObjectPush'
+      EndPushSound=Sound'UnrealShare.General.Endpush'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.steelbarrelM'
+      CollisionRadius=14.000000
+      CollisionHeight=23.500000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      bProjTarget=True
+      Mass=100.000000
+      Buoyancy=1.000000
 }

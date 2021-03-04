@@ -30,10 +30,10 @@ simulated function AnimEnd()
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=4.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.SmallSparkM'
-     AmbientGlow=223
-     bUnlit=True
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=4.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.SmallSparkM'
+      AmbientGlow=223
+      bUnlit=True
 }

@@ -340,7 +340,38 @@ function bool DecodeServerProperties(string Data)
 
 defaultproperties
 {
-     MaxSimultaneousPing=10
-     MaxSimBroadbandPing=20
-     PlayerListSortColumn=1
+      Owner=None
+      TotalServers=0
+      TotalPlayers=0
+      TotalMaxPlayers=0
+      bNeedUpdateCount=False
+      MaxSimultaneousPing=10
+      MaxSimBroadbandPing=20
+      IP=""
+      QueryPort=0
+      Category=""
+      GameName=""
+      ServerPing=None
+      bPinging=False
+      bPingFailed=False
+      bPinged=False
+      bNoInitalPing=False
+      bOldServer=False
+      RulesList=None
+      PlayerList=None
+      bKeepDescription=False
+      PlayerListSortColumn=1
+      bLocalServer=False
+      Ping=0.000000
+      HostName=""
+      GamePort=0
+      MapName=""
+      MapTitle=""
+      MapDisplayName=""
+      GameType=""
+      GameMode=""
+      NumPlayers=0
+      MaxPlayers=0
+      GameVer=0
+      MinNetVer=0
 }

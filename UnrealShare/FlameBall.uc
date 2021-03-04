@@ -44,15 +44,16 @@ auto state Explode
 
 defaultproperties
 {
-     EffectSound1=Sound'UnrealShare.flak.Explode1'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=4.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.flameballM'
-     AmbientGlow=183
-     LightType=LT_Steady
-     LightBrightness=226
-     LightHue=29
-     LightSaturation=177
-     LightRadius=9
+      NormUp=(Pitch=0,Yaw=0,Roll=0)
+      EffectSound1=Sound'UnrealShare.flak.Explode1'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=4.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.flameballM'
+      AmbientGlow=183
+      LightType=LT_Steady
+      LightBrightness=226
+      LightHue=29
+      LightSaturation=177
+      LightRadius=9
 }

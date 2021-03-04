@@ -15,5 +15,5 @@ class PlainBar extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.PlainBar'
+      Mesh=LodMesh'Botpack.PlainBar'
 }

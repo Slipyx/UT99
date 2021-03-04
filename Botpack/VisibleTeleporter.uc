@@ -18,10 +18,11 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     bStatic=False
-     bHidden=False
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Mesh=LodMesh'Botpack.Tele2'
-     bUnlit=True
+      t=None
+      bStatic=False
+      bHidden=False
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Mesh=LodMesh'Botpack.Tele2'
+      bUnlit=True
 }

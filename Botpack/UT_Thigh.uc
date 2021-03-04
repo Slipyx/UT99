@@ -14,7 +14,7 @@ class UT_Thigh extends UTPlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.ThighUTM'
-     CollisionRadius=25.000000
-     CollisionHeight=6.000000
+      Mesh=LodMesh'Botpack.ThighUTM'
+      CollisionRadius=25.000000
+      CollisionHeight=6.000000
 }

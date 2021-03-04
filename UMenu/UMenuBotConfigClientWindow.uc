@@ -135,6 +135,8 @@ function SaveConfigs()
 
 defaultproperties
 {
-     BIMText="Enable Bots"
-     BIMHelp="If checked, bots will be present in your new multiplayer game."
+      BotConfig=None
+      BIMCheck=None
+      BIMText="Enable Bots"
+      BIMHelp="If checked, bots will be present in your new multiplayer game."
 }

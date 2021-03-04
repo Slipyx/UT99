@@ -13,8 +13,8 @@ class LightBox extends UT_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Mesh=LodMesh'Botpack.lightboxM'
-     bUnlit=True
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Mesh=LodMesh'Botpack.lightboxM'
+      bUnlit=True
 }

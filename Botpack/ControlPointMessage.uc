@@ -19,6 +19,7 @@ static function string GetString(
 
 defaultproperties
 {
-     ControlPointStr="Control Point"
-     ControlledBy="now controlled by"
+      ControlPointStr="Control Point"
+      ControlledBy="now controlled by"
+      ControlTrailer=""
 }

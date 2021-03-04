@@ -147,7 +147,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
 		if ( Other.IsA('RifleRound') )
 		{
 			ReplaceWith( Other, "Botpack.RifleShell" );
-			return true;
+			return false;
 		}
 		if ( Other.IsA('RifleAmmo') )
 		{
@@ -248,4 +248,5 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
 
 defaultproperties
 {
+      MyGame=None
 }

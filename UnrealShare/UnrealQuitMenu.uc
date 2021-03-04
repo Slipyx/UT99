@@ -49,6 +49,7 @@ function bool ProcessSelection()
 	}
 	else 
 		ExitMenu();
+	return false;
 }
 
 function DrawMenu(canvas Canvas)
@@ -141,27 +142,28 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     YesSelString=" [YES]  No"
-     NoSelString="  Yes  [NO]"
-     HelpMessage(1)="Select yes and hit enter to return to your puny, miserable, useless real life, if you can't handle UNREALity."
-     MenuList(0)="A Digital Extremes/Epic Megagames"
-     MenuList(1)="Collaboration"
-     MenuList(2)="Game Design: James Schmalz"
-     MenuList(3)="Cliff Bleszinski"
-     MenuList(4)="Level Design: Cliff Bleszinski"
-     MenuList(5)="T. Elliot Cannon  Pancho Eekels"
-     MenuList(6)="Jeremy War  Cedric Fiorentino"
-     MenuList(7)="Shane Caudle"
-     MenuList(8)="Animator: Dave Carter"
-     MenuList(9)="Art: James Schmalz "
-     MenuList(10)="Mike Leatham  Artur Bialas"
-     MenuList(11)="Programming: Tim Sweeney  Steven Polge"
-     MenuList(12)="Erik de Neve  James Schmalz"
-     MenuList(13)="Carlo Vogelsang  Nick Michon"
-     MenuList(14)="Music: Alexander Brandon"
-     MenuList(15)="Michiel van den Bos"
-     MenuList(16)="Sound Effects: Dave Ewing"
-     MenuList(17)="Producer for GT: Jason Schreiber"
-     MenuList(18)="Biz:Mark Rein Nigel Kent Craig Lafferty"
-     MenuTitle="Quit?"
+      bResponse=False
+      YesSelString=" [YES]  No"
+      NoSelString="  Yes  [NO]"
+      HelpMessage(1)="Select yes and hit enter to return to your puny, miserable, useless real life, if you can't handle UNREALity."
+      MenuList(0)="A Digital Extremes/Epic Megagames"
+      MenuList(1)="Collaboration"
+      MenuList(2)="Game Design: James Schmalz"
+      MenuList(3)="Cliff Bleszinski"
+      MenuList(4)="Level Design: Cliff Bleszinski"
+      MenuList(5)="T. Elliot Cannon  Pancho Eekels"
+      MenuList(6)="Jeremy War  Cedric Fiorentino"
+      MenuList(7)="Shane Caudle"
+      MenuList(8)="Animator: Dave Carter"
+      MenuList(9)="Art: James Schmalz "
+      MenuList(10)="Mike Leatham  Artur Bialas"
+      MenuList(11)="Programming: Tim Sweeney  Steven Polge"
+      MenuList(12)="Erik de Neve  James Schmalz"
+      MenuList(13)="Carlo Vogelsang  Nick Michon"
+      MenuList(14)="Music: Alexander Brandon"
+      MenuList(15)="Michiel van den Bos"
+      MenuList(16)="Sound Effects: Dave Ewing"
+      MenuList(17)="Producer for GT: Jason Schreiber"
+      MenuList(18)="Biz:Mark Rein Nigel Kent Craig Lafferty"
+      MenuTitle="Quit?"
 }

@@ -167,6 +167,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal,X,Y,Z, projStart, EnemyDir, EnemyUp;
 	local actor HitActor1, HitActor2;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+	    return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -410,9 +413,9 @@ function PlayVictoryDance()
 
 defaultproperties
 {
-     Blade=Sound'UnrealShare.Skaarj.blade1s'
-     SpinDamage=16
-     ClawDamage=14
-     CombatStyle=0.600000
-     Mesh=LodMesh'UnrealShare.Skaarjw'
+      Blade=Sound'UnrealShare.Skaarj.blade1s'
+      SpinDamage=16
+      ClawDamage=14
+      CombatStyle=0.600000
+      Mesh=LodMesh'UnrealShare.Skaarjw'
 }

@@ -58,4 +58,7 @@ function GetDesiredDimensions(out float W, out float H)
 
 defaultproperties
 {
+      DesiredWidth=0.000000
+      DesiredHeight=0.000000
+      TabLast=None
 }

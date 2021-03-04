@@ -6,4 +6,7 @@ var bool bRowDirty;
 
 defaultproperties
 {
+      Text=""
+      WrapParent=None
+      bRowDirty=False
 }

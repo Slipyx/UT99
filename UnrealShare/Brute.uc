@@ -328,6 +328,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal,X,Y,Z, projStart, EnemyDir, EnemyUp;
 	local actor HitActor1, HitActor2;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+		return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -370,6 +373,8 @@ function SpawnRightShot()
 
 function WhipDamageTarget()
 {
+	if ( Target == None )
+	    return;
 	if ( MeleeDamageTarget(WhipDamage, (WhipDamage * 1000.0 * Normal(Target.Location - Location))) )
 		PlaySound(PistolWhip, SLOT_Interact);
 }
@@ -409,6 +414,11 @@ function PlayRangedAttack()
 	//FIXME - if going to ranged attack need to
 	//	TweenAnim('StillFire', 0.2);
 	//What I need is a tween into time for the PlayAnim()
+	if ( Target == None )
+	{
+		PlayThreatening();
+		return;
+	}
 
 	if ( (AnimSequence == 'T8') || (VSize(Target.Location - Location) > 230) ) 
 	{
@@ -434,12 +444,12 @@ ignores SeePlayer, HearNoise, Bump, HitWall;
 			Super.ChooseAttackMode();
 			return;
 		}
-			
-		if ((Enemy == None) || (Enemy.Health <= 0))
+
+		if (!HasAliveEnemy())
 		{
 			if (Orders == 'Attacking')
 				Orders = '';
-			GotoState('Waiting', 'TurnFromWall');
+			WhatToDoNext('','');
 			return;
 		}
 
@@ -540,49 +550,53 @@ ignores SeePlayer, HearNoise, Bump;
 
 defaultproperties
 {
-     WhipDamage=20
-     footstep=Sound'UnrealShare.Brute.walk1br'
-     Footstep2=Sound'UnrealShare.Brute.walk2br'
-     PistolWhip=Sound'UnrealShare.Brute.pwhip1br'
-     PistolHit=Sound'UnrealShare.Brute.pstlhit1br'
-     Die2=Sound'UnrealShare.Brute.death2br'
-     CarcassType=Class'UnrealShare.BruteCarcass'
-     Aggressiveness=1.000000
-     RefireRate=0.300000
-     WalkingSpeed=0.600000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     bLeadTarget=False
-     RangedProjectile=Class'UnrealShare.BruteProjectile'
-     ProjectileSpeed=700.000000
-     Acquire=Sound'UnrealShare.Brute.yell1br'
-     Fear=Sound'UnrealShare.Brute.injur2br'
-     Roam=Sound'UnrealShare.Brute.nearby2br'
-     Threaten=Sound'UnrealShare.Brute.yell2br'
-     bCanStrafe=True
-     MeleeRange=70.000000
-     GroundSpeed=140.000000
-     WaterSpeed=100.000000
-     JumpZ=-1.000000
-     Visibility=150
-     SightRadius=1500.000000
-     Health=340
-     ReducedDamageType=exploded
-     ReducedDamagePct=0.300000
-     UnderWaterTime=60.000000
-     HitSound1=Sound'UnrealShare.Brute.injur1br'
-     HitSound2=Sound'UnrealShare.Brute.injur2br'
-     Land=None
-     Die=Sound'UnrealShare.Brute.death1br'
-     WaterStep=None
-     CombatStyle=0.800000
-     AmbientSound=Sound'UnrealShare.Brute.amb1br'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Brute1'
-     TransientSoundVolume=3.000000
-     CollisionRadius=52.000000
-     CollisionHeight=52.000000
-     Mass=400.000000
-     Buoyancy=390.000000
-     RotationRate=(Pitch=3072,Yaw=45000,Roll=0)
+      WhipDamage=20
+      bBerserk=False
+      bLongBerserk=False
+      bTurret=False
+      footstep=Sound'UnrealShare.Brute.walk1br'
+      Footstep2=Sound'UnrealShare.Brute.walk2br'
+      PistolWhip=Sound'UnrealShare.Brute.pwhip1br'
+      Gutshot=None
+      PistolHit=Sound'UnrealShare.Brute.pstlhit1br'
+      Die2=Sound'UnrealShare.Brute.death2br'
+      CarcassType=Class'UnrealShare.BruteCarcass'
+      Aggressiveness=1.000000
+      RefireRate=0.300000
+      WalkingSpeed=0.600000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      bLeadTarget=False
+      RangedProjectile=Class'UnrealShare.BruteProjectile'
+      ProjectileSpeed=700.000000
+      Acquire=Sound'UnrealShare.Brute.yell1br'
+      Fear=Sound'UnrealShare.Brute.injur2br'
+      Roam=Sound'UnrealShare.Brute.nearby2br'
+      Threaten=Sound'UnrealShare.Brute.yell2br'
+      bCanStrafe=True
+      MeleeRange=70.000000
+      GroundSpeed=140.000000
+      WaterSpeed=100.000000
+      JumpZ=-1.000000
+      Visibility=150
+      SightRadius=1500.000000
+      Health=340
+      ReducedDamageType="exploded"
+      ReducedDamagePct=0.300000
+      UnderWaterTime=60.000000
+      HitSound1=Sound'UnrealShare.Brute.injur1br'
+      HitSound2=Sound'UnrealShare.Brute.injur2br'
+      Land=None
+      Die=Sound'UnrealShare.Brute.death1br'
+      WaterStep=None
+      CombatStyle=0.800000
+      AmbientSound=Sound'UnrealShare.Brute.amb1br'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Brute1'
+      TransientSoundVolume=3.000000
+      CollisionRadius=52.000000
+      CollisionHeight=52.000000
+      Mass=400.000000
+      Buoyancy=390.000000
+      RotationRate=(Pitch=3072,Yaw=45000,Roll=0)
 }

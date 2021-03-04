@@ -68,8 +68,30 @@ function Timer ()
 
 defaultproperties
 {
-     playProbability=0.600000
-     minReCheckTime=5.000000
-     maxReCheckTime=10.000000
-     bStatic=False
+      bInitiallyOn=False
+      Sounds(0)=None
+      Sounds(1)=None
+      Sounds(2)=None
+      Sounds(3)=None
+      Sounds(4)=None
+      Sounds(5)=None
+      Sounds(6)=None
+      Sounds(7)=None
+      Sounds(8)=None
+      Sounds(9)=None
+      Sounds(10)=None
+      Sounds(11)=None
+      Sounds(12)=None
+      Sounds(13)=None
+      Sounds(14)=None
+      Sounds(15)=None
+      playProbability=0.600000
+      minReCheckTime=5.000000
+      maxReCheckTime=10.000000
+      bDontRepeat=False
+      soundPlaying=False
+      rePlayTime=0.000000
+      numSounds=0
+      lastSound=0
+      bStatic=False
 }

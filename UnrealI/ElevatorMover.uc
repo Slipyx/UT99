@@ -104,4 +104,9 @@ ChangeFrame:
 
 defaultproperties
 {
+      LastKeyNum=0
+      NextKeyNum=0
+      MoveDirection=0
+      MoveTimeInterval=0.000000
+      bMoveKey=False
 }

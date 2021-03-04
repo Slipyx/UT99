@@ -24,6 +24,16 @@ Auto State Animate
 	{
 		local float speed;
 
+		if (bDeleteme)
+			return;
+		if (bStatic )
+		{
+			Velocity = vect(0,0,0);
+			SetPhysics(PHYS_None);
+			bBounce = False;
+			return;
+		}
+
 		Velocity = 0.5*(( Velocity dot HitNormal ) * HitNormal * (-2.0) + Velocity);   // Reflect off Wall w/damping
 		speed = VSize(Velocity);
 		if (speed>500) PlaySound(PushSound, SLOT_Misc,1.0);			
@@ -46,6 +56,9 @@ Auto State Animate
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteme)
+			return;
+
 		SetPhysics(PHYS_Falling);
 		bBounce = True;
 		Momentum.Z = abs(Momentum.Z*4+3000);
@@ -62,16 +75,17 @@ Auto State Animate
 
 defaultproperties
 {
-     bPushable=True
-     PushSound=Sound'UnrealShare.General.Chunkhit2'
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.BookM'
-     CollisionRadius=12.000000
-     CollisionHeight=4.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     Mass=1.000000
+      bFirstHit=False
+      bPushable=True
+      PushSound=Sound'UnrealShare.General.Chunkhit2'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.BookM'
+      CollisionRadius=12.000000
+      CollisionHeight=4.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      Mass=1.000000
 }

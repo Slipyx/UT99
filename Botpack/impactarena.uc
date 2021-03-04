@@ -7,9 +7,9 @@ class ImpactArena expands Arena;
 
 defaultproperties
 {
-     WeaponName=ImpactHammer
-     AmmoName=PAmmo
-     WeaponString="Botpack.ImpactHammer"
-     AmmoString="Botpack.PAmmo"
-     DefaultWeapon=Class'Botpack.ImpactHammer'
+      WeaponName="ImpactHammer"
+      AmmoName="PAmmo"
+      WeaponString="Botpack.ImpactHammer"
+      AmmoString="Botpack.PAmmo"
+      DefaultWeapon=Class'Botpack.ImpactHammer'
 }

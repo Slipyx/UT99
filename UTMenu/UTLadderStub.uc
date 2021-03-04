@@ -114,5 +114,6 @@ function EvaluateMatch(optional bool bTrophyVictory);
 
 defaultproperties
 {
-     StubClassName="UTMenu.UTLadderStub"
+      StubClassName="UTMenu.UTLadderStub"
+      StubClass=None
 }

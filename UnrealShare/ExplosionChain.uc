@@ -59,16 +59,17 @@ state Exploding
 
 defaultproperties
 {
-     MomentumTransfer=100000.000000
-     Damage=100.000000
-     Size=1.000000
-     DelayTime=0.300000
-     bNetTemporary=False
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Sprite
-     Texture=Texture'UnrealShare.s_Exp001'
-     DrawScale=0.400000
-     bCollideActors=True
-     bCollideWorld=True
-     bProjTarget=True
+      MomentumTransfer=100000.000000
+      Damage=100.000000
+      Size=1.000000
+      DelayTime=0.300000
+      bExploding=False
+      bNetTemporary=False
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Sprite
+      Texture=Texture'UnrealShare.s_Exp001'
+      DrawScale=0.400000
+      bCollideActors=True
+      bCollideWorld=True
+      bProjTarget=True
 }

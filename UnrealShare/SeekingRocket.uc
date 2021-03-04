@@ -37,12 +37,12 @@ auto state Flying
 
 defaultproperties
 {
-     bNetTemporary=False
-     RemoteRole=ROLE_DumbProxy
-     LifeSpan=10.000000
-     LightBrightness=182
-     LightHue=27
-     LightSaturation=75
-     LightRadius=8
-     bCorona=False
+      bNetTemporary=False
+      RemoteRole=ROLE_DumbProxy
+      LifeSpan=10.000000
+      LightBrightness=182
+      LightHue=27
+      LightSaturation=75
+      LightRadius=8
+      bCorona=False
 }

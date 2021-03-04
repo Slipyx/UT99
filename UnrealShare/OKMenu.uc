@@ -32,5 +32,5 @@ function bool ProcessSelection()
 
 defaultproperties
 {
-     OKString="[OK]"
+      OKString="[OK]"
 }

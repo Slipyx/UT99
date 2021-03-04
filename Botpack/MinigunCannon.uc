@@ -204,10 +204,11 @@ FaceEnemy:
 
 defaultproperties
 {
-     FireSound=Sound'UnrealI.Rifle.RifleShot'
-     SampleTime=0.100000
-     Mesh=LodMesh'Botpack.grmockgunM'
-     SoundRadius=96
-     SoundVolume=255
-     CollisionHeight=24.000000
+      MuzzFlash=None
+      FireSound=Sound'UnrealI.Rifle.RifleShot'
+      SampleTime=0.100000
+      Mesh=LodMesh'Botpack.grmockgunM'
+      SoundRadius=96
+      SoundVolume=255
+      CollisionHeight=24.000000
 }

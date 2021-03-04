@@ -28,14 +28,14 @@ Begin:
 
 defaultproperties
 {
-     bNetTemporary=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.ShieldEffect'
-     AmbientGlow=128
-     bUnlit=True
-     LightType=LT_Steady
-     LightBrightness=114
-     LightHue=147
-     LightSaturation=182
-     LightRadius=12
+      bNetTemporary=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.ShieldEffect'
+      AmbientGlow=128
+      bUnlit=True
+      LightType=LT_Steady
+      LightBrightness=114
+      LightHue=147
+      LightSaturation=182
+      LightRadius=12
 }

@@ -5,5 +5,5 @@ class YellowBook extends Book;
 
 defaultproperties
 {
-     Skin=Texture'UnrealShare.Skins.JBook2'
+      Skin=Texture'UnrealShare.Skins.JBook2'
 }

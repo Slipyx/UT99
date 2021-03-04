@@ -9,6 +9,6 @@ class SmokeHoseDest extends Effects;
 
 defaultproperties
 {
-     bHidden=True
-     DrawType=DT_Sprite
+      bHidden=True
+      DrawType=DT_Sprite
 }

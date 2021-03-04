@@ -141,12 +141,14 @@ function SaveConfigs()
 
 defaultproperties
 {
-     NetSpeedText="Internet Connection"
-     NetSpeedHelp="Select the closest match to your internet connection. Try selecting a lower setting if you're getting huge lag."
-     NetSpeeds(0)="Modem (28.8K - 56K)"
-     NetSpeeds(1)="ISDN"
-     NetSpeeds(2)="Cable, xDSL"
-     NetSpeeds(3)="LAN"
-     bShownWindow=True
-     ControlOffset=20.000000
+      NetSpeedCombo=None
+      NetSpeedText="Internet Connection"
+      NetSpeedHelp="Select the closest match to your internet connection. Try selecting a lower setting if you're getting huge lag."
+      NetSpeeds(0)="Modem (28.8K - 56K)"
+      NetSpeeds(1)="ISDN"
+      NetSpeeds(2)="Cable, xDSL"
+      NetSpeeds(3)="LAN"
+      bInitialized=False
+      bShownWindow=True
+      ControlOffset=20.000000
 }

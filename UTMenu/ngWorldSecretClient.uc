@@ -129,12 +129,16 @@ function MessageBoxDone(UWindowMessageBox W, MessageBoxResult Result)
 
 defaultproperties
 {
-     SecretDesc="Pick your own password to keep your online ngWorldStats unique."
-     SecretText="ngWorldStats Password:"
-     OKText="OK"
-     QuitHelp="Select [Yes] to save your new password."
-     QuitTitle="Confirm Password Change"
-     QuitText="Warning! If you play with this new password, a new ngWorldStats account will be created for you the next time you join a ngWorldStats game server. Are you sure you want to do this?"
-     EmptyTitle="Confirm Password Removal"
-     EmptyText="Note: You have chosen not to have an ngWorldStats password. Your online game statistics will not be accumulated. Are you sure this is what you want?"
+      SecretLabel=None
+      SecretDesc="Pick your own password to keep your online ngWorldStats unique."
+      SecretCombo=None
+      SecretText="ngWorldStats Password:"
+      OKButton=None
+      OKText="OK"
+      ConfirmChange=None
+      QuitHelp="Select [Yes] to save your new password."
+      QuitTitle="Confirm Password Change"
+      QuitText="Warning! If you play with this new password, a new ngWorldStats account will be created for you the next time you join a ngWorldStats game server. Are you sure you want to do this?"
+      EmptyTitle="Confirm Password Removal"
+      EmptyText="Note: You have chosen not to have an ngWorldStats password. Your online game statistics will not be accumulated. Are you sure this is what you want?"
 }

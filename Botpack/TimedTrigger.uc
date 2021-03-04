@@ -27,6 +27,7 @@ function Timer()
 
 defaultproperties
 {
-     DelaySeconds=1.000000
-     bCollideActors=False
+      DelaySeconds=1.000000
+      bRepeating=False
+      bCollideActors=False
 }

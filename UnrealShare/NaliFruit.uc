@@ -64,6 +64,12 @@ auto state Pickup
 				Other.MakeNoise(0.1 * Level.Game.Difficulty);		
 		}
 	}
+
+	function BeginState()
+	{
+		Super.BeginState();
+		bAlwaysRelevant = false;
+	}
 Begin:
 	PlayAnim('Root');
 	FinishAnim();
@@ -78,10 +84,11 @@ Begin:
 
 defaultproperties
 {
-     HealingAmount=0
-     PickupMessage="You picked the Nali Healing Fruit +"
-     RespawnTime=5.000000
-     PickupViewMesh=LodMesh'UnrealShare.NaliFruitMesh'
-     Mesh=LodMesh'UnrealShare.NaliFruitMesh'
-     CollisionHeight=21.000000
+      bGrowWhenSeen=False
+      HealingAmount=0
+      PickupMessage="You picked the Nali Healing Fruit +"
+      RespawnTime=5.000000
+      PickupViewMesh=LodMesh'UnrealShare.NaliFruitMesh'
+      Mesh=LodMesh'UnrealShare.NaliFruitMesh'
+      CollisionHeight=21.000000
 }

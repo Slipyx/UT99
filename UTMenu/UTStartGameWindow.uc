@@ -2,5 +2,5 @@ class UTStartGameWindow expands UMenuStartGameWindow;
 
 defaultproperties
 {
-     ClientClass=Class'UTMenu.UTStartGameCW'
+      ClientClass=Class'UTMenu.UTStartGameCW'
 }

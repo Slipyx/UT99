@@ -236,6 +236,7 @@ function Projectile ProjectileFire(class<projectile> ProjClass, float ProjSpeed,
 	Tracked = Spawn(ProjClass,,, Start,AdjustedAim);
 	if ( Level.Game.IsA('DeathMatchPlus') && DeathmatchPlus(Level.Game).bNoviceMode )
 		Tracked = None; //no combo move
+	return Tracked;
 }
 
 function ProcessTraceHit(Actor Other, Vector HitLocation, Vector HitNormal, Vector X, Vector Y, Vector Z)
@@ -405,42 +406,45 @@ state ClientFiring
 
 defaultproperties
 {
-     hitdamage=40
-     WeaponDescription="Classification: Energy Rifle\n\nPrimary Fire: Instant hit laser beam.\n\nSecondary Fire: Large, slow moving plasma balls.\n\nTechniques: Hitting the secondary fire plasma balls with the regular fire's laser beam will cause an immensely powerful explosion."
-     InstFlash=-0.400000
-     InstFog=(Z=800.000000)
-     AmmoName=Class'Botpack.ShockCore'
-     PickupAmmoCount=20
-     bInstantHit=True
-     bAltWarnTarget=True
-     bSplashDamage=True
-     FiringSpeed=2.000000
-     FireOffset=(X=10.000000,Y=-5.000000,Z=-8.000000)
-     AltProjectileClass=Class'Botpack.ShockProj'
-     MyDamageType=jolted
-     AIRating=0.630000
-     AltRefireRate=0.700000
-     FireSound=Sound'UnrealShare.ASMD.TazerFire'
-     AltFireSound=Sound'UnrealShare.ASMD.TazerAltFire'
-     SelectSound=Sound'UnrealShare.ASMD.TazerSelect'
-     DeathMessage="%k inflicted mortal damage upon %o with the %w."
-     NameColor=(R=128,G=0)
-     AutoSwitchPriority=4
-     InventoryGroup=4
-     PickupMessage="You got the ASMD Shock Rifle."
-     ItemName="Shock Rifle"
-     PlayerViewOffset=(X=4.400000,Y=-1.700000,Z=-1.600000)
-     PlayerViewMesh=LodMesh'Botpack.ASMD2M'
-     PlayerViewScale=2.000000
-     BobDamping=0.975000
-     PickupViewMesh=LodMesh'Botpack.ASMD2pick'
-     ThirdPersonMesh=LodMesh'Botpack.ASMD2hand'
-     StatusIcon=Texture'Botpack.Icons.UseASMD'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseASMD'
-     Mesh=LodMesh'Botpack.ASMD2pick'
-     bNoSmooth=False
-     CollisionRadius=34.000000
-     CollisionHeight=8.000000
-     Mass=50.000000
+      hitdamage=40
+      Tracked=None
+      bBotSpecialMove=False
+      TapTime=0.000000
+      WeaponDescription="Classification: Energy Rifle\n\nPrimary Fire: Instant hit laser beam.\n\nSecondary Fire: Large, slow moving plasma balls.\n\nTechniques: Hitting the secondary fire plasma balls with the regular fire's laser beam will cause an immensely powerful explosion."
+      InstFlash=-0.400000
+      InstFog=(Z=800.000000)
+      AmmoName=Class'Botpack.ShockCore'
+      PickupAmmoCount=20
+      bInstantHit=True
+      bAltWarnTarget=True
+      bSplashDamage=True
+      FiringSpeed=2.000000
+      FireOffset=(X=10.000000,Y=-5.000000,Z=-8.000000)
+      AltProjectileClass=Class'Botpack.ShockProj'
+      MyDamageType="jolted"
+      AIRating=0.630000
+      AltRefireRate=0.700000
+      FireSound=Sound'UnrealShare.ASMD.TazerFire'
+      AltFireSound=Sound'UnrealShare.ASMD.TazerAltFire'
+      SelectSound=Sound'UnrealShare.ASMD.TazerSelect'
+      DeathMessage="%k inflicted mortal damage upon %o with the %w."
+      NameColor=(R=128,G=0)
+      AutoSwitchPriority=4
+      InventoryGroup=4
+      PickupMessage="You got the ASMD Shock Rifle."
+      ItemName="Shock Rifle"
+      PlayerViewOffset=(X=4.400000,Y=-1.700000,Z=-1.600000)
+      PlayerViewMesh=LodMesh'Botpack.ASMD2M'
+      PlayerViewScale=2.000000
+      BobDamping=0.975000
+      PickupViewMesh=LodMesh'Botpack.ASMD2pick'
+      ThirdPersonMesh=LodMesh'Botpack.ASMD2hand'
+      StatusIcon=Texture'Botpack.Icons.UseASMD'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseASMD'
+      Mesh=LodMesh'Botpack.ASMD2pick'
+      bNoSmooth=False
+      CollisionRadius=34.000000
+      CollisionHeight=8.000000
+      Mass=50.000000
 }

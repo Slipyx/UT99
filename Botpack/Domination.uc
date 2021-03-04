@@ -522,19 +522,38 @@ function EndGame( string Reason )
 
 defaultproperties
 {
-     bDumbDown=True
-     bScoreTeamKills=False
-     GoalTeamScore=100.000000
-     bUseTranslocator=True
-     bRatedTranslocator=True
-     StartUpMessage="Capture and hold control points to win."
-     gamegoal="points wins the match!"
-     LadderTypeIndex=3
-     bCoopWeaponMode=True
-     ScoreBoardType=Class'Botpack.DominationScoreboard'
-     HUDType=Class'Botpack.ChallengeDominationHUD'
-     MapListType=Class'Botpack.DOMMapList'
-     MapPrefix="DOM"
-     BeaconName="DOM"
-     GameName="Domination"
+      bNeutralPoints=False
+      bDumbDown=True
+      ControlPoints(0)=None
+      ControlPoints(1)=None
+      ControlPoints(2)=None
+      ControlPoints(3)=None
+      ControlPoints(4)=None
+      ControlPoints(5)=None
+      ControlPoints(6)=None
+      ControlPoints(7)=None
+      ControlPoints(8)=None
+      ControlPoints(9)=None
+      ControlPoints(10)=None
+      ControlPoints(11)=None
+      ControlPoints(12)=None
+      ControlPoints(13)=None
+      ControlPoints(14)=None
+      ControlPoints(15)=None
+      DomScoreEvent=0
+      bScoreTeamKills=False
+      GoalTeamScore=100.000000
+      TimeLimit=0
+      bUseTranslocator=True
+      bRatedTranslocator=True
+      StartUpMessage="Capture and hold control points to win."
+      gamegoal="points wins the match!"
+      LadderTypeIndex=3
+      bCoopWeaponMode=True
+      ScoreBoardType=Class'Botpack.DominationScoreboard'
+      HUDType=Class'Botpack.ChallengeDominationHUD'
+      MapListType=Class'Botpack.DOMMapList'
+      MapPrefix="DOM"
+      BeaconName="DOM"
+      GameName="Domination"
 }

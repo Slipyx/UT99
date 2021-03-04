@@ -12,9 +12,9 @@ function ForceMeshToExist()
 
 defaultproperties
 {
-     Physics=PHYS_Falling
-     AnimSequence=Dead1
-     Mesh=LodMesh'UnrealI.Female2'
-     bBlockActors=True
-     bBlockPlayers=True
+      Physics=PHYS_Falling
+      AnimSequence="Dead1"
+      Mesh=LodMesh'UnrealI.Female2'
+      bBlockActors=True
+      bBlockPlayers=True
 }

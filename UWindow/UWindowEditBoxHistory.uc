@@ -4,4 +4,5 @@ var string HistoryText;
 
 defaultproperties
 {
+      HistoryText=""
 }

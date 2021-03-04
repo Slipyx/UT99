@@ -14,12 +14,12 @@ class Clip extends ShellBox;
 
 defaultproperties
 {
-     AmmoAmount=20
-     ParentAmmo=Class'UnrealShare.ShellBox'
-     PickupMessage="You picked up a clip"
-     PickupViewMesh=LodMesh'UnrealShare.ClipM'
-     Icon=Texture'UnrealShare.Icons.I_ClipAmmo'
-     Mesh=LodMesh'UnrealShare.ClipM'
-     CollisionRadius=20.000000
-     CollisionHeight=4.000000
+      AmmoAmount=20
+      ParentAmmo=Class'UnrealShare.ShellBox'
+      PickupMessage="You picked up a clip"
+      PickupViewMesh=LodMesh'UnrealShare.ClipM'
+      Icon=Texture'UnrealShare.Icons.I_ClipAmmo'
+      Mesh=LodMesh'UnrealShare.ClipM'
+      CollisionRadius=20.000000
+      CollisionHeight=4.000000
 }

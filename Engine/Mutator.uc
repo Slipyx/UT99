@@ -52,6 +52,13 @@ function bool HandlePickupQuery(Pawn Other, Inventory item, out byte bAllowPicku
 	return false;
 }
 
+function bool HandlePauseRequest( PlayerPawn Other)
+{
+	if ( NextMutator != None )
+		return NextMutator.HandlePauseRequest(Other);
+	return false;
+}
+
 function bool PreventDeath(Pawn Killed, Pawn Killer, name damageType, vector HitLocation)
 {
 	if ( NextMutator != None )
@@ -97,12 +104,15 @@ function Class<Weapon> MyDefaultWeapon()
 		return Level.Game.DefaultWeapon;
 }
 
-function AddMutator(Mutator M)
+function AddMutator( Mutator M)
 {
-	if ( NextMutator == None )
-		NextMutator = M;
-	else
-		NextMutator.AddMutator(M);
+	if ( (M != None) && (M != self) )
+	{
+		if ( NextMutator == None )
+			NextMutator = M;
+		else
+			NextMutator.AddMutator(M);
+	}
 }
 
 /* ReplaceWith()
@@ -212,17 +222,23 @@ function bool MutatorBroadcastLocalizedMessage( Actor Sender, Pawn Receiver, out
 // Registers the current mutator on the client to receive PostRender calls.
 simulated function RegisterHUDMutator()
 {
-	local Pawn P;
+	local PlayerPawn P;
 
-	ForEach AllActors(class'Pawn', P)
-		if ( P.IsA('PlayerPawn') && (PlayerPawn(P).myHUD != None) )
+	ForEach AllActors( class'PlayerPawn', P)
+		if ( P.myHUD != None )
 		{
-			NextHUDMutator = PlayerPawn(P).myHud.HUDMutator;
-			PlayerPawn(P).myHUD.HUDMutator = Self;
+			NextHUDMutator = P.myHud.HUDMutator;
+			P.myHUD.HUDMutator = Self;
 			bHUDMutator = True;
-		}	
+		}
 }
 
 defaultproperties
 {
+      NextMutator=None
+      NextDamageMutator=None
+      NextMessageMutator=None
+      NextHUDMutator=None
+      bHUDMutator=False
+      DefaultWeapon=None
 }

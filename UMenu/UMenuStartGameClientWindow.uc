@@ -88,8 +88,10 @@ function StartPressed()
 
 defaultproperties
 {
-     DedicatedText="Dedicated"
-     DedicatedHelp="Press to launch a dedicated server."
-     ServerText="Server"
-     bNetworkGame=True
+      DedicatedButton=None
+      DedicatedText="Dedicated"
+      DedicatedHelp="Press to launch a dedicated server."
+      ServerText="Server"
+      ServerTab=None
+      bNetworkGame=True
 }

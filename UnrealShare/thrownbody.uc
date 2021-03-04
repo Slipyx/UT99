@@ -42,8 +42,8 @@ class ThrownBody extends MaleBody;
 
 defaultproperties
 {
-     bPushable=True
-     AnimSequence=Hang2
-     Rotation=(Pitch=8000)
-     RotationRate=(Pitch=80000)
+      bPushable=True
+      AnimSequence="Hang2"
+      Rotation=(Pitch=8000)
+      RotationRate=(Pitch=80000)
 }

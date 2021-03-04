@@ -57,7 +57,9 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
-     OKText="OK"
-     ClientClass=Class'UBrowser.UBrowserOpenCW'
-     WindowTitle="Open Location"
+      CloseButton=None
+      OKButton=None
+      OKText="OK"
+      ClientClass=Class'UBrowser.UBrowserOpenCW'
+      WindowTitle="Open Location"
 }

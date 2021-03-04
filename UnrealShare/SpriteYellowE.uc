@@ -7,6 +7,6 @@ class SpriteYellowE extends SpriteBlueExplo;
 
 defaultproperties
 {
-     Texture=Texture'UnrealShare.DispExpl.dseY_A00'
-     Skin=Texture'UnrealShare.Effects.PalYellow'
+      Texture=Texture'UnrealShare.DispExpl.dseY_A00'
+      Skin=Texture'UnrealShare.Effects.PalYellow'
 }

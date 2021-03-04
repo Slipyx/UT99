@@ -599,6 +599,10 @@ State ClientActive
 
 	simulated function BeginState()
 	{
+		//Non-respawnable weapon hasn't had mesh update quick enough, simulate it locally
+		if ( (Mesh == default.Mesh) && (Mesh != PlayerViewMesh) ) 
+			Mesh = PlayerViewMesh;
+	
 		bForceFire = false;
 		bForceAltFire = false;
 		bWeaponUp = false;
@@ -685,9 +689,19 @@ ignores Fire, AltFire, AnimEnd;
 
 defaultproperties
 {
-     FireAdjust=1.000000
-     MyDamageType=Unspecified
-     AltDamageType=Unspecified
-     PickupMessageClass=Class'Botpack.PickupMessagePlus'
-     bClientAnim=True
+      Affector=None
+      FireAdjust=1.000000
+      WeaponDescription=""
+      InstFlash=0.000000
+      InstFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      bCanClientFire=False
+      bForceFire=False
+      bForceAltFire=False
+      FireTime=0.000000
+      AltFireTime=0.000000
+      FireStartTime=0.000000
+      MyDamageType="Unspecified"
+      AltDamageType="Unspecified"
+      PickupMessageClass=Class'Botpack.PickupMessagePlus'
+      bClientAnim=True
 }

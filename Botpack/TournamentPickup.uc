@@ -32,10 +32,10 @@ function BecomeItem()
 
 defaultproperties
 {
-     M_Activated=""
-     M_Selected=""
-     M_Deactivated=""
-     PickupMessageClass=Class'Botpack.PickupMessagePlus'
-     ItemMessageClass=Class'Botpack.ItemMessagePlus'
-     bClientAnim=True
+      M_Activated=""
+      M_Selected=""
+      M_Deactivated=""
+      PickupMessageClass=Class'Botpack.PickupMessagePlus'
+      ItemMessageClass=Class'Botpack.ItemMessagePlus'
+      bClientAnim=True
 }

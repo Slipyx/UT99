@@ -94,5 +94,8 @@ auto state Flying
 
 defaultproperties
 {
-     bNetTemporary=False
+      GuidedVelocity=(X=0.000000,Y=0.000000,Z=0.000000)
+      OldGuiderRotation=(Pitch=0,Yaw=0,Roll=0)
+      GuidedRotation=(Pitch=0,Yaw=0,Roll=0)
+      bNetTemporary=False
 }

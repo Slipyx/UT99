@@ -79,6 +79,10 @@ var globalconfig int CrosshairCount;
 var globalconfig string CrossHairs[20];
 var texture CrossHairTextures[20];
 
+// crosshair scaling options
+var globalconfig bool bAutoCrosshairScale;
+var globalconfig float CrosshairScale;
+
 var texture GrayWeapons[11];
 var texture FP1[3], FP2[3], FP3[3];
 var int LastReportedTime;
@@ -184,8 +188,6 @@ function SetDamage(vector HitLoc, float damage)
 
 simulated function PostBeginPlay()
 {
-	local int i;
-
 	if ( Level.NetMode != NM_Standalone )
 		MOTDFadeOutTime = 350;
 	FaceAreaOffset = -64;
@@ -577,7 +579,7 @@ simulated function DrawAmmo(Canvas Canvas)
 
 	Canvas.Style = Style;
 	Canvas.DrawColor = HUDColor;
-	if ( bHideAllWeapons || (HudScale * WeaponScale * Canvas.ClipX <= Canvas.ClipX - 256 * Scale) )
+	if ( bHideAllWeapons || (HudScale * WeaponScale * Canvas.ClipX <= Canvas.ClipX - 255 * Scale) )
 		Y = Canvas.ClipY - 63.5 * Scale;
 	else
 		Y = Canvas.ClipY - 127.5 * Scale;
@@ -604,7 +606,7 @@ simulated function DrawFragCount(Canvas Canvas)
 		return;
 
 	Canvas.Style = Style;
-	if ( bHideAllWeapons || (HudScale * WeaponScale * Canvas.ClipX <= Canvas.ClipX - 256 * Scale) )
+	if ( bHideAllWeapons || (HudScale * WeaponScale * Canvas.ClipX <= Canvas.ClipX - 255 * Scale) )
 		Y = Canvas.ClipY - 63.5 * Scale;
 	else
 		Y = Canvas.ClipY - 127.5 * Scale;
@@ -657,7 +659,7 @@ simulated function DrawGameSynopsis(Canvas Canvas)
 	Canvas.StrLen(RankString, XL, YL);
 	if ( bHideAllWeapons )
 		YOffset = Canvas.ClipY - YL*2;
-	else if ( HudScale * WeaponScale * Canvas.ClipX <= Canvas.ClipX - 256 * Scale )
+	else if ( HudScale * WeaponScale * Canvas.ClipX <= Canvas.ClipX - 255 * Scale )
 		YOffset = Canvas.ClipY - 64*Scale - YL*2;
 	else
 		YOffset = Canvas.ClipY - 128*Scale - YL*2;
@@ -683,7 +685,7 @@ simulated function DrawWeapons(Canvas Canvas)
 {
 	local Weapon W, WeaponSlot[11];
 	local inventory Inv;
-	local int i, j, BaseY, BaseX, Pending, WeapX, WeapY;
+	local int i, BaseY, BaseX, Pending, WeapX, WeapY;
 	local float AmmoScale, WeaponOffset, WeapScale, WeaponX, TexX, TexY;
 
 	BaseX = 0.5 * (Canvas.ClipX - HudScale * WeaponScale * Canvas.ClipX);
@@ -922,6 +924,7 @@ function bool DrawSpeechArea( Canvas Canvas, float XL, float YL )
 
 	Canvas.SetPos(Yadj + WackNumber, 0);
 	Canvas.DrawTile(FP3[paneltype], 64, YPos, 0, 0, FP3[paneltype].USize, FP3[paneltype].VSize);
+	return true;
 }
 
 //========================================
@@ -1298,7 +1301,7 @@ function UpdateRankAndSpread()
 {
 	local PlayerReplicationInfo PRI;
 	local int HighScore;
-	local int i, j;
+	local int i;
 
 	PlayerCount = 0;
 	HighScore = -100;
@@ -1338,8 +1341,6 @@ simulated function TellTime(int num)
 
 simulated function Tick(float DeltaTime)
 {
-	local int i;
-
 	Super.Tick(DeltaTime);
 
 	IdentifyFadeTime = FMax(0.0, IdentifyFadeTime - DeltaTime);
@@ -1434,10 +1435,19 @@ simulated function DrawCrossHair( canvas Canvas, int X, int Y)
 	local texture T;
 
  	if (Crosshair>=CrosshairCount) Return;
-	if ( Canvas.ClipX < 512 )
-		XScale = 0.5;
+
+	if (bAutoCrosshairScale)
+	{
+		if ( Canvas.ClipX < 512 )
+		    XScale = 0.5;
+		else
+			XScale = Clamp(int(0.1 + Canvas.ClipX/640.0), 1, 2);
+	}
 	else
-		XScale = FMax(1, int(0.1 + Canvas.ClipX/640.0));
+	{
+		XScale = CrosshairScale;
+	}
+	
 	PickDiff = Level.TimeSeconds - PickupTime;
 	if ( PickDiff < 0.4 )
 	{
@@ -1771,59 +1781,183 @@ simulated function LocalizedMessage( class<LocalMessage> Message, optional int S
 
 defaultproperties
 {
-     VersionMessage="Version"
-     PlayerCountString="Ideal Player Load:"
-     MapTitleString="in"
-     AuthorString="by"
-     MapTitleString2="Map:"
-     AuthorString2="Author:"
-     RankString="Rank:"
-     SpreadString="Spread:"
-     CrosshairCount=9
-     CrossHairs(0)="Botpack.CHair1"
-     CrossHairs(1)="Botpack.CHair2"
-     CrossHairs(2)="Botpack.CHair3"
-     CrossHairs(3)="Botpack.CHair4"
-     CrossHairs(4)="Botpack.CHair5"
-     CrossHairs(5)="Botpack.CHair6"
-     CrossHairs(6)="Botpack.CHair7"
-     CrossHairs(7)="Botpack.CHair8"
-     CrossHairs(8)="Botpack.CHair9"
-     FP1(0)=Texture'Botpack.FacePanel.FacePanel1'
-     FP1(1)=Texture'Botpack.FacePanel.FacePanel1b'
-     FP1(2)=Texture'Botpack.FacePanel.FacePanel1a'
-     FP2(0)=Texture'Botpack.FacePanel.FacePanel2'
-     FP2(1)=Texture'Botpack.FacePanel.FacePanel2b'
-     FP2(2)=Texture'Botpack.FacePanel.FacePanel2a'
-     FP3(0)=Texture'Botpack.FacePanel.FacePanel3'
-     FP3(1)=Texture'Botpack.FacePanel.FacePanel3b'
-     FP3(2)=Texture'Botpack.FacePanel.FacePanel3a'
-     bStartUpMessage=True
-     bUseTeamColor=True
-     Opacity=15
-     HUDScale=1.000000
-     StatusScale=1.000000
-     WeaponScale=0.800000
-     FavoriteHUDColor=(B=16)
-     CrosshairColor=(G=16)
-     Style=3
-     WhiteColor=(R=255,G=255,B=255)
-     RedColor=(R=255)
-     GreenColor=(G=255)
-     CyanColor=(G=255,B=255)
-     UnitColor=(R=1,G=1,B=1)
-     BlueColor=(B=255)
-     GoldColor=(R=255,G=255)
-     PurpleColor=(R=255,B=255)
-     TurqColor=(G=128,B=255)
-     GrayColor=(R=200,G=200,B=200)
-     FaceColor=(R=50,G=50,B=50)
-     IdentifyName="Name:"
-     IdentifyHealth="Health:"
-     IdentifyCallsign="Callsign:"
-     LiveFeed="Live Feed from "
-     ScoreTime=-10000000.000000
-     ServerInfoClass=Class'Botpack.ServerInfo'
-     FontInfoClass="Botpack.FontInfo"
-     HUDConfigWindowType="UTMenu.UTChallengeHUDConfig"
+      SizeY=0
+      Count=0
+      CurrentMessage=""
+      MOTDFadeOutTime=0.000000
+      IdentifyFadeTime=0.000000
+      IdentifyTarget=None
+      PawnOwner=None
+      MyFonts=None
+      ShortMessageQueue(0)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      ShortMessageQueue(1)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      ShortMessageQueue(2)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      ShortMessageQueue(3)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(0)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(1)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(2)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(3)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(4)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(5)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(6)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(7)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(8)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      LocalMessages(9)=(Message=None,Switch=0,RelatedPRI=None,OptionalObject=None,EndOfLife=0.000000,Lifetime=0.000000,bDrawing=False,numLines=0,StringMessage="",DrawColor=(R=0,G=0,B=0,A=0),StringFont=None,XL=0.000000,YL=0.000000,YPos=0.000000)
+      FaceTexture=None
+      FaceTime=0.000000
+      FaceTeam=(R=0,G=0,B=0,A=0)
+      VersionMessage="Version"
+      PlayerCountString="Ideal Player Load:"
+      MapTitleString="in"
+      AuthorString="by"
+      MapTitleString2="Map:"
+      AuthorString2="Author:"
+      RankString="Rank:"
+      SpreadString="Spread:"
+      PlayerCount=0
+      bTiedScore=False
+      ReceivedMessage=""
+      ReceivedName=""
+      ReceivedZone=None
+      ReceivedTime=0.000000
+      TutIconTex=None
+      TutIconX=0
+      TutIconY=0
+      TutIconBlink=0.000000
+      CrosshairCount=9
+      CrossHairs(0)="Botpack.CHair1"
+      CrossHairs(1)="Botpack.CHair2"
+      CrossHairs(2)="Botpack.CHair3"
+      CrossHairs(3)="Botpack.CHair4"
+      CrossHairs(4)="Botpack.CHair5"
+      CrossHairs(5)="Botpack.CHair6"
+      CrossHairs(6)="Botpack.CHair7"
+      CrossHairs(7)="Botpack.CHair8"
+      CrossHairs(8)="Botpack.CHair9"
+      CrossHairs(9)=""
+      CrossHairs(10)=""
+      CrossHairs(11)=""
+      CrossHairs(12)=""
+      CrossHairs(13)=""
+      CrossHairs(14)=""
+      CrossHairs(15)=""
+      CrossHairs(16)=""
+      CrossHairs(17)=""
+      CrossHairs(18)=""
+      CrossHairs(19)=""
+      CrossHairTextures(0)=None
+      CrossHairTextures(1)=None
+      CrossHairTextures(2)=None
+      CrossHairTextures(3)=None
+      CrossHairTextures(4)=None
+      CrossHairTextures(5)=None
+      CrossHairTextures(6)=None
+      CrossHairTextures(7)=None
+      CrossHairTextures(8)=None
+      CrossHairTextures(9)=None
+      CrossHairTextures(10)=None
+      CrossHairTextures(11)=None
+      CrossHairTextures(12)=None
+      CrossHairTextures(13)=None
+      CrossHairTextures(14)=None
+      CrossHairTextures(15)=None
+      CrossHairTextures(16)=None
+      CrossHairTextures(17)=None
+      CrossHairTextures(18)=None
+      CrossHairTextures(19)=None
+      bAutoCrosshairScale=True
+      CrosshairScale=1.600000
+      GrayWeapons(0)=None
+      GrayWeapons(1)=None
+      GrayWeapons(2)=None
+      GrayWeapons(3)=None
+      GrayWeapons(4)=None
+      GrayWeapons(5)=None
+      GrayWeapons(6)=None
+      GrayWeapons(7)=None
+      GrayWeapons(8)=None
+      GrayWeapons(9)=None
+      GrayWeapons(10)=None
+      FP1(0)=Texture'Botpack.FacePanel.FacePanel1'
+      FP1(1)=Texture'Botpack.FacePanel.FacePanel1b'
+      FP1(2)=Texture'Botpack.FacePanel.FacePanel1a'
+      FP2(0)=Texture'Botpack.FacePanel.FacePanel2'
+      FP2(1)=Texture'Botpack.FacePanel.FacePanel2b'
+      FP2(2)=Texture'Botpack.FacePanel.FacePanel2a'
+      FP3(0)=Texture'Botpack.FacePanel.FacePanel3'
+      FP3(1)=Texture'Botpack.FacePanel.FacePanel3b'
+      FP3(2)=Texture'Botpack.FacePanel.FacePanel3a'
+      LastReportedTime=0
+      bStartUpMessage=True
+      bForceScores=False
+      bTimeValid=False
+      bLowRes=False
+      bResChanged=False
+      OldClipX=0
+      bAlwaysHideFrags=False
+      bHideCenterMessages=False
+      bHideAllWeapons=False
+      bHideStatus=False
+      bHideAmmo=False
+      bHideTeamInfo=False
+      bHideFrags=False
+      bHideHUD=False
+      bHideNoviceMessages=False
+      bHideFaces=False
+      bUseTeamColor=True
+      Opacity=15
+      HUDScale=1.000000
+      StatusScale=1.000000
+      WeaponScale=0.800000
+      FavoriteHUDColor=(R=0,G=0,B=16,A=0)
+      CrosshairColor=(R=0,G=16,B=0,A=0)
+      Scale=0.000000
+      Style=3
+      BaseColor=(R=0,G=0,B=0,A=0)
+      WhiteColor=(R=255,G=255,B=255,A=0)
+      RedColor=(R=255,G=0,B=0,A=0)
+      GreenColor=(R=0,G=255,B=0,A=0)
+      CyanColor=(R=0,G=255,B=255,A=0)
+      UnitColor=(R=1,G=1,B=1,A=0)
+      BlueColor=(R=0,G=0,B=255,A=0)
+      GoldColor=(R=255,G=255,B=0,A=0)
+      HUDColor=(R=0,G=0,B=0,A=0)
+      SolidHUDColor=(R=0,G=0,B=0,A=0)
+      PurpleColor=(R=255,G=0,B=255,A=0)
+      TurqColor=(R=0,G=128,B=255,A=0)
+      GrayColor=(R=200,G=200,B=200,A=0)
+      FaceColor=(R=50,G=50,B=50,A=0)
+      IdentifyName="Name:"
+      IdentifyHealth="Health:"
+      IdentifyCallsign="Callsign:"
+      LiveFeed="Live Feed from "
+      ScoreTime=-10000000.000000
+      rank=0
+      lead=0
+      HitPos(0)=(X=0.000000,Y=0.000000,Z=0.000000)
+      HitPos(1)=(X=0.000000,Y=0.000000,Z=0.000000)
+      HitPos(2)=(X=0.000000,Y=0.000000,Z=0.000000)
+      HitPos(3)=(X=0.000000,Y=0.000000,Z=0.000000)
+      HitTime(0)=0.000000
+      HitTime(1)=0.000000
+      HitTime(2)=0.000000
+      HitTime(3)=0.000000
+      hitdamage(0)=0.000000
+      hitdamage(1)=0.000000
+      hitdamage(2)=0.000000
+      hitdamage(3)=0.000000
+      PickupTime=0.000000
+      WeaponNameFade=0.000000
+      MessageFadeTime=0.000000
+      MessageFadeCount=0
+      bDrawMessageArea=False
+      bDrawFaceArea=False
+      FaceAreaOffset=0.000000
+      MinFaceAreaOffset=0.000000
+      TimeMessageClass=None
+      ServerInfo=None
+      bShowInfo=False
+      ServerInfoClass=Class'Botpack.ServerInfo'
+      FontInfoClass="Botpack.FontInfo"
+      HUDConfigWindowType="UTMenu.UTChallengeHUDConfig"
 }

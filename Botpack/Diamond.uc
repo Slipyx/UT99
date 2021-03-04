@@ -15,5 +15,5 @@ class Diamond extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.Diamond'
+      Mesh=LodMesh'Botpack.Diamond'
 }

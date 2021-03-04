@@ -109,6 +109,16 @@ function Notify(byte E)
 
 defaultproperties
 {
-     UnknownText="? Unknown ?"
-     bIgnoreLDoubleClick=False
+      MyFont=None
+      TextColor=(R=0,G=0,B=0,A=0)
+      Ladder=None
+      MatchIndex=0
+      bUnknown=False
+      UnknownText="? Unknown ?"
+      LadderWindow=None
+      LabelWidth=0.000000
+      LabelHeight=0.000000
+      OtherTexture=None
+      OldOverTexture=None
+      bIgnoreLDoubleClick=False
 }

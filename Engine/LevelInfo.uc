@@ -93,14 +93,15 @@ var() bool bNeverPrecache;
 
 var enum ENetMode
 {
-	NM_Standalone,        // Standalone game.
-	NM_DedicatedServer,   // Dedicated server, no local client.
-	NM_ListenServer,      // Listen server.
-	NM_Client             // Client only, no local server.
+	NM_Standalone,        		// Standalone game.
+	NM_DedicatedServer,   		// Dedicated server, no local client.
+	NM_ListenServer,      		// Listen server.
+	NM_Client             		// Client only, no local server.
 } NetMode;
-var string ComputerName;  // Machine's name according to the OS.
-var string EngineVersion; // Engine version.
-var string MinNetVersion; // Min engine version that is net compatible.
+var string ComputerName;  		// Machine's name according to the OS.
+var string EngineVersion; 		// Engine version. 
+var string MinNetVersion; 		// Min engine version that is net compatible.
+var int    ServerMoveVersion;	// Max supported ServerMove protocol
 
 //-----------------------------------------------------------------------------
 // Gameplay rules
@@ -169,6 +170,7 @@ event ServerTravel( string URL, bool bItems )
 
 event BeginPlay()
 {
+	ServerMoveVersion = 2;
 	if (NetMode == NM_DedicatedServer || NetMode == NM_ListenServer)
 		SetTimer(TimeDilation,True);
 }
@@ -185,17 +187,65 @@ event Timer()
 replication
 {
 	reliable if( Role==ROLE_Authority )
-		Pauser, TimeDilation, bNoCheating, bAllowFOV;
+		Pauser, TimeDilation, bNoCheating, bAllowFOV, ServerMoveVersion;
 }
 
 defaultproperties
 {
-     TimeDilation=1.000000
-     Title="Untitled"
-     VisibleGroups="None"
-     bHighDetailMode=True
-     CdTrack=255
-     Brightness=1.000000
-     DefaultTexture=Texture'Engine.DefaultTexture'
-     bHiddenEd=True
+      TimeDilation=1.000000
+      TimeSeconds=0.000000
+      Title="Untitled"
+      Author=""
+      IdealPlayerCount=""
+      RecommendedEnemies=0
+      RecommendedTeammates=0
+      LevelEnterText=""
+      LocalizedPkg=""
+      Pauser=""
+      Summary=None
+      VisibleGroups="None"
+      bLonePlayer=False
+      bBegunPlay=False
+      bPlayersOnly=False
+      bHighDetailMode=True
+      bDropDetail=False
+      bAggressiveLOD=False
+      bStartup=False
+      bHumansOnly=False
+      bNoCheating=False
+      bAllowFOV=False
+      bLowRes=False
+      Song=None
+      SongSection=0
+      CdTrack=255
+      PlayerDoppler=0.000000
+      Brightness=1.000000
+      Screenshot=None
+      DefaultTexture=Texture'Engine.DefaultTexture'
+      HubStackLevel=0
+      bNeverPrecache=False
+      NetMode=NM_Standalone
+      ComputerName=""
+      EngineVersion=""
+      MinNetVersion=""
+      ServerMoveVersion=0
+      DefaultGameType=None
+      Game=None
+      NavigationPointList=None
+      PawnList=None
+      NextURL=""
+      bNextItems=False
+      NextSwitchCountdown=0.000000
+      AIProfile(0)=0
+      AIProfile(1)=0
+      AIProfile(2)=0
+      AIProfile(3)=0
+      AIProfile(4)=0
+      AIProfile(5)=0
+      AIProfile(6)=0
+      AIProfile(7)=0
+      AvgAITime=0.000000
+      bCheckWalkSurfaces=False
+      SpawnNotify=None
+      bHiddenEd=True
 }

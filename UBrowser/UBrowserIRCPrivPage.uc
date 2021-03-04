@@ -65,5 +65,7 @@ function IsAway(string Nick, string Message)
 
 defaultproperties
 {
-     RightClickMenuClass=Class'UBrowser.UBrowserIRCPrivateMenu'
+      PrivNick=""
+      SystemPage=None
+      RightClickMenuClass=Class'UBrowser.UBrowserIRCPrivateMenu'
 }

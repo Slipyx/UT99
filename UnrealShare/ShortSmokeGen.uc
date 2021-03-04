@@ -26,9 +26,9 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     SmokeDelay=0.120000
-     BasePuffSize=1.500000
-     TotalNumPuffs=10
-     RisingVelocity=40.000000
-     RemoteRole=ROLE_SimulatedProxy
+      SmokeDelay=0.120000
+      BasePuffSize=1.500000
+      TotalNumPuffs=10
+      RisingVelocity=40.000000
+      RemoteRole=ROLE_SimulatedProxy
 }

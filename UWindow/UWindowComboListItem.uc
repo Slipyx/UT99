@@ -34,4 +34,8 @@ function int Compare(UWindowList T, UWindowList B)
 
 defaultproperties
 {
+      Value=""
+      Value2=""
+      SortWeight=0
+      ItemTop=0.000000
 }

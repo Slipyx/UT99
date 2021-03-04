@@ -15,5 +15,5 @@ class CapitalU extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.CapitalU'
+      Mesh=LodMesh'Botpack.CapitalU'
 }

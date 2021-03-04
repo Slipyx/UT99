@@ -58,7 +58,7 @@ auto state Flying
 			return;
 
 		bHurtEntry = true;
-		foreach VisibleCollidingActors( class 'Actor', Victims, 180, HitLocation )
+		foreach VisibleCollidingActors( class 'Actor', Victims, 180, HitLocation,, true)
 		{
 			if( Victims != self )
 			{
@@ -84,14 +84,14 @@ auto state Flying
 
 defaultproperties
 {
-     Damage=34.000000
-     MomentumTransfer=87000
-     MyDamageType=RipperAltDeath
-     SpawnSound=Sound'Botpack.ripper.RazorAlt'
-     ExplosionDecal=Class'Botpack.RipperMark'
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=23
-     LightRadius=3
+      Damage=34.000000
+      MomentumTransfer=87000
+      MyDamageType="RipperAltDeath"
+      SpawnSound=Sound'Botpack.ripper.RazorAlt'
+      ExplosionDecal=Class'Botpack.RipperMark'
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=23
+      LightRadius=3
 }

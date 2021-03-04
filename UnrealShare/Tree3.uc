@@ -14,5 +14,5 @@ class Tree3 extends Tree;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.Tree3M'
+      Mesh=LodMesh'UnrealShare.Tree3M'
 }

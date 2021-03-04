@@ -23,6 +23,6 @@ simulated function DirectionalAttach(vector Dir, vector Norm)
 
 defaultproperties
 {
-     Texture=Texture'Botpack.DirectionalBlast'
-     DrawScale=1.300000
+      Texture=Texture'Botpack.DirectionalBlast'
+      DrawScale=1.300000
 }

@@ -5,6 +5,6 @@ class UnrealMultiplayerMeshMenu extends UnrealMeshMenu;
 
 defaultproperties
 {
-     Selection=5
-     MenuLength=5
+      Selection=5
+      MenuLength=5
 }

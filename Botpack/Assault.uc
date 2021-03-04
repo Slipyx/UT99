@@ -383,7 +383,7 @@ function RemoveFort(FortStandard F, Pawn instigator)
 function Killed(pawn killer, pawn Other, name damageType)
 {
 	Super.Killed(killer, Other, damageType);
-	if ( (Other == Leader[Other.PlayerReplicationInfo.Team]) && Other.IsA('Bot') )
+	if ( Other.IsA('Bot') && Other.PlayerReplicationInfo != none && Other == Leader[Other.PlayerReplicationInfo.Team] )
 		ElectNewLeaderFor(Bot(Other));
 }
 
@@ -1071,25 +1071,64 @@ function bool ChangeTeam(Pawn Other, int NewTeam)
 
 defaultproperties
 {
-     Defenses=3
-     AttackMessage="Take the enemy base!"
-     DefendMessage="Defend your base against the enemy!"
-     TieMessage="Tie!"
-     WinMessage="and wins!"
-     ObjectivesMessage="Press F3 for an objectives briefing."
-     DefenderSuccess="defended the base"
-     bSpawnInTeamArea=True
-     bScoreTeamKills=False
-     MaxAllowedTeams=2
-     StartUpMessage=""
-     GameEndedMessage="conquered the base in"
-     LadderTypeIndex=4
-     bCoopWeaponMode=True
-     ScoreBoardType=Class'Botpack.AssaultScoreboard'
-     RulesMenuType="UTMenu.UTAssaultRulesSC"
-     HUDType=Class'Botpack.AssaultHUD'
-     MapListType=Class'Botpack.ASMapList'
-     MapPrefix="AS"
-     BeaconName="ASLT"
-     GameName="Assault"
+      Defender=None
+      Attacker=None
+      Defenses=3
+      Fort(0)=None
+      Fort(1)=None
+      Fort(2)=None
+      Fort(3)=None
+      Fort(4)=None
+      Fort(5)=None
+      Fort(6)=None
+      Fort(7)=None
+      Fort(8)=None
+      Fort(9)=None
+      Fort(10)=None
+      Fort(11)=None
+      Fort(12)=None
+      Fort(13)=None
+      Fort(14)=None
+      Fort(15)=None
+      BestFort=None
+      AttackMessage="Take the enemy base!"
+      DefendMessage="Defend your base against the enemy!"
+      TieMessage="Tie!"
+      WinMessage="and wins!"
+      ObjectivesMessage="Press F3 for an objectives briefing."
+      Destroyer=0
+      numForts=0
+      LastIncoming=0.000000
+      EndCam=None
+      SavedTime=0.000000
+      NumDefenses=0
+      CurrentDefender=0
+      bDefenseSet=False
+      bTiePartOne=False
+      GameCode=""
+      Part=1
+      bAssaultWon=False
+      bFortDown=False
+      DefenderSuccess="defended the base"
+      Leader(0)=None
+      Leader(1)=None
+      Leader(2)=None
+      Leader(3)=None
+      bSpawnInTeamArea=True
+      bScoreTeamKills=False
+      MaxAllowedTeams=2
+      GoalTeamScore=0.000000
+      FragLimit=0
+      TimeLimit=10
+      StartUpMessage=""
+      GameEndedMessage="conquered the base in"
+      LadderTypeIndex=4
+      bCoopWeaponMode=True
+      ScoreBoardType=Class'Botpack.AssaultScoreboard'
+      RulesMenuType="UTMenu.UTAssaultRulesSC"
+      HUDType=Class'Botpack.AssaultHUD'
+      MapListType=Class'Botpack.ASMapList'
+      MapPrefix="AS"
+      BeaconName="ASLT"
+      GameName="Assault"
 }

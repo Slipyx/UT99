@@ -15,5 +15,5 @@ class TriStud extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.TriStud'
+      Mesh=LodMesh'Botpack.TriStud'
 }

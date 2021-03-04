@@ -12,15 +12,15 @@ class FlakAmmo extends TournamentAmmo;
 
 defaultproperties
 {
-     AmmoAmount=10
-     MaxAmmo=50
-     UsedInWeaponSlot(6)=1
-     PickupMessage="You picked up 10 Flak Shells."
-     ItemName="Flak Shells"
-     PickupViewMesh=LodMesh'Botpack.FlakAmmoM'
-     MaxDesireability=0.320000
-     Mesh=LodMesh'Botpack.FlakAmmoM'
-     CollisionRadius=16.000000
-     CollisionHeight=11.000000
-     bCollideActors=True
+      AmmoAmount=10
+      MaxAmmo=50
+      UsedInWeaponSlot(6)=1
+      PickupMessage="You picked up 10 Flak Shells."
+      ItemName="Flak Shells"
+      PickupViewMesh=LodMesh'Botpack.FlakAmmoM'
+      MaxDesireability=0.320000
+      Mesh=LodMesh'Botpack.FlakAmmoM'
+      CollisionRadius=16.000000
+      CollisionHeight=11.000000
+      bCollideActors=True
 }

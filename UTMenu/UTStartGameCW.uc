@@ -39,11 +39,7 @@ function Notify(UWindowDialogControl C, byte E)
 		switch (C)
 		{
 			case StartButton:
-				if ((GetLevel().Game.Default.bWorldLog == True) && (GetPlayerOwner().GetNGSecret() == "") && (!GetPlayerOwner().ngSecretSet))
-				{
-					ConfirmStart = MessageBox(ConfirmTitle, ConfirmText, MB_YesNo, MR_Yes, MR_No);					
-				} else
-					StartPressed();
+				StartPressed();
 				return;
 			case DedicatedButton:
 				DedicatedPressed();
@@ -113,10 +109,15 @@ function StartPressed()
 
 defaultproperties
 {
-     DedicatedText="Dedicated"
-     DedicatedHelp="Press to launch a dedicated server."
-     ServerText="Server"
-     ConfirmTitle="Confirm Game Start"
-     ConfirmText="You are about to start a listen server running ngWorldStats but you have not supplied a ngWorldStats password. If you do not specify a password, your game stats will not be accumulated. Do you want to specify a password now?"
-     bNetworkGame=True
+      DedicatedButton=None
+      DedicatedText="Dedicated"
+      DedicatedHelp="Press to launch a dedicated server."
+      ServerText="Server"
+      ConfirmStart=None
+      ConfirmTitle=""
+      ConfirmText=""
+      ServerTab=None
+      Map="DM-Turbine.unr"
+      GameType="BotPack.DeathMatchPlus"
+      bNetworkGame=True
 }

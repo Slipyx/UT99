@@ -107,4 +107,32 @@ function CheckOrder()
 
 defaultproperties
 {
+      OrderCode(0)=0
+      OrderCode(1)=0
+      OrderCode(2)=0
+      OrderCode(3)=0
+      OrderCode(4)=0
+      OrderCode(5)=0
+      MoverTags(0)="None"
+      MoverTags(1)="None"
+      MoverTags(2)="None"
+      MoverTags(3)="None"
+      MoverTags(4)="None"
+      MoverTags(5)="None"
+      NumElements=0
+      MainEvent="None"
+      ActualOrder(0)=0
+      ActualOrder(1)=0
+      ActualOrder(2)=0
+      ActualOrder(3)=0
+      ActualOrder(4)=0
+      ActualOrder(5)=0
+      TriggerFlags(0)=0
+      TriggerFlags(1)=0
+      TriggerFlags(2)=0
+      TriggerFlags(3)=0
+      TriggerFlags(4)=0
+      TriggerFlags(5)=0
+      NumTriggered=0
+      bTriggeredAlready=False
 }

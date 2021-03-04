@@ -55,26 +55,27 @@ simulated Function Timer()
 
 defaultproperties
 {
-     SpriteAnim(0)=Texture'UnrealShare.MainEffect.e1_a00'
-     SpriteAnim(1)=Texture'UnrealShare.MainEffect.e2_a00'
-     SpriteAnim(2)=Texture'UnrealShare.MainEffect.e3_a00'
-     SpriteAnim(3)=Texture'UnrealShare.MainEffect.e4_a00'
-     SpriteAnim(4)=Texture'UnrealShare.MainEffect.e5_a00'
-     NumFrames=8
-     Pause=0.050000
-     EffectSound1=Sound'UnrealShare.General.Explo1'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.700000
-     DrawType=DT_SpriteAnimOnce
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.MainEffect.e1_a00'
-     Skin=Texture'UnrealShare.Effects.ExplosionPal'
-     DrawScale=3.500000
-     LightType=LT_TexturePaletteOnce
-     LightEffect=LE_NonIncidence
-     LightBrightness=192
-     LightHue=27
-     LightSaturation=71
-     LightRadius=9
-     bCorona=False
+      ExpCount=0
+      SpriteAnim(0)=Texture'UnrealShare.MainEffect.e1_a00'
+      SpriteAnim(1)=Texture'UnrealShare.MainEffect.e2_a00'
+      SpriteAnim(2)=Texture'UnrealShare.MainEffect.e3_a00'
+      SpriteAnim(3)=Texture'UnrealShare.MainEffect.e4_a00'
+      SpriteAnim(4)=Texture'UnrealShare.MainEffect.e5_a00'
+      NumFrames=8
+      Pause=0.050000
+      EffectSound1=Sound'UnrealShare.General.Explo1'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.700000
+      DrawType=DT_SpriteAnimOnce
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.MainEffect.e1_a00'
+      Skin=Texture'UnrealShare.Effects.ExplosionPal'
+      DrawScale=3.500000
+      LightType=LT_TexturePaletteOnce
+      LightEffect=LE_NonIncidence
+      LightBrightness=192
+      LightHue=27
+      LightSaturation=71
+      LightRadius=9
+      bCorona=False
 }

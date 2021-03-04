@@ -218,33 +218,35 @@ function DripSound()
 
 defaultproperties
 {
-     AmmoName=Class'UnrealI.Sludge'
-     PickupAmmoCount=25
-     bAltWarnTarget=True
-     FireOffset=(X=12.000000,Y=-9.000000,Z=-16.000000)
-     ProjectileClass=Class'UnrealShare.BioGel'
-     AltProjectileClass=Class'UnrealShare.BigBiogel'
-     AIRating=0.600000
-     RefireRate=0.900000
-     AltRefireRate=0.700000
-     FireSound=Sound'UnrealI.BioRifle.GelShot'
-     AltFireSound=Sound'UnrealI.BioRifle.GelShot'
-     CockingSound=Sound'UnrealI.BioRifle.GelLoad'
-     SelectSound=Sound'UnrealI.BioRifle.GelSelect'
-     Misc1Sound=Sound'UnrealI.BioRifle.GelLoad'
-     Misc2Sound=Sound'UnrealI.BioRifle.GelDrip'
-     DeathMessage="%o drank a glass of %k's dripping green load."
-     AutoSwitchPriority=8
-     InventoryGroup=8
-     PickupMessage="You got the GES BioRifle"
-     ItemName="GES Bio Rifle"
-     PlayerViewOffset=(X=2.000000,Y=-0.700000,Z=-1.150000)
-     PlayerViewMesh=LodMesh'UnrealI.BRifle'
-     PickupViewMesh=LodMesh'UnrealI.BRiflePick'
-     ThirdPersonMesh=LodMesh'UnrealI.BRifle3'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Mesh=LodMesh'UnrealI.BRiflePick'
-     bNoSmooth=False
-     CollisionRadius=28.000000
-     CollisionHeight=15.000000
+      ChargeSize=0.000000
+      Count=0.000000
+      AmmoName=Class'UnrealI.Sludge'
+      PickupAmmoCount=25
+      bAltWarnTarget=True
+      FireOffset=(X=12.000000,Y=-9.000000,Z=-16.000000)
+      ProjectileClass=Class'UnrealShare.BioGel'
+      AltProjectileClass=Class'UnrealShare.BigBiogel'
+      AIRating=0.600000
+      RefireRate=0.900000
+      AltRefireRate=0.700000
+      FireSound=Sound'UnrealI.BioRifle.GelShot'
+      AltFireSound=Sound'UnrealI.BioRifle.GelShot'
+      CockingSound=Sound'UnrealI.BioRifle.GelLoad'
+      SelectSound=Sound'UnrealI.BioRifle.GelSelect'
+      Misc1Sound=Sound'UnrealI.BioRifle.GelLoad'
+      Misc2Sound=Sound'UnrealI.BioRifle.GelDrip'
+      DeathMessage="%o drank a glass of %k's dripping green load."
+      AutoSwitchPriority=8
+      InventoryGroup=8
+      PickupMessage="You got the GES BioRifle"
+      ItemName="GES Bio Rifle"
+      PlayerViewOffset=(X=2.000000,Y=-0.700000,Z=-1.150000)
+      PlayerViewMesh=LodMesh'UnrealI.BRifle'
+      PickupViewMesh=LodMesh'UnrealI.BRiflePick'
+      ThirdPersonMesh=LodMesh'UnrealI.BRifle3'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Mesh=LodMesh'UnrealI.BRiflePick'
+      bNoSmooth=False
+      CollisionRadius=28.000000
+      CollisionHeight=15.000000
 }

@@ -16,7 +16,8 @@ function PreBeginPlay()
 
 defaultproperties
 {
-     Extent=700.000000
-     Texture=Texture'Engine.S_Flag'
-     SoundVolume=128
+      Extent=700.000000
+      lookDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      Texture=Texture'Engine.S_Flag'
+      SoundVolume=128
 }

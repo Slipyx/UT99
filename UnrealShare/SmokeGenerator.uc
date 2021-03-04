@@ -60,15 +60,17 @@ function UnTrigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
-     SmokeDelay=0.150000
-     SizeVariance=1.000000
-     BasePuffSize=1.750000
-     TotalNumPuffs=200
-     RisingVelocity=75.000000
-     GenerationType=Class'UnrealShare.SpriteSmokePuff'
-     bHidden=True
-     bNetTemporary=False
-     DrawType=DT_Sprite
-     Style=STY_Masked
-     Texture=Texture'UnrealShare.Effects.SmokePuff43'
+      SmokeDelay=0.150000
+      SizeVariance=1.000000
+      BasePuffSize=1.750000
+      TotalNumPuffs=200
+      RisingVelocity=75.000000
+      GenerationType=Class'UnrealShare.SpriteSmokePuff'
+      bRepeating=False
+      i=0
+      bHidden=True
+      bNetTemporary=False
+      DrawType=DT_Sprite
+      Style=STY_Masked
+      Texture=Texture'UnrealShare.Effects.SmokePuff43'
 }

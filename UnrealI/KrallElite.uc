@@ -29,16 +29,16 @@ function PlayMeleeAttack()
 
 defaultproperties
 {
-     StrikeDamage=28
-     ThrowDamage=38
-     PoundDamage=28
-     MinDuckTime=5.000000
-     bLeadTarget=True
-     RangedProjectile=Class'UnrealI.EliteKrallBolt'
-     ProjectileSpeed=880.000000
-     bCanStrafe=True
-     Health=200
-     UnderWaterTime=-1.000000
-     Skill=1.000000
-     Skin=Texture'UnrealI.Skins.ekrall'
+      StrikeDamage=28
+      ThrowDamage=38
+      PoundDamage=28
+      MinDuckTime=5.000000
+      bLeadTarget=True
+      RangedProjectile=Class'UnrealI.EliteKrallBolt'
+      ProjectileSpeed=880.000000
+      bCanStrafe=True
+      Health=200
+      UnderWaterTime=-1.000000
+      Skill=1.000000
+      Skin=Texture'UnrealI.Skins.ekrall'
 }

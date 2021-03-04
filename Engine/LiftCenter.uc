@@ -112,9 +112,16 @@ function Actor SpecialHandling(Pawn Other)
 
 defaultproperties
 {
-     MaxDist2D=400.000000
-     ExtraCost=400
-     bStatic=False
-     bNoDelete=True
-     RemoteRole=ROLE_None
+      LiftTag="None"
+      MyLift=None
+      LiftTrigger="None"
+      RecommendedTrigger=None
+      LastTriggerTime=0.000000
+      MaxZDiffAdd=0.000000
+      MaxDist2D=400.000000
+      LiftOffset=(X=0.000000,Y=0.000000,Z=0.000000)
+      ExtraCost=400
+      bStatic=False
+      bNoDelete=True
+      RemoteRole=ROLE_None
 }

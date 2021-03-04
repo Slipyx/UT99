@@ -193,4 +193,13 @@ event Tick(float DeltaTime)
 
 defaultproperties
 {
+      ServerIPAddr=(Addr=0,Port=0)
+      ServerAddress=""
+      ServerURI=""
+      ServerPort=0
+      CurrentState=0
+      ErrorCode=0
+      bClosed=False
+      ProxyServerAddress=""
+      ProxyServerPort=0
 }

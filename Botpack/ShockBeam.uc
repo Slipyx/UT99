@@ -51,18 +51,20 @@ simulated function Timer()
 
 defaultproperties
 {
-     Physics=PHYS_Rotating
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.270000
-     Rotation=(Roll=20000)
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'Botpack.Effects.jenergy2'
-     Mesh=LodMesh'Botpack.Shockbm'
-     DrawScale=0.440000
-     bUnlit=True
-     bParticles=True
-     bFixedRotationDir=True
-     RotationRate=(Roll=1000000)
-     DesiredRotation=(Roll=20000)
+      MoveAmount=(X=0.000000,Y=0.000000,Z=0.000000)
+      NumPuffs=0
+      Physics=PHYS_Rotating
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.270000
+      Rotation=(Roll=20000)
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'Botpack.Effects.jenergy2'
+      Mesh=LodMesh'Botpack.Shockbm'
+      DrawScale=0.440000
+      bUnlit=True
+      bParticles=True
+      bFixedRotationDir=True
+      RotationRate=(Roll=1000000)
+      DesiredRotation=(Roll=20000)
 }

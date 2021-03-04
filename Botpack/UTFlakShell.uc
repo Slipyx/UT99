@@ -52,15 +52,15 @@ function Explode(vector HitLocation, vector HitNormal)
 
 defaultproperties
 {
-     speed=1200.000000
-     Damage=70.000000
-     MomentumTransfer=75000
-     ExplosionDecal=Class'Botpack.BlastMark'
-     bNetTemporary=False
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=6.000000
-     Mesh=LodMesh'UnrealI.FlakSh'
-     AmbientGlow=67
-     bUnlit=True
+      speed=1200.000000
+      Damage=70.000000
+      MomentumTransfer=75000
+      ExplosionDecal=Class'Botpack.BlastMark'
+      bNetTemporary=False
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=6.000000
+      Mesh=LodMesh'UnrealI.FlakSh'
+      AmbientGlow=67
+      bUnlit=True
 }

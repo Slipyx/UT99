@@ -52,20 +52,24 @@ Begin:
 
 defaultproperties
 {
-     M_NoRoom="No room to activate force field."
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You picked up the Force Field"
-     RespawnTime=20.000000
-     PickupViewMesh=LodMesh'UnrealI.ForceFieldPick'
-     Charge=130
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealI.Pickups.FieldSnd'
-     DeActivateSound=Sound'UnrealI.Pickups.fFieldh2'
-     Icon=Texture'UnrealI.Icons.I_ForceField'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealI.ForceFieldPick'
-     AmbientGlow=78
-     CollisionRadius=8.000000
-     CollisionHeight=22.000000
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      R=None
+      M_NoRoom="No room to activate force field."
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You picked up the Force Field"
+      RespawnTime=20.000000
+      PickupViewMesh=LodMesh'UnrealI.ForceFieldPick'
+      Charge=130
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealI.Pickups.FieldSnd'
+      DeActivateSound=Sound'UnrealI.Pickups.fFieldh2'
+      Icon=Texture'UnrealI.Icons.I_ForceField'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealI.ForceFieldPick'
+      AmbientGlow=78
+      CollisionRadius=8.000000
+      CollisionHeight=22.000000
 }

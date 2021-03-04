@@ -25,11 +25,11 @@ class Tracer extends Projectile;
 
 defaultproperties
 {
-     speed=10000.000000
-     MaxSpeed=10000.000000
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.000000
-     Mesh=LodMesh'UnrealI.TracerM'
-     AmbientGlow=130
-     bUnlit=True
+      speed=10000.000000
+      MaxSpeed=10000.000000
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.000000
+      Mesh=LodMesh'UnrealI.TracerM'
+      AmbientGlow=130
+      bUnlit=True
 }

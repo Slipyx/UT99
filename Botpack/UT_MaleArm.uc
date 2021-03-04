@@ -14,7 +14,7 @@ class UT_MaleArm extends UTPlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.malearmm'
-     CollisionRadius=25.000000
-     CollisionHeight=6.000000
+      Mesh=LodMesh'Botpack.malearmm'
+      CollisionRadius=25.000000
+      CollisionHeight=6.000000
 }

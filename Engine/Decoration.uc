@@ -6,7 +6,7 @@ class Decoration extends Actor
 	native;
 
 // If set, the pyrotechnic or explosion when item is damaged.
-var() class<actor> EffectWhenDestroyed;
+var() class<Actor> EffectWhenDestroyed;
 var() bool bPushable;
 var() bool bOnlyTriggerable;
 var bool bSplash;
@@ -19,6 +19,26 @@ var() class<inventory> content2;
 var() class<inventory> content3;
 var() sound EndPushSound;
 var bool bPushSoundPlaying;
+
+
+
+event PostBeginPlay()
+{
+	//Make this decoration appear in the skybox on net clients
+	if ( (SkyZoneInfo(Region.Zone) != None) && !bHidden && (RemoteRole != ROLE_None) )
+	{
+		bAlwaysRelevant = true;
+		NetPriority *= 0.5;
+	}
+	//Reduce amount of network ticks on decorations that don't need them
+	if ( bStatic && (RemoteRole != ROLE_None) )
+	{
+		if ( NetUpdateFrequency == 100 )
+			NetUpdateFrequency = 5;
+		NetPriority *= 0.5;
+	}
+}
+
 
 simulated function FollowHolder(Actor Other);
 
@@ -41,7 +61,7 @@ singular function ZoneChange( ZoneInfo NewZone )
 	local float splashsize;
 	local actor splash;
 
-	if( NewZone.bWaterZone )
+	if ( NewZone.bWaterZone )
 	{
 		if( bSplash && !Region.Zone.bWaterZone && Mass<=Buoyancy 
 			&& ((Abs(Velocity.Z) < 100) || (Mass == 0)) && (FRand() < 0.05) && !PlayerCanSeeMe() )
@@ -121,8 +141,8 @@ singular function BaseChange()
 
 function Destroyed()
 {
-	local actor dropped, A;
-	local class<actor> tempClass;
+	local Actor dropped, A;
+	local class<Actor> tempClass;
 
 	if( (Pawn(Base) != None) && (Pawn(Base).CarriedDecoration == self) )
 		Pawn(Base).DropDecoration();
@@ -131,12 +151,16 @@ function Destroyed()
 		tempClass = Contents;
 		if (Content2!=None && FRand()<0.3) tempClass = Content2;
 		if (Content3!=None && FRand()<0.3) tempClass = Content3;
-		dropped = Spawn(tempClass);
-		dropped.RemoteRole = ROLE_DumbProxy;
-		dropped.SetPhysics(PHYS_Falling);
-		dropped.bCollideWorld = true;
-		if ( inventory(dropped) != None )
-			inventory(dropped).GotoState('Pickup', 'Dropped');
+		if ( tempClass != None )
+			dropped = Spawn(tempClass);
+		if ( dropped != None )
+		{
+			dropped.RemoteRole = ROLE_DumbProxy;
+			dropped.SetPhysics(PHYS_Falling);
+			dropped.bCollideWorld = true;
+			if ( Inventory(dropped) != None )
+				Inventory(dropped).GotoState('Pickup', 'Dropped');
+		}
 	}	
 
 	if( Event != '' )
@@ -144,12 +168,12 @@ function Destroyed()
 			A.Trigger( Self, None );
 
 	if ( bPushSoundPlaying )
-		PlaySound(EndPushSound, SLOT_Misc,0.0);
+		PlaySound( EndPushSound, SLOT_Misc,0.0);
 			
 	Super.Destroyed();
 }
 
-simulated function skinnedFrag(class<fragment> FragType, texture FragSkin, vector Momentum, float DSize, int NumFrags) 
+simulated function skinnedFrag( class<fragment> FragType, texture FragSkin, vector Momentum, float DSize, int NumFrags) 
 {
 	local int i;
 	local actor A, Toucher;
@@ -157,26 +181,27 @@ simulated function skinnedFrag(class<fragment> FragType, texture FragSkin, vecto
 
 	if ( bOnlyTriggerable )
 		return; 
-	if (Event!='')
-		foreach AllActors( class 'Actor', A, Event )
+
+	if ( Event != '' )
+		ForEach AllActors( class 'Actor', A, Event )
 			A.Trigger( Toucher, pawn(Toucher) );
-	if ( Region.Zone.bDestructive )
-	{
-		Destroy();
-		return;
-	}
-	for (i=0 ; i<NumFrags ; i++) 
-	{
-		s = Spawn( FragType, Owner);
-		s.CalcVelocity(Momentum/100,0);
-		s.Skin = FragSkin;
-		s.DrawScale = DSize*0.5+0.7*DSize*FRand();
-	}
+
+	if ( !Region.Zone.bDestructive && (FragType != None) )
+		for ( i=0 ; i<NumFrags ; i++ ) 
+		{
+			s = Spawn( FragType, Owner);
+			if ( s != None )
+			{
+				s.CalcVelocity(Momentum/100,0);
+				s.Skin = FragSkin;
+				s.DrawScale = DSize*0.5+0.7*DSize*FRand();
+			}
+		}
 
 	Destroy();
 }
 
-simulated function Frag(class<fragment> FragType, vector Momentum, float DSize, int NumFrags) 
+simulated function Frag( class<fragment> FragType, vector Momentum, float DSize, int NumFrags) 
 {
 	local int i;
 	local actor A, Toucher;
@@ -184,28 +209,28 @@ simulated function Frag(class<fragment> FragType, vector Momentum, float DSize, 
 
 	if ( bOnlyTriggerable )
 		return; 
-	if (Event!='')
-		foreach AllActors( class 'Actor', A, Event )
-			A.Trigger( Toucher, pawn(Toucher) );
-	if ( Region.Zone.bDestructive )
-	{
-		Destroy();
-		return;
-	}
-	for (i=0 ; i<NumFrags ; i++) 
-	{
-		s = Spawn( FragType, Owner);
-		s.CalcVelocity(Momentum,0);
-		s.DrawScale = DSize*0.5+0.7*DSize*FRand();
-	}
 
+	if ( Event != '' )
+		ForEach AllActors( class 'Actor', A, Event )
+			A.Trigger( Toucher, pawn(Toucher) );
+
+	if ( !Region.Zone.bDestructive && (FragType != None) )
+		for ( i=0 ; i<NumFrags ; i++ ) 
+		{
+			s = Spawn( FragType, Owner);
+			if ( s != None )
+			{
+				s.CalcVelocity(Momentum,0);
+				s.DrawScale = DSize*0.5+0.7*DSize*FRand();
+			}
+		}
 	Destroy();
 }
 
 function Timer()
 {
-	PlaySound(EndPushSound, SLOT_Misc,0.0);
-	bPushSoundPlaying=False;
+	PlaySound( EndPushSound, SLOT_Misc, 0.0);
+	bPushSoundPlaying = False;
 }
 
 function Bump( actor Other )
@@ -232,8 +257,21 @@ function Bump( actor Other )
 
 defaultproperties
 {
-     bStatic=True
-     bStasis=True
-     Texture=None
-     Mass=0.000000
+      EffectWhenDestroyed=None
+      bPushable=False
+      bOnlyTriggerable=False
+      bSplash=False
+      bBobbing=False
+      bWasCarried=False
+      PushSound=None
+      numLandings=0
+      contents=None
+      content2=None
+      content3=None
+      EndPushSound=None
+      bPushSoundPlaying=False
+      bStatic=True
+      bStasis=True
+      Texture=None
+      Mass=0.000000
 }

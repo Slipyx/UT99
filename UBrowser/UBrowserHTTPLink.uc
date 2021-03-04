@@ -169,7 +169,14 @@ Begin:
 
 defaultproperties
 {
-     ResolveFailedError="The master server could not be resolved: "
-     TimeOutError="Timeout talking to the master server"
-     CouldNotConnectError="Connecting to the master server timed out: "
+      OwnerFactory=None
+      MasterServerIpAddr=(Addr=0,Port=0)
+      bHasOpened=False
+      MasterServerAddress=""
+      MasterServerURI=""
+      MasterServerTCPPort=0
+      MasterServerTimeout=0
+      ResolveFailedError="The master server could not be resolved: "
+      TimeOutError="Timeout talking to the master server"
+      CouldNotConnectError="Connecting to the master server timed out: "
 }

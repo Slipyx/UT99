@@ -14,5 +14,5 @@ class Arm1 extends PlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.Arm1M'
+      Mesh=LodMesh'UnrealShare.Arm1M'
 }

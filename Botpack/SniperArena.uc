@@ -7,9 +7,9 @@ class SniperArena expands Arena;
 
 defaultproperties
 {
-     WeaponName=SniperRifle
-     AmmoName=BulletBox
-     WeaponString="Botpack.SniperRifle"
-     AmmoString="Botpack.BulletBox"
-     DefaultWeapon=Class'Botpack.SniperRifle'
+      WeaponName="SniperRifle"
+      AmmoName="BulletBox"
+      WeaponString="Botpack.SniperRifle"
+      AmmoString="Botpack.BulletBox"
+      DefaultWeapon=Class'Botpack.SniperRifle'
 }

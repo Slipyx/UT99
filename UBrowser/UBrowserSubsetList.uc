@@ -5,4 +5,6 @@ var bool bOldElement;
 
 defaultproperties
 {
+      SubsetFactory=None
+      bOldElement=False
 }

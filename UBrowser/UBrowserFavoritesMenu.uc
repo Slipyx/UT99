@@ -37,7 +37,9 @@ function ShowWindow()
 
 defaultproperties
 {
-     EditFavoriteName="&Edit Favorite"
-     NewFavoriteName="&New Favorite"
-     FavoritesName="Remove from &Favorites"
+      EditFavorite=None
+      NewFavorite=None
+      EditFavoriteName="&Edit Favorite"
+      NewFavoriteName="&New Favorite"
+      FavoritesName="Remove from &Favorites"
 }

@@ -25,5 +25,6 @@ function Resized()
 
 defaultproperties
 {
-     ListAreaClass="UMenu.UMenuWeaponPriorityListArea"
+      ListAreaClass="UMenu.UMenuWeaponPriorityListArea"
+      HSplitter=None
 }

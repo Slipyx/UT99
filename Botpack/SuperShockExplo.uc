@@ -9,5 +9,5 @@ simulated Function Timer()
 
 defaultproperties
 {
-     DrawScale=1.000000
+      DrawScale=1.000000
 }

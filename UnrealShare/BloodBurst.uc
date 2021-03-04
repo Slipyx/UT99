@@ -12,7 +12,7 @@ simulated function PostBeginPlay()
 
 defaultproperties
 {
-     bOwnerNoSee=True
-     DrawScale=0.400000
-     AmbientGlow=80
+      bOwnerNoSee=True
+      DrawScale=0.400000
+      AmbientGlow=80
 }

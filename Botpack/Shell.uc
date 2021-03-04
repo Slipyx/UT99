@@ -13,10 +13,10 @@ class Shell extends UT_Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.shellM'
-     DrawScale=0.300000
-     CollisionRadius=10.000000
-     CollisionHeight=36.000000
-     bCollideActors=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.shellM'
+      DrawScale=0.300000
+      CollisionRadius=10.000000
+      CollisionHeight=36.000000
+      bCollideActors=True
 }

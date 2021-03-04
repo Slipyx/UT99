@@ -228,6 +228,12 @@ function PlayMeleeAttack()
 {
 	local float dist, decision;
 
+	if (Target == None)
+	{
+	    PlayWaiting();
+		return;
+	}
+
 	decision = FRand();
 	dist = VSize(Target.Location - Location);
 	if (dist > CollisionRadius + Target.CollisionRadius + 45)
@@ -304,37 +310,37 @@ KeepWaiting:
 
 defaultproperties
 {
-     BiteDamage=10
-     LungeDamage=20
-     Bite=Sound'UnrealI.Pupae.bite1pp'
-     Stab=Sound'UnrealI.Pupae.hiss1pp'
-     lunge=Sound'UnrealI.Pupae.hiss2pp'
-     Chew=Sound'UnrealI.Pupae.munch1p'
-     Tear=Sound'UnrealI.Pupae.tear1pp'
-     CarcassType=Class'UnrealI.PupaeCarcass'
-     Aggressiveness=10.000000
-     Acquire=Sound'UnrealI.Pupae.hiss2pp'
-     Fear=Sound'UnrealI.Pupae.hiss1pp'
-     Roam=Sound'UnrealI.Pupae.roam1pp'
-     Threaten=Sound'UnrealI.Pupae.hiss3pp'
-     bCanStrafe=True
-     MeleeRange=280.000000
-     GroundSpeed=260.000000
-     WaterSpeed=100.000000
-     JumpZ=340.000000
-     Visibility=100
-     SightRadius=3000.000000
-     PeripheralVision=-0.400000
-     Health=65
-     Intelligence=BRAINS_NONE
-     HitSound1=Sound'UnrealI.Pupae.injur1pp'
-     HitSound2=Sound'UnrealI.Pupae.injur2pp'
-     Die=Sound'UnrealI.Pupae.death1pp'
-     CombatStyle=1.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Pupae1'
-     CollisionRadius=28.000000
-     CollisionHeight=9.000000
-     Mass=80.000000
-     RotationRate=(Pitch=3072,Yaw=65000,Roll=0)
+      BiteDamage=10
+      LungeDamage=20
+      Bite=Sound'UnrealI.Pupae.bite1pp'
+      Stab=Sound'UnrealI.Pupae.hiss1pp'
+      lunge=Sound'UnrealI.Pupae.hiss2pp'
+      Chew=Sound'UnrealI.Pupae.munch1p'
+      Tear=Sound'UnrealI.Pupae.tear1pp'
+      CarcassType=Class'UnrealI.PupaeCarcass'
+      Aggressiveness=10.000000
+      Acquire=Sound'UnrealI.Pupae.hiss2pp'
+      Fear=Sound'UnrealI.Pupae.hiss1pp'
+      Roam=Sound'UnrealI.Pupae.roam1pp'
+      Threaten=Sound'UnrealI.Pupae.hiss3pp'
+      bCanStrafe=True
+      MeleeRange=280.000000
+      GroundSpeed=260.000000
+      WaterSpeed=100.000000
+      JumpZ=340.000000
+      Visibility=100
+      SightRadius=3000.000000
+      PeripheralVision=-0.400000
+      Health=65
+      Intelligence=BRAINS_NONE
+      HitSound1=Sound'UnrealI.Pupae.injur1pp'
+      HitSound2=Sound'UnrealI.Pupae.injur2pp'
+      Die=Sound'UnrealI.Pupae.death1pp'
+      CombatStyle=1.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Pupae1'
+      CollisionRadius=28.000000
+      CollisionHeight=9.000000
+      Mass=80.000000
+      RotationRate=(Pitch=3072,Yaw=65000,Roll=0)
 }

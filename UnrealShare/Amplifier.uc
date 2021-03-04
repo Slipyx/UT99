@@ -70,6 +70,18 @@ function UsedUp()
 
 state Activated
 {
+	function BeginState()
+	{
+		local inventory inv;
+		bActive = true;
+		for ( Inv=Pawn(Owner).Inventory; Inv!=None; Inv=Inv.Inventory )
+		{
+			if ( inv.isa('DispersionPistol'))
+				DispersionPistol(Inv).Amp = self;
+			if ( inv.isa('ASMD'))
+				ASMD(Inv).Amp = self;
+		}
+	}
 
 	function float UseCharge(float Amount)
 	{
@@ -127,22 +139,22 @@ Begin:
 
 defaultproperties
 {
-     AmpMultiplier=4.000000
-     AmpSound=Sound'UnrealShare.Pickups.AmpAct'
-     bCanActivate=True
-     ExpireMessage="Amplifier is out of power."
-     bAutoActivate=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You got the Energy Amplifier"
-     RespawnTime=90.000000
-     PickupViewMesh=LodMesh'UnrealShare.AmplifierM'
-     Charge=1000
-     MaxDesireability=1.200000
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealShare.Pickups.HEALTH1'
-     Icon=Texture'UnrealShare.Icons.I_Amp'
-     Mesh=LodMesh'UnrealShare.AmplifierM'
-     CollisionRadius=20.000000
-     CollisionHeight=13.500000
+      AmpMultiplier=4.000000
+      AmpSound=Sound'UnrealShare.Pickups.AmpAct'
+      bCanActivate=True
+      ExpireMessage="Amplifier is out of power."
+      bAutoActivate=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You got the Energy Amplifier"
+      RespawnTime=90.000000
+      PickupViewMesh=LodMesh'UnrealShare.AmplifierM'
+      Charge=1000
+      MaxDesireability=1.200000
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealShare.Pickups.HEALTH1'
+      Icon=Texture'UnrealShare.Icons.I_Amp'
+      Mesh=LodMesh'UnrealShare.AmplifierM'
+      CollisionRadius=20.000000
+      CollisionHeight=13.500000
 }

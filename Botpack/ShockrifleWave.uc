@@ -34,16 +34,16 @@ simulated function Tick( float DeltaTime )
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=1.300000
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Mesh=LodMesh'Botpack.ShockRWM'
-     AmbientGlow=255
-     bUnlit=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=195
-     LightRadius=6
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=1.300000
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Mesh=LodMesh'Botpack.ShockRWM'
+      AmbientGlow=255
+      bUnlit=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=195
+      LightRadius=6
 }

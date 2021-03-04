@@ -158,5 +158,11 @@ state Activated
 
 defaultproperties
 {
-     bRotatingPickup=False
+      Inv=None
+      NumCopies=0
+      bCanHaveMultipleCopies=False
+      bCanActivate=False
+      ExpireMessage=""
+      bAutoActivate=False
+      bRotatingPickup=False
 }

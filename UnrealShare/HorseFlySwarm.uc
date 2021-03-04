@@ -92,13 +92,14 @@ Wander:
 
 defaultproperties
 {
-     swarmsize=20
-     bOnlyIfEnemy=True
-     swarmradius=120.000000
-     GroundSpeed=200.000000
-     AirSpeed=200.000000
-     JumpZ=-1.000000
-     SightRadius=2000.000000
-     PeripheralVision=-5.000000
-     bHidden=True
+      swarmsize=20
+      totalflies=0
+      bOnlyIfEnemy=True
+      swarmradius=120.000000
+      GroundSpeed=200.000000
+      AirSpeed=200.000000
+      JumpZ=-1.000000
+      SightRadius=2000.000000
+      PeripheralVision=-5.000000
+      bHidden=True
 }

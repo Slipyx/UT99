@@ -4,5 +4,5 @@ class RipperMark expands Scorch;
 
 defaultproperties
 {
-     Texture=Texture'Botpack.ripperblast'
+      Texture=Texture'Botpack.ripperblast'
 }

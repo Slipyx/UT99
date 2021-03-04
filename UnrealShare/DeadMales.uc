@@ -15,6 +15,6 @@ function SpawnHead()
 
 defaultproperties
 {
-     MasterReplacement=Class'UnrealShare.MaleMasterChunk'
-     Physics=PHYS_None
+      MasterReplacement=Class'UnrealShare.MaleMasterChunk'
+      Physics=PHYS_None
 }

@@ -10,7 +10,7 @@ function ForceMeshToExist()
 
 defaultproperties
 {
-     CarcassType=Class'UnrealI.FemaleTwoCarcass'
-     Skin=Texture'UnrealShare.Skins.Sonya'
-     Mesh=LodMesh'UnrealI.Female2'
+      CarcassType=Class'UnrealI.FemaleTwoCarcass'
+      Skin=Texture'UnrealShare.Skins.Sonya'
+      Mesh=LodMesh'UnrealI.Female2'
 }

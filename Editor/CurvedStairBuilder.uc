@@ -105,12 +105,14 @@ function bool Build()
 
 defaultproperties
 {
-     InnerRadius=240
-     StepHeight=16
-     StepWidth=256
-     AngleOfCurve=90
-     NumSteps=4
-     GroupName=CStair
-     BitmapFilename="BBCurvedStair"
-     ToolTip="Curved Staircase"
+      InnerRadius=240
+      StepHeight=16
+      StepWidth=256
+      AngleOfCurve=90
+      NumSteps=4
+      AddToFirstStep=0
+      GroupName="CStair"
+      CounterClockwise=False
+      BitmapFilename="BBCurvedStair"
+      ToolTip="Curved Staircase"
 }

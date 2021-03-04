@@ -77,12 +77,16 @@ function PostBeginPlay()
 {
 	VoicePitch = 0.9 + 0.2 * FRand();
 	if ( BabyCow(self) != None )
-		VoicePitch *= 1.4;	
+	{
+		VoicePitch *= 1.4;
+		bHasBaby=false;
+	}
 	if (bHasBaby) //add baby
 	{
 		Destination = Location;
-		baby = Spawn(class 'BabyCow',,, Location + vector(Rotation) * 1.5 * CollisionRadius);
-		baby.mom = self;
+		baby = Spawn(class 'BabyCow',,, Location + vector(Rotation) * 2.5 * CollisionRadius);
+		if (baby!=none)
+			baby.mom = self;
 	}
 	Super.PostBeginPlay();
 }
@@ -279,7 +283,7 @@ state Grazing
 						Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-		if ( health <= 0 )
+		if ( health <= 0 || bDeleteMe )
 			return;
 		if ( NextState == 'TakeHit' )
 			{
@@ -289,6 +293,29 @@ state Grazing
 			}
 		else
 			EnemyAcquired();
+	}
+
+	function HitWall(vector HitNormal, actor Wall)
+	{
+		if (Physics == PHYS_Falling)
+			return;
+		if ( Wall.IsA('Mover') && Mover(Wall).HandleDoor(self) )
+		{
+			if ( SpecialPause > 0 )
+				Acceleration = vect(0,0,0);
+			GotoState('Grazing', 'Graze');
+			return;
+		}
+		Focus = Destination;
+		if ( PickWallAdjust() && (FRand() < 0.7) )
+		{
+			if ( Physics == PHYS_Falling )
+				SetFall();
+			else
+				GotoState('Grazing', 'AdjustFromWall');
+		}
+		else
+			MoveTimer = -1.0;
 	}
 
 	function Bump(actor Other)
@@ -311,7 +338,8 @@ state Grazing
 	{
 		if ( (Enemy != None) && (AttitudeTo(Enemy) < ATTITUDE_Ignore) )
 			return;
-		Enemy = Other.Enemy;
+		if ( Other.Enemy != None )
+		    Enemy = Other.Enemy;
 		if (Enemy.bIsPlayer)
 			AttitudeToPlayer = ATTITUDE_Hate;
 		else 
@@ -494,7 +522,7 @@ state Grazing
 
 	function EndState()
 	{
-		if ( Enemy.bIsPlayer )
+		if ( Enemy != None && Enemy.bIsPlayer )
 			MakeNoise(1.0);
 		JumpZ = Default.JumpZ;
 		bAvoidLedges = false;
@@ -504,10 +532,11 @@ state Grazing
 Begin:
 	//log(class$" Grazing");
 
-Wander: 
+Wander:
+	Acceleration = vect(0,0,0);
+	WaitForLanding();
 	if (!bForage)
 		Goto('Graze');
-	WaitForLanding();
 	PickDestination();
 	TweenToWalking(0.2);
 	FinishAnim();
@@ -542,43 +571,71 @@ Turn:
 	SetTurn();
 	TurnTo(Destination);
 	Goto('Graze');
+
+Pausing:
+	Acceleration = vect(0,0,0);
+	if ( NearWall(2 * CollisionRadius + 50) )
+	{
+		PlayTurning();
+		TurnTo(Focus);
+	}
+	Enable('AnimEnd');
+	NextAnim = '';
+	TweenToPatrolStop(0.2);
+	Sleep(1.0);
+	Disable('AnimEnd');
+	FinishAnim();
+	Goto('Moving');
+
+AdjustFromWall:
+	if ( !IsAnimating() )
+		PlayWalking();
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
+	Goto('Moving');
 }
 
 defaultproperties
 {
-     bStayClose=True
-     WanderRadius=500.000000
-     shake=Sound'UnrealShare.Cow.shakeC'
-     Swish=Sound'UnrealShare.Cow.swishC'
-     footstep=Sound'UnrealShare.Cow.walkC'
-     CarcassType=Class'UnrealShare.CowCarcass'
-     Orders=Grazing
-     Aggressiveness=0.500000
-     bHasRangedAttack=True
-     bIsWuss=True
-     Acquire=Sound'UnrealShare.Cow.cMoo1c'
-     Roam=Sound'UnrealShare.Cow.cMoo2c'
-     Threaten=Sound'UnrealShare.Cow.cMoo2c'
-     GroundSpeed=180.000000
-     WaterSpeed=100.000000
-     JumpZ=-1.000000
-     MaxStepHeight=17.000000
-     SightRadius=1500.000000
-     PeripheralVision=-10.000000
-     HearingThreshold=0.700000
-     Health=60
-     UnderWaterTime=40.000000
-     AttitudeToPlayer=ATTITUDE_Ignore
-     Intelligence=BRAINS_REPTILE
-     HitSound1=Sound'UnrealShare.Cow.injurC1c'
-     HitSound2=Sound'UnrealShare.Cow.injurC2c'
-     Die=Sound'UnrealShare.Cow.DeathC1c'
-     CombatStyle=-1.000000
-     AmbientSound=Sound'UnrealShare.Cow.ambCow'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.NaliCow'
-     CollisionRadius=48.000000
-     CollisionHeight=32.000000
-     Mass=120.000000
-     RotationRate=(Pitch=2048,Yaw=30000,Roll=0)
+      bForage=False
+      bHasBaby=False
+      bStayClose=True
+      WanderRadius=500.000000
+      StartLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      baby=None
+      ScaryGuy=None
+      shake=Sound'UnrealShare.Cow.shakeC'
+      Swish=Sound'UnrealShare.Cow.swishC'
+      footstep=Sound'UnrealShare.Cow.walkC'
+      VoicePitch=0.000000
+      CarcassType=Class'UnrealShare.CowCarcass'
+      Orders="Grazing"
+      Aggressiveness=0.500000
+      bHasRangedAttack=True
+      bIsWuss=True
+      Acquire=Sound'UnrealShare.Cow.cMoo1c'
+      Roam=Sound'UnrealShare.Cow.cMoo2c'
+      Threaten=Sound'UnrealShare.Cow.cMoo2c'
+      GroundSpeed=180.000000
+      WaterSpeed=100.000000
+      JumpZ=-1.000000
+      MaxStepHeight=17.000000
+      SightRadius=1500.000000
+      PeripheralVision=-10.000000
+      HearingThreshold=0.700000
+      Health=60
+      UnderWaterTime=40.000000
+      AttitudeToPlayer=ATTITUDE_Ignore
+      Intelligence=BRAINS_REPTILE
+      HitSound1=Sound'UnrealShare.Cow.injurC1c'
+      HitSound2=Sound'UnrealShare.Cow.injurC2c'
+      Die=Sound'UnrealShare.Cow.DeathC1c'
+      CombatStyle=-1.000000
+      AmbientSound=Sound'UnrealShare.Cow.ambCow'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.NaliCow'
+      CollisionRadius=48.000000
+      CollisionHeight=32.000000
+      Mass=120.000000
+      RotationRate=(Pitch=2048,Yaw=30000,Roll=0)
 }

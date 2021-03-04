@@ -43,10 +43,10 @@ event float BotDesireability(Pawn Bot)
 	return ( MaxDesireability * FMin(1, 0.15 * MaxAmmo/AlreadyHas.AmmoAmount) );
 }
 
-function bool HandlePickupQuery( inventory Item )
+function bool HandlePickupQuery( Inventory Item )
 {
-	if ( (class == item.class) || 
-		(ClassIsChildOf(item.class, class'Ammo') && (class == Ammo(item).parentammo)) ) 
+	if ( (class == Item.class) || 
+		(ClassIsChildOf(Item.class, class'Ammo') && (class == Ammo(Item).parentammo)) ) 
 	{
 		if (AmmoAmount==MaxAmmo) return true;
 		if (Level.Game.LocalLog != None)
@@ -56,10 +56,10 @@ function bool HandlePickupQuery( inventory Item )
 		if (Item.PickupMessageClass == None)
 			Pawn(Owner).ClientMessage( Item.PickupMessage, 'Pickup' );
 		else
-			Pawn(Owner).ReceiveLocalizedMessage( Item.PickupMessageClass, 0, None, None, item.Class );
-		item.PlaySound( item.PickupSound );
-		AddAmmo(Ammo(item).AmmoAmount);
-		item.SetRespawn();
+			Pawn(Owner).ReceiveLocalizedMessage( Item.PickupMessageClass, 0, None, None, Item.Class );
+		Item.PlaySound( Item.PickupSound,, 2);
+		AddAmmo(Ammo(Item).AmmoAmount);
+		Item.SetRespawn();
 		return true;				
 	}
 	if ( Inventory == None )
@@ -116,9 +116,23 @@ function inventory SpawnCopy( Pawn Other )
 
 defaultproperties
 {
-     PickupMessage="You picked up some ammo."
-     RespawnTime=30.000000
-     MaxDesireability=0.200000
-     Texture=Texture'Engine.S_Ammo'
-     bCollideActors=False
+      AmmoAmount=0
+      MaxAmmo=0
+      ParentAmmo=None
+      UsedInWeaponSlot(0)=0
+      UsedInWeaponSlot(1)=0
+      UsedInWeaponSlot(2)=0
+      UsedInWeaponSlot(3)=0
+      UsedInWeaponSlot(4)=0
+      UsedInWeaponSlot(5)=0
+      UsedInWeaponSlot(6)=0
+      UsedInWeaponSlot(7)=0
+      UsedInWeaponSlot(8)=0
+      UsedInWeaponSlot(9)=0
+      PAmmo=None
+      PickupMessage="You picked up some ammo."
+      RespawnTime=30.000000
+      MaxDesireability=0.200000
+      Texture=Texture'Engine.S_Ammo'
+      bCollideActors=False
 }

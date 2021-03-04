@@ -121,11 +121,11 @@ function CheckOpenCondition()
 
 defaultproperties
 {
-     GameType="Botpack.DeathMatchPlus"
-     TrophyMap="EOL_DeathMatch.unr"
-     LadderName="Deathmatch"
-     Ladder=Class'Botpack.LadderDM'
-     DemoLadder=Class'Botpack.LadderDMDemo'
-     GOTYLadder=Class'Botpack.LadderDMGOTY'
-     LadderTrophy=Texture'UTMenu.Skins.TrophyDM'
+      GameType="Botpack.DeathMatchPlus"
+      TrophyMap="EOL_DeathMatch.unr"
+      LadderName="Deathmatch"
+      Ladder=Class'Botpack.LadderDM'
+      DemoLadder=Class'Botpack.LadderDMDemo'
+      GOTYLadder=Class'Botpack.LadderDMGOTY'
+      LadderTrophy=Texture'UTMenu.Skins.TrophyDM'
 }

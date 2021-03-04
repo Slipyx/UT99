@@ -13,4 +13,8 @@ replication
 
 defaultproperties
 {
+      FlagList(0)=None
+      FlagList(1)=None
+      FlagList(2)=None
+      FlagList(3)=None
 }

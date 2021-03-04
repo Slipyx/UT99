@@ -71,6 +71,12 @@ var() byte	StrikeDamage;
 var() bool	bTeleportWhenHurt;
 var float	LastDuckTime;
 
+function PostBeginPlay()
+{
+	Super.PostBeginPlay();
+	bLeadTarget = bLeadTarget && (FRand() > 0.5);
+}
+
 function PreSetMovement()
 {
 	bCanJump = true;
@@ -81,6 +87,20 @@ function PreSetMovement()
 	bCanOpenDoors = true;
 	bCanDoSpecial = true;
 	bCanDuck = true;
+}
+
+function ZoneChange(ZoneInfo newZone)
+{
+	if ( newZone.bWaterZone )
+	{
+		setPhysics(PHYS_Swimming);
+		if (!bCanSwim)
+			MoveTimer = -1.0;
+		if ( Enemy == None)
+			Acceleration = Accelrate * vect(0,0,1);
+	}
+	else
+		Super.ZoneChange(newZone);
 }
 
 function Died(pawn Killer, name damageType, vector HitLocation)
@@ -105,7 +125,9 @@ function TryToDuck(vector duckDir, bool bReversed)
 	//log("duck");
 	if ( Level.TimeSeconds - LastDuckTime < 0.6 - 0.1 * skill )
 		return;	
-				
+
+	if ( Region.Zone.bWaterZone )
+	    return;
 	duckLeft = !bReversed;
 
 	Extent.X = CollisionRadius;
@@ -173,18 +195,26 @@ function Step()
 
 function Flap()
 {
+	if (Region.Zone.bWaterZone )
+		return;
+
 	PlaySound(sound'fly1WL', SLOT_Interact);
 }
 
 function SetMovementPhysics()
 {
+	if ( Region.Zone.bWaterZone )
+	{
+		SetPhysics(PHYS_Swimming);
+		return;
+	}
 	if (Enemy != None)
 	{
 		if (Physics == PHYS_None)
 			SetPhysics(PHYS_Walking);
-		else if ( Region.Zone.bWaterZone || (Physics != PHYS_Walking) )
+		else if (Physics != PHYS_Walking)
 			SetPhysics(PHYS_Flying);
-	} 
+	}
 	else if (Physics != PHYS_Falling)
 		SetPhysics(PHYS_Walking);
 }
@@ -197,6 +227,12 @@ singular function Falling()
 function PlayWaiting()
 {
 	local float decision;
+
+	if ( Region.Zone.bWaterZone )
+	{
+		PlayAnim('Fly', 0.35, 0.1);
+		return;
+	}
 
 	if (AnimSequence == 'Land')
 	{
@@ -213,7 +249,9 @@ function PlayWaiting()
 
 function PlayPatrolStop()
 {
-	if (Physics == PHYS_Flying)
+	if (Region.Zone.bWaterZone )
+		PlayWaiting();
+	else if (Physics == PHYS_Flying )
 		LoopAnim('Fly', 0.7);
 	else
 		PlayWaiting();
@@ -226,7 +264,9 @@ function PlayWaitingAmbush()
 
 function PlayChallenge()
 {
-	if (Physics == PHYS_Flying)
+	if (Region.Zone.bWaterZone )
+		TweenAnim('Fly', 0.4);
+	else if (Physics == PHYS_Flying)
 		PlayAnim('Fly', 0.7, 0.1);
 	else if ( FRand() < 0.5 )
 	{
@@ -239,7 +279,7 @@ function PlayChallenge()
 
 function TweenToFighter(float tweentime)
 {
-	if (Physics == PHYS_Flying)
+	if (Physics == PHYS_Flying || Region.Zone.bWaterZone )
 		TweenAnim('Fly', tweentime);
 	else
 		TweenAnim('Fighter', tweentime);
@@ -261,7 +301,7 @@ function TweenToRunning(float tweentime)
 
 function TweenToWalking(float tweentime)
 {
-	if (Physics == PHYS_Flying)
+	if (Physics == PHYS_Flying || Region.Zone.bWaterZone )
 		TweenAnim('Fly', tweentime);
 	else
 		TweenAnim('Walk', tweentime);
@@ -269,15 +309,21 @@ function TweenToWalking(float tweentime)
 
 function TweenToWaiting(float tweentime)
 {
+	if (Region.Zone.bWaterZone )
+	{
+		if ( (AnimSequence != 'Fly') || !bAnimLoop )
+			TweenAnim('Fly', tweentime);
+		return;
+	}
 	PlayAnim('Land', 0.2 + 0.8 * FRand());
 	SetPhysics(PHYS_Falling);
 }
 
 function TweenToPatrolStop(float tweentime)
 {
-	if (Physics == PHYS_Flying)
+	if (Physics == PHYS_Flying || Region.Zone.bWaterZone)
 	{
-		if (FRand() < 0.3)
+		if (FRand() < 0.3 && !Region.Zone.bWaterZone)
 		{
 			SetPhysics(PHYS_Falling);
 			PlayAnim('Land', 0.7);
@@ -292,7 +338,9 @@ function TweenToPatrolStop(float tweentime)
 
 function PlayRunning()
 {
-	if (Physics == PHYS_Walking)
+	if (Region.Zone.bWaterZone )
+		LoopAnim('Fly', -0.5/WaterSpeed,, 0.4);
+	else if (Physics == PHYS_Walking)
 		LoopAnim('Run', -1.0/GroundSpeed,, 0.4);
 	else
 		LoopAnim('Fly', -1.0/AirSpeed,, 0.4);
@@ -300,7 +348,9 @@ function PlayRunning()
 
 function PlayWalking()
 {
-	if (Physics == PHYS_Walking)
+	if (Region.Zone.bWaterZone )
+		LoopAnim('Fly', -0.5/WaterSpeed,, 0.4);
+	else if (Physics == PHYS_Walking)
 		LoopAnim('Walk', -1.4/GroundSpeed,, 0.4);
 	else
 		LoopAnim('Fly', -1.7/AirSpeed,, 0.4);
@@ -308,7 +358,9 @@ function PlayWalking()
 
 function PlayThreatening()
 {
-	if (Physics == PHYS_Walking)
+	if (Region.Zone.bWaterZone )
+		PlayChallenge();
+	else if (Physics == PHYS_Walking )
 		TweenAnim('Fighter', 0.3);
 	else
 		LoopAnim('Fly', 0.6);
@@ -316,7 +368,7 @@ function PlayThreatening()
 
 function PlayTurning()
 {
-	if (Physics == PHYS_Walking)
+	if (Physics == PHYS_Walking && !Region.Zone.bWaterZone)
 		TweenAnim('Walk', 0.3);
 	else
 		LoopAnim('Fly');
@@ -325,7 +377,7 @@ function PlayTurning()
 function PlayDying(name DamageType, vector HitLocation)
 {
 	PlaySound(Die, SLOT_Talk);
-	if ( Physics == PHYS_Flying )
+	if ( Physics == PHYS_Flying || Region.Zone.bWaterZone )
 		PlayAnim('Dead2A', 0.7, 0.12);
 	else
 		PlayAnim('Dead1', 0.7, 0.12);
@@ -353,7 +405,10 @@ function PlayLanded(float impactVel)
 
 function PlayVictoryDance()
 {
-	PlayAnim('Strike', 0.6, 0.1);
+	if (Region.Zone.bWaterZone )
+		PlayAnim('Fly', 0.7, 0.1);
+	else
+		PlayAnim('Strike', 0.6, 0.1);
 }
 	
 function PlayMeleeAttack()
@@ -364,6 +419,8 @@ function PlayMeleeAttack()
 		return;
 	}
 	PlayAnim('Strike');
+	if (Target==none)
+		return;
 	if ( MeleeDamageTarget(StrikeDamage, (StrikeDamage * 1000.0 * Normal(Target.Location - Location))) )
 		PlaySound(Threaten, SLOT_Talk); 
 }
@@ -375,6 +432,9 @@ function bool CanFireAtEnemy()
 	local actor HitActor;
 	local rotator EnemyRot;
 	local float EnemyDist;
+
+	if (HasAliveEnemy())
+		return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -405,7 +465,8 @@ function PlayRangedAttack()
 {
 	local vector X,Y,Z, projStart;
 	local rotator projRotation;
-	if (Physics == PHYS_Flying)
+
+	if (Physics == PHYS_Flying || Region.Zone.bWaterZone )
 		PlayAnim('FlyFire');
 	else
 		PlayAnim('Fire');
@@ -420,13 +481,15 @@ function PlayMovingAttack()
 {
 	local vector X,Y,Z, projStart;
 	local rotator projRotation;
-	if (Physics == PHYS_Flying)
+
+	if (Physics == PHYS_Flying || Region.Zone.bWaterZone )
 		PlayAnim('FlyFire');
 	else
 	{
 		DesiredSpeed = 0.4;
 		PlayAnim('WalkFire');
 	}
+
 	GetAxes(Rotation,X,Y,Z);
 	projStart = Location - 0.5 * CollisionHeight * Y;
 	projRotation = AdjustAim(ProjectileSpeed, projStart, 600, bLeadTarget, bWarnTarget); 
@@ -442,9 +505,11 @@ function PlayMovingAttack()
 
 State Charging
 {
+	ignores SeePlayer, HearNoise;
+
 	function HitWall(vector HitNormal, actor Wall)
 	{
-		if ( (Physics == PHYS_Flying) && (HitNormal.Z > 0.7) )
+		if ( (Physics == PHYS_Flying) && (HitNormal.Z > 0.7) && (!Region.Zone.bWaterZone) )
 		{
 			SetPhysics(PHYS_Walking);
 			return;
@@ -457,37 +522,57 @@ State Charging
 		local vector HitLocation, HitNormal;
 		local actor HitActor;
 
-		if ( (Enemy.Location.Z > Location.Z + MaxStepHeight) || (FRand() < 0.3) )
+		if (Enemy!=none )
 		{
-			Velocity.Z = 400;
-			SetPhysics(PHYS_Flying);
+			if ( (Enemy.Location.Z > Location.Z + MaxStepHeight) || (FRand() < 0.3) )
+			{
+				HitActor = Trace(HitLocation, HitNormal, Location + vect(0,0,300), Location, true);
+				if (HitActor == none)
+				{
+					if (Region.Zone.bWaterZone )
+						Velocity.Z = Waterspeed;
+					else
+					{
+						Velocity.Z = Airspeed;
+						SetPhysics(PHYS_Flying);
+					}
+				}
+			}
+			else if ( !Region.Zone.bWaterZone )
+			{
+				HitActor = Trace(HitLocation, HitNormal, Location - 2 * CollisionHeight * vect(0,0,1), Location, true);
+				if (HitActor == Level)
+					SetPhysics(PHYS_Falling);
+			}
 		}
-		else if ( !Region.Zone.bWaterZone )
-		{	
-			HitActor = Trace(HitLocation, HitNormal, Location - 2 * CollisionHeight * vect(0,0,1), Location, true);
-			if (HitActor == Level)
-				SetPhysics(PHYS_Falling);
-		}				
 		Super.BeginState();
 	}
 }
 
 State TacticalMove
 {
+	ignores SeePlayer, HearNoise;
+
 	function HitWall(vector HitNormal, actor Wall)
 	{
-		if (HitNormal.Z > 0.7)
+		if (Physics == PHYS_Falling)
+			return;
+		if ( (Physics == PHYS_Flying) && (HitNormal.Z > 0.7) && (!Region.Zone.bWaterZone) )
 		{
 			SetPhysics(PHYS_Walking);
 			return;
 		}
 		Focus = Destination;
 		if (PickWallAdjust())
-			GotoState('TacticalMove', 'AdjustFromWall');
+		{
+			if ( Physics == PHYS_Falling )
+				SetFall();
+			else
+				GotoState('TacticalMove', 'AdjustFromWall');
+		}
 		else
 		{
-			DesiredRotation = Rotator(Enemy.Location - location);
-			GotoState('Attacking');
+			super.HitWall(HitNormal, Wall);
 		}
 	}
 
@@ -496,18 +581,26 @@ State TacticalMove
 		local vector HitLocation, HitNormal;
 		local actor HitActor;
 
-		if ( (FRand() < 0.3) || 
-				(Enemy.Location.Z - Location.Z) > MaxStepHeight + 2 * (CollisionHeight - Enemy.CollisionHeight) )
+		if ( (FRand() < 0.3) || (Enemy!=none && (Enemy.Location.Z - Location.Z > MaxStepHeight + 2 * (CollisionHeight - Enemy.CollisionHeight))) )
 		{
-			Velocity.Z = 400;
-			SetPhysics(PHYS_Flying);
+			HitActor = Trace(HitLocation, HitNormal, Location + vect(0,0,300), Location, true);
+			if (HitActor == none)
+			{
+				if (Region.Zone.bWaterZone )
+					Velocity.Z = Waterspeed;
+				else
+				{
+					Velocity.Z = Airspeed;
+					SetPhysics(PHYS_Flying);
+				}
+			}
 		}
 		else if ( !Region.Zone.bWaterZone )
-		{	
+		{
 			HitActor = Trace(HitLocation, HitNormal, Location - 2 * CollisionHeight * vect(0,0,1), Location, true);
 			if (HitActor == Level)
 				SetPhysics(PHYS_Falling);
-		}				
+		}
 		Super.BeginState();
 	}
 
@@ -594,13 +687,13 @@ state Mutilating
 		Enemy = None;
 		Acceleration = vect(0,0,0);
 		SetAlertness(0.0);
-		Health = 100000;
 	}
 
 FinalSequence:
 	Disable('AnimEnd');
 	PlayTurning();
-	TurnToward(Enemy);
+	if (Enemy!=none)
+	   TurnToward(Enemy);
 	PlayAnim('Point', 0.7, 0.15);
 	FinishAnim();
 	PlaySound(sound'laugh1WL', SLOT_Talk);
@@ -619,37 +712,39 @@ Begin:
 
 defaultproperties
 {
-     StrikeDamage=40
-     CarcassType=Class'UnrealI.WarlordCarcass'
-     Aggressiveness=0.500000
-     RefireRate=0.700000
-     WalkingSpeed=0.250000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     bIsBoss=True
-     RangedProjectile=Class'UnrealI.WarlordRocket'
-     Acquire=Sound'UnrealI.WarLord.acquire1WL'
-     Fear=Sound'UnrealI.WarLord.threat1WL'
-     Roam=Sound'UnrealI.WarLord.roam1WL'
-     Threaten=Sound'UnrealI.WarLord.threat1WL'
-     bCanStrafe=True
-     MeleeRange=70.000000
-     GroundSpeed=440.000000
-     AirSpeed=440.000000
-     AccelRate=1500.000000
-     SightRadius=3000.000000
-     Health=1100
-     ReducedDamageType=exploded
-     Intelligence=BRAINS_HUMAN
-     HitSound1=Sound'UnrealI.WarLord.injur1WL'
-     HitSound2=Sound'UnrealI.WarLord.injur2WL'
-     Die=Sound'UnrealI.WarLord.DeathCry1WL'
-     CombatStyle=0.500000
-     NameArticle=" the "
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.WarlordM'
-     TransientSoundVolume=12.000000
-     CollisionRadius=52.000000
-     CollisionHeight=78.000000
-     Mass=1000.000000
+      StrikeDamage=40
+      bTeleportWhenHurt=False
+      LastDuckTime=0.000000
+      CarcassType=Class'UnrealI.WarlordCarcass'
+      Aggressiveness=0.500000
+      RefireRate=0.700000
+      WalkingSpeed=0.250000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      bIsBoss=True
+      RangedProjectile=Class'UnrealI.WarlordRocket'
+      Acquire=Sound'UnrealI.WarLord.acquire1WL'
+      Fear=Sound'UnrealI.WarLord.threat1WL'
+      Roam=Sound'UnrealI.WarLord.roam1WL'
+      Threaten=Sound'UnrealI.WarLord.threat1WL'
+      bCanStrafe=True
+      MeleeRange=70.000000
+      GroundSpeed=440.000000
+      AirSpeed=440.000000
+      AccelRate=1500.000000
+      SightRadius=3000.000000
+      Health=1100
+      ReducedDamageType="exploded"
+      Intelligence=BRAINS_HUMAN
+      HitSound1=Sound'UnrealI.WarLord.injur1WL'
+      HitSound2=Sound'UnrealI.WarLord.injur2WL'
+      Die=Sound'UnrealI.WarLord.DeathCry1WL'
+      CombatStyle=0.500000
+      NameArticle=" the "
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.WarlordM'
+      TransientSoundVolume=12.000000
+      CollisionRadius=52.000000
+      CollisionHeight=78.000000
+      Mass=1000.000000
 }

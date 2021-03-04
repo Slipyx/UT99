@@ -23,6 +23,6 @@ function ReceiveDoubleClickItem(UWindowListBox L, UWindowListBoxItem I)
 
 defaultproperties
 {
-     bCanDragExternal=True
-     bAcceptExternalDragDrop=True
+      bCanDragExternal=True
+      bAcceptExternalDragDrop=True
 }

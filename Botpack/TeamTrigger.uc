@@ -42,4 +42,6 @@ function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 
 defaultproperties
 {
+      Team=0
+      bTimed=False
 }

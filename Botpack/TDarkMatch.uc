@@ -25,7 +25,7 @@ function AddDefaultInventory(pawn aPlayer)
 
 defaultproperties
 {
-     MapListType=Class'Botpack.TDKMapList'
-     MapPrefix="TDK"
-     GameName="Tournament DarkMatch"
+      MapListType=Class'Botpack.TDKMapList'
+      MapPrefix="TDK"
+      GameName="Tournament DarkMatch"
 }

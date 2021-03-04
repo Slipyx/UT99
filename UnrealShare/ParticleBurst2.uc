@@ -26,10 +26,10 @@ auto state Explode
 
 defaultproperties
 {
-     bHighDetail=True
-     Physics=PHYS_None
-     LifeSpan=0.300000
-     Texture=Texture'UnrealShare.Effects.T_PStar'
-     DrawScale=0.350000
-     RotationRate=(Pitch=0,Yaw=0,Roll=0)
+      bHighDetail=True
+      Physics=PHYS_None
+      LifeSpan=0.300000
+      Texture=Texture'UnrealShare.Effects.T_PStar'
+      DrawScale=0.350000
+      RotationRate=(Pitch=0,Yaw=0,Roll=0)
 }

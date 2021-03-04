@@ -898,12 +898,16 @@ function int ReadStyleText(string StyleString, out int StylePos, out HTMLStyle C
 
 defaultproperties
 {
-     TextColor=(R=255,G=255,B=255)
-     LinkColor=(B=255)
-     ALinkColor=(R=255)
-     bTopCentric=True
-     bAutoScrollbar=True
-     bVariableRowHeight=True
-     RowClass=Class'UWindow.UWindowHTMLTextRow'
-     bIgnoreLDoubleClick=True
+      TextColor=(R=255,G=255,B=255,A=0)
+      BGColor=(R=0,G=0,B=0,A=0)
+      LinkColor=(R=0,G=0,B=255,A=0)
+      ALinkColor=(R=255,G=0,B=0,A=0)
+      LastBlinkTime=0.000000
+      bShowBlink=False
+      bReleased=False
+      bTopCentric=True
+      bAutoScrollbar=True
+      bVariableRowHeight=True
+      RowClass=Class'UWindow.UWindowHTMLTextRow'
+      bIgnoreLDoubleClick=True
 }

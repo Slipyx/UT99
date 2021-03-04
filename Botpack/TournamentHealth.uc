@@ -61,15 +61,16 @@ auto state Pickup
 
 defaultproperties
 {
-     HealingAmount=20
-     PickupMessage="You picked up a Health Pack +"
-     RespawnTime=20.000000
-     MaxDesireability=0.500000
-     PickupSound=Sound'UnrealShare.Pickups.Health2'
-     Icon=Texture'UnrealShare.Icons.I_Health'
-     RemoteRole=ROLE_DumbProxy
-     AmbientGlow=64
-     CollisionRadius=22.000000
-     CollisionHeight=8.000000
-     Mass=10.000000
+      HealingAmount=20
+      bSuperHeal=False
+      PickupMessage="You picked up a Health Pack +"
+      RespawnTime=20.000000
+      MaxDesireability=0.500000
+      PickupSound=Sound'UnrealShare.Pickups.Health2'
+      Icon=Texture'UnrealShare.Icons.I_Health'
+      RemoteRole=ROLE_DumbProxy
+      AmbientGlow=64
+      CollisionRadius=22.000000
+      CollisionHeight=8.000000
+      Mass=10.000000
 }

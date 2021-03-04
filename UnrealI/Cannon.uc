@@ -128,21 +128,25 @@ Begin:
 
 defaultproperties
 {
-     DeactivateDistance=2000.000000
-     SampleTime=0.300000
-     TrackingRate=10000
-     Drop=60.000000
-     Health=100.000000
-     FireSound=Sound'UnrealI.Cannon.CannonShot'
-     ActivateSound=Sound'UnrealI.Cannon.CannonActivate'
-     ExplodeSound=Sound'UnrealI.Cannon.CannonExplode'
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.CannonM'
-     CollisionRadius=44.000000
-     CollisionHeight=44.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bProjTarget=True
-     RotationRate=(Yaw=50000)
+      DeactivateDistance=2000.000000
+      SampleTime=0.300000
+      TrackingRate=10000
+      Drop=60.000000
+      Health=100.000000
+      FireSound=Sound'UnrealI.Cannon.CannonShot'
+      ActivateSound=Sound'UnrealI.Cannon.CannonActivate'
+      ExplodeSound=Sound'UnrealI.Cannon.CannonExplode'
+      cTarget=None
+      bShoot=False
+      ShotsFired=0
+      A=None
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.CannonM'
+      CollisionRadius=44.000000
+      CollisionHeight=44.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bProjTarget=True
+      RotationRate=(Yaw=50000)
 }

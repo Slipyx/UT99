@@ -216,6 +216,17 @@ function FocusOtherWindow(UWindowWindow W)
 
 defaultproperties
 {
-     ListClass=Class'UWindow.UWindowComboList'
-     bNoKeyboard=True
+      EditBoxWidth=0.000000
+      EditAreaDrawX=0.000000
+      EditAreaDrawY=0.000000
+      EditBox=None
+      Button=None
+      LeftButton=None
+      RightButton=None
+      ListClass=Class'UWindow.UWindowComboList'
+      List=None
+      bListVisible=False
+      bCanEdit=False
+      bButtons=False
+      bNoKeyboard=True
 }

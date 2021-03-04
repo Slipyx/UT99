@@ -146,9 +146,15 @@ function Carcass SpawnCarcass()
 	local carcass carc;
 	
 	carc = Spawn(CarcassType);
-	carc.Initfor(self);
-	carc.bReducedHeight = true;
-	carc.PrePivot = PrePivot;
+	if ( carc != None )
+	{
+        carc.Initfor(self);
+	    if (IsA('LeglessKrall'))
+	    {
+	        carc.bReducedHeight = true;
+			carc.PrePivot = PrePivot;
+	    }
+	}
 	return carc;
 }
 
@@ -197,7 +203,8 @@ function PlayTakeHit(float tweentime, vector HitLoc, int damage)
 	Level.Game.DiscardInventory(self);
 	Velocity.Z *= 1.3;
 	rep = Spawn(class'LeglessKrall');
-	rep.InitFor(self);
+	if ( rep != None )
+	    rep.InitFor(self);
 	destroy();
 }
 
@@ -836,6 +843,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal,X,Y,Z, projStart, EnemyDir, EnemyUp;
 	local actor HitActor;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+		return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -873,12 +883,16 @@ function ShotMove()
 
 function StrikeDamageTarget()
 {
+	if (Target==none)
+		return;
 	if (MeleeDamageTarget(StrikeDamage, StrikeDamage * 700 * Normal(Target.Location - Location)))
 		PlaySound(SpearHit,SLOT_Interact);
 }
 
 function PoundDamageTarget()
 {
+	if (Target==none)
+		return;
 	if (MeleeDamageTarget(PoundDamage, PoundDamage * 500 * Normal(Target.Location - Location)))
 		PlaySound(SpearHit,SLOT_Interact);
 }
@@ -891,6 +905,9 @@ function ThrowDamageTarget()
 function ThrowTarget() 
 {
 	local rotator newRot;
+	
+	if ( Target == None )
+		return;
 	if (AttackSuccess && (Vsize(Target.Location - Location) < CollisionRadius + Target.CollisionRadius + 1.5 * MeleeRange) )
 	{
 		PlaySound(SpearThrow,SLOT_Interact);
@@ -979,52 +996,63 @@ ignores SeePlayer, HearNoise;
 
 defaultproperties
 {
-     StrikeDamage=20
-     ThrowDamage=30
-     PoundDamage=20
-     bSpearToss=True
-     Strike1=Sound'UnrealI.Krall.strike1k'
-     Strike2=Sound'UnrealI.Krall.strike1k'
-     Twirl=Sound'UnrealI.Krall.staflp4k'
-     syllable1=Sound'UnrealI.Krall.syl1kr'
-     syllable2=Sound'UnrealI.Krall.syl2kr'
-     syllable3=Sound'UnrealI.Krall.syl3kr'
-     syllable4=Sound'UnrealI.Krall.syl4kr'
-     syllable5=Sound'UnrealI.Krall.syl5kr'
-     syllable6=Sound'UnrealI.Krall.syl6kr'
-     Die2=Sound'UnrealI.Krall.death2k'
-     spearHit=Sound'UnrealI.Krall.hit2k'
-     spearThrow=Sound'UnrealI.Krall.throw1k'
-     MinDuckTime=8.000000
-     CarcassType=Class'UnrealI.KrallCarcass'
-     Aggressiveness=0.500000
-     RefireRate=0.500000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     bLeadTarget=False
-     RangedProjectile=Class'UnrealI.KraalBolt'
-     Acquire=Sound'UnrealI.Krall.chlng1k'
-     Fear=Sound'UnrealI.Krall.chlng2k'
-     Threaten=Sound'UnrealI.Krall.chlng2k'
-     MeleeRange=50.000000
-     GroundSpeed=240.000000
-     AirSpeed=240.000000
-     AccelRate=500.000000
-     JumpZ=360.000000
-     HearingThreshold=0.000000
-     Health=180
-     Intelligence=BRAINS_HUMAN
-     HitSound1=Sound'UnrealI.Krall.injur1k'
-     HitSound2=Sound'UnrealI.Krall.injur2k'
-     Die=Sound'UnrealI.Krall.death1k'
-     CombatStyle=0.800000
-     AmbientSound=Sound'UnrealI.Krall.amb1kr'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.KrallM'
-     TransientSoundVolume=1.500000
-     CollisionRadius=25.000000
-     CollisionHeight=46.000000
-     Mass=140.000000
-     Buoyancy=140.000000
-     RotationRate=(Pitch=3072,Yaw=60000,Roll=0)
+      StrikeDamage=20
+      ThrowDamage=30
+      PoundDamage=20
+      AttackSuccess=False
+      bSpearToss=True
+      bDicePlayer=False
+      bSleeping=False
+      bHasDice=False
+      bHeldDice=False
+      Strike1=Sound'UnrealI.Krall.strike1k'
+      Strike2=Sound'UnrealI.Krall.strike1k'
+      Twirl=Sound'UnrealI.Krall.staflp4k'
+      syllable1=Sound'UnrealI.Krall.syl1kr'
+      syllable2=Sound'UnrealI.Krall.syl2kr'
+      syllable3=Sound'UnrealI.Krall.syl3kr'
+      syllable4=Sound'UnrealI.Krall.syl4kr'
+      syllable5=Sound'UnrealI.Krall.syl5kr'
+      syllable6=Sound'UnrealI.Krall.syl6kr'
+      Die2=Sound'UnrealI.Krall.death2k'
+      spearHit=Sound'UnrealI.Krall.hit2k'
+      spearThrow=Sound'UnrealI.Krall.throw1k'
+      phrase="None"
+      phrasesyllable=0
+      VoicePitch=0.000000
+      Toy1=None
+      Toy2=None
+      MinDuckTime=8.000000
+      LastDuckTime=0.000000
+      CarcassType=Class'UnrealI.KrallCarcass'
+      Aggressiveness=0.500000
+      RefireRate=0.500000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      bLeadTarget=False
+      RangedProjectile=Class'UnrealI.KraalBolt'
+      Acquire=Sound'UnrealI.Krall.chlng1k'
+      Fear=Sound'UnrealI.Krall.chlng2k'
+      Threaten=Sound'UnrealI.Krall.chlng2k'
+      MeleeRange=50.000000
+      GroundSpeed=240.000000
+      AirSpeed=240.000000
+      AccelRate=500.000000
+      JumpZ=360.000000
+      HearingThreshold=0.000000
+      Health=180
+      Intelligence=BRAINS_HUMAN
+      HitSound1=Sound'UnrealI.Krall.injur1k'
+      HitSound2=Sound'UnrealI.Krall.injur2k'
+      Die=Sound'UnrealI.Krall.death1k'
+      CombatStyle=0.800000
+      AmbientSound=Sound'UnrealI.Krall.amb1kr'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.KrallM'
+      TransientSoundVolume=1.500000
+      CollisionRadius=25.000000
+      CollisionHeight=46.000000
+      Mass=140.000000
+      Buoyancy=140.000000
+      RotationRate=(Pitch=3072,Yaw=60000,Roll=0)
 }

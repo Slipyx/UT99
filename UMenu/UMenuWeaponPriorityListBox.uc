@@ -130,9 +130,10 @@ function SelectWeapon()
 
 defaultproperties
 {
-     WeaponClassParent="Engine.Weapon"
-     WeaponPriorityHelp="Click and drag a weapon name in the list on the left to change its priority.  Weapons higher in the list have higher priority."
-     ItemHeight=13.000000
-     bCanDrag=True
-     ListClass=Class'UMenu.UMenuWeaponPriorityList'
+      WeaponClassParent="Engine.Weapon"
+      MeshWindow=None
+      WeaponPriorityHelp="Click and drag a weapon name in the list on the left to change its priority.  Weapons higher in the list have higher priority."
+      ItemHeight=13.000000
+      bCanDrag=True
+      ListClass=Class'UMenu.UMenuWeaponPriorityList'
 }

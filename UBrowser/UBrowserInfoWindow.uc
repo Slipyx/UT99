@@ -34,5 +34,6 @@ function SetSizes()
 
 defaultproperties
 {
-     ClientClass=Class'UBrowser.UBrowserInfoClientWindow'
+      Menu=None
+      ClientClass=Class'UBrowser.UBrowserInfoClientWindow'
 }

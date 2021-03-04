@@ -77,23 +77,25 @@ auto state Burning
 
 defaultproperties
 {
-     BurnTime=0.100000
-     bNetOptional=True
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Texture=None
-     DrawScale=0.300000
-     AmbientGlow=123
-     bUnlit=True
-     CollisionRadius=1.000000
-     CollisionHeight=1.000000
-     bCollideActors=True
-     bCollideWorld=True
-     LightType=LT_Steady
-     LightBrightness=130
-     LightHue=120
-     LightSaturation=200
-     LightRadius=1
-     bBounce=True
+      BurnTime=0.100000
+      InitialBrightness=0.000000
+      PassedTime=0.000000
+      bNetOptional=True
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Texture=None
+      DrawScale=0.300000
+      AmbientGlow=123
+      bUnlit=True
+      CollisionRadius=1.000000
+      CollisionHeight=1.000000
+      bCollideActors=True
+      bCollideWorld=True
+      LightType=LT_Steady
+      LightBrightness=130
+      LightHue=120
+      LightSaturation=200
+      LightRadius=1
+      bBounce=True
 }

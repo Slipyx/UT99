@@ -27,9 +27,9 @@ event ActorLeaving( actor Other )
 
 defaultproperties
 {
-     DamagePerSec=20
-     DamageType=Frozen
-     bWaterZone=True
-     bPainZone=True
-     ViewFog=(X=0.011719,Y=0.039063,Z=0.046875)
+      DamagePerSec=20
+      DamageType="Frozen"
+      bWaterZone=True
+      bPainZone=True
+      ViewFog=(X=0.011719,Y=0.039063,Z=0.046875)
 }

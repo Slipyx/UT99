@@ -15,5 +15,5 @@ class CircleStud extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.CircleStud'
+      Mesh=LodMesh'Botpack.CircleStud'
 }

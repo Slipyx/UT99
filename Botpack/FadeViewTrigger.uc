@@ -68,6 +68,11 @@ event Tick(float DeltaTime)
 
 defaultproperties
 {
-     TargetFlash=(X=-2.000000,Y=-2.000000,Z=-2.000000)
-     FadeSeconds=5.000000
+      ViewFlash=(X=0.000000,Y=0.000000,Z=0.000000)
+      ViewFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      TargetFlash=(X=-2.000000,Y=-2.000000,Z=-2.000000)
+      bTriggerOnceOnly=False
+      FadeSeconds=5.000000
+      OldViewFlash=(X=0.000000,Y=0.000000,Z=0.000000)
+      bTriggered=False
 }

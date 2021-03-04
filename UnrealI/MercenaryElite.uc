@@ -7,9 +7,9 @@ class MercenaryElite extends Mercenary;
 
 defaultproperties
 {
-     PunchDamage=25
-     bCanFireWhileInvulnerable=True
-     Health=240
-     Skill=1.000000
-     Skin=Texture'UnrealI.Skins.JMerc2'
+      PunchDamage=25
+      bCanFireWhileInvulnerable=True
+      Health=240
+      Skill=1.000000
+      Skin=Texture'UnrealI.Skins.JMerc2'
 }

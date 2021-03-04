@@ -24,7 +24,8 @@ function AnimEnd()
 
 defaultproperties
 {
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.TrophyMale1'
+      bFinal=False
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.TrophyMale1'
 }

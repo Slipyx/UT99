@@ -349,19 +349,20 @@ Turn:
 
 defaultproperties
 {
-     bStayClose=True
-     WanderRadius=350.000000
-     GroundSpeed=400.000000
-     AccelRate=1500.000000
-     JumpZ=190.000000
-     MinHitWall=-0.100000
-     SightRadius=1000.000000
-     PeripheralVision=-10.000000
-     UnderWaterTime=3.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Rabbit'
-     CollisionRadius=18.299999
-     CollisionHeight=13.300000
-     Mass=20.000000
-     Buoyancy=21.000000
+      bStayClose=True
+      WanderRadius=350.000000
+      StartLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      GroundSpeed=400.000000
+      AccelRate=1500.000000
+      JumpZ=190.000000
+      MinHitWall=-0.100000
+      SightRadius=1000.000000
+      PeripheralVision=-10.000000
+      UnderWaterTime=3.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Rabbit'
+      CollisionRadius=18.299999
+      CollisionHeight=13.300000
+      Mass=20.000000
+      Buoyancy=21.000000
 }

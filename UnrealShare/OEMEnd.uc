@@ -24,8 +24,9 @@ function Timer()
 
 defaultproperties
 {
-     bStatic=False
-     CollisionRadius=50.000000
-     CollisionHeight=50.000000
-     bCollideActors=True
+      Toucher=None
+      bStatic=False
+      CollisionRadius=50.000000
+      CollisionHeight=50.000000
+      bCollideActors=True
 }

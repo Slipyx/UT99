@@ -156,23 +156,23 @@ function DrawValues(canvas Canvas, int StartX, int StartY, int Spacing)
 
 defaultproperties
 {
-     GameStyle(0)="Classic"
-     GameStyle(1)="Hardcore"
-     GameStyle(2)="Turbo"
-     GameClass=Class'UnrealShare.DeathMatchGame'
-     MenuLength=9
-     HelpMessage(3)="Number of frags scored by leading player to end game.  If 0, there is no limit."
-     HelpMessage(4)="Time limit (in minutes) to end game.  If 0, there is no limit."
-     HelpMessage(5)="Maximum number of players allowed in the game."
-     HelpMessage(6)="If Weapons Stay is enabled, weapons respawn instantly, but can only be picked up once by a given player."
-     HelpMessage(7)="Configure bot game and individual parameters."
-     HelpMessage(8)="Choose Game Style:  Hardcore game speed is faster and weapons do more damage than Classic. Turbo is Hardcore with really fast movement."
-     HelpMessage(9)="Classic or new style (weapon based) deathmessages."
-     MenuList(3)="Frag limit"
-     MenuList(4)="Time Limit"
-     MenuList(5)="Max Players"
-     MenuList(6)="Weapons Stay"
-     MenuList(7)="Configure Bots"
-     MenuList(8)="Game Style"
-     MenuList(9)="DeathMessages"
+      GameStyle(0)="Classic"
+      GameStyle(1)="Hardcore"
+      GameStyle(2)="Turbo"
+      GameClass=Class'UnrealShare.DeathMatchGame'
+      MenuLength=9
+      HelpMessage(3)="Number of frags scored by leading player to end game.  If 0, there is no limit."
+      HelpMessage(4)="Time limit (in minutes) to end game.  If 0, there is no limit."
+      HelpMessage(5)="Maximum number of players allowed in the game."
+      HelpMessage(6)="If Weapons Stay is enabled, weapons respawn instantly, but can only be picked up once by a given player."
+      HelpMessage(7)="Configure bot game and individual parameters."
+      HelpMessage(8)="Choose Game Style:  Hardcore game speed is faster and weapons do more damage than Classic. Turbo is Hardcore with really fast movement."
+      HelpMessage(9)="Classic or new style (weapon based) deathmessages."
+      MenuList(3)="Frag limit"
+      MenuList(4)="Time Limit"
+      MenuList(5)="Max Players"
+      MenuList(6)="Weapons Stay"
+      MenuList(7)="Configure Bots"
+      MenuList(8)="Game Style"
+      MenuList(9)="DeathMessages"
 }

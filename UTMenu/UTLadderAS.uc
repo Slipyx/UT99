@@ -58,9 +58,9 @@ function EvaluateMatch(optional bool bTrophyVictory)
 
 defaultproperties
 {
-     GameType="Botpack.Assault"
-     TrophyMap="EOL_Assault.unr"
-     LadderName="Assault"
-     Ladder=Class'Botpack.LadderAS'
-     LadderTrophy=Texture'UTMenu.Skins.TrophyAS'
+      GameType="Botpack.Assault"
+      TrophyMap="EOL_Assault.unr"
+      LadderName="Assault"
+      Ladder=Class'Botpack.LadderAS'
+      LadderTrophy=Texture'UTMenu.Skins.TrophyAS'
 }

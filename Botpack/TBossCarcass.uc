@@ -6,7 +6,7 @@ class TBossCarcass extends TMaleBody;
 
 defaultproperties
 {
-     MasterReplacement=Class'Botpack.TBossMasterChunk'
-     GibSounds(1)=Sound'Botpack.Boss.BNewGib'
-     Mesh=LodMesh'Botpack.Boss'
+      MasterReplacement=Class'Botpack.TBossMasterChunk'
+      GibSounds(1)=Sound'Botpack.Boss.BNewGib'
+      Mesh=LodMesh'Botpack.Boss'
 }

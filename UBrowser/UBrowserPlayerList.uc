@@ -194,5 +194,15 @@ function UBrowserPlayerList FindID(int ID)
 
 defaultproperties
 {
-     SortColumn=1
+      PlayerName=""
+      PlayerMesh=""
+      PlayerSkin=""
+      PlayerFace=""
+      PlayerTeam=""
+      PlayerFrags=0
+      PlayerPing=0
+      PlayerID=0
+      PlayerStats=""
+      SortColumn=1
+      bDescending=False
 }

@@ -96,14 +96,16 @@ function Explode(vector HitLocation, vector HitNormal)
 
 defaultproperties
 {
-     speed=1200.000000
-     Damage=70.000000
-     MomentumTransfer=75000
-     bNetTemporary=False
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=6.000000
-     Mesh=LodMesh'Botpack.flakslugm'
-     AmbientGlow=67
-     bUnlit=True
+      trail=None
+      InitialDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      speed=1200.000000
+      Damage=70.000000
+      MomentumTransfer=75000
+      bNetTemporary=False
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=6.000000
+      Mesh=LodMesh'Botpack.flakslugm'
+      AmbientGlow=67
+      bUnlit=True
 }

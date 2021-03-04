@@ -15,7 +15,7 @@ class Tree9 extends Tree;
 
 defaultproperties
 {
-     Mesh=None
-     CollisionRadius=15.000000
-     CollisionHeight=39.000000
+      Mesh=None
+      CollisionRadius=15.000000
+      CollisionHeight=39.000000
 }

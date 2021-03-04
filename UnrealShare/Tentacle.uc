@@ -75,6 +75,11 @@ function eAttitude AttitudeToCreature(Pawn Other)
 
 simulated function AddVelocity( vector NewVelocity )
 {
+	if (Health <=0 || bDeleteme)
+	{
+		Disable('Hitwall');
+		Disable('Bump');
+	}
 	if (Physics == PHYS_Rotating)
 		Velocity = vect(0,0,0);
 	else
@@ -97,6 +102,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal, EnemyDir, projStart, EnemyUp;
 	local actor HitActor;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+	    return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -303,6 +311,8 @@ function PlayMeleeAttack()
 
 function SmackTarget()
 {
+    if (Target == None)
+	    return;
 	if ( MeleeDamageTarget(WhipDamage, (WhipDamage * 1000 * Normal(Target.Location - Location))) )
 		PlaySound(Smack, SLOT_Interact);		
 }
@@ -330,13 +340,13 @@ ignores SeePlayer, HearNoise, Bump, HitWall;
 			return;
 		}
 			
-		if ((Enemy == None) || (Enemy.Health <= 0))
+		if (!HasAliveEnemy())
 		{
-			if ((OldEnemy != None) && (OldEnemy.Health > 0)) 
-				{
+			if ((OldEnemy != None) && (OldEnemy.Health > 0) && OldEnemy != self && !OldEnemy.bDeleteMe) 
+			{
 				Enemy = OldEnemy;
 				OldEnemy = None;
-				}
+			}
 			else
 			{
 				 GotoState('Waiting');
@@ -359,7 +369,7 @@ ignores EnemyNotVisible;
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-		if ( health <= 0 )
+		if ( health <= 0 || bDeleteMe )
 			return;
 		if (NextState == 'TakeHit')
 		{
@@ -373,6 +383,8 @@ Begin:
 	PlayChallenge();
 	TurnTo(LastSeenPos);
 HangOut:
+	if (!HasAliveEnemy())
+	    GotoState('Attacking');
 	if ( bHasRangedAttack && bClearShot && (FRand() < 0.5) && (VSize(Enemy.Location - LastSeenPos) < 100) && CanStakeOut() )
 		PlayRangedAttack();
 	FinishAnim();
@@ -399,39 +411,40 @@ Begin:
 
 defaultproperties
 {
-     mebax=Sound'UnrealShare.Tentacle.curltn'
-     Whip=Sound'UnrealShare.Tentacle.strike2tn'
-     Smack=Sound'UnrealShare.Tentacle.splat2tn'
-     CarcassType=Class'UnrealShare.TentacleCarcass'
-     Aggressiveness=1.000000
-     RefireRate=0.700000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     bLeadTarget=False
-     RangedProjectile=Class'UnrealShare.TentacleProjectile'
-     Acquire=Sound'UnrealShare.Tentacle.yell1tn'
-     Fear=Sound'UnrealShare.Tentacle.injured2tn'
-     Roam=Sound'UnrealShare.Tentacle.waver1tn'
-     Threaten=Sound'UnrealShare.Tentacle.yell2tn'
-     MeleeRange=70.000000
-     WaterSpeed=100.000000
-     AccelRate=100.000000
-     JumpZ=10.000000
-     SightRadius=1000.000000
-     PeripheralVision=-2.000000
-     HearingThreshold=10.000000
-     Health=50
-     UnderWaterTime=-1.000000
-     Intelligence=BRAINS_REPTILE
-     HitSound1=Sound'UnrealShare.Tentacle.injured1tn'
-     HitSound2=Sound'UnrealShare.Tentacle.injured2tn'
-     Land=Sound'UnrealShare.Tentacle.splat2tn'
-     Die=Sound'UnrealShare.Tentacle.death2tn'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Tentacle1'
-     CollisionRadius=28.000000
-     CollisionHeight=36.000000
-     Mass=200.000000
-     Buoyancy=400.000000
-     RotationRate=(Pitch=0,Yaw=30000,Roll=0)
+      WhipDamage=0
+      mebax=Sound'UnrealShare.Tentacle.curltn'
+      Whip=Sound'UnrealShare.Tentacle.strike2tn'
+      Smack=Sound'UnrealShare.Tentacle.splat2tn'
+      CarcassType=Class'UnrealShare.TentacleCarcass'
+      Aggressiveness=1.000000
+      RefireRate=0.700000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      bLeadTarget=False
+      RangedProjectile=Class'UnrealShare.TentacleProjectile'
+      Acquire=Sound'UnrealShare.Tentacle.yell1tn'
+      Fear=Sound'UnrealShare.Tentacle.injured2tn'
+      Roam=Sound'UnrealShare.Tentacle.waver1tn'
+      Threaten=Sound'UnrealShare.Tentacle.yell2tn'
+      MeleeRange=70.000000
+      WaterSpeed=100.000000
+      AccelRate=100.000000
+      JumpZ=10.000000
+      SightRadius=1000.000000
+      PeripheralVision=-2.000000
+      HearingThreshold=10.000000
+      Health=50
+      UnderWaterTime=-1.000000
+      Intelligence=BRAINS_REPTILE
+      HitSound1=Sound'UnrealShare.Tentacle.injured1tn'
+      HitSound2=Sound'UnrealShare.Tentacle.injured2tn'
+      Land=Sound'UnrealShare.Tentacle.splat2tn'
+      Die=Sound'UnrealShare.Tentacle.death2tn'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Tentacle1'
+      CollisionRadius=28.000000
+      CollisionHeight=36.000000
+      Mass=200.000000
+      Buoyancy=400.000000
+      RotationRate=(Pitch=0,Yaw=30000,Roll=0)
 }

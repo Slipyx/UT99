@@ -71,4 +71,8 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
 
 defaultproperties
 {
+      WeaponName="None"
+      AmmoName="None"
+      WeaponString=""
+      AmmoString=""
 }

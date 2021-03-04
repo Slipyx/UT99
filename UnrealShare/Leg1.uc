@@ -14,7 +14,7 @@ class Leg1 extends PlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.leg1M'
-     CollisionRadius=25.000000
-     CollisionHeight=6.000000
+      Mesh=LodMesh'UnrealShare.leg1M'
+      CollisionRadius=25.000000
+      CollisionHeight=6.000000
 }

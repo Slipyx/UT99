@@ -12,16 +12,16 @@ class BladeHopper extends TournamentAmmo;
 
 defaultproperties
 {
-     AmmoAmount=25
-     MaxAmmo=75
-     UsedInWeaponSlot(7)=1
-     PickupMessage="You picked up some Razor Blades."
-     ItemName="Blade Hopper"
-     PickupViewMesh=LodMesh'Botpack.BladeHopperM'
-     MaxDesireability=0.220000
-     Skin=Texture'Botpack.Skins.BladeHopperT'
-     Mesh=LodMesh'Botpack.BladeHopperM'
-     CollisionRadius=20.000000
-     CollisionHeight=10.000000
-     bCollideActors=True
+      AmmoAmount=25
+      MaxAmmo=75
+      UsedInWeaponSlot(7)=1
+      PickupMessage="You picked up some Razor Blades."
+      ItemName="Blade Hopper"
+      PickupViewMesh=LodMesh'Botpack.BladeHopperM'
+      MaxDesireability=0.220000
+      Skin=Texture'Botpack.Skins.BladeHopperT'
+      Mesh=LodMesh'Botpack.BladeHopperM'
+      CollisionRadius=20.000000
+      CollisionHeight=10.000000
+      bCollideActors=True
 }

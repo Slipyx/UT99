@@ -32,11 +32,11 @@ function BaseChange()
 
 defaultproperties
 {
-     bForceStasis=True
-     bCollideActors=False
-     bBlockActors=False
-     bBlockPlayers=False
-     bProjTarget=False
-     Mass=5.000000
-     Buoyancy=5.000000
+      bForceStasis=True
+      bCollideActors=False
+      bBlockActors=False
+      bBlockPlayers=False
+      bProjTarget=False
+      Mass=5.000000
+      Buoyancy=5.000000
 }

@@ -15,6 +15,6 @@ class Flag2 extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Flag2M'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Flag2M'
 }

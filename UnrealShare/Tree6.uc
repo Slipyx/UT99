@@ -14,7 +14,7 @@ class Tree6 extends Tree;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.Tree6M'
-     CollisionRadius=17.000000
-     CollisionHeight=93.000000
+      Mesh=LodMesh'UnrealShare.Tree6M'
+      CollisionRadius=17.000000
+      CollisionHeight=93.000000
 }

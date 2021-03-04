@@ -46,5 +46,5 @@ function Notify(UWindowDialogControl C, byte E)
 
 defaultproperties
 {
-     CantSave="Cannot Save: You are dead."
+      CantSave="Cannot Save: You are dead."
 }

@@ -262,18 +262,40 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     GameType="UnrealShare.DeathMatchGame"
-     BotTitle="BOTMATCH"
-     MenuLength=5
-     HelpMessage(1)="Choose Game Type."
-     HelpMessage(2)="Choose Map."
-     HelpMessage(3)="Modify Game Options."
-     HelpMessage(4)="Start Game."
-     HelpMessage(5)="Start a dedicated server on this machine."
-     MenuList(1)="Select Game"
-     MenuList(2)="Select Map"
-     MenuList(3)="Configure Game"
-     MenuList(4)="Start Game"
-     MenuList(5)="Launch Dedicated Server"
-     MenuTitle="MULTIPLAYER"
+      Map=""
+      GameType="UnrealShare.DeathMatchGame"
+      Games(0)=""
+      Games(1)=""
+      Games(2)=""
+      Games(3)=""
+      Games(4)=""
+      Games(5)=""
+      Games(6)=""
+      Games(7)=""
+      Games(8)=""
+      Games(9)=""
+      Games(10)=""
+      Games(11)=""
+      Games(12)=""
+      Games(13)=""
+      Games(14)=""
+      Games(15)=""
+      MaxGames=0
+      CurrentGame=0
+      GameClass=None
+      bStandalone=False
+      BotTitle="BOTMATCH"
+      Difficulty=0
+      MenuLength=5
+      HelpMessage(1)="Choose Game Type."
+      HelpMessage(2)="Choose Map."
+      HelpMessage(3)="Modify Game Options."
+      HelpMessage(4)="Start Game."
+      HelpMessage(5)="Start a dedicated server on this machine."
+      MenuList(1)="Select Game"
+      MenuList(2)="Select Map"
+      MenuList(3)="Configure Game"
+      MenuList(4)="Start Game"
+      MenuList(5)="Launch Dedicated Server"
+      MenuTitle="MULTIPLAYER"
 }

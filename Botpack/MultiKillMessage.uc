@@ -84,16 +84,16 @@ static simulated function ClientReceive(
 
 defaultproperties
 {
-     DoubleKillString="Double Kill!"
-     TripleKillString="Triple Kill!"
-     MultiKillString="Multi Kill!"
-     UltraKillString="ULTRA KILL!!"
-     MonsterKillString="M O N S T E R  K I L L !!!"
-     FontSize=1
-     bIsSpecial=True
-     bIsUnique=True
-     bFadeMessage=True
-     DrawColor=(G=0,B=0)
-     YPos=196.000000
-     bCenter=True
+      DoubleKillString="Double Kill!"
+      TripleKillString="Triple Kill!"
+      MultiKillString="Multi Kill!"
+      UltraKillString="ULTRA KILL!!"
+      MonsterKillString="M O N S T E R  K I L L !!!"
+      FontSize=1
+      bIsSpecial=True
+      bIsUnique=True
+      bFadeMessage=True
+      DrawColor=(G=0,B=0)
+      YPos=196.000000
+      bCenter=True
 }

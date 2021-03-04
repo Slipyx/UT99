@@ -15,10 +15,10 @@ class Candle extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.CandleM'
-     CollisionRadius=2.000000
-     CollisionHeight=14.000000
-     bCollideActors=True
-     bCollideWorld=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.CandleM'
+      CollisionRadius=2.000000
+      CollisionHeight=14.000000
+      bCollideActors=True
+      bCollideWorld=True
 }

@@ -27,4 +27,6 @@ function Created()
 
 defaultproperties
 {
+      ListClass=None
+      Items=None
 }

@@ -59,8 +59,11 @@ function Actor SpecialHandling(Pawn Other)
 
 defaultproperties
 {
-     bHiddenEd=True
-     bCollideWhenPlacing=False
-     CollisionRadius=20.000000
-     CollisionHeight=40.000000
+      markedWarpZone=None
+      TriggerActor=None
+      TriggerActor2=None
+      bHiddenEd=True
+      bCollideWhenPlacing=False
+      CollisionRadius=20.000000
+      CollisionHeight=40.000000
 }

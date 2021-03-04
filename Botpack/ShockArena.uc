@@ -7,9 +7,9 @@ class ShockArena expands Arena;
 
 defaultproperties
 {
-     WeaponName=ShockRifle
-     AmmoName=ShockCore
-     WeaponString="Botpack.ShockRifle"
-     AmmoString="Botpack.ShockCore"
-     DefaultWeapon=Class'Botpack.ShockRifle'
+      WeaponName="ShockRifle"
+      AmmoName="ShockCore"
+      WeaponString="Botpack.ShockRifle"
+      AmmoString="Botpack.ShockCore"
+      DefaultWeapon=Class'Botpack.ShockRifle'
 }

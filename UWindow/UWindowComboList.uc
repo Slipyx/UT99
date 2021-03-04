@@ -30,6 +30,17 @@ function Texture GetLookAndFeelTexture()
 	return LookAndFeel.Active;
 }
 
+function Texture GetLookAndFeelTextureEx(out float Scale)
+{
+	if (LookAndFeel.ActiveHiRes != none)
+	{
+		Scale = LookAndFeel.ActiveHiResScale;
+		return LookAndFeel.ActiveHiRes;
+	}
+	Scale = 1.0;
+	return LookAndFeel.Active;
+}
+
 function Setup()
 {
 	VertSB = UWindowVScrollBar(CreateWindow(class'UWindowVScrollBar', 0, WinWidth - 16, 16, WinHeight));
@@ -222,6 +233,19 @@ function LMouseDown(float X, float Y)
 	Root.CaptureMouse();
 }
 
+function bool MouseWheelDown(float ScrollDelta)
+{
+	Super.MouseWheelDown(ScrollDelta);
+	return true;
+}
+
+function bool MouseWheelUp(float ScrollDelta)
+{
+	Super.MouseWheelUp(ScrollDelta);
+	VertSB.Scroll(int(ScrollDelta));
+	return true;
+}
+
 function BeforePaint(Canvas C, float X, float Y)
 {
 	local float W, H, MaxWidth;
@@ -330,5 +354,12 @@ function FocusOtherWindow(UWindowWindow W)
 
 defaultproperties
 {
-     MaxVisible=10
+      Owner=None
+      VertSB=None
+      Selected=None
+      ItemHeight=0
+      VBorder=0
+      HBorder=0
+      TextBorder=0
+      MaxVisible=10
 }

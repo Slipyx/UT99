@@ -30,4 +30,7 @@ function PostBeginPlay()
 
 defaultproperties
 {
+      LocationName=""
+      Radius=0.000000
+      NextLocation=None
 }

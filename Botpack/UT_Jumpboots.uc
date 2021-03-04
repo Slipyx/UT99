@@ -109,22 +109,23 @@ Begin:
 
 defaultproperties
 {
-     ExpireMessage="The AntiGrav Boots have drained."
-     bAutoActivate=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You picked up the AntiGrav boots."
-     ItemName="AntiGrav Boots"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'Botpack.jboot'
-     Charge=3
-     MaxDesireability=0.500000
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'Botpack.Pickups.BootSnd'
-     Icon=Texture'UnrealI.Icons.I_Boots'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'Botpack.jboot'
-     AmbientGlow=64
-     CollisionRadius=22.000000
-     CollisionHeight=14.000000
+      TimeCharge=0
+      ExpireMessage="The AntiGrav Boots have drained."
+      bAutoActivate=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You picked up the AntiGrav boots."
+      ItemName="AntiGrav Boots"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'Botpack.jboot'
+      Charge=3
+      MaxDesireability=0.500000
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'Botpack.Pickups.BootSnd'
+      Icon=Texture'UnrealI.Icons.I_Boots'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'Botpack.jboot'
+      AmbientGlow=64
+      CollisionRadius=22.000000
+      CollisionHeight=14.000000
 }

@@ -6,5 +6,5 @@ class DoubleEnforcer extends Enforcer;
 
 defaultproperties
 {
-     ItemName="Double Enforcers"
+      ItemName="Double Enforcers"
 }

@@ -35,6 +35,6 @@ function SaveConfigs()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuBotmatchClientWindow'
-     WindowTitle="Botmatch"
+      ClientClass=Class'UMenu.UMenuBotmatchClientWindow'
+      WindowTitle="Botmatch"
 }

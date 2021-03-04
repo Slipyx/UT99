@@ -34,6 +34,7 @@ var config string DefaultsSettingsPage;
 var config string DefaultsBotsPage;
 var config string DefaultsServerPage;
 var config string DefaultsIPPolicyPage;
+var config string DefaultsMD5IgnorePage; //utpg: MD5Ignore page
 var config string DefaultsRestartPage;
 
 var config string MessageUHTM;
@@ -97,7 +98,6 @@ function LoadMutators()
 	local string NextMutator, NextDesc;
 	local listitem TempItem;
 	local Mutator M;
-	local int j;
 	local int k;
 
 	ExcludeMutators = None;
@@ -125,10 +125,12 @@ function LoadMutators()
 
 	IncludeMutators = None;
 
-	for (M = Level.Game.BaseMutator.NextMutator; M != None; M = M.NextMutator) {
+	for ( M=Level.Game.BaseMutator.NextMutator ; M!=None ; M=M.NextMutator )
+	{
 		TempItem = ExcludeMutators.DeleteElement(ExcludeMutators, String(M.Class));
 
-		if (TempItem != None) {
+		if (TempItem != None)
+		{
 			if (IncludeMutators == None)
 				IncludeMutators = TempItem;
 			else
@@ -225,7 +227,7 @@ function ApplyMapList(out ListItem ExcludeMaps, out ListItem IncludeMaps, String
 function ReloadExcludeMaps(out ListItem ExcludeMaps, String GameType)
 {
 	local class<GameInfo>	GameClass;
-	local string FirstMap, NextMap, TestMap, MapName;
+	local string FirstMap, NextMap, TestMap;
 	local ListItem TempItem;
 
 	GameClass = class<GameInfo>(DynamicLoadObject(GameType, class'Class'));
@@ -251,7 +253,11 @@ function ReloadExcludeMaps(out ListItem ExcludeMaps, String GameType)
 			if (ExcludeMaps == None)
 				ExcludeMaps = TempItem;
 			else
-				ExcludeMaps.AddSortedElement(ExcludeMaps, TempItem);
+			{
+				// Maplists returned by GetMapName get sorted in C++ as of the Unreal Tournament 469 patch
+				//ExcludeMaps.AddSortedElement(ExcludeMaps, TempItem);
+				ExcludeMaps.AddElement(TempItem);
+			}
 		}
 
 		NextMap = Level.GetMapName(GameClass.Default.MapPrefix, NextMap, 1);
@@ -396,7 +402,7 @@ event Query(WebRequest Request, WebResponse Response)
 	}
 
 	//Response.Subst("BugAddress", "utbugs"$Level.EngineVersion$"@epicgames.com");
-  Response.Subst("BugAddress", "utpg@utpg.org");
+    //Response.Subst("BugAddress", "utpg@utpg.org");
 	// Match query function.  checks URI and calls appropriate input/output function
 	switch (Mid(Request.URI, 1)) {
 	case "":
@@ -463,6 +469,10 @@ event Query(WebRequest Request, WebResponse Response)
 		Response.Subst("Area", "Defaults");
 		Response.Subst("Section", "IP Bans / Accepts");
 		QueryDefaultsIPPolicy(Request, Response); break;
+  case DefaultsMD5IgnorePage: //utpg: MD5Ignore page
+		Response.Subst("Area", "Defaults");
+		Response.Subst("Section", "MD5 Ignore");
+		QueryDefaultsMD5Ignore(Request, Response); break;
 	default:
 		Response.SendText("ERROR: Page not found or enabled.");
 
@@ -564,7 +574,7 @@ function QueryCurrentPlayers(WebRequest Request, WebResponse Response)
 	local string Sort, PlayerListSubst, TempStr, S;
 	local ListItem PlayerList, TempItem;
 	local Pawn P;
-	local int i, PawnCount, j, Minutes, Seconds;
+	local int PawnCount, j, Minutes, Seconds;
 	local string IP;
 
 	if (Level.Game != None && DeathMatchPlus(Level.Game) != None &&
@@ -580,7 +590,7 @@ function QueryCurrentPlayers(WebRequest Request, WebResponse Response)
 	Sort = Request.GetVariable("Sort", "Name");
 	for (P=Level.PawnList; P!=None; P=P.NextPawn)
 	{
-		if(		PlayerPawn(P) != None
+		if (	PlayerPawn(P) != None
 			&&	P.PlayerReplicationInfo != None
 			&&	NetConnection(PlayerPawn(P).Player) != None)
 		{
@@ -589,7 +599,7 @@ function QueryCurrentPlayers(WebRequest Request, WebResponse Response)
 				IP = PlayerPawn(P).GetPlayerNetworkAddress();
 				if(Level.Game.CheckIPPolicy(IP))
 				{
-					IP = Left(IP, InStr(IP, ":"));
+					IP = class'InternetInfo'.static.StripPort(IP);
 					Log("Adding IP Ban for: "$IP);
 					for(j=0;j<ArrayCount(Level.Game.IPPolicies);j++)
 						if(Level.Game.IPPolicies[j] == "")
@@ -604,9 +614,9 @@ function QueryCurrentPlayers(WebRequest Request, WebResponse Response)
 			}
 			else
 			{
-				if(Request.GetVariable("KickPlayer"$string(P.PlayerReplicationInfo.PlayerID)) != "")
+				if ( Request.GetVariable("KickPlayer"$string(P.PlayerReplicationInfo.PlayerID)) != "" )
 				{
-					if (Level.Game.bLogAdminActions)
+					if ( Level.Game.bLogAdminActions )
 						log("Webadmin kicked"@P.PlayerReplicationInfo.PlayerName@PlayerPawn(P).GetPlayerNetworkAddress()@"from"@Left(string(Level), InStr(string(Level), "."))$".unr",'AdminAction');
 					P.Destroy();
 				}
@@ -636,10 +646,10 @@ function QueryCurrentPlayers(WebRequest Request, WebResponse Response)
 				else
 					TempStr = "";
 			}
-			if(PlayerPawn(P) != None)
+			if ( PlayerPawn(P) != None )
 			{
 				IP = PlayerPawn(P).GetPlayerNetworkAddress();
-				IP = Left(IP, InStr(IP, ":"));
+				IP = class'InternetInfo'.static.StripPort(IP);
 			}
 			else
 				IP = "";
@@ -760,8 +770,8 @@ function QueryCurrentConsole(WebRequest Request, WebResponse Response)
 function QueryCurrentConsoleLog(WebRequest Request, WebResponse Response)
 {
 	local ListItem TempItem;
-	local String LogSubst, LogStr, S;
-	local int i, Minutes, Seconds;
+	local String LogSubst, S;
+	local int Minutes, Seconds;
 
 	if (Level.Game != None && DeathMatchPlus(Level.Game) != None &&
 		DeathMatchPlus(Level.Game).TimeLimit > 0.0)
@@ -948,6 +958,7 @@ function QueryDefaultsMenu(WebRequest Request, WebResponse Response)
 	Response.Subst("BotsBG",	DefaultBG);
 	Response.Subst("ServerBG",	DefaultBG);
 	Response.Subst("IPPolicyBG",DefaultBG);
+  Response.Subst("MD5IgnoreBG",DefaultBG);
 	Response.Subst("RestartBG", DefaultBG);
 
 	switch(Page) {
@@ -963,6 +974,8 @@ function QueryDefaultsMenu(WebRequest Request, WebResponse Response)
 		Response.Subst("ServerBG",	HighlightedBG); break;
 	case DefaultsIPPolicyPage:
 		Response.Subst("IPPolicyBG",HighlightedBG); break;
+  case DefaultsMD5IgnorePage:
+		Response.Subst("MD5IgnoreBG",HighlightedBG); break;
 	case DefaultsRestartPage:
 		Response.Subst("RestartBG", HighlightedBG); break;
 	}
@@ -974,6 +987,7 @@ function QueryDefaultsMenu(WebRequest Request, WebResponse Response)
 	Response.Subst("BotsURI", 		DefaultsPage$"?GameType="$GameType$"&Page="$DefaultsBotsPage);
 	Response.Subst("ServerURI", 	DefaultsPage$"?GameType="$GameType$"&Page="$DefaultsServerPage);
 	Response.Subst("IPPolicyURI", 	DefaultsPage$"?GameType="$GameType$"&Page="$DefaultsIPPolicyPage);
+  Response.Subst("MD5IgnoreURI", 	DefaultsPage$"?GameType="$GameType$"&Page="$DefaultsMD5IgnorePage); //utpg: MD5Ignore page  
 	Response.Subst("RestartURI", 	DefaultsPage$"?GameType="$GameType$"&Page="$DefaultsRestartPage);
 
 	Response.IncludeUHTM(DefaultsMenuPage$".uhtm");
@@ -1535,35 +1549,101 @@ function QueryDefaultsIPPolicy(WebRequest Request, WebResponse Response)
 	Response.IncludeUHTM(DefaultsIPPolicyPage$"-f.uhtm");
 }
 
+// utpg: MD5 Ignore page
+function QueryDefaultsMD5Ignore(WebRequest Request, WebResponse Response)
+{
+  local int i;
+  local string tmp, tmp2, md5list;
+
+  if(Request.GetVariable("Update") != "")
+	{
+    // ignores
+    tmp = Request.GetVariable("MD5IgnoreTable");
+    i = InStr(tmp, chr(10));
+    while (i > -1)
+    {      
+      tmp2 = trim(Left(tmp, i));
+      if (tmp2 != "") 
+      {
+        if (md5list != "") md5list = md5list$",";
+        md5list = md5list$"\""$tmp2$"\"";
+      }
+      tmp = Mid(tmp, i+1);
+      i = InStr(tmp, chr(10));
+    }
+    tmp = trim(tmp);
+    if (tmp != "") 
+    {
+      if (md5list != "") md5list = md5list$",";
+      md5list = md5list$"\""$tmp$"\"";
+    }
+    if (md5list != "") 
+    {
+      Level.ConsoleCommand("set Engine.GameEngine MD5Ignore ("$md5list$")");
+      Level.Game.SaveConfig();
+    }    
+  }
+  // ignore
+  md5list = "";
+  tmp = Level.ConsoleCommand("get Engine.GameEngine MD5Ignore");
+  tmp = Mid(tmp, 1, Len(tmp)-2);
+  i = InStr(tmp, ",");
+  while (i > -1)
+  {
+    tmp2 = Left(tmp, i);
+    md5list = md5list$Mid(tmp2, 1, Len(tmp2)-2)$chr(10);
+    tmp = Mid(tmp, i+1);
+    i = InStr(tmp, ",");
+  }
+  md5list = md5list$Mid(tmp, 1, Len(tmp)-2);
+  Response.Subst("MD5IgnoreList", md5list);
+  Response.Subst("PostAction", DefaultsMD5IgnorePage);
+	Response.IncludeUHTM("defaults_md5ignore.uhtm");
+}
+
+function string Trim(coerce string in)
+{
+  while ((Left(in, 1) == " ") || (Left(in, 1) == chr(13))) in = Right(in, Len(in) - 1);
+  while ((Right(in, 1) == " ") || (Right(in, 1) == chr(13))) in = Left(in, Len(in) - 1);
+  return in;
+}
+
 defaultproperties
 {
-     SpectatorType=Class'UTServerAdmin.UTServerAdminSpectator'
-     MenuPage="menu"
-     RootPage="root"
-     CurrentPage="current"
-     CurrentMenuPage="current_menu"
-     CurrentIndexPage="current_index"
-     CurrentPlayersPage="current_players"
-     CurrentGamePage="current_game"
-     CurrentConsolePage="current_console"
-     CurrentConsoleLogPage="current_console_log"
-     CurrentConsoleSendPage="current_console_send"
-     DefaultSendText="say "
-     CurrentMutatorsPage="current_mutators"
-     CurrentRestartPage="current_restart"
-     DefaultsPage="defaults"
-     DefaultsMenuPage="defaults_menu"
-     DefaultsMapsPage="defaults_maps"
-     DefaultsRulesPage="defaults_rules"
-     DefaultsSettingsPage="defaults_settings"
-     DefaultsBotsPage="defaults_bots"
-     DefaultsServerPage="defaults_server"
-     DefaultsIPPolicyPage="defaults_ippolicy"
-     DefaultsRestartPage="defaults_restart"
-     MessageUHTM="message.uhtm"
-     DefaultBG="#aaaaaa"
-     HighlightedBG="#ffffff"
-     AdminRealm="UT Remote Admin Server"
-     AdminUsername="admin"
-     AdminPassword="admin"
+      SpectatorType=Class'UTServerAdmin.UTServerAdminSpectator'
+      Spectator=None
+      GameTypeList=None
+      IncludeMaps=None
+      ExcludeMaps=None
+      IncludeMutators=None
+      ExcludeMutators=None
+      MenuPage="menu"
+      RootPage="root"
+      CurrentPage="current"
+      CurrentMenuPage="current_menu"
+      CurrentIndexPage="current_index"
+      CurrentPlayersPage="current_players"
+      CurrentGamePage="current_game"
+      CurrentConsolePage="current_console"
+      CurrentConsoleLogPage="current_console_log"
+      CurrentConsoleSendPage="current_console_send"
+      DefaultSendText="say "
+      CurrentMutatorsPage="current_mutators"
+      CurrentRestartPage="current_restart"
+      DefaultsPage="defaults"
+      DefaultsMenuPage="defaults_menu"
+      DefaultsMapsPage="defaults_maps"
+      DefaultsRulesPage="defaults_rules"
+      DefaultsSettingsPage="defaults_settings"
+      DefaultsBotsPage="defaults_bots"
+      DefaultsServerPage="defaults_server"
+      DefaultsIPPolicyPage="defaults_ippolicy"
+      DefaultsMD5IgnorePage="default_md5ignore"
+      DefaultsRestartPage="defaults_restart"
+      MessageUHTM="message.uhtm"
+      DefaultBG="#aaaaaa"
+      HighlightedBG="#ffffff"
+      AdminRealm="UT Remote Admin Server"
+      AdminUsername="admin"
+      AdminPassword="admin"
 }

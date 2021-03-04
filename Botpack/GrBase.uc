@@ -30,8 +30,8 @@ class GrBase extends ut_Decoration;
 
 defaultproperties
 {
-     bStatic=False
-     RemoteRole=ROLE_None
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.GrBaseM'
+      bStatic=False
+      RemoteRole=ROLE_None
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.GrBaseM'
 }

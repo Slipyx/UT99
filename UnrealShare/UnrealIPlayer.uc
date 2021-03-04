@@ -292,21 +292,36 @@ static function SetMultiSkin( Actor SkinActor, string SkinName, string FaceName,
 
 defaultproperties
 {
-     bSinglePlayer=True
-     bCanStrafe=True
-     MeleeRange=50.000000
-     GroundSpeed=400.000000
-     AirSpeed=400.000000
-     AccelRate=2048.000000
-     UnderWaterTime=20.000000
-     Intelligence=BRAINS_HUMAN
-     Land=Sound'UnrealShare.Generic.Land1'
-     WaterStep=Sound'UnrealShare.Generic.LSplash'
-     AnimSequence=WalkSm
-     DrawType=DT_Mesh
-     LightBrightness=70
-     LightHue=40
-     LightSaturation=128
-     LightRadius=6
-     RotationRate=(Pitch=3072,Yaw=65000,Roll=2048)
+      drown=None
+      breathagain=None
+      Footstep1=None
+      Footstep2=None
+      Footstep3=None
+      HitSound3=None
+      HitSound4=None
+      Die2=None
+      Die3=None
+      Die4=None
+      GaspSound=None
+      UWHit1=None
+      UWHit2=None
+      LandGrunt=None
+      VoiceType=None
+      bSinglePlayer=True
+      bCanStrafe=True
+      MeleeRange=50.000000
+      GroundSpeed=400.000000
+      AirSpeed=400.000000
+      AccelRate=2048.000000
+      UnderWaterTime=20.000000
+      Intelligence=BRAINS_HUMAN
+      Land=Sound'UnrealShare.Generic.Land1'
+      WaterStep=Sound'UnrealShare.Generic.LSplash'
+      AnimSequence="WalkSm"
+      DrawType=DT_Mesh
+      LightBrightness=70
+      LightHue=40
+      LightSaturation=128
+      LightRadius=6
+      RotationRate=(Pitch=3072,Yaw=65000,Roll=2048)
 }

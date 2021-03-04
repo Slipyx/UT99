@@ -66,22 +66,22 @@ Begin:
 
 defaultproperties
 {
-     speed=800.000000
-     MaxSpeed=1200.000000
-     Damage=16.000000
-     SpawnSound=Sound'UnrealShare.Skaarj.Skrjshot'
-     ImpactSound=Sound'UnrealShare.Skaarj.SkrjImp'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=7.300000
-     DrawType=DT_Sprite
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.SKEffect.Skj_a00'
-     DrawScale=0.700000
-     bUnlit=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=149
-     LightHue=165
-     LightSaturation=186
-     LightRadius=4
+      speed=800.000000
+      MaxSpeed=1200.000000
+      Damage=16.000000
+      SpawnSound=Sound'UnrealShare.Skaarj.Skrjshot'
+      ImpactSound=Sound'UnrealShare.Skaarj.SkrjImp'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=7.300000
+      DrawType=DT_Sprite
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.SKEffect.Skj_a00'
+      DrawScale=0.700000
+      bUnlit=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=149
+      LightHue=165
+      LightSaturation=186
+      LightRadius=4
 }

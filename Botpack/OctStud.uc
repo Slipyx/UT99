@@ -15,5 +15,5 @@ class OctStud extends StudMetal;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.OctStud'
+      Mesh=LodMesh'Botpack.OctStud'
 }

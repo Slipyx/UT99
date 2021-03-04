@@ -11,4 +11,7 @@ function Query(WebRequest Request, WebResponse Response);
 
 defaultproperties
 {
+      Level=None
+      WebServer=None
+      Path=""
 }

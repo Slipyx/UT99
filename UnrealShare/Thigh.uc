@@ -13,7 +13,7 @@ class Thigh extends PlayerChunks;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.ThighM'
-     CollisionRadius=6.000000
-     CollisionHeight=3.000000
+      Mesh=LodMesh'UnrealShare.ThighM'
+      CollisionRadius=6.000000
+      CollisionHeight=3.000000
 }

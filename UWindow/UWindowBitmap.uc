@@ -27,4 +27,8 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      t=None
+      R=(X=0,Y=0,W=0,H=0)
+      bStretch=False
+      bCenter=False
 }

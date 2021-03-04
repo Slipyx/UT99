@@ -15,13 +15,13 @@ class SearchLight extends Flashlight;
 
 defaultproperties
 {
-     PickupMessage="You picked up the Searchlight."
-     RespawnTime=300.000000
-     PickupViewMesh=LodMesh'UnrealI.BigFlash'
-     Charge=20000
-     Icon=Texture'UnrealI.Icons.I_BigFlash'
-     Mesh=LodMesh'UnrealI.BigFlash'
-     CollisionHeight=12.000000
-     LightHue=167
-     LightRadius=13
+      PickupMessage="You picked up the Searchlight."
+      RespawnTime=300.000000
+      PickupViewMesh=LodMesh'UnrealI.BigFlash'
+      Charge=20000
+      Icon=Texture'UnrealI.Icons.I_BigFlash'
+      Mesh=LodMesh'UnrealI.BigFlash'
+      CollisionHeight=12.000000
+      LightHue=167
+      LightRadius=13
 }

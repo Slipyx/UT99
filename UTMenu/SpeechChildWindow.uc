@@ -214,7 +214,7 @@ function Notify(UWindowWindow B, byte E)
 	{
 		case DE_DoubleClick:
 		case DE_Click:
-			GetPlayerOwner().PlaySound(sound'SpeechWindowClick', SLOT_Interact);
+			GetPlayerOwner().PlaySound( Sound'SpeechWindowClick', SLOT_Interface );
 			for (i=0; i<NumOptions; i++)
 			{
 				if (B == OptionButtons[i])
@@ -250,6 +250,40 @@ function Notify(UWindowWindow B, byte E)
 
 defaultproperties
 {
-     TopTexture=Texture'UTMenu.Skins.OrdersTop2'
-     WindowTitle=""
+      OptionOffset=0
+      MinOptions=0
+      OtherOffset(0)=0
+      OtherOffset(1)=0
+      OtherOffset(2)=0
+      OtherOffset(3)=0
+      OtherOffset(4)=0
+      OtherOffset(5)=0
+      OtherOffset(6)=0
+      OtherOffset(7)=0
+      OtherOffset(8)=0
+      OtherOffset(9)=0
+      OtherOffset(10)=0
+      OtherOffset(11)=0
+      OtherOffset(12)=0
+      OtherOffset(13)=0
+      OtherOffset(14)=0
+      OtherOffset(15)=0
+      OtherOffset(16)=0
+      OtherOffset(17)=0
+      OtherOffset(18)=0
+      OtherOffset(19)=0
+      OtherOffset(20)=0
+      OtherOffset(21)=0
+      OtherOffset(22)=0
+      OtherOffset(23)=0
+      OtherOffset(24)=0
+      OtherOffset(25)=0
+      OtherOffset(26)=0
+      OtherOffset(27)=0
+      OtherOffset(28)=0
+      OtherOffset(29)=0
+      OtherOffset(30)=0
+      OtherOffset(31)=0
+      TopTexture=Texture'UTMenu.Skins.OrdersTop2'
+      WindowTitle=""
 }

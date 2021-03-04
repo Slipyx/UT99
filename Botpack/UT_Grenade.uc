@@ -140,21 +140,26 @@ simulated function Explosion(vector HitLocation)
 
 defaultproperties
 {
-     speed=600.000000
-     MaxSpeed=1000.000000
-     Damage=80.000000
-     MomentumTransfer=50000
-     MyDamageType=GrenadeDeath
-     ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
-     ExplosionDecal=Class'Botpack.BlastMark'
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     AnimSequence=WingIn
-     Mesh=LodMesh'Botpack.UTGrenade'
-     DrawScale=0.020000
-     AmbientGlow=64
-     bUnlit=True
-     bBounce=True
-     bFixedRotationDir=True
-     DesiredRotation=(Pitch=12000,Yaw=5666,Roll=2334)
+      bCanHitOwner=False
+      bHitWater=False
+      Count=0.000000
+      SmokeRate=0.000000
+      NumExtraGrenades=0
+      speed=600.000000
+      MaxSpeed=1000.000000
+      Damage=80.000000
+      MomentumTransfer=50000
+      MyDamageType="GrenadeDeath"
+      ImpactSound=Sound'UnrealShare.Eightball.GrenadeFloor'
+      ExplosionDecal=Class'Botpack.BlastMark'
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      AnimSequence="WingIn"
+      Mesh=LodMesh'Botpack.UTGrenade'
+      DrawScale=0.020000
+      AmbientGlow=64
+      bUnlit=True
+      bBounce=True
+      bFixedRotationDir=True
+      DesiredRotation=(Pitch=12000,Yaw=5666,Roll=2334)
 }

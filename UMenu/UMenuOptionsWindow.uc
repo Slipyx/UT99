@@ -44,6 +44,6 @@ function Resized()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuOptionsClientWindow'
-     WindowTitle="Preferences"
+      ClientClass=Class'UMenu.UMenuOptionsClientWindow'
+      WindowTitle="Preferences"
 }

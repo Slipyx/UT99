@@ -191,7 +191,15 @@ Begin:
 
 defaultproperties
 {
-     ResolveFailedError="The master server could not be resolved: "
-     TimeOutError="Timeout talking to the master server"
-     CouldNotConnectError="Connecting to the master server timed out: "
+      OwnerFactory=None
+      MasterServerIpAddr=(Addr=0,Port=0)
+      bOpened=False
+      MasterServerAddress=""
+      MasterServerTCPPort=0
+      Region=0
+      MasterServerTimeout=0
+      GameName=""
+      ResolveFailedError="The master server could not be resolved: "
+      TimeOutError="Timeout talking to the master server"
+      CouldNotConnectError="Connecting to the master server timed out: "
 }

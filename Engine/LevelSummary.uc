@@ -18,4 +18,10 @@ var() localized string LevelEnterText;
 
 defaultproperties
 {
+      Title=""
+      Author=""
+      IdealPlayerCount=""
+      RecommendedEnemies=0
+      RecommendedTeammates=0
+      LevelEnterText=""
 }

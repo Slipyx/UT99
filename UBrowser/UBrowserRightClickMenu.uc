@@ -84,12 +84,22 @@ function ShowWindow()
 
 defaultproperties
 {
-     PlayName="&Play on This Server"
-     RefreshName="&Refresh All Servers"
-     InfoName="&Server and Player Info"
-     FavoritesName="Add to &Favorites"
-     RefreshServerName="P&ing This Server"
-     PingAllName="Ping &All Servers"
-     OpenLocationName="Open &Location"
-     CopyName="&Copy This Server Location"
+      Play=None
+      Copy=None
+      Refresh=None
+      RefreshServer=None
+      PingAll=None
+      Info=None
+      Favorites=None
+      OpenLocation=None
+      PlayName="&Play on This Server"
+      RefreshName="&Refresh All Servers"
+      InfoName="&Server and Player Info"
+      FavoritesName="Add to &Favorites"
+      RefreshServerName="P&ing This Server"
+      PingAllName="Ping &All Servers"
+      OpenLocationName="Open &Location"
+      CopyName="&Copy This Server Location"
+      Grid=None
+      List=None
 }

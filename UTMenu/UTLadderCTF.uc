@@ -109,12 +109,12 @@ function CheckOpenCondition()
 
 defaultproperties
 {
-     ShortTitle="CTF"
-     GameType="Botpack.CTFGame"
-     TrophyMap="EOL_CTF.unr"
-     LadderName="Capture The Flag"
-     Ladder=Class'Botpack.LadderCTF'
-     DemoLadder=Class'Botpack.LadderCTFDemo'
-     GOTYLadder=Class'Botpack.LadderCTFGOTY'
-     LadderTrophy=Texture'UTMenu.Skins.TrophyCTF'
+      ShortTitle="CTF"
+      GameType="Botpack.CTFGame"
+      TrophyMap="EOL_CTF.unr"
+      LadderName="Capture The Flag"
+      Ladder=Class'Botpack.LadderCTF'
+      DemoLadder=Class'Botpack.LadderCTFDemo'
+      GOTYLadder=Class'Botpack.LadderCTFGOTY'
+      LadderTrophy=Texture'UTMenu.Skins.TrophyCTF'
 }

@@ -39,7 +39,7 @@ simulated function SpawnEffects()
 
 defaultproperties
 {
-     LifeSpan=0.900000
-     Skin=Texture'Botpack.Effects.pPurpleRing'
-     DrawScale=4.000000
+      LifeSpan=0.900000
+      Skin=Texture'Botpack.Effects.pPurpleRing'
+      DrawScale=4.000000
 }

@@ -12,15 +12,15 @@ class RocketPack extends TournamentAmmo;
 
 defaultproperties
 {
-     AmmoAmount=12
-     MaxAmmo=48
-     UsedInWeaponSlot(5)=1
-     PickupMessage="You picked up a rocket pack."
-     PickupViewMesh=LodMesh'Botpack.RocketPackMesh'
-     MaxDesireability=0.300000
-     Physics=PHYS_Falling
-     Mesh=LodMesh'Botpack.RocketPackMesh'
-     CollisionRadius=27.000000
-     CollisionHeight=12.000000
-     bCollideActors=True
+      AmmoAmount=12
+      MaxAmmo=48
+      UsedInWeaponSlot(5)=1
+      PickupMessage="You picked up a rocket pack."
+      PickupViewMesh=LodMesh'Botpack.RocketPackMesh'
+      MaxDesireability=0.300000
+      Physics=PHYS_Falling
+      Mesh=LodMesh'Botpack.RocketPackMesh'
+      CollisionRadius=27.000000
+      CollisionHeight=12.000000
+      bCollideActors=True
 }

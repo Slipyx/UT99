@@ -283,4 +283,33 @@ Close:
 
 defaultproperties
 {
+      OpenTimes(0)=0.000000
+      OpenTimes(1)=0.000000
+      OpenTimes(2)=0.000000
+      OpenTimes(3)=0.000000
+      OpenTimes(4)=0.000000
+      OpenTimes(5)=0.000000
+      CloseTimes(0)=0.000000
+      CloseTimes(1)=0.000000
+      CloseTimes(2)=0.000000
+      CloseTimes(3)=0.000000
+      CloseTimes(4)=0.000000
+      CloseTimes(5)=0.000000
+      Tags(0)="None"
+      Tags(1)="None"
+      Tags(2)="None"
+      Tags(3)="None"
+      Tags(4)="None"
+      Tags(5)="None"
+      Events(0)="None"
+      Events(1)="None"
+      Events(2)="None"
+      Events(3)="None"
+      Events(4)="None"
+      Events(5)="None"
+      AttachTag="None"
+      LastKeyNum=0
+      NextKeyNum=0
+      MoveDirection=0
+      bMoveKey=False
 }

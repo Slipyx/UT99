@@ -31,4 +31,8 @@ function Tick(float Delta)
 
 defaultproperties
 {
+      bClosed=False
+      bOpening=False
+      DoorPos=0.000000
+      PendingPos=0.000000
 }

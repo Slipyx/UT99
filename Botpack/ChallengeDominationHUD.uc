@@ -79,5 +79,5 @@ simulated function bool SpecialIdentify(Canvas Canvas, Actor Other )
 
 defaultproperties
 {
-     ServerInfoClass=Class'Botpack.ServerInfoDOM'
+      ServerInfoClass=Class'Botpack.ServerInfoDOM'
 }

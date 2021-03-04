@@ -118,7 +118,7 @@ var(Events) name          Event;         // The event this actor causes.
 var Actor                 Target;        // Actor we're aiming at (other uses as well).
 var Pawn                  Instigator;    // Pawn responsible for damage.
 var(Sound) sound        AmbientSound;    // Ambient sound effect.
-var Inventory             Inventory;     // Inventory chain.
+var travel Inventory      Inventory;     // Inventory chain.
 var const Actor           Base;          // Moving brush actor we're standing on.
 var const PointRegion     Region;        // Region this actor is in.
 var(Movement)	name	  AttachTag;
@@ -127,6 +127,7 @@ var(Movement)	name	  AttachTag;
 var const byte            StandingCount; // Count of actors standing on this actor.
 var const byte            MiscNumber;    // Internal use.
 var const byte            LatentByte;    // Internal latent function use.
+var byte                  TransientSoundPriority; // OldUnreal sound priority control. We squeezed this variable into the 1 byte padding zone between LatentByte and LatentInt to preserve binary compatibility
 var const int             LatentInt;     // Internal latent function use.
 var const float           LatentFloat;   // Internal latent function use.
 var const actor           LatentActor;   // Internal latent function use.
@@ -255,13 +256,13 @@ var(Sound) float TransientSoundRadius;
 // Sound slots for actors.
 enum ESoundSlot
 {
-	SLOT_None,
+	SLOT_None,      // Allows multiple interruptless playback of multiple Sounds in this slot.
 	SLOT_Misc,
 	SLOT_Pain,
 	SLOT_Interact,
 	SLOT_Ambient,
 	SLOT_Talk,
-	SLOT_Interface,
+	SLOT_Interface, // Will make this sound playback as is without any spatial effects or distance attenuation applied.
 };
 
 // Music transitions.
@@ -436,70 +437,70 @@ enum EInputAction
 // Input keys.
 enum EInputKey
 {
-/*00*/	IK_None			,IK_LeftMouse	,IK_RightMouse	,IK_Cancel		,
-/*04*/	IK_MiddleMouse	,IK_Unknown05	,IK_Unknown06	,IK_Unknown07	,
-/*08*/	IK_Backspace	,IK_Tab         ,IK_Unknown0A	,IK_Unknown0B	,
-/*0C*/	IK_Unknown0C	,IK_Enter	    ,IK_Unknown0E	,IK_Unknown0F	,
-/*10*/	IK_Shift		,IK_Ctrl	    ,IK_Alt			,IK_Pause       ,
-/*14*/	IK_CapsLock		,IK_Unknown15	,IK_Unknown16	,IK_Unknown17	,
-/*18*/	IK_Unknown18	,IK_Unknown19	,IK_Unknown1A	,IK_Escape		,
-/*1C*/	IK_Unknown1C	,IK_Unknown1D	,IK_Unknown1E	,IK_Unknown1F	,
-/*20*/	IK_Space		,IK_PageUp      ,IK_PageDown    ,IK_End         ,
-/*24*/	IK_Home			,IK_Left        ,IK_Up          ,IK_Right       ,
-/*28*/	IK_Down			,IK_Select      ,IK_Print       ,IK_Execute     ,
-/*2C*/	IK_PrintScrn	,IK_Insert      ,IK_Delete      ,IK_Help		,
-/*30*/	IK_0			,IK_1			,IK_2			,IK_3			,
-/*34*/	IK_4			,IK_5			,IK_6			,IK_7			,
-/*38*/	IK_8			,IK_9			,IK_Unknown3A	,IK_Unknown3B	,
-/*3C*/	IK_Unknown3C	,IK_Unknown3D	,IK_Unknown3E	,IK_Unknown3F	,
-/*40*/	IK_Unknown40	,IK_A			,IK_B			,IK_C			,
-/*44*/	IK_D			,IK_E			,IK_F			,IK_G			,
-/*48*/	IK_H			,IK_I			,IK_J			,IK_K			,
-/*4C*/	IK_L			,IK_M			,IK_N			,IK_O			,
-/*50*/	IK_P			,IK_Q			,IK_R			,IK_S			,
-/*54*/	IK_T			,IK_U			,IK_V			,IK_W			,
-/*58*/	IK_X			,IK_Y			,IK_Z			,IK_Unknown5B	,
-/*5C*/	IK_Unknown5C	,IK_Unknown5D	,IK_Unknown5E	,IK_Unknown5F	,
-/*60*/	IK_NumPad0		,IK_NumPad1     ,IK_NumPad2     ,IK_NumPad3     ,
-/*64*/	IK_NumPad4		,IK_NumPad5     ,IK_NumPad6     ,IK_NumPad7     ,
-/*68*/	IK_NumPad8		,IK_NumPad9     ,IK_GreyStar    ,IK_GreyPlus    ,
-/*6C*/	IK_Separator	,IK_GreyMinus	,IK_NumPadPeriod,IK_GreySlash   ,
-/*70*/	IK_F1			,IK_F2          ,IK_F3          ,IK_F4          ,
-/*74*/	IK_F5			,IK_F6          ,IK_F7          ,IK_F8          ,
-/*78*/	IK_F9           ,IK_F10         ,IK_F11         ,IK_F12         ,
-/*7C*/	IK_F13			,IK_F14         ,IK_F15         ,IK_F16         ,
-/*80*/	IK_F17			,IK_F18         ,IK_F19         ,IK_F20         ,
-/*84*/	IK_F21			,IK_F22         ,IK_F23         ,IK_F24         ,
-/*88*/	IK_Unknown88	,IK_Unknown89	,IK_Unknown8A	,IK_Unknown8B	,
-/*8C*/	IK_Unknown8C	,IK_Unknown8D	,IK_Unknown8E	,IK_Unknown8F	,
-/*90*/	IK_NumLock		,IK_ScrollLock  ,IK_Unknown92	,IK_Unknown93	,
-/*94*/	IK_Unknown94	,IK_Unknown95	,IK_Unknown96	,IK_Unknown97	,
-/*98*/	IK_Unknown98	,IK_Unknown99	,IK_Unknown9A	,IK_Unknown9B	,
-/*9C*/	IK_Unknown9C	,IK_Unknown9D	,IK_Unknown9E	,IK_Unknown9F	,
-/*A0*/	IK_LShift		,IK_RShift      ,IK_LControl    ,IK_RControl    ,
-/*A4*/	IK_UnknownA4	,IK_UnknownA5	,IK_UnknownA6	,IK_UnknownA7	,
-/*A8*/	IK_UnknownA8	,IK_UnknownA9	,IK_UnknownAA	,IK_UnknownAB	,
-/*AC*/	IK_UnknownAC	,IK_UnknownAD	,IK_UnknownAE	,IK_UnknownAF	,
-/*B0*/	IK_UnknownB0	,IK_UnknownB1	,IK_UnknownB2	,IK_UnknownB3	,
-/*B4*/	IK_UnknownB4	,IK_UnknownB5	,IK_UnknownB6	,IK_UnknownB7	,
-/*B8*/	IK_UnknownB8	,IK_UnknownB9	,IK_Semicolon	,IK_Equals		,
-/*BC*/	IK_Comma		,IK_Minus		,IK_Period		,IK_Slash		,
-/*C0*/	IK_Tilde		,IK_UnknownC1	,IK_UnknownC2	,IK_UnknownC3	,
-/*C4*/	IK_UnknownC4	,IK_UnknownC5	,IK_UnknownC6	,IK_UnknownC7	,
-/*C8*/	IK_Joy1	        ,IK_Joy2	    ,IK_Joy3	    ,IK_Joy4	    ,
-/*CC*/	IK_Joy5	        ,IK_Joy6	    ,IK_Joy7	    ,IK_Joy8	    ,
-/*D0*/	IK_Joy9	        ,IK_Joy10	    ,IK_Joy11	    ,IK_Joy12		,
-/*D4*/	IK_Joy13		,IK_Joy14	    ,IK_Joy15	    ,IK_Joy16	    ,
-/*D8*/	IK_UnknownD8	,IK_UnknownD9	,IK_UnknownDA	,IK_LeftBracket	,
-/*DC*/	IK_Backslash	,IK_RightBracket,IK_SingleQuote	,IK_UnknownDF	,
-/*E0*/  IK_JoyX			,IK_JoyY		,IK_JoyZ		,IK_JoyR		,
-/*E4*/	IK_MouseX		,IK_MouseY		,IK_MouseZ		,IK_MouseW		,
-/*E8*/	IK_JoyU			,IK_JoyV		,IK_UnknownEA	,IK_UnknownEB	,
-/*EC*/	IK_MouseWheelUp ,IK_MouseWheelDown,IK_Unknown10E,UK_Unknown10F  ,
-/*F0*/	IK_JoyPovUp     ,IK_JoyPovDown	,IK_JoyPovLeft	,IK_JoyPovRight	,
-/*F4*/	IK_UnknownF4	,IK_UnknownF5	,IK_Attn		,IK_CrSel		,
-/*F8*/	IK_ExSel		,IK_ErEof		,IK_Play		,IK_Zoom		,
-/*FC*/	IK_NoName		,IK_PA1			,IK_OEMClear
+	/*00*/	IK_None			,IK_LeftMouse	,IK_RightMouse	,IK_Cancel		,
+	/*04*/	IK_MiddleMouse	,IK_Unknown05	,IK_Unknown06	,IK_Unknown07	,
+	/*08*/	IK_Backspace	,IK_Tab         ,IK_Unknown0A	,IK_Unknown0B	,
+	/*0C*/	IK_Unknown0C	,IK_Enter	    ,IK_Unknown0E	,IK_Unknown0F	,
+	/*10*/	IK_Shift		,IK_Ctrl	    ,IK_Alt			,IK_Pause       ,
+	/*14*/	IK_CapsLock		,IK_MouseButton4,IK_MouseButton5,IK_MouseButton6,
+	/*18*/	IK_MouseButton7	,IK_MouseButton8,IK_Unknown1A	,IK_Escape		,
+	/*1C*/	IK_Unknown1C	,IK_Unknown1D	,IK_Unknown1E	,IK_Unknown1F	,
+	/*20*/	IK_Space		,IK_PageUp      ,IK_PageDown    ,IK_End         ,
+	/*24*/	IK_Home			,IK_Left        ,IK_Up          ,IK_Right       ,
+	/*28*/	IK_Down			,IK_Select      ,IK_Print       ,IK_Execute     ,
+	/*2C*/	IK_PrintScrn	,IK_Insert      ,IK_Delete      ,IK_Help		,
+	/*30*/	IK_0			,IK_1			,IK_2			,IK_3			,
+	/*34*/	IK_4			,IK_5			,IK_6			,IK_7			,
+	/*38*/	IK_8			,IK_9			,IK_Unknown3A	,IK_Unknown3B	,
+	/*3C*/	IK_Unknown3C	,IK_Unknown3D	,IK_Unknown3E	,IK_Unknown3F	,
+	/*40*/	IK_Unknown40	,IK_A			,IK_B			,IK_C			,
+	/*44*/	IK_D			,IK_E			,IK_F			,IK_G			,
+	/*48*/	IK_H			,IK_I			,IK_J			,IK_K			,
+	/*4C*/	IK_L			,IK_M			,IK_N			,IK_O			,
+	/*50*/	IK_P			,IK_Q			,IK_R			,IK_S			,
+	/*54*/	IK_T			,IK_U			,IK_V			,IK_W			,
+	/*58*/	IK_X			,IK_Y			,IK_Z			,IK_Unknown5B	,
+	/*5C*/	IK_Unknown5C	,IK_Unknown5D	,IK_Unknown5E	,IK_Unknown5F	,
+	/*60*/	IK_NumPad0		,IK_NumPad1     ,IK_NumPad2     ,IK_NumPad3     ,
+	/*64*/	IK_NumPad4		,IK_NumPad5     ,IK_NumPad6     ,IK_NumPad7     ,
+	/*68*/	IK_NumPad8		,IK_NumPad9     ,IK_GreyStar    ,IK_GreyPlus    ,
+	/*6C*/	IK_Separator	,IK_GreyMinus	,IK_NumPadPeriod,IK_GreySlash   ,
+	/*70*/	IK_F1			,IK_F2          ,IK_F3          ,IK_F4          ,
+	/*74*/	IK_F5			,IK_F6          ,IK_F7          ,IK_F8          ,
+	/*78*/	IK_F9           ,IK_F10         ,IK_F11         ,IK_F12         ,
+	/*7C*/	IK_F13			,IK_F14         ,IK_F15         ,IK_F16         ,
+	/*80*/	IK_F17			,IK_F18         ,IK_F19         ,IK_F20         ,
+	/*84*/	IK_F21			,IK_F22         ,IK_F23         ,IK_F24         ,
+	/*88*/	IK_Unknown88	,IK_Unknown89	,IK_Unknown8A	,IK_Unknown8B	,
+	/*8C*/	IK_Unknown8C	,IK_Unknown8D	,IK_Unknown8E	,IK_Unknown8F	,
+	/*90*/	IK_NumLock		,IK_ScrollLock  ,IK_Unknown92	,IK_Unknown93	,
+	/*94*/	IK_Unknown94	,IK_Unknown95	,IK_Unknown96	,IK_Unknown97	,
+	/*98*/	IK_Unknown98	,IK_Unknown99	,IK_Unknown9A	,IK_Unknown9B	,
+	/*9C*/	IK_Unknown9C	,IK_Unknown9D	,IK_Unknown9E	,IK_Unknown9F	,
+	/*A0*/	IK_LShift		,IK_RShift      ,IK_LControl    ,IK_RControl    ,
+	/*A4*/	IK_UnknownA4	,IK_UnknownA5	,IK_UnknownA6	,IK_UnknownA7	,
+	/*A8*/	IK_UnknownA8	,IK_UnknownA9	,IK_UnknownAA	,IK_UnknownAB	,
+	/*AC*/	IK_UnknownAC	,IK_UnknownAD	,IK_UnknownAE	,IK_UnknownAF	,
+	/*B0*/	IK_UnknownB0	,IK_UnknownB1	,IK_UnknownB2	,IK_UnknownB3	,
+	/*B4*/	IK_UnknownB4	,IK_UnknownB5	,IK_UnknownB6	,IK_UnknownB7	,
+	/*B8*/	IK_UnknownB8	,IK_UnknownB9	,IK_Semicolon	,IK_Equals		,
+	/*BC*/	IK_Comma		,IK_Minus		,IK_Period		,IK_Slash		,
+	/*C0*/	IK_Tilde		,IK_UnknownC1	,IK_UnknownC2	,IK_UnknownC3	,
+	/*C4*/	IK_UnknownC4	,IK_UnknownC5	,IK_UnknownC6	,IK_UnknownC7	,
+	/*C8*/	IK_Joy1	        ,IK_Joy2	    ,IK_Joy3	    ,IK_Joy4	    ,
+	/*CC*/	IK_Joy5	        ,IK_Joy6	    ,IK_Joy7	    ,IK_Joy8	    ,
+	/*D0*/	IK_Joy9	        ,IK_Joy10	    ,IK_Joy11	    ,IK_Joy12		,
+	/*D4*/	IK_Joy13		,IK_Joy14	    ,IK_Joy15	    ,IK_Joy16	    ,
+	/*D8*/	IK_UnknownD8	,IK_UnknownD9	,IK_UnknownDA	,IK_LeftBracket	,
+	/*DC*/	IK_Backslash	,IK_RightBracket,IK_SingleQuote	,IK_UnknownDF	,
+	/*E0*/  IK_JoyX			,IK_JoyY		,IK_JoyZ		,IK_JoyR		,
+	/*E4*/	IK_MouseX		,IK_MouseY		,IK_MouseZ		,IK_MouseW		,
+	/*E8*/	IK_JoyU			,IK_JoyV		,IK_UnknownEA	,IK_UnknownEB	,
+	/*EC*/	IK_MouseWheelUp ,IK_MouseWheelDown,IK_Unknown10E,UK_Unknown10F  ,
+	/*F0*/	IK_JoyPovUp     ,IK_JoyPovDown	,IK_JoyPovLeft	,IK_JoyPovRight	,
+	/*F4*/	IK_UnknownF4	,IK_UnknownF5	,IK_Attn		,IK_CrSel		,
+	/*F8*/	IK_ExSel		,IK_ErEof		,IK_Play		,IK_Zoom		,
+	/*FC*/	IK_NoName		,IK_PA1			,IK_OEMClear
 };
 
 var(Display) class<RenderIterator> RenderIteratorClass;	// class to instantiate as the actor's RenderInterface
@@ -833,7 +834,7 @@ native(307) final iterator function TouchingActors( class<actor> BaseClass, out 
 native(309) final iterator function TraceActors   ( class<actor> BaseClass, out actor Actor, out vector HitLoc, out vector HitNorm, vector End, optional vector Start, optional vector Extent );
 native(310) final iterator function RadiusActors  ( class<actor> BaseClass, out actor Actor, float Radius, optional vector Loc );
 native(311) final iterator function VisibleActors ( class<actor> BaseClass, out actor Actor, optional float Radius, optional vector Loc );
-native(312) final iterator function VisibleCollidingActors ( class<actor> BaseClass, out actor Actor, optional float Radius, optional vector Loc, optional bool bIgnoreHidden );
+native(312) final iterator function VisibleCollidingActors ( class<actor> BaseClass, out actor Actor, optional float Radius, optional vector Loc, optional bool bIgnoreHidden, optional bool bAddOtherRadius );
 
 //=============================================================================
 // Color operators
@@ -935,7 +936,7 @@ final function HurtRadius( float DamageAmount, float DamageRadius, name DamageNa
 		return;
 
 	bHurtEntry = true;
-	foreach VisibleCollidingActors( class 'Actor', Victims, DamageRadius, HitLocation )
+	foreach VisibleCollidingActors( class 'Actor', Victims, DamageRadius, HitLocation, , true)
 	{
 		if( Victims != self )
 		{
@@ -1024,33 +1025,190 @@ function SetDefaultDisplayProperties()
 
 defaultproperties
 {
-     Role=ROLE_Authority
-     RemoteRole=ROLE_DumbProxy
-     LODBias=1.000000
-     OddsOfAppearing=1.000000
-     bDifficulty0=True
-     bDifficulty1=True
-     bDifficulty2=True
-     bDifficulty3=True
-     bSinglePlayer=True
-     bNet=True
-     bNetSpecial=True
-     DrawType=DT_Sprite
-     Style=STY_Normal
-     Texture=Texture'Engine.S_Actor'
-     DrawScale=1.000000
-     ScaleGlow=1.000000
-     Fatness=128
-     SpriteProjForward=32.000000
-     bMovable=True
-     SoundRadius=32
-     SoundVolume=128
-     SoundPitch=64
-     TransientSoundVolume=1.000000
-     CollisionRadius=22.000000
-     CollisionHeight=22.000000
-     bJustTeleported=True
-     Mass=100.000000
-     NetPriority=1.000000
-     NetUpdateFrequency=100.000000
+      bStatic=False
+      bHidden=False
+      bNoDelete=False
+      bAnimFinished=False
+      bAnimLoop=False
+      bAnimNotify=False
+      bAnimByOwner=False
+      bDeleteMe=False
+      bDynamicLight=False
+      bTimerLoop=False
+      bCanTeleport=False
+      bOwnerNoSee=False
+      bOnlyOwnerSee=False
+      bIsMover=False
+      bAlwaysRelevant=False
+      bAlwaysTick=False
+      bHighDetail=False
+      bStasis=False
+      bForceStasis=False
+      bIsPawn=False
+      bNetTemporary=False
+      bNetOptional=False
+      bReplicateInstigator=False
+      bTrailerSameRotation=False
+      bTrailerPrePivot=False
+      bClientAnim=False
+      bSimFall=False
+      Physics=PHYS_None
+      Role=ROLE_Authority
+      RemoteRole=ROLE_DumbProxy
+      Owner=None
+      InitialState="None"
+      Group="None"
+      TimerRate=0.000000
+      TimerCounter=0.000000
+      LifeSpan=0.000000
+      AnimSequence="None"
+      AnimFrame=0.000000
+      AnimRate=0.000000
+      TweenRate=0.000000
+      SkelAnim=None
+      LODBias=1.000000
+      Level=None
+      Tag="None"
+      Event="None"
+      Target=None
+      Instigator=None
+      AmbientSound=None
+      Inventory=None
+      Base=None
+      Region=(Zone=None,iLeaf=0,ZoneNumber=0)
+      AttachTag="None"
+      StandingCount=0
+      MiscNumber=0
+      LatentByte=0
+      TransientSoundPriority=0
+      LatentInt=0
+      LatentFloat=0.000000
+      LatentActor=None
+      Touching(0)=None
+      Touching(1)=None
+      Touching(2)=None
+      Touching(3)=None
+      Deleted=None
+      Location=(X=0.000000,Y=0.000000,Z=0.000000)
+      Rotation=(Pitch=0,Yaw=0,Roll=0)
+      OldLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      ColLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      Velocity=(X=0.000000,Y=0.000000,Z=0.000000)
+      Acceleration=(X=0.000000,Y=0.000000,Z=0.000000)
+      OddsOfAppearing=1.000000
+      bHiddenEd=False
+      bDirectional=False
+      bSelected=False
+      bMemorized=False
+      bHighlighted=False
+      bEdLocked=False
+      bEdShouldSnap=False
+      bDifficulty0=True
+      bDifficulty1=True
+      bDifficulty2=True
+      bDifficulty3=True
+      bSinglePlayer=True
+      bNet=True
+      bNetSpecial=True
+      bScriptInitialized=False
+      HitActor=None
+      DrawType=DT_Sprite
+      Style=STY_Normal
+      Sprite=None
+      Texture=Texture'Engine.S_Actor'
+      Skin=None
+      Mesh=None
+      Brush=None
+      DrawScale=1.000000
+      PrePivot=(X=0.000000,Y=0.000000,Z=0.000000)
+      ScaleGlow=1.000000
+      VisibilityRadius=0.000000
+      VisibilityHeight=0.000000
+      AmbientGlow=0
+      Fatness=128
+      SpriteProjForward=32.000000
+      bUnlit=False
+      bNoSmooth=False
+      bParticles=False
+      bRandomFrame=False
+      bMeshEnviroMap=False
+      bMeshCurvy=False
+      bFilterByVolume=False
+      bShadowCast=False
+      bHurtEntry=False
+      bGameRelevant=False
+      bCarriedItem=False
+      bForcePhysicsUpdate=False
+      bIsSecretGoal=False
+      bIsKillGoal=False
+      bIsItemGoal=False
+      bCollideWhenPlacing=False
+      bTravel=False
+      bMovable=True
+      MultiSkins(0)=None
+      MultiSkins(1)=None
+      MultiSkins(2)=None
+      MultiSkins(3)=None
+      MultiSkins(4)=None
+      MultiSkins(5)=None
+      MultiSkins(6)=None
+      MultiSkins(7)=None
+      SoundRadius=32
+      SoundVolume=128
+      SoundPitch=64
+      TransientSoundVolume=1.000000
+      TransientSoundRadius=0.000000
+      CollisionRadius=22.000000
+      CollisionHeight=22.000000
+      bCollideActors=False
+      bCollideWorld=False
+      bBlockActors=False
+      bBlockPlayers=False
+      bProjTarget=False
+      LightType=LT_None
+      LightEffect=LE_None
+      LightBrightness=0
+      LightHue=0
+      LightSaturation=0
+      LightRadius=0
+      LightPeriod=0
+      LightPhase=0
+      LightCone=0
+      VolumeBrightness=0
+      VolumeRadius=0
+      VolumeFog=0
+      bSpecialLit=False
+      bActorShadows=False
+      bCorona=False
+      bLensFlare=False
+      bBounce=False
+      bFixedRotationDir=False
+      bRotateToDesired=False
+      bInterpolating=False
+      bJustTeleported=True
+      DodgeDir=DODGE_None
+      Mass=100.000000
+      Buoyancy=0.000000
+      RotationRate=(Pitch=0,Yaw=0,Roll=0)
+      DesiredRotation=(Pitch=0,Yaw=0,Roll=0)
+      PhysAlpha=0.000000
+      PhysRate=0.000000
+      PendingTouch=None
+      AnimLast=0.000000
+      AnimMinRate=0.000000
+      OldAnimRate=0.000000
+      SimAnim=(W=0.000000,X=0.000000,Y=0.000000,Z=0.000000)
+      NetPriority=1.000000
+      NetUpdateFrequency=100.000000
+      bNetInitial=False
+      bNetOwner=False
+      bNetRelevant=False
+      bNetSee=False
+      bNetHear=False
+      bNetFeel=False
+      bSimulatedPawn=False
+      bDemoRecording=False
+      bClientDemoRecording=False
+      bClientDemoNetFunc=False
+      RenderIteratorClass=None
 }

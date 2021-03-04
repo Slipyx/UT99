@@ -141,6 +141,19 @@ function LMouseDown(float X, float Y)
 	}
 }
 
+function bool MouseWheelDown(float ScrollDelta)
+{
+	Super.MouseWheelDown(ScrollDelta);
+	return true;
+}
+
+function bool MouseWheelUp(float ScrollDelta)
+{
+	Super.MouseWheelUp(ScrollDelta);
+	Scroll(int(ScrollDelta));
+	return true;
+}
+
 function Tick(float Delta)
 {
 	local bool bUp, bDown;
@@ -196,4 +209,17 @@ function MouseMove(float X, float Y)
 
 defaultproperties
 {
+      UpButton=None
+      DownButton=None
+      bDisabled=False
+      MinPos=0.000000
+      MaxPos=0.000000
+      MaxVisible=0.000000
+      pos=0.000000
+      ThumbStart=0.000000
+      ThumbHeight=0.000000
+      NextClickTime=0.000000
+      DragY=0.000000
+      bDragging=False
+      ScrollAmount=0.000000
 }

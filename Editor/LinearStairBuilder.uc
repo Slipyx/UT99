@@ -115,11 +115,12 @@ event bool Build()
 
 defaultproperties
 {
-     StepLength=32
-     StepHeight=16
-     StepWidth=256
-     NumSteps=8
-     GroupName=LinearStair
-     BitmapFilename="BBLinearStair"
-     ToolTip="Linear Staircase"
+      StepLength=32
+      StepHeight=16
+      StepWidth=256
+      NumSteps=8
+      AddToFirstStep=0
+      GroupName="LinearStair"
+      BitmapFilename="BBLinearStair"
+      ToolTip="Linear Staircase"
 }

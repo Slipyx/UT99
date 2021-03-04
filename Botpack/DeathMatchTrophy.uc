@@ -13,7 +13,7 @@ class DeathMatchTrophy extends Trophy;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Botpack.deathmatchtrophyM'
-     DrawScale=0.200000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'Botpack.deathmatchtrophyM'
+      DrawScale=0.200000
 }

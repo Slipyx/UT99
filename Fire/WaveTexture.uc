@@ -14,4 +14,8 @@ var(WaterPaint)			byte   PhongSize;
 
 defaultproperties
 {
+      BumpMapLight=0
+      BumpMapAngle=0
+      PhongRange=0
+      PhongSize=0
 }

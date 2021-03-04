@@ -7,13 +7,13 @@ class SkaarjLord extends SkaarjWarrior;
 
 defaultproperties
 {
-     LungeDamage=35
-     SpinDamage=35
-     ClawDamage=20
-     VoicePitch=0.300000
-     Health=320
-     Skill=1.000000
-     CombatStyle=0.650000
-     Skin=Texture'UnrealI.Skins.SkaarjL'
-     Fatness=140
+      LungeDamage=35
+      SpinDamage=35
+      ClawDamage=20
+      VoicePitch=0.300000
+      Health=320
+      Skill=1.000000
+      CombatStyle=0.650000
+      Skin=Texture'UnrealI.Skins.SkaarjL'
+      Fatness=140
 }

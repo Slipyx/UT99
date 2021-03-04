@@ -56,8 +56,9 @@ simulated event Actor SpawnNotification(Actor A)
 
 defaultproperties
 {
-     ActorClass=Class'Engine.Actor'
-     bHidden=True
-     bAlwaysRelevant=True
-     bNetTemporary=True
+      ActorClass=Class'Engine.Actor'
+      Next=None
+      bHidden=True
+      bAlwaysRelevant=True
+      bNetTemporary=True
 }

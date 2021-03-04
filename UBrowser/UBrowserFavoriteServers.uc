@@ -28,7 +28,7 @@ function RemoveFavorite(UBrowserServerList Item)
 
 defaultproperties
 {
-     ListFactories(0)="UBrowser.UBrowserFavoritesFact"
-     RightClickMenuClass=Class'UBrowser.UBrowserFavoritesMenu'
-     bShowFailedServers=True
+      ListFactories(0)="UBrowser.UBrowserFavoritesFact"
+      RightClickMenuClass=Class'UBrowser.UBrowserFavoritesMenu'
+      bShowFailedServers=True
 }

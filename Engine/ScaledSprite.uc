@@ -5,5 +5,5 @@ class ScaledSprite extends Decoration;
 
 defaultproperties
 {
-     Texture=Texture'Engine.S_Pickup'
+      Texture=Texture'Engine.S_Pickup'
 }

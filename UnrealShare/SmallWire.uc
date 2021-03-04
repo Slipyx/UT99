@@ -13,7 +13,7 @@ Begin:
 
 defaultproperties
 {
-     DrawScale=0.600000
-     CollisionRadius=3.000000
-     CollisionHeight=40.000000
+      DrawScale=0.600000
+      CollisionRadius=3.000000
+      CollisionHeight=40.000000
 }

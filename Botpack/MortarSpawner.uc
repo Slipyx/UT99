@@ -46,16 +46,16 @@ function LaunchShell()
 
 defaultproperties
 {
-     ShellDamage=70
-     ShellMomentumTransfer=150000
-     ShellBlastRadius=400
-     RateOfFire=5
-     ShellSpeed=1000.000000
-     Deviation=4096
-     bDeviate=True
-     FireSound=Sound'UnrealShare.flak.Explode1'
-     bHidden=True
-     bNetTemporary=False
-     bDirectional=True
-     DrawType=DT_Sprite
+      ShellDamage=70
+      ShellMomentumTransfer=150000
+      ShellBlastRadius=400
+      RateOfFire=5
+      ShellSpeed=1000.000000
+      Deviation=4096
+      bDeviate=True
+      FireSound=Sound'UnrealShare.flak.Explode1'
+      bHidden=True
+      bNetTemporary=False
+      bDirectional=True
+      DrawType=DT_Sprite
 }

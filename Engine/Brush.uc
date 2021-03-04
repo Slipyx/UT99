@@ -34,13 +34,19 @@ var() bool  bColored;
 
 defaultproperties
 {
-     MainScale=(Scale=(X=1.000000,Y=1.000000,Z=1.000000))
-     PostScale=(Scale=(X=1.000000,Y=1.000000,Z=1.000000))
-     TempScale=(Scale=(X=1.000000,Y=1.000000,Z=1.000000))
-     bStatic=True
-     bHidden=True
-     bNoDelete=True
-     bEdShouldSnap=True
-     DrawType=DT_Brush
-     bFixedRotationDir=True
+      CsgOper=CSG_Active
+      UnusedLightMesh=None
+      PostPivot=(X=0.000000,Y=0.000000,Z=0.000000)
+      MainScale=(Scale=(X=1.000000,Y=1.000000,Z=1.000000),SheerRate=0.000000,SheerAxis=SHEER_None)
+      PostScale=(Scale=(X=1.000000,Y=1.000000,Z=1.000000),SheerRate=0.000000,SheerAxis=SHEER_None)
+      TempScale=(Scale=(X=1.000000,Y=1.000000,Z=1.000000),SheerRate=0.000000,SheerAxis=SHEER_None)
+      BrushColor=(R=0,G=0,B=0,A=0)
+      PolyFlags=0
+      bColored=False
+      bStatic=True
+      bHidden=True
+      bNoDelete=True
+      bEdShouldSnap=True
+      DrawType=DT_Brush
+      bFixedRotationDir=True
 }

@@ -412,21 +412,30 @@ function UseSelected()
 
 defaultproperties
 {
-     ControlOffset=25
-     PlayerBaseClass="UnrealiPlayer"
-     NameText="Name:"
-     NameHelp="Set your player name."
-     TeamText="Team:"
-     Teams(0)="Red"
-     Teams(1)="Blue"
-     Teams(2)="Green"
-     Teams(3)="Gold"
-     NoTeam="None"
-     TeamHelp="Select the team you wish to play on."
-     ClassText="Class:"
-     ClassHelp="Select your player class."
-     SkinText="Skin:"
-     SkinHelp="Choose a skin for your player."
-     FaceText="Face:"
-     FaceHelp="Choose a face for your player."
+      ControlOffset=25
+      NewPlayerClass=None
+      MeshName=""
+      Initialized=False
+      MeshWindow=None
+      PlayerBaseClass="UnrealiPlayer"
+      NameEdit=None
+      NameText="Name:"
+      NameHelp="Set your player name."
+      TeamCombo=None
+      TeamText="Team:"
+      Teams(0)="Red"
+      Teams(1)="Blue"
+      Teams(2)="Green"
+      Teams(3)="Gold"
+      NoTeam="None"
+      TeamHelp="Select the team you wish to play on."
+      ClassCombo=None
+      ClassText="Class:"
+      ClassHelp="Select your player class."
+      SkinCombo=None
+      SkinText="Skin:"
+      SkinHelp="Choose a skin for your player."
+      FaceCombo=None
+      FaceText="Face:"
+      FaceHelp="Choose a face for your player."
 }

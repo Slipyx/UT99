@@ -25,4 +25,6 @@ function UMenuMutatorList FindMutator(string FindMutatorClass)
 
 defaultproperties
 {
+      MutatorName=""
+      MutatorClass=""
 }

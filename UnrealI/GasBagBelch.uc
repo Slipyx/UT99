@@ -78,27 +78,28 @@ Begin:
 
 defaultproperties
 {
-     SpriteAnim(0)=Texture'UnrealI.Effects.gbProj0'
-     SpriteAnim(1)=Texture'UnrealI.Effects.gbProj1'
-     SpriteAnim(2)=Texture'UnrealI.Effects.gbProj2'
-     SpriteAnim(3)=Texture'UnrealI.Effects.gbProj3'
-     SpriteAnim(4)=Texture'UnrealI.Effects.gbProj4'
-     SpriteAnim(5)=Texture'UnrealI.Effects.gbProj5'
-     speed=600.000000
-     Damage=40.000000
-     ImpactSound=Sound'UnrealShare.flak.expl2'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.500000
-     DrawType=DT_Sprite
-     Style=STY_Translucent
-     Texture=Texture'UnrealI.Effects.gbProj0'
-     DrawScale=1.800000
-     Fatness=0
-     bUnlit=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=5
-     LightSaturation=16
-     LightRadius=9
+      SpriteAnim(0)=Texture'UnrealI.Effects.gbProj0'
+      SpriteAnim(1)=Texture'UnrealI.Effects.gbProj1'
+      SpriteAnim(2)=Texture'UnrealI.Effects.gbProj2'
+      SpriteAnim(3)=Texture'UnrealI.Effects.gbProj3'
+      SpriteAnim(4)=Texture'UnrealI.Effects.gbProj4'
+      SpriteAnim(5)=Texture'UnrealI.Effects.gbProj5'
+      i=0
+      speed=600.000000
+      Damage=40.000000
+      ImpactSound=Sound'UnrealShare.flak.expl2'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.500000
+      DrawType=DT_Sprite
+      Style=STY_Translucent
+      Texture=Texture'UnrealI.Effects.gbProj0'
+      DrawScale=1.800000
+      Fatness=0
+      bUnlit=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=5
+      LightSaturation=16
+      LightRadius=9
 }

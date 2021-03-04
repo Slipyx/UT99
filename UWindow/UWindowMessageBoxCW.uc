@@ -183,8 +183,15 @@ function Notify(UWindowDialogControl C, byte E)
 
 defaultproperties
 {
-     YesText="Yes"
-     NoText="No"
-     OKText="OK"
-     CancelText="Cancel"
+      Buttons=MB_YesNo
+      EnterResult=MR_None
+      YesButton=None
+      NoButton=None
+      OKButton=None
+      CancelButton=None
+      YesText="Yes"
+      NoText="No"
+      OKText="OK"
+      CancelText="Cancel"
+      MessageArea=None
 }

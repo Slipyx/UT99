@@ -26,7 +26,7 @@ function Invisibility (bool Vis)
 
 	if( Vis )
 	{
-		PlaySound(ActivateSound,,4.0);
+		Owner.PlaySound(ActivateSound,,4.0);
 		if ( PlayerPawn(Owner) != None )		
 			PlayerPawn(Owner).ClientAdjustGlow(-0.15, vect(156.25,156.25,351.625));
 		Pawn(Owner).Visibility = 10;
@@ -36,7 +36,7 @@ function Invisibility (bool Vis)
 	}
 	else
 	{
-		PlaySound(DeActivateSound);
+		Owner.PlaySound(DeActivateSound);
 		if ( PlayerPawn(Owner) != None )		
 			PlayerPawn(Owner).ClientAdjustGlow(0.15, vect(-156.25,-156.25,-351.625));	
 		Pawn(Owner).Visibility = Pawn(Owner).Default.Visibility;
@@ -81,21 +81,22 @@ Begin:
 
 defaultproperties
 {
-     ExpireMessage="Invisibility has worn off."
-     bAutoActivate=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You have Invisibility"
-     RespawnTime=100.000000
-     PickupViewMesh=LodMesh'UnrealI.InvisibilityMesh'
-     Charge=100
-     MaxDesireability=1.200000
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealI.Pickups.Invisible'
-     Icon=Texture'UnrealI.Icons.I_Invisibility'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealI.InvisibilityMesh'
-     AmbientGlow=96
-     CollisionRadius=15.000000
-     CollisionHeight=17.000000
+      TempVis=0
+      ExpireMessage="Invisibility has worn off."
+      bAutoActivate=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You have Invisibility"
+      RespawnTime=100.000000
+      PickupViewMesh=LodMesh'UnrealI.InvisibilityMesh'
+      Charge=100
+      MaxDesireability=1.200000
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealI.Pickups.Invisible'
+      Icon=Texture'UnrealI.Icons.I_Invisibility'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealI.InvisibilityMesh'
+      AmbientGlow=96
+      CollisionRadius=15.000000
+      CollisionHeight=17.000000
 }

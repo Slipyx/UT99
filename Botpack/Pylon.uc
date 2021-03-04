@@ -106,20 +106,21 @@ Auto State Animate
 
 defaultproperties
 {
-     bPushable=True
-     bStatic=False
-     bNetTemporary=True
-     RemoteRole=ROLE_None
-     bNet=False
-     DrawType=DT_Mesh
-     Mesh=Mesh'Botpack.PylonM'
-     CollisionRadius=12.000000
-     CollisionHeight=8.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     bProjTarget=True
-     Mass=35.000000
-     Buoyancy=40.000000
+      bFirstHit=False
+      bPushable=True
+      bStatic=False
+      bNetTemporary=True
+      RemoteRole=ROLE_None
+      bNet=False
+      DrawType=DT_Mesh
+      Mesh=Mesh'Botpack.PylonM'
+      CollisionRadius=12.000000
+      CollisionHeight=8.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      bProjTarget=True
+      Mass=35.000000
+      Buoyancy=40.000000
 }

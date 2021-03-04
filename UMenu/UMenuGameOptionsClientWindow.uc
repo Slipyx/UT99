@@ -248,9 +248,9 @@ function WeaponFlashChecked()
 function DodgingChecked()
 {
 	if(DodgingCheck.bChecked)
-		GetPlayerOwner().ChangeDodgeClickTime(0.25);
+		GetPlayerOwner().SetDodgeClickTime(0.25);
 	else
-		GetPlayerOwner().ChangeDodgeClickTime(-1.0);
+		GetPlayerOwner().SetDodgeClickTime(-1.0);
 }
 
 function WeaponHandChanged()
@@ -323,26 +323,33 @@ function LocalChecked()
 
 defaultproperties
 {
-     WeaponFlashText="Weapon Flash"
-     WeaponFlashHelp="If checked, your screen will flash when you fire your weapon."
-     WeaponHandText="Weapon Hand"
-     WeaponHandHelp="Select where your weapon will appear."
-     LeftName="Left"
-     CenterName="Center"
-     RightName="Right"
-     HiddenName="Hidden"
-     DodgingText="Dodging"
-     DodgingHelp="If checked, double tapping the movement keys (forward, back, and strafe left or right) will result in a fast dodge move."
-     ViewBobText="View Bob"
-     ViewBobHelp="Use the slider to adjust the amount your view will bob when moving."
-     SpeedText="Game Speed"
-     GoreText="Gore Level"
-     GoreHelp="Choose the level of gore you wish to see in the game."
-     GoreLevels(0)="Normal"
-     GoreLevels(1)="Reduced"
-     GoreLevels(2)="Ultra-Low"
-     LocalText="ngStats Local Logging"
-     LocalHelp="If checked, your system will log local botmatch and single player tournament games for stat compilation."
-     bShowGoreControl=True
-     ControlOffset=20.000000
+      WeaponFlashCheck=None
+      WeaponFlashText="Weapon Flash"
+      WeaponFlashHelp="If checked, your screen will flash when you fire your weapon."
+      WeaponHandCombo=None
+      WeaponHandText="Weapon Hand"
+      WeaponHandHelp="Select where your weapon will appear."
+      LeftName="Left"
+      CenterName="Center"
+      RightName="Right"
+      HiddenName="Hidden"
+      DodgingCheck=None
+      DodgingText="Dodging"
+      DodgingHelp="If checked, double tapping the movement keys (forward, back, and strafe left or right) will result in a fast dodge move."
+      ViewBobSlider=None
+      ViewBobText="View Bob"
+      ViewBobHelp="Use the slider to adjust the amount your view will bob when moving."
+      SpeedSlider=None
+      SpeedText="Game Speed"
+      GoreCombo=None
+      GoreText="Gore Level"
+      GoreHelp="Choose the level of gore you wish to see in the game."
+      GoreLevels(0)="Normal"
+      GoreLevels(1)="Reduced"
+      GoreLevels(2)="Ultra-Low"
+      LocalCheck=None
+      LocalText="Local Logging"
+      LocalHelp="If checked, your system will log local botmatch and single player tournament games for stat compilation."
+      bShowGoreControl=True
+      ControlOffset=20.000000
 }

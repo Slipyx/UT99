@@ -20,6 +20,6 @@ function Created()
 
 defaultproperties
 {
-     ClientClass=Class'UMenu.UMenuLoadGameScrollClient'
-     WindowTitle="Load Game"
+      ClientClass=Class'UMenu.UMenuLoadGameScrollClient'
+      WindowTitle="Load Game"
 }

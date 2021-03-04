@@ -153,7 +153,28 @@ function Paint(Canvas C, float X, float Y)
 {
 }
 
+function bool MouseWheelDown(float ScrollDelta)
+{
+	Super.MouseWheelDown(ScrollDelta);
+	return true;
+}
+
+function bool MouseWheelUp(float ScrollDelta)
+{
+	Super.MouseWheelUp(ScrollDelta);
+	VertSB.Scroll(25 * int(ScrollDelta));
+	return true;
+}
+
 defaultproperties
 {
-     ClientClass=Class'UWindow.UWindowDialogClientWindow'
+      bShowHorizSB=False
+      bShowVertSB=False
+      ClientArea=None
+      FixedArea=None
+      ClientClass=Class'UWindow.UWindowDialogClientWindow'
+      FixedAreaClass=None
+      VertSB=None
+      HorizSB=None
+      BRBitmap=None
 }

@@ -112,15 +112,6 @@ simulated function bool ClientFire( float Value )
 {
 	if ( bCanClientFire )
 	{
-		if ( (PlayerPawn(Owner) != None) 
-			&& ((Level.NetMode == NM_Standalone) || PlayerPawn(Owner).Player.IsA('ViewPort')) )
-		{
-			if ( InstFlash != 0.0 )
-				PlayerPawn(Owner).ClientInstantFlash( InstFlash, InstFog);
-			PlayerPawn(Owner).ShakeView(ShakeTime, ShakeMag, ShakeVert);
-		}
-		if ( Affector != None )
-			Affector.FireEffect();
 		Owner.PlayOwnedSound(Misc1Sound, SLOT_Misc, 1.3*Pawn(Owner).SoundDampening);
 		PlayAnim('Pull', 0.2, 0.05);
 		if ( Role < ROLE_Authority )
@@ -128,7 +119,7 @@ simulated function bool ClientFire( float Value )
 		return true;
 	}
 	return false;
-}		
+}
 
 function Fire( float Value )
 {
@@ -389,7 +380,7 @@ function TraceAltFire()
 	ProcessAltTraceHit(Other, HitLocation, HitNormal, vector(AdjustedAim), Y, Z);
 
 	// push aside projectiles
-	ForEach VisibleCollidingActors(class'Projectile', P, 550, Owner.Location)
+	ForEach VisibleCollidingActors(class'Projectile', P, 550, Owner.Location,,true)
 		if ( ((P.Physics == PHYS_Projectile) || (P.Physics == PHYS_Falling))
 			&& (Normal(P.Location - Owner.Location) Dot X) > 0.9 )
 		{
@@ -442,31 +433,33 @@ simulated function PlayIdleAnim()
 
 defaultproperties
 {
-     AltFireSound=Sound'Botpack.ASMD.ImpactFire'
-     TensionSound=Sound'Botpack.ASMD.ImpactLoop'
-     WeaponDescription="Classification: Melee Piston\n\nPrimary Fire: When trigger is held down, touch opponents with this piston to inflict massive damage.\n\nSecondary Fire: Damages opponents at close range and has the ability to deflect projectiles.\n\nTechniques: Shoot at the ground while jumping to jump extra high."
-     InstFog=(X=475.000000,Y=325.000000,Z=145.000000)
-     bMeleeWeapon=True
-     bRapidFire=True
-     MyDamageType=impact
-     RefireRate=1.000000
-     AltRefireRate=1.000000
-     FireSound=Sound'Botpack.ASMD.ImpactAltFireRelease'
-     SelectSound=Sound'Botpack.ASMD.ImpactPickup'
-     Misc1Sound=Sound'Botpack.ASMD.ImpactAltFireStart'
-     DeathMessage="%o got smeared by %k's piston."
-     NameColor=(G=192,B=0)
-     PickupMessage="You got the Impact Hammer."
-     ItemName="Impact Hammer"
-     PlayerViewOffset=(X=3.800000,Y=-1.600000,Z=-1.800000)
-     PlayerViewMesh=LodMesh'Botpack.ImpactHammer'
-     PickupViewMesh=LodMesh'Botpack.ImpPick'
-     ThirdPersonMesh=LodMesh'Botpack.ImpactHandm'
-     StatusIcon=Texture'Botpack.Icons.UseHammer'
-     PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
-     Icon=Texture'Botpack.Icons.UseHammer'
-     Mesh=LodMesh'Botpack.ImpPick'
-     bNoSmooth=False
-     SoundRadius=50
-     SoundVolume=200
+      ChargeSize=0.000000
+      Count=0.000000
+      AltFireSound=Sound'Botpack.ASMD.ImpactFire'
+      TensionSound=Sound'Botpack.ASMD.ImpactLoop'
+      WeaponDescription="Classification: Melee Piston\n\nPrimary Fire: When trigger is held down, touch opponents with this piston to inflict massive damage.\n\nSecondary Fire: Damages opponents at close range and has the ability to deflect projectiles.\n\nTechniques: Shoot at the ground while jumping to jump extra high."
+      InstFog=(X=475.000000,Y=325.000000,Z=145.000000)
+      bMeleeWeapon=True
+      bRapidFire=True
+      MyDamageType="impact"
+      RefireRate=1.000000
+      AltRefireRate=1.000000
+      FireSound=Sound'Botpack.ASMD.ImpactAltFireRelease'
+      SelectSound=Sound'Botpack.ASMD.ImpactPickup'
+      Misc1Sound=Sound'Botpack.ASMD.ImpactAltFireStart'
+      DeathMessage="%o got smeared by %k's piston."
+      NameColor=(G=192,B=0)
+      PickupMessage="You got the Impact Hammer."
+      ItemName="Impact Hammer"
+      PlayerViewOffset=(X=3.800000,Y=-1.600000,Z=-1.800000)
+      PlayerViewMesh=LodMesh'Botpack.ImpactHammer'
+      PickupViewMesh=LodMesh'Botpack.ImpPick'
+      ThirdPersonMesh=LodMesh'Botpack.ImpactHandm'
+      StatusIcon=Texture'Botpack.Icons.UseHammer'
+      PickupSound=Sound'UnrealShare.Pickups.WeaponPickup'
+      Icon=Texture'Botpack.Icons.UseHammer'
+      Mesh=LodMesh'Botpack.ImpPick'
+      bNoSmooth=False
+      SoundRadius=50
+      SoundVolume=200
 }

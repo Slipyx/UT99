@@ -84,11 +84,17 @@ function InterpolateEnd( actor Other )
 
 defaultproperties
 {
-     RateModifier=1.000000
-     GameSpeedModifier=1.000000
-     FovModifier=1.000000
-     ScreenFlashScale=1.000000
-     bStatic=False
-     bDirectional=True
-     Texture=Texture'Engine.S_Interp'
+      Position=0
+      RateModifier=1.000000
+      GameSpeedModifier=1.000000
+      FovModifier=1.000000
+      bEndOfPath=False
+      bSkipNextPath=False
+      ScreenFlashScale=1.000000
+      ScreenFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      Prev=None
+      Next=None
+      bStatic=False
+      bDirectional=True
+      Texture=Texture'Engine.S_Interp'
 }

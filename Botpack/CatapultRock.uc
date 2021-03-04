@@ -26,5 +26,5 @@ Begin:
 
 defaultproperties
 {
-     DrawScale=8.500000
+      DrawScale=8.500000
 }

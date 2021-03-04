@@ -44,11 +44,13 @@ function Trigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
-     bStatic=False
-     bDirectional=True
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'Engine.S_Corpse'
-     Mesh=LodMesh'UnrealShare.IPanel'
-     bUnlit=True
+      bFade=False
+      Count=0.000000
+      bStatic=False
+      bDirectional=True
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'Engine.S_Corpse'
+      Mesh=LodMesh'UnrealShare.IPanel'
+      bUnlit=True
 }

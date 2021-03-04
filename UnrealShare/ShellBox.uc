@@ -16,16 +16,16 @@ class Shellbox extends Ammo;
 
 defaultproperties
 {
-     AmmoAmount=50
-     MaxAmmo=200
-     UsedInWeaponSlot(0)=1
-     UsedInWeaponSlot(2)=1
-     PickupMessage="You picked up 50 bullets"
-     PickupViewMesh=LodMesh'UnrealShare.ShellBoxMesh'
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Icon=Texture'UnrealShare.Icons.I_ShellAmmo'
-     Mesh=LodMesh'UnrealShare.ShellBoxMesh'
-     CollisionRadius=22.000000
-     CollisionHeight=11.000000
-     bCollideActors=True
+      AmmoAmount=50
+      MaxAmmo=200
+      UsedInWeaponSlot(0)=1
+      UsedInWeaponSlot(2)=1
+      PickupMessage="You picked up 50 bullets"
+      PickupViewMesh=LodMesh'UnrealShare.ShellBoxMesh'
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Icon=Texture'UnrealShare.Icons.I_ShellAmmo'
+      Mesh=LodMesh'UnrealShare.ShellBoxMesh'
+      CollisionRadius=22.000000
+      CollisionHeight=11.000000
+      bCollideActors=True
 }

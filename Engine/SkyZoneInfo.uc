@@ -6,5 +6,5 @@ class SkyZoneInfo extends ZoneInfo
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
+      RemoteRole=ROLE_SimulatedProxy
 }

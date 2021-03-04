@@ -76,7 +76,8 @@ state() TriggerTurnsOn
 		if( SavedTrigger!=None )
 			SavedTrigger.EndEvent();
 		SavedTrigger = Other;
-		SavedTrigger.BeginEvent();
+		if( SavedTrigger!=None )		
+			SavedTrigger.BeginEvent();
 		Direction = 1.0;
 		Enable( 'Tick' );
 	}
@@ -90,7 +91,8 @@ state() TriggerTurnsOff
 		if( SavedTrigger!=None )
 			SavedTrigger.EndEvent();
 		SavedTrigger = Other;
-		SavedTrigger.BeginEvent();
+		if( SavedTrigger!=None )
+			SavedTrigger.BeginEvent();
 		Direction = -1.0;
 		Enable( 'Tick' );
 	}
@@ -104,7 +106,8 @@ state() TriggerToggle
 		if( SavedTrigger!=None )
 			SavedTrigger.EndEvent();
 		SavedTrigger = Other;
-		SavedTrigger.BeginEvent();
+		if( SavedTrigger!=None )
+			SavedTrigger.BeginEvent();
 		Direction *= -1;
 		Enable( 'Tick' );
 	}
@@ -118,7 +121,8 @@ state() TriggerControl
 		if( SavedTrigger!=None )
 			SavedTrigger.EndEvent();
 		SavedTrigger = Other;
-		SavedTrigger.BeginEvent();
+		if( SavedTrigger!=None )
+			SavedTrigger.BeginEvent();
 		if( bInitiallyOn ) Direction = -1.0;
 		else               Direction = 1.0;
 		Enable( 'Tick' );
@@ -128,7 +132,8 @@ state() TriggerControl
 		if( SavedTrigger!=None )
 			SavedTrigger.EndEvent();
 		SavedTrigger = Other;
-		SavedTrigger.BeginEvent();
+		if( SavedTrigger!=None )
+			SavedTrigger.BeginEvent();
 		if( bInitiallyOn ) Direction = 1.0;
 		else               Direction = -1.0;
 		Enable( 'Tick' );
@@ -154,7 +159,8 @@ state() TriggerPound {
 		if( SavedTrigger!=None )
 			SavedTrigger.EndEvent();
 		SavedTrigger = Other;
-		SavedTrigger.BeginEvent();
+		if( SavedTrigger!=None )		
+			SavedTrigger.BeginEvent();
 		Direction = 1;
 		poundTime = ChangeTime;			// how much time will pass till reversal
 		SetTimer (ChangeTime, false);		// wake up when it's time to reverse
@@ -165,8 +171,17 @@ state() TriggerPound {
 
 defaultproperties
 {
-     bStatic=False
-     bHidden=False
-     RemoteRole=ROLE_SimulatedProxy
-     bMovable=True
+      ChangeTime=0.000000
+      bInitiallyOn=False
+      bDelayFullOn=False
+      RemainOnTime=0.000000
+      InitialBrightness=0.000000
+      Alpha=0.000000
+      Direction=0.000000
+      SavedTrigger=None
+      poundTime=0.000000
+      bStatic=False
+      bHidden=False
+      RemoteRole=ROLE_SimulatedProxy
+      bMovable=True
 }

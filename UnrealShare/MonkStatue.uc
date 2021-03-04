@@ -18,6 +18,14 @@ Auto State Animate
 {
 	function HitWall (vector HitNormal, actor Wall)
 	{
+		if (bDeleteme)
+			return;
+		if (bStatic )
+		{
+			SetPhysics(PHYS_None);
+			bBounce = False;
+			return;
+		}
 		if ( (Velocity.z<-200) && (HitNormal.Z > 0.5)  
 			|| (Rotation.Pitch>4000) && (Rotation.Pitch<61000) )
 			skinnedFrag(class'Fragment1',texture, VRand() * 40000,DrawScale*2.0,20);
@@ -32,6 +40,8 @@ Auto State Animate
 
 	function Timer()
 	{
+		if ( bPushSoundPlaying )
+			Global.Timer();
 		if (Velocity.z<-80) 
 		{
 			RotationRate.Yaw = 15000;
@@ -41,12 +51,14 @@ Auto State Animate
 			DesiredRotation.Pitch=16000;	
 			DesiredRotation.Yaw=0;
 			DesiredRotation.Roll=0;
-		}		
+		}
 	}
 
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteMe)
+		    return;
 		Instigator = InstigatedBy;
 		if ( Instigator != None )
 			MakeNoise(1.0);
@@ -60,6 +72,8 @@ Auto State Animate
 
 function Bump( Actor Other )
 {
+	if (bStatic || bDeleteMe)
+	    return;
 	bBounce = ( bPushable && (Pawn(Other)!=None) );
 	if ( bBounce )
 		Super.Bump(Other);
@@ -67,18 +81,18 @@ function Bump( Actor Other )
 
 defaultproperties
 {
-     bPushable=True
-     PushSound=Sound'UnrealShare.General.ObjectPush'
-     EndPushSound=Sound'UnrealShare.General.Endpush'
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.MonkStatueM'
-     CollisionHeight=88.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     bBounce=True
-     Mass=100.000000
-     Buoyancy=1.000000
+      bPushable=True
+      PushSound=Sound'UnrealShare.General.ObjectPush'
+      EndPushSound=Sound'UnrealShare.General.Endpush'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.MonkStatueM'
+      CollisionHeight=88.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      bBounce=True
+      Mass=100.000000
+      Buoyancy=1.000000
 }

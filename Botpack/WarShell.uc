@@ -136,20 +136,23 @@ auto state Flying
 
 defaultproperties
 {
-     speed=600.000000
-     Damage=1000.000000
-     MomentumTransfer=100000
-     MyDamageType=RedeemerDeath
-     ExplosionDecal=Class'Botpack.NuclearMark'
-     bNetTemporary=False
-     RemoteRole=ROLE_SimulatedProxy
-     AmbientSound=Sound'Botpack.Redeemer.WarFly'
-     Mesh=LodMesh'Botpack.missile'
-     AmbientGlow=78
-     bUnlit=True
-     SoundRadius=100
-     SoundVolume=255
-     CollisionRadius=15.000000
-     CollisionHeight=8.000000
-     bProjTarget=True
+      CannonTimer=0.000000
+      SmokeRate=0.000000
+      trail=None
+      speed=600.000000
+      Damage=1000.000000
+      MomentumTransfer=100000
+      MyDamageType="RedeemerDeath"
+      ExplosionDecal=Class'Botpack.NuclearMark'
+      bNetTemporary=False
+      RemoteRole=ROLE_SimulatedProxy
+      AmbientSound=Sound'Botpack.Redeemer.WarFly'
+      Mesh=LodMesh'Botpack.missile'
+      AmbientGlow=78
+      bUnlit=True
+      SoundRadius=100
+      SoundVolume=255
+      CollisionRadius=15.000000
+      CollisionHeight=8.000000
+      bProjTarget=True
 }

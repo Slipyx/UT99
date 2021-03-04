@@ -39,21 +39,21 @@ auto state Explode
 
 defaultproperties
 {
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=1.000000
-     AnimSequence=All
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.Effects.T_PawnT'
-     Skin=Texture'UnrealShare.Effects.T_PawnT'
-     Mesh=LodMesh'UnrealShare.TeleEffect3'
-     DrawScale=0.200000
-     bUnlit=True
-     bParticles=True
-     LightType=LT_Pulse
-     LightEffect=LE_NonIncidence
-     LightBrightness=255
-     LightHue=170
-     LightSaturation=96
-     LightRadius=12
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=1.000000
+      AnimSequence="All"
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.Effects.T_PawnT'
+      Skin=Texture'UnrealShare.Effects.T_PawnT'
+      Mesh=LodMesh'UnrealShare.TeleEffect3'
+      DrawScale=0.200000
+      bUnlit=True
+      bParticles=True
+      LightType=LT_Pulse
+      LightEffect=LE_NonIncidence
+      LightBrightness=255
+      LightHue=170
+      LightSaturation=96
+      LightRadius=12
 }

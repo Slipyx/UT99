@@ -20,4 +20,5 @@ function PostBeginPlay()
 
 defaultproperties
 {
+      FavoriteNumber=0
 }

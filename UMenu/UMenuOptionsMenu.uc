@@ -92,14 +92,19 @@ function Select(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     PreferencesName="P&references"
-     PreferencesHelp="Change your game options, audio and video setup, HUD configuration, controls and other options."
-     PrioritizeName="&Weapons"
-     PrioritizeHelp="Change your weapon priority, view and set weapon options."
-     DesktopName="Show &Desktop"
-     DesktopHelp="Toggle between showing your game behind the menus, or the desktop logo."
-     PlayerMenuName="&Player Setup"
-     PlayerMenuHelp="Configure your player setup for multiplayer and botmatch gaming."
-     PlayerWindowClass=Class'UMenu.UMenuPlayerWindow'
-     WeaponPriorityWindowClass=Class'UMenu.UMenuWeaponPriorityWindow'
+      Preferences=None
+      Prioritize=None
+      Desktop=None
+      Advanced=None
+      Player=None
+      PreferencesName="P&references"
+      PreferencesHelp="Change your game options, audio and video setup, HUD configuration, controls and other options."
+      PrioritizeName="&Weapons"
+      PrioritizeHelp="Change your weapon priority, view and set weapon options."
+      DesktopName="Show &Desktop"
+      DesktopHelp="Toggle between showing your game behind the menus, or the desktop logo."
+      PlayerMenuName="&Player Setup"
+      PlayerMenuHelp="Configure your player setup for multiplayer and botmatch gaming."
+      PlayerWindowClass=Class'UMenu.UMenuPlayerWindow'
+      WeaponPriorityWindowClass=Class'UMenu.UMenuWeaponPriorityWindow'
 }

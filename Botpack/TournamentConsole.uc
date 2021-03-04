@@ -86,4 +86,5 @@ function PrintActionMessage( Canvas C, string BigMessage )
 
 defaultproperties
 {
+      bShowSpeech=False
 }

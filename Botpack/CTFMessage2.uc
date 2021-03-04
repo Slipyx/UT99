@@ -57,16 +57,16 @@ static function string GetString(
 
 defaultproperties
 {
-     YouHaveFlagString="You have the flag, return to base!"
-     EnemyHasFlagString="The enemy has your flag, recover it!"
-     RedColor=(R=255)
-     YellowColor=(R=255,G=255)
-     FontSize=1
-     bIsSpecial=True
-     bIsConsoleMessage=False
-     bFadeMessage=True
-     Lifetime=1
-     DrawColor=(R=0,G=128)
-     YPos=196.000000
-     bCenter=True
+      YouHaveFlagString="You have the flag, return to base!"
+      EnemyHasFlagString="The enemy has your flag, recover it!"
+      RedColor=(R=255,G=0,B=0,A=0)
+      YellowColor=(R=255,G=255,B=0,A=0)
+      FontSize=1
+      bIsSpecial=True
+      bIsConsoleMessage=False
+      bFadeMessage=True
+      Lifetime=1
+      DrawColor=(R=0,G=128)
+      YPos=196.000000
+      bCenter=True
 }

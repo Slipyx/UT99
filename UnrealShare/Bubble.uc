@@ -38,17 +38,17 @@ simulated function BeginPlay()
 
 defaultproperties
 {
-     bNetOptional=True
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=2.000000
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.S_bubble1'
-     Mesh=LodMesh'UnrealShare.SBubbles'
-     DrawScale=0.200000
-     bUnlit=True
-     bParticles=True
-     Mass=3.000000
-     Buoyancy=5.000000
+      bNetOptional=True
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=2.000000
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.S_bubble1'
+      Mesh=LodMesh'UnrealShare.SBubbles'
+      DrawScale=0.200000
+      bUnlit=True
+      bParticles=True
+      Mass=3.000000
+      Buoyancy=5.000000
 }

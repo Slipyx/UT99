@@ -311,4 +311,13 @@ function bool CheckMousePassThrough(float X, float Y)
 
 defaultproperties
 {
+      TabOffset=0
+      bShowSelected=False
+      FirstShown=None
+      bDragging=False
+      DragTab=None
+      TabRows=0
+      bArrangeRowsLikeTimHates=False
+      UnFlashTime=0.000000
+      bFlashShown=False
 }

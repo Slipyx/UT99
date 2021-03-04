@@ -20,7 +20,8 @@ simulated event RenderTexture(ScriptedTexture Tex)
 
 defaultproperties
 {
-     bNoDelete=True
-     bAlwaysRelevant=True
-     RemoteRole=ROLE_SimulatedProxy
+      ScriptedTexture=None
+      bNoDelete=True
+      bAlwaysRelevant=True
+      RemoteRole=ROLE_SimulatedProxy
 }

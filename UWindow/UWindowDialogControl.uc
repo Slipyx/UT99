@@ -152,4 +152,19 @@ function MouseLeave()
 
 defaultproperties
 {
+      NotifyWindow=None
+      Text=""
+      Font=0
+      TextColor=(R=0,G=0,B=0,A=0)
+      Align=TA_Left
+      TextX=0.000000
+      TextY=0.000000
+      bHasKeyboardFocus=False
+      bNoKeyboard=False
+      bAcceptExternalDragDrop=False
+      HelpText=""
+      MinWidth=0.000000
+      MinHeight=0.000000
+      TabNext=None
+      TabPrev=None
 }

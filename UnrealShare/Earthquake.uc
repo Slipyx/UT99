@@ -65,9 +65,10 @@ var   float remainingTime;
 
 defaultproperties
 {
-     magnitude=2000.000000
-     duration=5.000000
-     Radius=300.000000
-     bThrowPlayer=True
-     bStatic=False
+      magnitude=2000.000000
+      duration=5.000000
+      Radius=300.000000
+      bThrowPlayer=True
+      RemainingTime=0.000000
+      bStatic=False
 }

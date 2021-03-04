@@ -40,6 +40,7 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
-     ClientClass=Class'UTMenu.SpeechBinderSC'
-     WindowTitle="Speech Binder"
+      CloseButton=None
+      ClientClass=Class'UTMenu.SpeechBinderSC'
+      WindowTitle="Speech Binder"
 }

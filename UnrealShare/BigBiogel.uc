@@ -60,11 +60,11 @@ state OnSurface
 
 defaultproperties
 {
-     speed=700.000000
-     Damage=75.000000
-     MomentumTransfer=30000
-     RemoteRole=ROLE_DumbProxy
-     LifeSpan=25.000000
-     CollisionRadius=3.000000
-     CollisionHeight=4.000000
+      speed=700.000000
+      Damage=75.000000
+      MomentumTransfer=30000
+      RemoteRole=ROLE_DumbProxy
+      LifeSpan=25.000000
+      CollisionRadius=3.000000
+      CollisionHeight=4.000000
 }

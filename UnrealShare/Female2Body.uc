@@ -35,5 +35,5 @@ class Female2Body extends FemaleBody;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.Fem2Body'
+      Mesh=LodMesh'UnrealShare.Fem2Body'
 }

@@ -136,11 +136,15 @@ function ProcessInput(string Text);
 
 defaultproperties
 {
-     TextAreaClass="UBrowser.UBrowserIRCTextArea"
-     HasLeftText="has left"
-     HasJoinedText="has joined"
-     WasKickedByText="was kicked by"
-     NowKnownAsText="is now known as"
-     QuitText="Quit"
-     SetsModeText="sets mode"
+      TextArea=None
+      EditControl=None
+      TextAreaClass="UBrowser.UBrowserIRCTextArea"
+      HasLeftText="has left"
+      HasJoinedText="has joined"
+      WasKickedByText="was kicked by"
+      NowKnownAsText="is now known as"
+      QuitText="Quit"
+      SetsModeText="sets mode"
+      RightClickMenuClass=None
+      Menu=None
 }

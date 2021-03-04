@@ -41,6 +41,6 @@ simulated function SpawnEffects()
 
 defaultproperties
 {
-     MaxSparks=4
-     ChipOdds=0.500000
+      MaxSparks=4
+      ChipOdds=0.500000
 }

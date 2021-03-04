@@ -9,4 +9,5 @@ function bool ShowThisItem()
 
 defaultproperties
 {
+      WeaponDescription=""
 }

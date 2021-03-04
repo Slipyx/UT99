@@ -13,5 +13,5 @@ class SmallSpark2 extends SmallSpark;
 
 defaultproperties
 {
-     Mesh=LodMesh'UnrealShare.SmallSpark2M'
+      Mesh=LodMesh'UnrealShare.SmallSpark2M'
 }

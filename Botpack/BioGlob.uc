@@ -72,7 +72,9 @@ state OnSurface
 
 defaultproperties
 {
-     speed=700.000000
-     Damage=75.000000
-     MomentumTransfer=30000
+      NumSplash=0
+      Spawnpoint=(X=0.000000,Y=0.000000,Z=0.000000)
+      speed=700.000000
+      Damage=75.000000
+      MomentumTransfer=30000
 }

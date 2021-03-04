@@ -111,5 +111,8 @@ function SelectLAN()
 
 defaultproperties
 {
-     WindowTitleString="Unreal Server Browser"
+      BannerWindow=None
+      StatusBarDefaultText=""
+      bStandaloneBrowser=False
+      WindowTitleString="Unreal Server Browser"
 }

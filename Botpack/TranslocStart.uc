@@ -12,9 +12,9 @@ function Actor SpecialHandling(Pawn Other)
 
 	if ( (Other.MoveTarget == None) || (!Other.MoveTarget.IsA('TranslocDest') && (Other.MoveTarget != self)) )
 		return self;
-	B = Bot(Other);
 
-	if ( (B.MyTranslocator == None) || (B.MyTranslocator.TTarget != None) )
+	B = Bot(Other);
+	if ( (B == None) || (B.MyTranslocator == None) || (B.MyTranslocator.TTarget != None) )
 		return None;
 
 	B.TranslocateToTarget(self);	
@@ -23,7 +23,7 @@ function Actor SpecialHandling(Pawn Other)
 
 defaultproperties
 {
-     bSpecialCost=True
-     bStatic=False
-     bNoDelete=True
+      bSpecialCost=True
+      bStatic=False
+      bNoDelete=True
 }

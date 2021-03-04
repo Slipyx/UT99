@@ -13,9 +13,9 @@ class Moon3 extends Moon;
 
 defaultproperties
 {
-     Skin=None
-     Mesh=LodMesh'UnrealI.Moon3M'
-     DrawScale=0.150000
-     RotationRate=(Yaw=400,Roll=100)
-     DesiredRotation=(Yaw=400,Roll=100)
+      Skin=None
+      Mesh=LodMesh'UnrealI.Moon3M'
+      DrawScale=0.150000
+      RotationRate=(Yaw=400,Roll=100)
+      DesiredRotation=(Yaw=400,Roll=100)
 }

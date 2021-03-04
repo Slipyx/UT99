@@ -177,4 +177,31 @@ function MenuTick( float DeltaTime )
 
 defaultproperties
 {
+      PulseTime=0.000000
+      bPulseDown=False
+      TitleFadeTime=0.000000
+      MenuFadeTimes(0)=0.000000
+      MenuFadeTimes(1)=0.000000
+      MenuFadeTimes(2)=0.000000
+      MenuFadeTimes(3)=0.000000
+      MenuFadeTimes(4)=0.000000
+      MenuFadeTimes(5)=0.000000
+      MenuFadeTimes(6)=0.000000
+      MenuFadeTimes(7)=0.000000
+      MenuFadeTimes(8)=0.000000
+      MenuFadeTimes(9)=0.000000
+      MenuFadeTimes(10)=0.000000
+      MenuFadeTimes(11)=0.000000
+      MenuFadeTimes(12)=0.000000
+      MenuFadeTimes(13)=0.000000
+      MenuFadeTimes(14)=0.000000
+      MenuFadeTimes(15)=0.000000
+      MenuFadeTimes(16)=0.000000
+      MenuFadeTimes(17)=0.000000
+      MenuFadeTimes(18)=0.000000
+      MenuFadeTimes(19)=0.000000
+      MenuFadeTimes(20)=0.000000
+      MenuFadeTimes(21)=0.000000
+      MenuFadeTimes(22)=0.000000
+      MenuFadeTimes(23)=0.000000
 }

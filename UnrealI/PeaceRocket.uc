@@ -79,18 +79,24 @@ function Explode(vector HitLocation, vector HitNormal)
 
 defaultproperties
 {
-     MaxSpeed=600.000000
-     Damage=100.000000
-     MomentumTransfer=70000
-     bNetTemporary=False
-     LifeSpan=15.000000
-     Mesh=LodMesh'UnrealI.perock'
-     AmbientGlow=96
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=79
-     LightHue=28
-     LightSaturation=157
-     LightRadius=6
-     bBounce=True
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      ClosestPawn=None
+      ClosestDistance=0.000000
+      Count=0
+      MaxSpeed=600.000000
+      Damage=100.000000
+      MomentumTransfer=70000
+      bNetTemporary=False
+      LifeSpan=15.000000
+      Mesh=LodMesh'UnrealI.perock'
+      AmbientGlow=96
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=79
+      LightHue=28
+      LightSaturation=157
+      LightRadius=6
+      bBounce=True
 }

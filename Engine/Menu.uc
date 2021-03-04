@@ -65,6 +65,7 @@ function Menu ExitMenu()
 	}
 
 	Destroy();
+	return none;
 }
 
 function SetFontBrightness(canvas Canvas, bool bBright)
@@ -139,14 +140,67 @@ function MenuProcessInput( byte KeyNum, byte ActionNum )
 
 defaultproperties
 {
-     Selection=1
-     HelpMessage(1)="This menu has not yet been implemented."
-     LeftString="Left"
-     RightString="Right"
-     CenterString="Center"
-     EnabledString="Enabled"
-     DisabledString="Disabled"
-     YesString="yes"
-     NoString="no"
-     bHidden=True
+      ParentMenu=None
+      Selection=1
+      MenuLength=0
+      bConfigChanged=False
+      bExitAllMenus=False
+      PlayerOwner=None
+      HelpMessage(0)=""
+      HelpMessage(1)="This menu has not yet been implemented."
+      HelpMessage(2)=""
+      HelpMessage(3)=""
+      HelpMessage(4)=""
+      HelpMessage(5)=""
+      HelpMessage(6)=""
+      HelpMessage(7)=""
+      HelpMessage(8)=""
+      HelpMessage(9)=""
+      HelpMessage(10)=""
+      HelpMessage(11)=""
+      HelpMessage(12)=""
+      HelpMessage(13)=""
+      HelpMessage(14)=""
+      HelpMessage(15)=""
+      HelpMessage(16)=""
+      HelpMessage(17)=""
+      HelpMessage(18)=""
+      HelpMessage(19)=""
+      HelpMessage(20)=""
+      HelpMessage(21)=""
+      HelpMessage(22)=""
+      HelpMessage(23)=""
+      MenuList(0)=""
+      MenuList(1)=""
+      MenuList(2)=""
+      MenuList(3)=""
+      MenuList(4)=""
+      MenuList(5)=""
+      MenuList(6)=""
+      MenuList(7)=""
+      MenuList(8)=""
+      MenuList(9)=""
+      MenuList(10)=""
+      MenuList(11)=""
+      MenuList(12)=""
+      MenuList(13)=""
+      MenuList(14)=""
+      MenuList(15)=""
+      MenuList(16)=""
+      MenuList(17)=""
+      MenuList(18)=""
+      MenuList(19)=""
+      MenuList(20)=""
+      MenuList(21)=""
+      MenuList(22)=""
+      MenuList(23)=""
+      LeftString="Left"
+      RightString="Right"
+      CenterString="Center"
+      EnabledString="Enabled"
+      DisabledString="Disabled"
+      MenuTitle=""
+      YesString="yes"
+      NoString="no"
+      bHidden=True
 }

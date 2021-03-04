@@ -58,18 +58,20 @@ function Timer()
 
 defaultproperties
 {
-     TakenSound=Sound'Botpack.CTF.flagtaken'
-     bStatic=False
-     bNoDelete=True
-     bAlwaysRelevant=True
-     DrawType=DT_Mesh
-     Skin=Texture'Botpack.Skins.JpflagB'
-     Mesh=LodMesh'Botpack.newflag'
-     DrawScale=1.300000
-     SoundRadius=255
-     SoundVolume=255
-     CollisionRadius=60.000000
-     CollisionHeight=60.000000
-     bCollideActors=True
-     NetUpdateFrequency=3.000000
+      Team=0
+      TakenSound=Sound'Botpack.CTF.flagtaken'
+      bStatic=False
+      bNoDelete=True
+      bAlwaysRelevant=True
+      TransientSoundPriority=255
+      DrawType=DT_Mesh
+      Skin=Texture'Botpack.Skins.JpflagB'
+      Mesh=LodMesh'Botpack.newflag'
+      DrawScale=1.300000
+      SoundRadius=255
+      SoundVolume=255
+      CollisionRadius=60.000000
+      CollisionHeight=60.000000
+      bCollideActors=True
+      NetUpdateFrequency=3.000000
 }

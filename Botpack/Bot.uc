@@ -7,13 +7,13 @@ class Bot expands Pawn
 var(Pawn) class<carcass> CarcassType;
 
 // Advanced AI attributes.
-var(Orders) name	Orders;			//orders a bot is carrying out 
+var(Orders) name	Orders;			//orders a bot is carrying out
 var(Orders) name	OrderTag;		// tag of object referred to by orders
 var		actor		OrderObject;		// object referred to by orders (if applicable)
 var(Combat) float	TimeBetweenAttacks;  // seconds - modified by difficulty
-var 	name		NextAnim;		// used in states with multiple, sequenced animations	
+var 	name		NextAnim;		// used in states with multiple, sequenced animations
 var(Combat) float	Aggressiveness; //0.0 to 1.0 (typically)
-var		float       BaseAggressiveness; 
+var		float       BaseAggressiveness;
 var   	Pawn		OldEnemy;
 var		int			numHuntPaths;
 var		vector		HidingSpot;
@@ -22,7 +22,7 @@ var(Combat) float	RefireRate;
 var		float		StrafingAbility;
 
 //AI flags
-var	 	bool   		bReadyToAttack;		// can attack again 
+var	 	bool   		bReadyToAttack;		// can attack again
 var		bool		bCanFire;			//used by TacticalMove and Charging states
 var		bool		bCanDuck;
 var		bool		bStrafeDir;
@@ -38,7 +38,6 @@ var		bool		bNoShootDecor;
 var		bool		bGathering;
 var		bool		bCamping;
 var config	bool	bVerbose; //for debugging
-var		bool		bViewTarget; //is being used as a viewtarget
 var		bool		bWantsToCamp;
 var		bool		bWallAdjust;
 var		bool		bCanTranslocate;
@@ -51,7 +50,7 @@ var		bool		bKamikaze;
 var		bool		bClearShot;
 var		bool		bQuickFire;		// fire quickly as moving in and out of cover
 var		bool		bDevious;
-var		bool		bDumbDown;		// dumb down team AI 
+var		bool		bDumbDown;		// dumb down team AI
 var		bool		bJumpy;
 var		bool		bHasImpactHammer;
 var		bool		bImpactJumping;
@@ -121,7 +120,7 @@ var float TacticalOffset;
 // for debugging
 var string GoalString;
 
-// HUD status 
+// HUD status
 var texture StatusDoll, StatusBelt;
 
 // allowed voices
@@ -182,7 +181,7 @@ simulated function PostBeginPlay()
 	if ( Level.NetMode != NM_DedicatedServer )
 		Shadow = Spawn(class'PlayerShadow',self);
 }
- 
+
 function StartMatch();
 
 function StopFiring()
@@ -193,12 +192,12 @@ function StopFiring()
 }
 
 function ShootTarget(Actor NewTarget);
-	
-function InitRating() 
+
+function InitRating()
 {
 	if ( !Level.Game.IsA('DeathMatchPlus') )
 		return;
-	
+
 	Rating = 1000 + 400 * skill;
 	if ( DeathMatchPlus(Level.Game).bNoviceMode )
 		Rating -= 500;
@@ -264,14 +263,18 @@ function YellAt(Pawn Moron)
 		return;
 
 	SendTeamMessage(None, 'FRIENDLYFIRE', Rand(class<ChallengeVoicePack>(PlayerReplicationInfo.VoiceType).Default.NumFFires), 5);
-}	
+}
 
 function bool AddInventory( inventory NewItem )
 {
-	Super.AddInventory(NewItem);
+	local bool Result;
+	
+	Result = Super.AddInventory(NewItem);
 
 	if ( NewItem.IsA('Translocator') )
 		MyTranslocator = Translocator(NewItem);
+
+	return Result;
 }
 
 function HaltFiring()
@@ -306,7 +309,7 @@ function SendTeamMessage(PlayerReplicationInfo Recipient, name MessageType, byte
 function SendGlobalMessage(PlayerReplicationInfo Recipient, name MessageType, byte MessageID, float Wait)
 {
 	//log(self@"Send message"@MessageType@MessageID@"at"@Level.TimeSeconds);
-	if ( (MessageType == OldMessageType) && (MessageID == OldMessageID) 
+	if ( (MessageType == OldMessageType) && (MessageID == OldMessageID)
 		&& (Level.TimeSeconds - OldMessageTime < Wait) )
 		return;
 
@@ -323,7 +326,7 @@ function SetOrders(name NewOrders, Pawn OrderGiver, optional bool bNoAck)
 	local Bot B;
 
 	if ( NewOrders != BotReplicationInfo(PlayerReplicationInfo).RealOrders )
-	{ 
+	{
 		if ( (IsInState('Roaming') && bCamping) || IsInState('Wandering') )
 			GotoState('Roaming', 'PreBegin');
 		else if ( !IsInState('Dying') )
@@ -398,8 +401,8 @@ function SetOrders(name NewOrders, Pawn OrderGiver, optional bool bNoAck)
 						break;
 					}
 				}
-	}	
-				
+	}
+
 	BotReplicationInfo(PlayerReplicationInfo).OrderObject = OrderObject;
 }
 
@@ -454,9 +457,12 @@ function bool SwitchToBestWeapon()
 function SpecialFire()
 {
 	bComboPaused = true;
-	SpecialPause = 0.75 + VSize(Target.Location - Location)/Weapon.AltProjectileSpeed;
+	if (Weapon != None)
+		SpecialPause = 0.75 + VSize(Target.Location - Location)/Weapon.AltProjectileSpeed;
+	else
+		SpecialPause = 0.75 + VSize(Target.Location - Location)/class'Weapon'.default.AltProjectileSpeed;
 	NextState = 'Attacking';
-	NextLabel = 'Begin'; 
+	NextLabel = 'Begin';
 	Acceleration = vect(0,0,0);
 	GotoState('RangedAttack');
 }
@@ -520,10 +526,10 @@ function PlayHit(float Damage, vector HitLocation, name damageType, vector Momen
 	{
 		if (damageType == 'Drowned')
 		{
-			bub = spawn(class 'Bubble1',,, Location 
+			bub = spawn(class 'Bubble1',,, Location
 				+ 0.7 * CollisionRadius * vector(ViewRotation) + 0.3 * BaseEyeHeight * vect(0,0,1));
 			if (bub != None)
-				bub.DrawScale = FRand()*0.06+0.04; 
+				bub.DrawScale = FRand()*0.06+0.04;
 		}
 		else if ( damageType != 'Corroded' )
 		{
@@ -542,19 +548,19 @@ function PlayHit(float Damage, vector HitLocation, name damageType, vector Momen
 			else
 				spawn(class 'UT_BloodBurst',self,,hitLocation + BloodOffset);
 		}
-	}	
+	}
 
 	bFireFalling = false;
 	bOptionalTakeHit = ( (Level.TimeSeconds - LastPainTime > 0.3 + 0.25 * skill)
 						&& (Damage * FRand() > 0.08 * Health) && (bNovice || (Skill < 2))
-						&& (GetAnimGroup(AnimSequence) != 'MovingAttack') 
-						&& (GetAnimGroup(AnimSequence) != 'Attack') ); 
+						&& (GetAnimGroup(AnimSequence) != 'MovingAttack')
+						&& (GetAnimGroup(AnimSequence) != 'Attack') );
 
 	PlayTakeHitSound(Damage, damageType, 2);
 	if ( ((Weapon == None) || !Weapon.bPointing)
-		 && (GetAnimGroup(AnimSequence) != 'Dodge') 
-		&& (bOptionalTakeHit || (Momentum.Z > 140) 
-			 || (Damage * FRand() > (0.17 + 0.04 * skill) * Health)) ) 
+		 && (GetAnimGroup(AnimSequence) != 'Dodge')
+		&& (bOptionalTakeHit || (Momentum.Z > 140)
+			 || (Damage * FRand() > (0.17 + 0.04 * skill) * Health)) )
 	{
 		PlayHitAnim(HitLocation, Damage);
 		if ( (Enemy != None) && !bNovice && (FRand() * Skill > 0.5) )
@@ -572,10 +578,10 @@ function PlayHit(float Damage, vector HitLocation, name damageType, vector Momen
 
 function PlayHitAnim(vector HitLocation, float Damage)
 {
-	NextAnim = ''; 
+	NextAnim = '';
 	NextState = 'TakeHit';
-	PlayTakeHit(0.08, hitLocation, Damage); 
-} 
+	PlayTakeHit(0.08, hitLocation, Damage);
+}
 
 function PlayDeathHit(float Damage, vector HitLocation, name damageType, vector Momentum)
 {
@@ -587,18 +593,18 @@ function PlayDeathHit(float Damage, vector HitLocation, name damageType, vector 
 		Spawn(Region.Zone.ExitActor);
 	if (HeadRegion.Zone.bWaterZone)
 	{
-		bub = spawn(class 'Bubble1',,, Location 
+		bub = spawn(class 'Bubble1',,, Location
 			+ 0.3 * CollisionRadius * vector(Rotation) + 0.8 * BaseEyeHeight * vect(0,0,1));
 		if (bub != None)
-			bub.DrawScale = FRand()*0.08+0.03; 
-		bub = spawn(class 'Bubble1',,, Location 
+			bub.DrawScale = FRand()*0.08+0.03;
+		bub = spawn(class 'Bubble1',,, Location
 			+ 0.2 * CollisionRadius * VRand() + 0.7 * BaseEyeHeight * vect(0,0,1));
 		if (bub != None)
-			bub.DrawScale = FRand()*0.08+0.03; 
-		bub = spawn(class 'Bubble1',,, Location 
+			bub.DrawScale = FRand()*0.08+0.03;
+		bub = spawn(class 'Bubble1',,, Location
 			+ 0.3 * CollisionRadius * VRand() + 0.6 * BaseEyeHeight * vect(0,0,1));
 		if (bub != None)
-			bub.DrawScale = FRand()*0.08+0.03; 
+			bub.DrawScale = FRand()*0.08+0.03;
 	}
 	if ( !bGreenBlood && (DamageType == 'shot') || (DamageType == 'decapitated') )
 	{
@@ -607,12 +613,12 @@ function PlayDeathHit(float Damage, vector HitLocation, name damageType, vector 
 			Mo.Z *= 0.5;
 		spawn(class 'UT_BloodHit',self,,hitLocation, rotator(Mo));
 	}
-	else if ( (damageType != 'Burned') && (damageType != 'Corroded') 
+	else if ( (damageType != 'Burned') && (damageType != 'Corroded')
 		 && (damageType != 'Drowned') && (damageType != 'Fell') )
 	{
 		b = spawn(class 'UT_BloodBurst',self,'', hitLocation);
-		if ( bGreenBlood && (b != None) ) 
-			b.GreenBlood();		
+		if ( bGreenBlood && (b != None) )
+			b.GreenBlood();
 	}
 }
 
@@ -657,8 +663,8 @@ function PlayDyingSound()
 	}
 
 	rnd = Rand(6);
-	PlaySound(Deaths[rnd], SLOT_Talk, 16);	
-	PlaySound(Deaths[rnd], SLOT_Pain, 16);	
+	PlaySound(Deaths[rnd], SLOT_Talk, 16);
+	PlaySound(Deaths[rnd], SLOT_Pain, 16);
 }
 
 function PlayTakeHitSound(int damage, name damageType, int Mult)
@@ -679,15 +685,15 @@ function PlayTakeHitSound(int damage, name damageType, int Mult)
 	}
 	damage *= FRand();
 
-	if (damage < 8) 
+	if (damage < 8)
 		PlaySound(HitSound1, SLOT_Pain,16,,,Frand()*0.2+0.9);
 	else if (damage < 25)
 	{
-		if (FRand() < 0.5) PlaySound(HitSound2, SLOT_Pain,16,,,Frand()*0.15+0.9);			
+		if (FRand() < 0.5) PlaySound(HitSound2, SLOT_Pain,16,,,Frand()*0.15+0.9);
 		else PlaySound(HitSound3, SLOT_Pain,16,,,Frand()*0.15+0.9);
 	}
 	else
-		PlaySound(HitSound4, SLOT_Pain,16,,,Frand()*0.15+0.9);			
+		PlaySound(HitSound4, SLOT_Pain,16,,,Frand()*0.15+0.9);
 }
 
 function CallForHelp()
@@ -696,7 +702,7 @@ function CallForHelp()
 
 	//log(self$" call for help");
 	SendTeamMessage(None, 'Other', 4, 15);
-		
+
 	for ( P=Level.PawnList; P!=None; P=P.NextPawn )
 		if ( P.IsA('Bot') && (P.PlayerReplicationInfo.Team == PlayerReplicationInfo.Team) )
 			P.HandleHelpMessageFrom(self);
@@ -726,19 +732,19 @@ function ZoneChange(ZoneInfo newZone)
 		else if (Physics != PHYS_Swimming)
 		{
 			if (Physics != PHYS_Falling)
-				PlayDive(); 
+				PlayDive();
 			setPhysics(PHYS_Swimming);
 		}
 	}
 	else if (Physics == PHYS_Swimming)
 	{
 		if ( bCanFly )
-			 SetPhysics(PHYS_Flying); 
+			 SetPhysics(PHYS_Flying);
 		else
-		{ 
+		{
 			SetPhysics(PHYS_Falling);
 			if ( bCanWalk && (Abs(Acceleration.X) + Abs(Acceleration.Y) > 0)
-				&& (Destination.Z >= Location.Z) 
+				&& (Destination.Z >= Location.Z)
 				&& CheckWaterJump(jumpDir) )
 				JumpOutOfWater(jumpDir);
 		}
@@ -814,7 +820,7 @@ function PainTimer()
 	else if (HeadRegion.Zone.bWaterZone)
 	{
 		if (bDrowning)
-			self.TakeDamage(5, None, Location + CollisionHeight * vect(0,0,0.5), vect(0,0,0), 'Drowned'); 
+			self.TakeDamage(5, None, Location + CollisionHeight * vect(0,0,0.5), vect(0,0,0), 'Drowned');
 		else if ( !Level.Game.IsA('Assault') )
 		{
 			bDrowning = true;
@@ -823,7 +829,7 @@ function PainTimer()
 		if (Health > 0)
 			PainTime = 2.0;
 	}
-}	
+}
 
 function ChangedWeapon()
 {
@@ -833,7 +839,7 @@ function ChangedWeapon()
 	{
 		if ( Weapon == None )
 			SwitchToBestWeapon();
-		else if ( Weapon.GetStateName() == 'DownWeapon' ) 
+		else if ( Weapon.GetStateName() == 'DownWeapon' )
 			Weapon.GotoState('Idle');
 		PendingWeapon = None;
 	}
@@ -866,7 +872,7 @@ function ChangedWeapon()
 function bool Gibbed( name damageType)
 {
 	if ( (damageType == 'decapitated') || (damageType == 'shot') )
-		return false; 	
+		return false;
 	return ( (Health < -80) || ((Health < -40) && (FRand() < 0.6)) );
 }
 
@@ -903,7 +909,7 @@ function JumpOffPawn()
 }
 
 //=============================================================================
-	
+
 function SetMovementPhysics()
 {
 	if (Physics == PHYS_Falling)
@@ -911,7 +917,7 @@ function SetMovementPhysics()
 	if ( Region.Zone.bWaterZone )
 		SetPhysics(PHYS_Swimming);
 	else
-		SetPhysics(PHYS_Walking); 
+		SetPhysics(PHYS_Walking);
 }
 
 function FearThisSpot(Actor aSpot)
@@ -950,7 +956,7 @@ function WhatToDoNext(name LikelyState, name LikelyLabel)
 		log("enemy "$Enemy);
 		log("old enemy "$OldEnemy);
 	}
-	if ( (Level.NetMode != NM_Standalone) 
+	if ( (Level.NetMode != NM_Standalone)
 		&& Level.Game.IsA('DeathMatchPlus')
 		&& DeathMatchPlus(Level.Game).TooManyBots() )
 	{
@@ -972,13 +978,13 @@ function WhatToDoNext(name LikelyState, name LikelyLabel)
 		bReadyToAttack = !bNovice;
 		GotoState('Attacking');
 	}
-	else if ( (Orders == 'Hold') && (Weapon.AIRating > 0.4) && (Health > 70) )
+	else if ( (Orders == 'Hold') && (Weapon != None) && (Weapon.AIRating > 0.4) && (Health > 70) )
 			GotoState('Hold');
 	else
 	{
 		GotoState('Roaming');
 		if ( Skill > 2.7 )
-			bReadyToAttack = true; 
+			bReadyToAttack = true;
 	}
 }
 
@@ -994,8 +1000,8 @@ function bool CheckBumpAttack(Pawn Other)
 			bReadyToAttack = true;
 			GotoState('RangedAttack');
 			return true;
-		} 
-		else 
+		}
+		else
 		{
 			Enemy = CurrentEnemy;
 			if ( OldEnemy == CurrentEnemy )
@@ -1007,7 +1013,7 @@ function bool CheckBumpAttack(Pawn Other)
 
 function bool DeferTo(Bot Other)
 {
-	if ( (Other.PlayerReplicationInfo.HasFlag != None) 
+	if ( (Other.PlayerReplicationInfo.HasFlag != None)
 		|| ((Orders == 'Follow') && (Other == OrderObject)) )
 	{
 		if ( Level.Game.IsA('TeamGamePlus') && TeamGamePlus(Level.Game).HandleTieUp(self, Other) )
@@ -1043,7 +1049,7 @@ function Bump(actor Other)
 		return;
 	if ( TimerRate <= 0 )
 		setTimer(1.0, false);
-	
+
 	if ( Level.Game.bTeamGame && (P != None) && (MoveTarget != None) )
 	{
 		OtherDir = P.Location - MoveTarget.Location;
@@ -1051,7 +1057,7 @@ function Bump(actor Other)
 		{
 			OtherDir.Z = 0;
 			dist = VSize(OtherDir);
-			bDestinationObstructed = ( VSize(OtherDir) < P.CollisionRadius ); 
+			bDestinationObstructed = ( VSize(OtherDir) < P.CollisionRadius );
 			if ( P.IsA('Bot') )
 				bAmLeader = ( Bot(P).DeferTo(self) || (PlayerReplicationInfo.HasFlag != None) );
 
@@ -1066,7 +1072,7 @@ function Bump(actor Other)
 						if ( M.IsA('Bot') )
 							bAmLeader = Bot(M).DeferTo(self) || bAmLeader;
 					}
-					if ( dist < 3 * M.CollisionRadius ) 
+					if ( dist < 3 * M.CollisionRadius )
 					{
 						num++;
 						if ( num >= 2 )
@@ -1077,7 +1083,7 @@ function Bump(actor Other)
 						}
 					}
 				}
-				
+
 			if ( bDestinationObstructed && !bAmLeader )
 			{
 				// P is standing on my destination
@@ -1094,7 +1100,7 @@ function Bump(actor Other)
 						GotoState('StakeOut');
 						LastSeenTime = 0;
 						bClearShot = false;
-					}		
+					}
 				}
 				else if ( (Health > 0) && !IsInState('Wandering') || (Acceleration == vect(0,0,0)) )
 				{
@@ -1118,26 +1124,26 @@ function Bump(actor Other)
 			Velocity.Y = -1 * VelDir.X;
 			Velocity *= FMax(speed, 280);
 		}
-	} 
-	else if ( (Health > 0) && (Enemy == None) && (bCamping 
+	}
+	else if ( (Health > 0) && (Enemy == None) && (bCamping
 				|| ((Orders == 'Follow') && (MoveTarget == OrderObject) && (MoveTarget.Acceleration == vect(0,0,0)))) )
 		GotoState('Wandering', 'Begin');
 	Disable('Bump');
 }
-		
+
 singular function Falling()
 {
 	if (bCanFly)
 	{
 		SetPhysics(PHYS_Flying);
 		return;
-	}			
+	}
 	//log(class$" Falling");
 	// SetPhysics(PHYS_Falling); //note - done by default in physics
  	if (health > 0)
 		SetFall();
 }
-	
+
 function SetFall()
 {
 	if (Enemy != None)
@@ -1155,7 +1161,7 @@ function LongFall()
 	SetFall();
 	if ( (Enemy != None) && (Region.Zone.ZoneGravity.Z > Region.Zone.Default.ZoneGravity.Z) )
 		GotoState('FallingState', 'FireWhileFalling');
-	else 
+	else
 		GotoState('FallingState', 'LongFall');
 }
 
@@ -1190,7 +1196,7 @@ event UpdateEyeHeight(float DeltaTime)
 	local vector T;
 
 	// update viewrotation
-	OldViewRotation = ViewRotation;			
+	OldViewRotation = ViewRotation;
 	if ( (bFire == 0) && (bAltFire == 0) )
 		ViewRotation = Rotation;
 
@@ -1204,7 +1210,7 @@ event UpdateEyeHeight(float DeltaTime)
 			{
 				if ( (Enemy != None) && Enemy.bIsPlayer )
 					P.ClientMessage(PlayerReplicationInfo.PlayerName@"Orders"@orders@"State"@GetStateName()@"MoveTarget"@MoveTarget@"AlternatePath"@AlternatePath@"Enemy"@Enemy.PlayerReplicationInfo.PlayerName@"See"@LineOfSightTo(Enemy), 'CriticalEvent' );
-				else					
+				else
 					P.ClientMessage(PlayerReplicationInfo.PlayerName@"Orders"@orders@"State"@GetStateName()@"MoveTarget"@MoveTarget@"AlternatePath"@AlternatePath@"Enemy"@Enemy, 'CriticalEvent' );
 			}
 			break;
@@ -1257,7 +1263,7 @@ event UpdateEyeHeight(float DeltaTime)
 			EyeHeight = bound;
 		else
 		{
-			bound = CollisionHeight + FMin(FMax(0.0,(OldLocation.Z - Location.Z)), MaxStepHeight); 
+			bound = CollisionHeight + FMin(FMax(0.0,(OldLocation.Z - Location.Z)), MaxStepHeight);
 			 if ( EyeHeight > bound )
 				EyeHeight = bound;
 		}
@@ -1291,7 +1297,7 @@ simulated function bool AdjustHitLocation(out vector HitLocation, vector TraceDi
 		HitLocation.Z = maxZ;
 		HitLocation.X = HitLocation.X + TraceDir.X * adjZ;
 		HitLocation.Y = HitLocation.Y + TraceDir.Y * adjZ;
-		if ( VSize(HitLocation - Location) > CollisionRadius )	
+		if ( VSize(HitLocation - Location) > CollisionRadius )
 			return false;
 	}
 	return true;
@@ -1312,28 +1318,28 @@ function SeePlayer(Actor SeenPlayer)
 	SetEnemy(Pawn(SeenPlayer));
 }
 
-/* FindBestPathToward() assumes the desired destination is not directly reachable, 
-given the creature's intelligence, it tries to set Destination to the location of the 
+/* FindBestPathToward() assumes the desired destination is not directly reachable,
+given the creature's intelligence, it tries to set Destination to the location of the
 best waypoint, and returns true if successful
 */
 function bool FindBestPathToward(actor desired, bool bClearPaths)
 {
 	local Actor path;
 	local bool success;
-	
+
 	if ( specialGoal != None)
 		desired = specialGoal;
 	path = None;
-	path = FindPathToward(desired,,bClearPaths); 
-		
-	success = (path != None);	
+	path = FindPathToward(desired,,bClearPaths);
+
+	success = (path != None);
 	if (success)
 	{
-		MoveTarget = path; 
+		MoveTarget = path;
 		Destination = path.Location;
-	}	
+	}
 	return success;
-}	
+}
 
 function bool NeedToTurn(vector targ)
 {
@@ -1358,7 +1364,7 @@ function bool NearWall(float walldist)
 
 	LookDir = vector(Rotation);
 	ViewSpot = Location + BaseEyeHeight * vect(0,0,1);
-	ViewDist = LookDir * walldist; 
+	ViewDist = LookDir * walldist;
 	HitActor = Trace(HitLocation, HitNormal, ViewSpot + ViewDist, ViewSpot, false);
 	if ( HitActor == None )
 		return false;
@@ -1449,7 +1455,7 @@ function bool CheckFutureSight(float deltatime)
 	else
 		FutureLoc = Location + GroundSpeed * Normal(Acceleration) * deltaTime;
 
-	if ( Base != None ) 
+	if ( Base != None )
 		FutureLoc += Base.Velocity * deltaTime;
 	//make sure won't run into something
 	if ( !FastTrace(FutureLoc, Location) && (Physics != PHYS_Falling) )
@@ -1463,7 +1469,7 @@ function bool CheckFutureSight(float deltatime)
 }
 
 /*
-Adjust the aim at target.  
+Adjust the aim at target.
 	- add aim error
 	- adjust up or down if barrier
 */
@@ -1488,18 +1494,18 @@ function rotator AdjustToss(float projSpeed, vector projStart, int aimerror, boo
 
 	if ( !Target.bIsPawn )
 	{
-		if ( (Region.Zone.ZoneGravity.Z != Region.Zone.Default.ZoneGravity.Z) 
+		if ( (Region.Zone.ZoneGravity.Z != Region.Zone.Default.ZoneGravity.Z)
 			|| (TargetDist > projSpeed) )
 		{
 			TossTime = TargetDist/projSpeed;
-			FireSpot.Z -= ((0.25 * Region.Zone.ZoneGravity.Z * TossTime + 200) * TossTime + 60);	
+			FireSpot.Z -= ((0.25 * Region.Zone.ZoneGravity.Z * TossTime + 200) * TossTime + 60);
 		}
 		viewRotation = Rotator(FireSpot - ProjStart);
 		return viewRotation;
-	}					
-	aimerror = aimerror * (11 - 10 *  
-		((Target.Location - Location)/TargetDist 
-			Dot Normal((Target.Location + 1.2 * Target.Velocity) - (ProjStart + Velocity)))); 
+	}
+	aimerror = aimerror * (11 - 10 *
+		((Target.Location - Location)/TargetDist
+			Dot Normal((Target.Location + 1.2 * Target.Velocity) - (ProjStart + Velocity))));
 
 	if ( bNovice )
 	{
@@ -1552,12 +1558,12 @@ function rotator AdjustToss(float projSpeed, vector projStart, int aimerror, boo
 	// adjust for toss distance (assume 200 z velocity add & 60 init height)
 	if ( FRand() < 0.75 )
 	{
-		TossSpeed = projSpeed + 0.4 * VSize(Velocity); 
-		if ( (Region.Zone.ZoneGravity.Z != Region.Zone.Default.ZoneGravity.Z) 
+		TossSpeed = projSpeed + 0.4 * VSize(Velocity);
+		if ( (Region.Zone.ZoneGravity.Z != Region.Zone.Default.ZoneGravity.Z)
 			|| (TargetDist > TossSpeed) )
 		{
 			TossTime = TargetDist/TossSpeed;
-			FireSpot.Z -= ((0.25 * Region.Zone.ZoneGravity.Z * TossTime + 200) * TossTime + 60);	
+			FireSpot.Z -= ((0.25 * Region.Zone.ZoneGravity.Z * TossTime + 200) * TossTime + 60);
 		}
 	}
 
@@ -1569,7 +1575,7 @@ function rotator AdjustToss(float projSpeed, vector projStart, int aimerror, boo
 	if ( (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) > 8192)
 		&& (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) < 57343) )
 	{
-		if ( (FireRotation.Yaw > Rotation.Yaw + 32768) || 
+		if ( (FireRotation.Yaw > Rotation.Yaw + 32768) ||
 			((FireRotation.Yaw < Rotation.Yaw) && (FireRotation.Yaw > Rotation.Yaw - 32768)) )
 			FireRotation.Yaw = Rotation.Yaw - 8192;
 		else
@@ -1577,14 +1583,14 @@ function rotator AdjustToss(float projSpeed, vector projStart, int aimerror, boo
 	}
 	FireDir = vector(FireRotation);
 	// avoid shooting into wall
-	HitActor = Trace(HitLocation, HitNormal, ProjStart + FMin(VSize(FireSpot-ProjStart), 400) * FireDir, ProjStart, false); 
+	HitActor = Trace(HitLocation, HitNormal, ProjStart + FMin(VSize(FireSpot-ProjStart), 400) * FireDir, ProjStart, false);
 	if ( (HitActor != None) && (HitNormal.Z < 0.7) )
 	{
 		FireRotation.Yaw = (realYaw - aimerror) & 65535;
 		if ( (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) > 8192)
 			&& (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) < 57343) )
 		{
-			if ( (FireRotation.Yaw > Rotation.Yaw + 32768) || 
+			if ( (FireRotation.Yaw > Rotation.Yaw + 32768) ||
 				((FireRotation.Yaw < Rotation.Yaw) && (FireRotation.Yaw > Rotation.Yaw - 32768)) )
 				FireRotation.Yaw = Rotation.Yaw - 8192;
 			else
@@ -1593,10 +1599,10 @@ function rotator AdjustToss(float projSpeed, vector projStart, int aimerror, boo
 		FireDir = vector(FireRotation);
 	}
 
-	if ( warnTarget && (Pawn(Target) != None) ) 
-		Pawn(Target).WarnTarget(self, projSpeed, FireDir); 
+	if ( warnTarget && (Pawn(Target) != None) )
+		Pawn(Target).WarnTarget(self, projSpeed, FireDir);
 
-	viewRotation = FireRotation;			
+	viewRotation = FireRotation;
 	return FireRotation;
 }
 
@@ -1626,15 +1632,15 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 	// perfect aim at stationary objects
 	if ( !Target.bIsPawn || Target.IsA('FortStandard') )
 		return rotator(Target.Location - projstart);
-					
+
 	FireSpot = Target.Location;
 	TargetDist = VSize(Target.Location - Location);
 
 	// figure out the relative motion of the target across the bots view, and adjust aim error
 	// based on magnitude of relative motion
-	aimerror = aimerror * (11 - 10 *  
-		((Target.Location - Location)/TargetDist 
-			Dot Normal((Target.Location + 1.25 * Target.Velocity) - (Location + Velocity)))); 
+	aimerror = aimerror * (11 - 10 *
+		((Target.Location - Location)/TargetDist
+			Dot Normal((Target.Location + 1.25 * Target.Velocity) - (Location + Velocity))));
 
 	// if enemy is charging straight at bot with a melee weapon, improve aim
 	bDefendMelee = ( (Target == Enemy) && (Enemy.Weapon != None) && Enemy.Weapon.bMeleeWeapon && (TargetDist < 700) );
@@ -1665,7 +1671,7 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 		// adjust aim error based on skill
 		aimerror = aimerror * (1.7 - 0.4 * (skill + FRand()));
 		// Bots don't aim as well if recently hit, or if they or their target is flying through the air
-		if ( (Skill < 2) 
+		if ( (Skill < 2)
 			&& ((Level.TimeSeconds - LastPainTime < 0.15) || (Physics == PHYS_Falling) || (Target.Physics == PHYS_Falling)) )
 			aimerror *= 1.2;
 	}
@@ -1680,8 +1686,8 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 		else
 			aimerror *= 2;
 	}
-	
-	// adjust aim error based on bot accuracy rating 
+
+	// adjust aim error based on bot accuracy rating
 	if ( !leadTarget || (accuracy < 0) )
 		aimerror -= aimerror * accuracy;
 
@@ -1725,10 +1731,10 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 		}
 	}
 
-	bClean = false; //so will fail first check unless shooting at feet  
-	if ( Target.bIsPawn && (!bNovice || bDefendMelee) 
-		&& (Weapon != None) 
-		&& (Weapon.bRecommendSplashDamage || (Weapon.bRecommendAltSplashDamage && (bAltFire != 0))) 
+	bClean = false; //so will fail first check unless shooting at feet
+	if ( Target.bIsPawn && (!bNovice || bDefendMelee)
+		&& (Weapon != None)
+		&& (Weapon.bRecommendSplashDamage || (Weapon.bRecommendAltSplashDamage && (bAltFire != 0)))
 		&& (((Target.Physics == PHYS_Falling) && (Location.Z + 80 >= Target.Location.Z))
 			|| ((Location.Z + 19 >= Target.Location.Z) && (bDefendMelee || (skill > 2.5 * FRand() - 0.5)))) )
 	{
@@ -1750,7 +1756,7 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 		FireSpot.Z = Target.Location.Z;
  		bClean = FastTrace(FireSpot, ProjStart);
 	}
-	if( !bClean ) 
+	if( !bClean )
 	{
 		////try head
  		FireSpot.Z = Target.Location.Z + 0.9 * Target.CollisionHeight;
@@ -1778,7 +1784,7 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 			SetTimer(TimeBetweenAttacks, false);
 		}
 	}
-	
+
 	FireRotation = Rotator(FireSpot - ProjStart);
 	realYaw = FireRotation.Yaw;
 	aimerror = Rand(2 * aimerror) - aimerror;
@@ -1787,7 +1793,7 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 	if ( (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) > 8192)
 		&& (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) < 57343) )
 	{
-		if ( (FireRotation.Yaw > Rotation.Yaw + 32768) || 
+		if ( (FireRotation.Yaw > Rotation.Yaw + 32768) ||
 			((FireRotation.Yaw < Rotation.Yaw) && (FireRotation.Yaw > Rotation.Yaw - 32768)) )
 			FireRotation.Yaw = Rotation.Yaw - 8192;
 		else
@@ -1797,7 +1803,7 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 	// avoid shooting into wall
 	FireDist = FMin(VSize(FireSpot-ProjStart), 400);
 	FireSpot = ProjStart + FireDist * FireDir;
-	HitActor = Trace(HitLocation, HitNormal, FireSpot, ProjStart, false); 
+	HitActor = Trace(HitLocation, HitNormal, FireSpot, ProjStart, false);
 	if ( HitActor != None )
 	{
 		if ( HitNormal.Z < 0.7 )
@@ -1806,7 +1812,7 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 			if ( (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) > 8192)
 				&& (Abs(FireRotation.Yaw - (Rotation.Yaw & 65535)) < 57343) )
 			{
-				if ( (FireRotation.Yaw > Rotation.Yaw + 32768) || 
+				if ( (FireRotation.Yaw > Rotation.Yaw + 32768) ||
 					((FireRotation.Yaw < Rotation.Yaw) && (FireRotation.Yaw > Rotation.Yaw - 32768)) )
 					FireRotation.Yaw = Rotation.Yaw - 8192;
 				else
@@ -1814,26 +1820,26 @@ function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool
 			}
 			FireDir = vector(FireRotation);
 			FireSpot = ProjStart + FireDist * FireDir;
-			HitActor = Trace(HitLocation, HitNormal, FireSpot, ProjStart, false); 
+			HitActor = Trace(HitLocation, HitNormal, FireSpot, ProjStart, false);
 		}
 		if ( HitActor != None )
 		{
 			FireSpot += HitNormal * 2 * Target.CollisionHeight;
 			if ( !bNovice )
 			{
-				HitActor = Trace(HitLocation, HitNormal, FireSpot, ProjStart, false); 
+				HitActor = Trace(HitLocation, HitNormal, FireSpot, ProjStart, false);
 				if ( HitActor != None )
-					FireSpot += Target.CollisionHeight * HitNormal; 
+					FireSpot += Target.CollisionHeight * HitNormal;
 			}
 			FireDir = Normal(FireSpot - ProjStart);
-			FireRotation = rotator(FireDir);		
+			FireRotation = rotator(FireDir);
 		}
 	}
 
-	if ( warnTarget && (Pawn(Target) != None) ) 
-		Pawn(Target).WarnTarget(self, projSpeed, FireDir); 
+	if ( warnTarget && (Pawn(Target) != None) )
+		Pawn(Target).WarnTarget(self, projSpeed, FireDir);
 
-	viewRotation = FireRotation;			
+	viewRotation = FireRotation;
 	return FireRotation;
 }
 
@@ -1843,7 +1849,7 @@ function WarnTarget(Pawn shooter, float projSpeed, vector FireDir)
 	local vector X,Y,Z, enemyDir;
 
 	// AI controlled creatures may duck if not falling
-	if ( (health <= 0) || !bCanDuck || (Enemy == None) 
+	if ( (health <= 0) || !bCanDuck || (Enemy == None)
 		|| (Physics == PHYS_Falling) || (Physics == PHYS_Swimming) )
 		return;
 
@@ -1857,9 +1863,9 @@ function WarnTarget(Pawn shooter, float projSpeed, vector FireDir)
 
 	// and projectile time is long enough
 	enemyDist = VSize(shooter.Location - Location);
-	if (enemyDist/projSpeed < 0.11 + 0.15 * FRand()) 
+	if (enemyDist/projSpeed < 0.11 + 0.15 * FRand())
 		return;
-					
+
 	// only if tight FOV
 	GetAxes(Rotation,X,Y,Z);
 	enemyDir = (shooter.Location - Location)/enemyDist;
@@ -1900,14 +1906,14 @@ function TryToDuck(vector duckDir, bool bReversed)
 	}
 	if ( !bSuccess )
 		return;
-	
+
 	if ( HitActor == None )
-		HitLocation = Location + 240 * duckDir; 
+		HitLocation = Location + 240 * duckDir;
 
 	HitActor = Trace(HitLocation, HitNormal, HitLocation - MaxStepHeight * vect(0,0,1), HitLocation, false, Extent);
 	if (HitActor == None)
 		return;
-		
+
 	SetFall();
 	Velocity = duckDir * 400;
 	Velocity.Z = 160;
@@ -1915,8 +1921,8 @@ function TryToDuck(vector duckDir, bool bReversed)
 	PlaySound(JumpSound, SLOT_Talk, 1.0, true, 800, 1.0 );
 	SetPhysics(PHYS_Falling);
 	if ( (Weapon != None) && Weapon.bSplashDamage
-		&& ((bFire != 0) || (bAltFire != 0)) && (Enemy != None) 
-		&& !FastTrace(Enemy.Location, HitLocation) 
+		&& ((bFire != 0) || (bAltFire != 0)) && (Enemy != None)
+		&& !FastTrace(Enemy.Location, HitLocation)
 		&& FastTrace(Enemy.Location, Location) )
 	{
 		bFire = 0;
@@ -1940,16 +1946,16 @@ function bool CloseToPointMan(Pawn Other)
 		return true;
 
 	if ( (Base != None) && (Other.Base != None) && (Other.Base != Base) )
-		return false;	
+		return false;
 
 	dist = VSize(Location - Other.Location);
 	if ( dist > 400 )
 		return false;
-	
+
 	// check if point is moving away
 	if ( (Region.Zone.bWaterZone || (dist > 200)) && (((Other.Location - Location) Dot Other.Velocity) > 0) )
 		return false;
-				
+
 	return ( LineOfSightTo(Other) );
 }
 
@@ -1957,8 +1963,8 @@ function bool CloseToPointMan(Pawn Other)
 function bool CanStakeOut()
 {
 	if ( VSize(Enemy.Location - LastSeenPos) > 800 )
-		return false;		
-	
+		return false;
+
 	return ( FastTrace(LastSeenPos, Location + EyeHeight * vect(0,0,1))
 			&& FastTrace(LastSeenPos , Enemy.Location + Enemy.BaseEyeHeight * vect(0,0,1)) );
 }
@@ -2012,7 +2018,7 @@ function float AssessThreat( Pawn NewThreat )
 				ThreatValue += 0.2;
 			if ( SpecialPause > 0 )
 				ThreatValue += 5;
-			if ( IsInState('Hunting') && (NewStrength < 0.2) 
+			if ( IsInState('Hunting') && (NewStrength < 0.2)
 				&& (Level.TimeSeconds - LastSeenTime < 3)
 				&& (relativeStrength(Enemy) < FMin(0, NewStrength)) )
 				ThreatValue -= 0.3;
@@ -2098,7 +2104,7 @@ function bool SetEnemy( Pawn NewEnemy )
 		}
 		EnemyAcquired();
 	}
-				
+
 	return result;
 }
 
@@ -2134,7 +2140,7 @@ function MaybeTaunt(Pawn Other)
 		GotoState('VictoryDance');
 	}
 	else
-		GotoState('Attacking'); 
+		GotoState('Attacking');
 }
 
 function Killed(pawn Killer, pawn Other, name damageType)
@@ -2160,7 +2166,7 @@ function Killed(pawn Killer, pawn Other, name damageType)
 		if ( (Killer == self) && (OldEnemy == None) )
 		{
 			for ( aPawn=Level.PawnList; aPawn!=None; aPawn=aPawn.nextPawn )
-				if ( aPawn.bIsPlayer && aPawn.bCollideActors 
+				if ( aPawn.bIsPlayer && aPawn.bCollideActors
 					&& (VSize(Location - aPawn.Location) < 1600)
 					&& CanSee(aPawn) && SetEnemy(aPawn) )
 				{
@@ -2170,7 +2176,7 @@ function Killed(pawn Killer, pawn Other, name damageType)
 
 			MaybeTaunt(Other);
 		}
-		else 
+		else
 			GotoState('Attacking');
 	}
 	else if ( Level.Game.bTeamGame && Other.bIsPlayer
@@ -2187,7 +2193,7 @@ function Killed(pawn Killer, pawn Other, name damageType)
 				PointDied = Level.TimeSeconds;
 		}
 	}
-}	
+}
 
 function EnemyAcquired()
 {
@@ -2213,7 +2219,7 @@ function float RelativeStrength(Pawn Other)
 	local int bTemp;
 
 	adjustedStrength = health;
-	adjustedOther = 0.5 * (Other.health + Other.Default.Health);	
+	adjustedOther = 0.5 * (Other.health + Other.Default.Health);
 	compare = 0.01 * float(adjustedOther - adjustedStrength);
 	if ( Weapon != None )
 	{
@@ -2240,17 +2246,17 @@ function bool CanFireAtEnemy()
 {
 	local vector HitLocation, HitNormal,X,Y,Z, projStart;
 	local actor HitActor;
-	
+
 	if ( Weapon == None )
 		return false;
-	
+
 	GetAxes(Rotation,X,Y,Z);
 	projStart = Location + Weapon.CalcDrawOffset() + Weapon.FireOffset.X * X + 1.2 * Weapon.FireOffset.Y * Y + Weapon.FireOffset.Z * Z;
 	if ( Weapon.bInstantHit )
 		HitActor = Trace(HitLocation, HitNormal, Enemy.Location + Enemy.CollisionHeight * vect(0,0,0.7), projStart, true);
 	else
-		HitActor = Trace(HitLocation, HitNormal, 
-				projStart + FMin(280, VSize(Enemy.Location - Location)) * Normal(Enemy.Location + Enemy.CollisionHeight * vect(0,0,0.7) - Location), 
+		HitActor = Trace(HitLocation, HitNormal,
+				projStart + FMin(280, VSize(Enemy.Location - Location)) * Normal(Enemy.Location + Enemy.CollisionHeight * vect(0,0,0.7) - Location),
 				projStart, true);
 
 	if ( HitActor == Enemy )
@@ -2276,7 +2282,7 @@ function bool FaceDestination(float F)
 	if ( Level.TimeSeconds - LastSeenTime > 4 - F)
 		return true;
 
-	RelativeDir = Normal(Enemy.Location - Location - vect(0,0,1) * (Enemy.Location.Z - Location.Z)) 
+	RelativeDir = Normal(Enemy.Location - Location - vect(0,0,1) * (Enemy.Location.Z - Location.Z))
 			Dot Normal(MoveTarget.Location - Location - vect(0,0,1) * (MoveTarget.Location.Z - Location.Z));
 
 	if ( RelativeDir > 0.93 )
@@ -2289,7 +2295,7 @@ function bool FaceDestination(float F)
 		if ( 0.6 * Skill - F * FRand() + RelativeDir - 0.75 + StrafingAbility < 0 )
 			return true;
 	}
-	else 
+	else
 	{
 		if ( FRand() < 0.2 * (2 - F) )
 			return false;
@@ -2303,7 +2309,7 @@ function PlayMeleeAttack()
 {
 	//log("play melee attack");
 	Acceleration = AccelRate * VRand();
-	TweenToWaiting(0.15); 
+	TweenToWaiting(0.15);
 	FireWeapon();
 }
 
@@ -2325,7 +2331,7 @@ function PlayOutOfWater()
 }
 
 function PlayCombatMove()
-{	
+{
 	if ( (Physics == PHYS_Falling) && (Velocity.Z < -300) )
 		FastInAir();
 	else
@@ -2349,10 +2355,10 @@ function PlayCombatMove()
 			if ( Weapon.AltRefireRate < 0.99 )
 				bAltFire = 0;
 		}
-		else 
-			FireWeapon(); 
-	}		
-	else 
+		else
+			FireWeapon();
+	}
+	else
 	{
 		// keep firing if rapid fire weapon unless can't see enemy
 		if ( Weapon.RefireRate < 0.99 )
@@ -2371,7 +2377,7 @@ function PlayCombatMove()
 function float StrafeAdjust()
 {
 	local vector Focus2D, Loc2D, Dest2D;
-	local float strafemag; 
+	local float strafemag;
 
 	Focus2D = Focus;
 	Focus2D.Z = 0;
@@ -2461,24 +2467,24 @@ function bool FindAmbushSpot()
 	if ( (AmbushSpot == None) && (Ambushpoint(MoveTarget) != None)
 		&& !AmbushPoint(MoveTarget).taken )
 		AmbushSpot = Ambushpoint(MoveTarget);
-					
+
 	if ( Ambushspot != None )
 	{
 		GoalString = "Ambush"@Ambushspot;
 		Ambushspot.taken = true;
 		if ( VSize(Ambushspot.Location - Location) < 2 * CollisionRadius )
 		{
-			GoalString = GoalString$" there";	
+			GoalString = GoalString$" there";
 			if ( !bInitLifeMessage && (Orders == 'Defend') )
 			{
-				bInitLifeMessage = true;	
+				bInitLifeMessage = true;
 				SendTeamMessage(None, 'OTHER', 9, 60);
 			}
 			if ( Level.Game.bTeamGame )
 				for ( P=Level.PawnList; P!=None; P=P.NextPawn )
 					if ( P.bIsPlayer && (P.PlayerReplicationInfo != None)
 						&& (P.PlayerReplicationInfo.Team == PlayerReplicationInfo.Team)
-						&& P.IsA('Bot') && (P != self) 
+						&& P.IsA('Bot') && (P != self)
 						&& (Bot(P).Ambushspot == AmbushSpot) )
 							Bot(P).AmbushSpot = None;
 
@@ -2490,11 +2496,11 @@ function bool FindAmbushSpot()
 		}
 		if ( ActorReachable(Ambushspot) )
 		{
-			GoalString = GoalString$" reachable";	
+			GoalString = GoalString$" reachable";
 			MoveTarget = Ambushspot;
 			return true;
 		}
-		GoalString = GoalString$" path there";	
+		GoalString = GoalString$" path there";
 		MoveTarget = FindPathToward(Ambushspot);
 		if ( MoveTarget != None )
 			return true;
@@ -2503,41 +2509,39 @@ function bool FindAmbushSpot()
 		Ambushspot = None;
 	}
 	return false;
-}	
+}
 
 function bool PickLocalInventory(float MaxDist, float MinDistraction)
 {
 	local inventory Inv, BestInv, KnowPath;
 	local float NewWeight, DroppedDist, BestWeight;
-	local actor BestPath;
 	local bool bCanReach;
-	local NavigationPoint N;
 
-	if ( (EnemyDropped != None) && !EnemyDropped.bDeleteMe 
+	if ( (EnemyDropped != None) && !EnemyDropped.bDeleteMe
 		&& (EnemyDropped.Owner == None) )
 	{
 		DroppedDist = VSize(EnemyDropped.Location - Location);
 		NewWeight = EnemyDropped.BotDesireability(self);
-		if ( (DroppedDist < MaxDist) 
+		if ( (DroppedDist < MaxDist)
 			&& ((NewWeight > MinDistraction) || (DroppedDist < 0.5 * MaxDist))
 			&& ((EnemyDropped.Physics != PHYS_Falling) || (Region.Zone.ZoneGravity.Z == Region.Zone.Default.ZoneGravity.Z))
 			&& ActorReachable(EnemyDropped) )
 		{
-			BestWeight = NewWeight; 		
+			BestWeight = NewWeight;
 			if ( BestWeight > 0.4 )
 			{
 				MoveTarget = EnemyDropped;
 				EnemyDropped = None;
-				return true; 
+				return true;
 			}
 			BestInv = EnemyDropped;
 			BestWeight = BestWeight/DroppedDist;
 			KnowPath = BestInv;
-		}	
-	}	
+		}
+	}
 
 	EnemyDropped = None;
-								
+
 	//first look at nearby inventory < MaxDist
 	foreach visiblecollidingactors(class'Inventory', Inv, MaxDist,,true)
 		if ( (Inv.IsInState('PickUp')) && (Inv.MaxDesireability/60 > BestWeight)
@@ -2545,7 +2549,7 @@ function bool PickLocalInventory(float MaxDist, float MinDistraction)
 			&& (Inv.Location.Z < Location.Z + MaxStepHeight + CollisionHeight) )
 		{
 			NewWeight = inv.BotDesireability(self);
-			if ( (NewWeight > MinDistraction) 
+			if ( (NewWeight > MinDistraction)
 				 || (Inv.bHeldItem && Inv.IsA('Weapon') && (VSize(Inv.Location - Location) < 0.6 * MaxDist)) )
 			{
 				NewWeight = NewWeight/VSize(Inv.Location - Location);
@@ -2588,7 +2592,7 @@ auto state StartUp
 {
 	function BeginState()
 	{
-		SetMovementPhysics(); 
+		SetMovementPhysics();
 		if (Physics == PHYS_Walking)
 			SetPhysics(PHYS_Falling);
 	}
@@ -2607,9 +2611,9 @@ state Holding
 		NextState = GetStateName();
 		NextLabel = 'Begin';
 		GotoState('RangedAttack');
-	}	
-	
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	}
+
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -2622,29 +2626,29 @@ state Holding
 		}
 		if (NextState == 'TakeHit')
 		{
-			NextState = 'Attacking'; 
+			NextState = 'Attacking';
 			NextLabel = 'Begin';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else if ( Enemy != None )
 			GotoState('Attacking');
 	}
-	
+
 	function Timer()
 	{
 		Enable('Bump');
 	}
-	
+
 	function EnemyAcquired()
 	{
 		GotoState('Acquisition', 'PlayOut');
 	}
-	
+
 	function AnimEnd()
 	{
 		PlayWaiting();
 	}
- 
+
 	function Landed(vector HitNormal)
 	{
 		SetPhysics(PHYS_None);
@@ -2677,8 +2681,8 @@ Begin:
 			log(self$" give up hold");
 		SetOrders('Freelance', None);
 		GotoState('Roaming');
-	} 
-	else 
+	}
+	else
 		HoldSpot(OrderObject).Holder = self;
 	TweenToWaiting(0.4);
 Waving:
@@ -2690,7 +2694,7 @@ Waving:
 
 state Hold
 {
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -2703,17 +2707,17 @@ state Hold
 		}
 		if (NextState == 'TakeHit')
 		{
-			NextState = 'Attacking'; 
+			NextState = 'Attacking';
 			NextLabel = 'Begin';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else if ( Enemy != None )
 			GotoState('Attacking');
 	}
-	
+
 	function HandleHelpMessageFrom(Pawn Other)
 	{
-		if ( (Health > 70) && (Weapon.AIRating > 0.5) && (Other.Enemy != None)
+		if ( (Health > 70) && (Weapon != None) && (Weapon.AIRating > 0.5) && (Other.Enemy != None)
 			&& ((Other.bIsPlayer && (Other.PlayerReplicationInfo.Team == PlayerReplicationInfo.Team)))
 			//	|| (Other.IsA('StationaryPawn') && StationaryPawn(Other).SameTeamAs(PlayerReplicationInfo.Team)))
 			&& (VSize(Other.Enemy.Location - Location) < 800) )
@@ -2727,10 +2731,10 @@ state Hold
 
 	function FearThisSpot(Actor aSpot)
 	{
-		Destination = Location + 120 * Normal(Location - aSpot.Location); 
+		Destination = Location + 120 * Normal(Location - aSpot.Location);
 		GotoState('Wandering', 'Moving');
 	}
-	
+
 	function Timer()
 	{
 		bReadyToAttack = True;
@@ -2739,10 +2743,10 @@ state Hold
 
 	function SetFall()
 	{
-		NextState = 'Hold'; 
+		NextState = 'Hold';
 		NextLabel = 'Landed';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function EnemyAcquired()
@@ -2772,7 +2776,7 @@ state Hold
 		else
 			MoveTimer = -1.0;
 	}
-	
+
 	function PickDestination()
 	{
 		local Vector Direction;
@@ -2781,9 +2785,9 @@ state Hold
 		{
 			SetOrders('Freelance', None);
 			GotoState('Roaming');
-		} 
+		}
 		Direction = Location - OrderObject.Location;
-		if ( (Direction.X * Direction.X + Direction.Y * Direction.Y < 256) 
+		if ( (Direction.X * Direction.X + Direction.Y * Direction.Y < 256)
 			&& (Abs(Direction.Z) < 48) )
 		{
 			SendTeamMessage(None, 'OTHER', 9, 45);
@@ -2805,18 +2809,18 @@ state Hold
 			return;
 		}
 		MoveTarget = FindPathToward(OrderObject);
-		if ( MoveTarget == None ) 
+		if ( MoveTarget == None )
 		{
 			SetOrders('Freelance', None);
 			GotoState('Roaming');
-		} 
+		}
 	}
 
 	function AnimEnd()
 	{
 		PlayRunning();
 	}
- 
+
 	function Landed(vector HitNormal)
 	{
 		SetPhysics(PHYS_None);
@@ -2839,7 +2843,7 @@ Begin:
 	SwitchToBestWeapon();
 	TweenToRunning(0.1);
 	WaitForLanding();
-	
+
 RunAway:
 	PickDestination();
 SpecialNavig:
@@ -2880,8 +2884,8 @@ AdjustFromWall:
 	if ( !IsAnimating() )
 		AnimEnd();
 	bCamping = false;
-	StrafeTo(Destination, Focus); 
-	Destination = Focus; 
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
 	MoveTo(Destination);
 	Goto('Moving');
 }
@@ -2901,11 +2905,11 @@ state Roaming
 	{
 		if ( bNovice || (Skill < 4 * FRand() - 1) )
 			return;
-		if ( (Health > 70) && (Weapon.AiRating > 0.6) 
+		if ( (Health > 70) && (Weapon != None) && (Weapon.AiRating > 0.6)
 			&& (RelativeStrength(Other) < 0) )
 			HearNoise(0.5, Other);
 	}
-				
+
 	function ShootTarget(Actor NewTarget)
 	{
 		Target = NewTarget;
@@ -2918,13 +2922,13 @@ state Roaming
 
 	function MayFall()
 	{
-		bCanJump = ( (MoveTarget != None) 
+		bCanJump = ( (MoveTarget != None)
 					&& ((MoveTarget.Physics != PHYS_Falling) || !MoveTarget.IsA('Inventory')) );
 	}
-	
+
 	function HandleHelpMessageFrom(Pawn Other)
 	{
-		if ( (Health > 70) && (Weapon.AIRating > 0.5) && (Other.Enemy != None)
+		if ( (Health > 70) && (Weapon != None) && (Weapon.AIRating > 0.5) && (Other.Enemy != None)
 			&& ((Other.bIsPlayer && (Other.PlayerReplicationInfo.Team == PlayerReplicationInfo.Team)))
 			//	|| (Other.IsA('StationaryPawn') && StationaryPawn(Other).SameTeamAs(PlayerReplicationInfo.Team)))
 			&& (VSize(Other.Enemy.Location - Location) < 800) )
@@ -2936,7 +2940,7 @@ state Roaming
 		}
 	}
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -2944,9 +2948,9 @@ state Roaming
 			return;
 		if (NextState == 'TakeHit')
 		{
-			NextState = 'Attacking'; 
+			NextState = 'Attacking';
 			NextLabel = '';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else if ( !bCanFire && (skill > 3 * FRand()) )
 			GotoState('Attacking');
@@ -2954,10 +2958,10 @@ state Roaming
 
 	function FearThisSpot(Actor aSpot)
 	{
-		Destination = Location + 120 * Normal(Location - aSpot.Location); 
+		Destination = Location + 120 * Normal(Location - aSpot.Location);
 		GotoState('Wandering', 'Moving');
 	}
-	
+
 	function Timer()
 	{
 		bReadyToAttack = True;
@@ -2967,10 +2971,10 @@ state Roaming
 	function SetFall()
 	{
 		bWallAdjust = false;
-		NextState = 'Roaming'; 
+		NextState = 'Roaming';
 		NextLabel = 'Landed';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function EnemyAcquired()
@@ -3006,8 +3010,7 @@ state Roaming
 
 	function PickDestination()
 	{
-		local inventory Inv, BestInv;
-		local float Bestweight, NewWeight, DroppedDist;
+		local float Bestweight;
 		local actor BestPath;
 		local decoration Dec;
 		local NavigationPoint N;
@@ -3020,7 +3023,7 @@ state Roaming
 		if ( Level.Game.IsA('TeamGamePlus') )
 		{
 			if ( (Orders == 'FreeLance') && !bStayFreelance
-				 &&	(Orders != BotReplicationInfo(PlayerReplicationInfo).RealOrders) ) 
+				 &&	(Orders != BotReplicationInfo(PlayerReplicationInfo).RealOrders) )
 				SetOrders(BotReplicationInfo(PlayerReplicationInfo).RealOrders, BotReplicationInfo(PlayerReplicationInfo).RealOrderGiver, true);
 			if ( FRand() < 0.5 )
 				bStayFreelance = false;
@@ -3050,7 +3053,7 @@ state Roaming
 				return;
 			}
 		}
-		bLockedAndLoaded = ( (Weapon.AIRating > 0.4) && (Health > 60) );
+		bLockedAndLoaded = ( (Weapon != None) && (Weapon.AIRating > 0.4) && (Health > 60) );
 
 		if (  Orders == 'Follow' )
 		{
@@ -3077,7 +3080,7 @@ state Roaming
 								return;
 							}
 						}
-					}				
+					}
 					if ( ActorReachable(OrderObject) )
 						MoveTarget = OrderObject;
 					else
@@ -3089,7 +3092,7 @@ state Roaming
 					if ( bVerbose )
 						log(self$" found no path to "$OrderObject);
 				}
-				else if ( !bInitLifeMessage && (Pawn(OrderObject).Health > 0) 
+				else if ( !bInitLifeMessage && (Pawn(OrderObject).Health > 0)
 							&& (VSize(Location - OrderObject.Location) < 500) )
 				{
 					bInitLifeMessage = true;
@@ -3101,7 +3104,7 @@ state Roaming
 		{
 			if ( PickLocalInventory(300, 0.55) )
 				return;
-			if ( FindAmbushSpot() ) 
+			if ( FindAmbushSpot() )
 				return;
 			if ( !LineOfSightTo(OrderObject) )
 			{
@@ -3149,12 +3152,12 @@ state Roaming
 
 		if ( (OrderObject != None) && !OrderObject.IsA('Ambushpoint') )
 			bWantsToCamp = false;
-		else if ( (Weapon.AIRating > 0.5) && (Health > 90) && !Region.Zone.bWaterZone )
+		else if ( (Weapon != None) && (Weapon.AIRating > 0.5) && (Health > 90) && !Region.Zone.bWaterZone )
 		{
 			bWantsToCamp = ( bWantsToCamp || (FRand() < CampingRate * FMin(1.0, Level.TimeSeconds - LastCampCheck)) );
 			LastCampCheck = Level.TimeSeconds;
 		}
-		else 
+		else
 			bWantsToCamp = false;
 
 		if ( bWantsToCamp && FindAmbushSpot() )
@@ -3174,7 +3177,7 @@ state Roaming
 		bNoShootDecor = false;
 		BestWeight = 0;
 
-		// look for long distance inventory 
+		// look for long distance inventory
 		BestPath = FindBestInventoryPath(BestWeight, !bNovice && (skill >= 2));
 		//log("roam to"@BestPath);
 		//log("---------------------------------");
@@ -3185,7 +3188,7 @@ state Roaming
 		}
 
 		// nothing around - maybe just wait a little
-		if ( (FRand() < 0.35) && bNovice 
+		if ( (FRand() < 0.35) && bNovice
 			&& (!Level.Game.IsA('DeathMatchPlus') || !DeathMatchPlus(Level.Game).OneOnOne())  )
 		{
 			GoalString = " Nothing cool, so camp ";
@@ -3205,7 +3208,7 @@ state Roaming
 
 		// hunt player
 		if ( (!bNovice || (Level.Game.IsA('DeathMatchPlus') && DeathMatchPlus(Level.Game).OneOnOne()))
-			&& (Weapon.AIRating > 0.5) && (Health > 60) )
+			&& (Weapon != None) && (Weapon.AIRating > 0.5) && (Health > 60) )
 		{
 			if ( (PlayerPawn(RoamTarget) != None) && !LineOfSightTo(RoamTarget) )
 			{
@@ -3220,7 +3223,7 @@ state Roaming
 			{
 				// high skill bots go hunt player
 				for ( P=Level.PawnList; P!=None; P=P.NextPawn )
-					if ( P.bIsPlayer && P.IsA('PlayerPawn') 
+					if ( P.bIsPlayer && P.IsA('PlayerPawn')
 						&& ((VSize(P.Location - Location) > 1500) || !LineOfSightTo(P)) )
 					{
 						BestPath = FindPathToward(P);
@@ -3234,14 +3237,14 @@ state Roaming
 			}
 			bWantsToCamp = true; // don't camp if couldn't go to player
 		}
-		
+
 		// look for ambush spot if didn't already try
 		if ( !bWantsToCamp && FindAmbushSpot() )
 		{
 			RoamTarget = AmbushSpot;
 			return;
 		}
-		
+
 		// find a roamtarget
 		if ( RoamTarget == None )
 		{
@@ -3253,7 +3256,7 @@ state Roaming
 					if ( (RoamTarget == None) || (Rand(i) == 0) )
 						RoamTarget = N;
 				}
-		}	
+		}
 
 		// roam around
 		if ( RoamTarget != None )
@@ -3277,7 +3280,7 @@ state Roaming
 					RoamTarget = None;
 			}
 		}
-												
+
 		 // wander or camp
 		if ( FRand() < 0.35 )
 			GotoState('Wandering');
@@ -3289,7 +3292,7 @@ state Roaming
 		}
 	}
 
-	function AnimEnd() 
+	function AnimEnd()
 	{
 		if ( bCamping )
 		{
@@ -3309,7 +3312,6 @@ state Roaming
 	function ShareWith(Pawn Other)
 	{
 		local bool bHaveItem, bIsHealth, bOtherHas, bIsWeapon;
-		local Pawn P;
 
 		if ( MoveTarget.IsA('Weapon') )
 		{
@@ -3354,7 +3356,7 @@ state Roaming
 			}
 		}
 	}
-						 
+
 	function BeginState()
 	{
 		bNoShootDecor = false;
@@ -3392,8 +3394,8 @@ LongCamp:
 	Sleep(CampTime);
 	Goto('PreBegin');
 
-GiveWay:	
-	//log("sharing");	
+GiveWay:
+	//log("sharing");
 	bCamping = true;
 	Acceleration = vect(0,0,0);
 	if ( GetAnimGroup(AnimSequence) != 'Waiting' )
@@ -3422,7 +3424,7 @@ ReCamp:
 		bCampOnlyOnce = false;
 		Goto('PreBegin');
 	}
-	if ( ((Orders != 'Follow') || ((Pawn(OrderObject).Health > 0) && CloseToPointMan(Pawn(OrderObject)))) 
+	if ( ((Orders != 'Follow') || ((Pawn(OrderObject).Health > 0) && CloseToPointMan(Pawn(OrderObject))))
 		&& (Weapon != None) && (Weapon.AIRating > 0.4) && (3 * FRand() > skill + 1) )
 		Goto('ReCamp');
 PreBegin:
@@ -3438,7 +3440,7 @@ Begin:
 	bCamping = false;
 	TweenToRunning(0.1);
 	WaitForLanding();
-	
+
 RunAway:
 	PickDestination();
 	bCanTranslocate = false;
@@ -3472,7 +3474,7 @@ Moving:
 			if ( InventorySpot(MoveTarget).markedItem.GetStateName() == 'Pickup' )
 				MoveTarget = InventorySpot(MoveTarget).markedItem;
 			else if (	(InventorySpot(MoveTarget).markedItem.LatentFloat < 5.0)
-						&& (InventorySpot(MoveTarget).markedItem.GetStateName() == 'Sleeping')	
+						&& (InventorySpot(MoveTarget).markedItem.GetStateName() == 'Sleeping')
 						&& (abs(Location.Z - MoveTarget.Location.Z) < CollisionHeight)
 						&& (VSize(Location - MoveTarget.Location + vect(0,0,1) * (MoveTarget.Location.Z - Location.Z)) < CollisionRadius * CollisionRadius) )
 			{
@@ -3485,8 +3487,8 @@ Moving:
 				&& (abs(Location.Z - MoveTarget.Location.Z) < CollisionHeight)
 				&& (VSize(Location - MoveTarget.Location + vect(0,0,1) * (MoveTarget.Location.Z - Location.Z)) < CollisionRadius * CollisionRadius) )
 		{
-			PlayVictoryDance();	
-			bCampOnlyOnce = true;		
+			PlayVictoryDance();
+			bCampOnlyOnce = true;
 			bCamping = true;
 			CampTime = 1.2;
 			Acceleration = vect(0,0,0);
@@ -3510,7 +3512,7 @@ TakeHit:
 	Goto('Moving');
 
 Landed:
-	if ( MoveTarget == None ) 
+	if ( MoveTarget == None )
 		Goto('RunAway');
 	Goto('Moving');
 
@@ -3519,8 +3521,8 @@ AdjustFromWall:
 		AnimEnd();
 	bWallAdjust = true;
 	bCamping = false;
-	StrafeTo(Destination, Focus); 
-	Destination = Focus; 
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
 	MoveTo(Destination);
 	bWallAdjust = false;
 	Goto('Moving');
@@ -3573,7 +3575,7 @@ state Wandering
 		GotoState('RangedAttack');
 	}
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 						Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -3587,9 +3589,9 @@ state Wandering
 
 		if ( NextState == 'TakeHit' )
 			{
-			NextState = 'Attacking'; 
+			NextState = 'Attacking';
 			NextLabel = 'Begin';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 			}
 		else
 			GotoState('Attacking');
@@ -3602,10 +3604,10 @@ state Wandering
 
 	function SetFall()
 	{
-		NextState = 'Wandering'; 
+		NextState = 'Wandering';
 		NextLabel = 'ContinueWander';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function EnemyAcquired()
@@ -3635,9 +3637,9 @@ state Wandering
 		else
 			MoveTimer = -1.0;
 	}
-	
+
 	function bool TestDirection(vector dir, out vector pick)
-	{	
+	{
 		local vector HitLocation, HitNormal, dist;
 		local float minDist;
 		local actor HitActor;
@@ -3657,14 +3659,14 @@ state Wandering
 		}
 		else
 			pick = Location + pick;
-		 
+
 		dist = pick - Location;
 		if (Physics == PHYS_Walking)
 			dist.Z = 0;
-		
-		return (VSize(dist) > minDist); 
+
+		return (VSize(dist) > minDist);
 	}
-			
+
 	function PickDestination()
 	{
 		local vector pick, pickdir;
@@ -3704,13 +3706,13 @@ state Wandering
 			pickdir.Z = 0;
 			if (XY >= 0.6)
 				pickdir = Normal(pickdir);
-		}	
+		}
 
 		success = TestDirection(pickdir, pick);
 		if (!success)
 			success = TestDirection(-1 * pickdir, pick);
-		
-		if (success)	
+
+		if (success)
 			Destination = pick;
 		else if ( bMustWander )
 		{
@@ -3731,7 +3733,7 @@ state Wandering
 
 	function FearThisSpot(Actor aSpot)
 	{
-		Destination = Location + 120 * Normal(Location - aSpot.Location); 
+		Destination = Location + 120 * Normal(Location - aSpot.Location);
 	}
 
 	function BeginState()
@@ -3746,7 +3748,7 @@ state Wandering
 		bStopAtLedges = true;
 		MinHitWall += 0.15;
 	}
-	
+
 	function EndState()
 	{
 		MinHitWall -= 0.15;
@@ -3760,18 +3762,18 @@ state Wandering
 Begin:
 	//log(class$" Wandering");
 
-Wander: 
+Wander:
 	WaitForLanding();
 	PickDestination();
 	TweenToWalking(0.15);
 	FinishAnim();
 	PlayWalking();
-	
+
 Moving:
 	Enable('HitWall');
 	MoveTo(Destination, WalkingSpeed);
 Pausing:
-	if ( Level.Game.bTeamGame 
+	if ( Level.Game.bTeamGame
 		&& (bLeading || ((Orders == 'Follow') && !CloseToPointMan(Pawn(OrderObject)))) )
 		GotoState('Roaming');
 	Acceleration = vect(0,0,0);
@@ -3802,12 +3804,12 @@ Turn:
 	Goto('Pausing');
 
 AdjustFromWall:
-	StrafeTo(Destination, Focus); 
-	Destination = Focus; 
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
 	Goto('Moving');
 }
-	
-/* Acquisition - 
+
+/* Acquisition -
 Creature has just reacted to stimulus, and set an enemy
 - depending on strength of stimulus, and ongoing stimulii, vary time to focus on target and start attacking (or whatever.  FIXME - need some acquisition specific animation
 HearNoise and SeePlayer used to improve/change stimulus
@@ -3815,13 +3817,13 @@ HearNoise and SeePlayer used to improve/change stimulus
 
 state Acquisition
 {
-ignores falling, landed; 
+ignores falling, landed;
 
 	function WarnTarget(Pawn shooter, float projSpeed, vector FireDir)
 	{
 	}
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		LastSeenPos = Enemy.Location;
@@ -3831,18 +3833,18 @@ ignores falling, landed;
 			return;
 		if (NextState == 'TakeHit')
 		{
-			NextState = 'Attacking'; 
+			NextState = 'Attacking';
 			NextLabel = 'Begin';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else
 			GotoState('Attacking');
 	}
-	
+
 	singular function HearNoise(float Loudness, Actor NoiseMaker)
 	{
 		local vector OldLastSeenPos;
-		
+
 		if ( SetEnemy(NoiseMaker.instigator) )
 		{
 			OldLastSeenPos = LastSeenPos;
@@ -3851,11 +3853,11 @@ ignores falling, landed;
 			else if ( (Pawn(NoiseMaker) != None) && (Enemy == Pawn(NoiseMaker).Enemy) )
 				LastSeenPos = 0.5 * (Pawn(NoiseMaker).Enemy.Location + VSize(Pawn(NoiseMaker).Enemy.Location - Location) * vector(Rotation));
 			if ( VSize(OldLastSeenPos - Enemy.Location) < VSize(LastSeenPos - Enemy.Location) )
-				LastSeenPos = OldLastSeenPos;				
+				LastSeenPos = OldLastSeenPos;
 		}
-		
+
 	}
-	
+
 	function SeePlayer(Actor SeenPlayer)
 	{
 		if ( SetEnemy(Pawn(SeenPlayer)) )
@@ -3864,8 +3866,8 @@ ignores falling, landed;
 			NextAnim = '';
 			GotoState('Attacking');
 		}
-	} 
-	
+	}
+
 	function BeginState()
 	{
 		Disable('Tick'); //only used for bounding anim time
@@ -3876,7 +3878,7 @@ ignores falling, landed;
 	{
 		LastAcquireTime = Level.TimeSeconds;
 	}
-		
+
 PlayOut:
 	Acceleration = vect(0,0,0);
 	if ( (AnimFrame < 0.6) && IsAnimating() )
@@ -3884,25 +3886,25 @@ PlayOut:
 		Sleep(0.05);
 		Goto('PlayOut');
 	}
-		
+
 Begin:
 	Acceleration = vect(0,0,0);
 	if (NeedToTurn(LastSeenPos))
-	{	
+	{
 		PlayTurning();
 		TurnTo(LastSeenPos);
 	}
 	DesiredRotation = Rotator(LastSeenPos - Location);
-	TweenToFighter(0.2); 
+	TweenToFighter(0.2);
 	FinishAnim();
 	if ( Enemy == None )
-		WhatToDoNext('','');	
+		WhatToDoNext('','');
 	if ( Enemy.IsA('StationaryPawn') )
 		GotoState('Attacking');
 	////log("Stimulus="$Stimulus);
 	if ( AttitudeTo(Enemy) == ATTITUDE_Fear )  //will run away from noise
 	{
-		LastSeenPos = Enemy.Location; 
+		LastSeenPos = Enemy.Location;
 		NextAnim = '';
 		GotoState('Attacking');
 	}
@@ -3948,7 +3950,7 @@ ignores SeePlayer, HearNoise, Bump, HitWall;
 		{
 			if ( (Level.TimeSeconds - LastAttractCheck > 0.5)
 				|| (AttitudeToEnemy == ATTITUDE_Fear)
-				|| (TG.PriorityObjective(self) > 1) ) 
+				|| (TG.PriorityObjective(self) > 1) )
 			{
 				goalstring = "attract check";
 				if ( TG.FindSpecialAttractionFor(self) )
@@ -3964,7 +3966,7 @@ ignores SeePlayer, HearNoise, Bump, HitWall;
 				goalstring = "no attract check";
 			}
 		}
-			
+
 		if (AttitudeToEnemy == ATTITUDE_Fear)
 		{
 			GotoState('Retreating');
@@ -3977,14 +3979,14 @@ ignores SeePlayer, HearNoise, Bump, HitWall;
 		}
 		else if ( !LineOfSightTo(Enemy) )
 		{
-			if ( (OldEnemy != None) 
+			if ( (OldEnemy != None)
 				&& (AttitudeTo(OldEnemy) == ATTITUDE_Hate) && LineOfSightTo(OldEnemy) )
 			{
 				changeEn = enemy;
 				enemy = oldenemy;
 				oldenemy = changeEn;
-			}	
-			else 
+			}
+			else
 			{
 				goalstring = "attract check";
 				if ( (TG != None) && TG.FindSpecialAttractionFor(self) )
@@ -3996,35 +3998,35 @@ ignores SeePlayer, HearNoise, Bump, HitWall;
 				}
 				if ( (Orders == 'Hold') && (Level.TimeSeconds - LastSeenTime > 5) )
 				{
-					NumHuntPaths = 0; 
+					NumHuntPaths = 0;
 					GotoState('StakeOut');
 				}
-				else if ( bWillHunt || (!bSniping && (VSize(Enemy.Location - Location) 
+				else if ( bWillHunt || (!bSniping && (VSize(Enemy.Location - Location)
 							> 600 + (FRand() * RelativeStrength(Enemy) - CombatStyle) * 600)) )
 				{
-					bDevious = ( !bNovice && !Level.Game.bTeamGame && Level.Game.IsA('DeathMatchPlus') 
+					bDevious = ( !bNovice && !Level.Game.bTeamGame && Level.Game.IsA('DeathMatchPlus')
 								&& (FRand() < 0.52 - 0.12 * DeathMatchPlus(Level.Game).NumBots) );
 					GotoState('Hunting');
 				}
 				else
 				{
-					NumHuntPaths = 0; 
+					NumHuntPaths = 0;
 					GotoState('StakeOut');
 				}
 				return;
 			}
-		}	
-		
+		}
+
 		if (bReadyToAttack)
 		{
 			////log("Attack!");
 			Target = Enemy;
 			SetTimer(TimeBetweenAttacks, False);
 		}
-			
+
 		GotoState('TacticalMove');
 	}
-	
+
 	//EnemyNotVisible implemented so engine will update LastSeenPos
 	function EnemyNotVisible()
 	{
@@ -4039,9 +4041,9 @@ ignores SeePlayer, HearNoise, Bump, HitWall;
 	function BeginState()
 	{
 		if ( TimerRate <= 0.0 )
-			SetTimer(TimeBetweenAttacks  * (1.0 + FRand()),false); 
+			SetTimer(TimeBetweenAttacks  * (1.0 + FRand()),false);
 		if (Physics == PHYS_None)
-			SetMovementPhysics(); 
+			SetMovementPhysics();
 	}
 
 Begin:
@@ -4064,13 +4066,13 @@ ignores EnemyNotVisible;
 	{
 		bAdvancedTactics = false;
 		if ( bCanFire ) // MoveTarget is player, not destination
-			bCanJump = ( (MoveTarget != None) 
+			bCanJump = ( (MoveTarget != None)
 						&& ((MoveTarget.Physics != PHYS_Falling) || !MoveTarget.IsA('Inventory')) );
 	}
 
 	function WarnTarget(Pawn shooter, float projSpeed, vector FireDir)
-	{	
-		if ( bCanFire && (FRand() < 0.4) ) 
+	{
+		if ( bCanFire && (FRand() < 0.4) )
 			return;
 
 		Super.WarnTarget(shooter, projSpeed, FireDir);
@@ -4101,8 +4103,8 @@ ignores EnemyNotVisible;
 			GotoState('Attacking');
 		}
 	}
-	
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -4110,9 +4112,9 @@ ignores EnemyNotVisible;
 			return;
 		if (NextState == 'TakeHit')
 		{
-			NextState = 'Retreating'; 
+			NextState = 'Retreating';
 			NextLabel = 'TakeHit';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else if ( !bCanFire && (skill > 3 * FRand()) )
 			GotoState('Retreating', 'Moving');
@@ -4123,13 +4125,13 @@ ignores EnemyNotVisible;
 		bReadyToAttack = True;
 		Enable('Bump');
 	}
-	
+
 	function SetFall()
 	{
-		NextState = 'Retreating'; 
+		NextState = 'Retreating';
 		NextLabel = 'Landed';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function HitWall(vector HitNormal, actor Wall)
@@ -4195,10 +4197,10 @@ ignores EnemyNotVisible;
 					BestInv = Inv;
 				}
 			}
-			 
-		 // see if better long distance inventory 
+
+		 // see if better long distance inventory
 		if ( BestWeight < 0.001 )
-		{ 
+		{
 			bTriedFar = true;
 			BestPath = FindBestInventoryPath(BestWeight, false);
 			if ( Level.Game.bTeamGame && (BestWeight < 0.0002) )
@@ -4236,7 +4238,7 @@ ignores EnemyNotVisible;
 			return;
 		}
 		if ( !bTriedFar )
-		{ 
+		{
 			BestWeight = 0;
 			BestPath = FindBestInventoryPath(BestWeight, false);
 			if ( BestPath != None )
@@ -4264,7 +4266,7 @@ ignores EnemyNotVisible;
 	{
 		local actor oldTarget;
 		local Actor path;
-		
+
 		oldTarget = Home;
 		PickDestination();
 		if (Home == oldTarget)
@@ -4282,19 +4284,19 @@ ignores EnemyNotVisible;
 				bKamikaze = true;
 				GotoState('TacticalMove', 'TacticalTick');
 			}
-			else 
+			else
 			{
 				MoveTarget = path;
 				Destination = path.Location;
 			}
 		}
 	}
-	
+
 	function bool CheckBumpAttack(Pawn Other)
 	{
 		if ( (Other == Enemy) && (((Other.Location - Location) Dot Velocity) > 0) )
 			bKamikaze = true;
-		
+
 		if ( SetEnemy(Other) && (Enemy == Other) && (Weapon != None) && !Weapon.bMeleeWeapon )
 		{
 			bReadyToAttack = true;
@@ -4303,7 +4305,7 @@ ignores EnemyNotVisible;
 		}
 		return false;
 	}
-	
+
 	function ReachedHome()
 	{
 		if (LineOfSightTo(Enemy))
@@ -4342,7 +4344,7 @@ ignores EnemyNotVisible;
 		//log("find retreat spot");
 		dist2d = Home.Location - Location;
 		zdiff = dist2d.Z;
-		dist2d.Z = 0.0;	
+		dist2d.Z = 0.0;
 		if ((VSize(dist2d) < 2 * CollisionRadius) && (Abs(zdiff) < CollisionHeight))
 			ReachedHome();
 		else
@@ -4361,7 +4363,7 @@ ignores EnemyNotVisible;
 				else
 					path = FindPathToward(Home);
 			}
-				
+
 			if (path == None)
 				ChangeDestination();
 			else
@@ -4372,7 +4374,7 @@ ignores EnemyNotVisible;
 		}
 	}
 
-	function AnimEnd() 
+	function AnimEnd()
 	{
 		if ( bCanFire && LineOfSightTo(Enemy) )
 			PlayCombatMove();
@@ -4405,10 +4407,10 @@ Begin:
 
 	TweenToRunning(0.1);
 	WaitForLanding();
-	
+
 RunAway:
 	PickDestination();
-	bAdvancedTactics = ( !bNovice && (Level.TimeSeconds - LastSeenTime < 1.0) 
+	bAdvancedTactics = ( !bNovice && (Level.TimeSeconds - LastSeenTime < 1.0)
 						&& (Skill > 2.5 * FRand() - 1)
 						&& (!MoveTarget.IsA('NavigationPoint') || !NavigationPoint(MoveTarget).bNeverUseStrafing) );
 SpecialNavig:
@@ -4442,7 +4444,7 @@ Moving:
 		Sleep(0.0);
 		Goto('RunAway');
 	}
-	if ( MoveTarget.IsA('InventorySpot') && (InventorySpot(MoveTarget).markedItem != None) 
+	if ( MoveTarget.IsA('InventorySpot') && (InventorySpot(MoveTarget).markedItem != None)
 		&& (InventorySpot(MoveTarget).markedItem.GetStateName() == 'Pickup')
 		&& (InventorySpot(MoveTarget).markedItem.BotDesireability(self) > 0) )
 			MoveTarget = InventorySpot(MoveTarget).markedItem;
@@ -4470,8 +4472,8 @@ TakeHit:
 AdjustFromWall:
 	if ( !IsAnimating() )
 		AnimEnd();
-	StrafeTo(Destination, Focus); 
-	Destination = Focus; 
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
 	MoveTo(Destination);
 	Goto('Moving');
 }
@@ -4483,7 +4485,7 @@ ignores EnemyNotVisible;
 	function MayFall()
 	{
 		bAdvancedTactics = false;
-		bCanJump = ( (MoveTarget != None) 
+		bCanJump = ( (MoveTarget != None)
 					&& ((MoveTarget.Physics != PHYS_Falling) || !MoveTarget.IsA('Inventory')) );
 	}
 
@@ -4528,8 +4530,8 @@ ignores EnemyNotVisible;
 			MakeNoise(1.0);
 		}
 	}
-	
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -4537,9 +4539,9 @@ ignores EnemyNotVisible;
 			return;
 		if (NextState == 'TakeHit')
 		{
-			NextState = 'Fallback'; 
+			NextState = 'Fallback';
 			NextLabel = 'TakeHit';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else if ( !bCanFire && (skill > 3 * FRand()) )
 			GotoState('Fallback', 'Moving');
@@ -4550,13 +4552,13 @@ ignores EnemyNotVisible;
 		bReadyToAttack = True;
 		Enable('Bump');
 	}
-	
+
 	function SetFall()
 	{
-		NextState = 'Fallback'; 
+		NextState = 'Fallback';
 		NextLabel = 'Landed';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function HitWall(vector HitNormal, actor Wall)
@@ -4672,7 +4674,7 @@ ignores EnemyNotVisible;
 		return false;
 	}
 
-	function AnimEnd() 
+	function AnimEnd()
 	{
 		if ( bCanFire && LineOfSightTo(Enemy) )
 			PlayCombatMove();
@@ -4710,10 +4712,10 @@ ignores EnemyNotVisible;
 Begin:
 	TweenToRunning(0.12);
 	WaitForLanding();
-	
+
 RunAway:
 	PickDestination();
-	bAdvancedTactics = ( !bNovice && (Level.TimeSeconds - LastSeenTime < 1.0) 
+	bAdvancedTactics = ( !bNovice && (Level.TimeSeconds - LastSeenTime < 1.0)
 						&& (Skill > 2.5 * FRand() - 1)
 						&& (!MoveTarget.IsA('NavigationPoint') || !NavigationPoint(MoveTarget).bNeverUseStrafing) );
 SpecialNavig:
@@ -4770,8 +4772,8 @@ TakeHit:
 AdjustFromWall:
 	if ( !IsAnimating() )
 		AnimEnd();
-	StrafeTo(Destination, Focus); 
-	Destination = Focus; 
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
 	MoveTo(Destination);
 	Goto('Moving');
 }
@@ -4781,7 +4783,7 @@ state Charging
 ignores SeePlayer, HearNoise;
 
 	/* MayFall() called by engine physics if walking and bCanJump, and
-		is about to go off a ledge.  Pawn has opportunity (by setting 
+		is about to go off a ledge.  Pawn has opportunity (by setting
 		bCanJump to false) to avoid fall
 	*/
 
@@ -4819,18 +4821,18 @@ ignores SeePlayer, HearNoise;
 		else
 			MoveTimer = -1.0;
 	}
-	
+
 	function SetFall()
 	{
-		NextState = 'Charging'; 
+		NextState = 'Charging';
 		NextLabel = 'ResumeCharge';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function FearThisSpot(Actor aSpot)
 	{
-		Destination = Location + 120 * Normal(Normal(Destination - Location) + Normal(Location - aSpot.Location)); 
+		Destination = Location + 120 * Normal(Normal(Destination - Location) + Normal(Location - aSpot.Location));
 		GotoState('TacticalMove', 'DoStrafeMove');
 	}
 
@@ -4841,7 +4843,7 @@ ignores SeePlayer, HearNoise;
 			Global.TryToDuck(duckDir, bReversed);
 			return;
 		}
-		if ( MoveTarget == Enemy ) 
+		if ( MoveTarget == Enemy )
 			TryStrafe(duckDir);
 	}
 
@@ -4856,7 +4858,7 @@ ignores SeePlayer, HearNoise;
 			healthpct = 0.25;
 
 		healthpct *= CombatStyle;
-		if ( FRand() * Damage < healthpct * Health ) 
+		if ( FRand() * Damage < healthpct * Health )
 			return false;
 
 		if ( !bFindDest )
@@ -4870,7 +4872,7 @@ ignores SeePlayer, HearNoise;
 	}
 
 	function bool TryStrafe(vector sideDir)
-	{ 
+	{
 		local vector extent, HitLocation, HitNormal;
 		local actor HitActor;
 
@@ -4885,7 +4887,7 @@ ignores SeePlayer, HearNoise;
 		}
 		if (HitActor != None)
 			return false;
-		
+
 		if ( Physics == PHYS_Walking )
 		{
 			HitActor = Trace(HitLocation, HitNormal, Location + 100 * sideDir - MaxStepHeight * vect(0,0,1), Location + 100 * sideDir, false, Extent);
@@ -4896,12 +4898,12 @@ ignores SeePlayer, HearNoise;
 		GotoState('TacticalMove', 'DoStrafeMove');
 		return true;
 	}
-			
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		local float pick;
-		local vector sideDir, extent;
+		local vector sideDir;
 		local bool bWasOnGround;
 
 		bWasOnGround = (Physics == PHYS_Walking);
@@ -4925,47 +4927,46 @@ ignores SeePlayer, HearNoise;
 				NextState = 'Charging';
 				NextLabel = 'TakeHit';
 			}
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else if ( StrafeFromDamage(momentum, Damage, damageType, true) )
 			return;
-		else if ( bWasOnGround && (MoveTarget == Enemy) && 
-					(Physics == PHYS_Falling) ) //weave
+		else if ( bWasOnGround && (MoveTarget == Enemy) && (Physics == PHYS_Falling) ) //weave
 		{
 			pick = 1.0;
 			if ( bStrafeDir )
 				pick = -1.0;
 			sideDir = Normal( Normal(Enemy.Location - Location) Cross vect(0,0,1) );
 			sideDir.Z = 0;
-			Velocity += pick * GroundSpeed * 0.7 * sideDir;   
+			Velocity += pick * GroundSpeed * 0.7 * sideDir;
 			if ( FRand() < 0.2 )
 				bStrafeDir = !bStrafeDir;
 		}
 	}
-							
-	function AnimEnd() 
+
+	function AnimEnd()
 	{
 		PlayCombatMove();
 	}
-	
+
 	function Timer()
 	{
 		bReadyToAttack = True;
-		Target = Enemy;	
+		Target = Enemy;
 		if ( Enemy == None )
 		{
 			GotoState('Attacking');
 			return;
 		}
-		if ( (VSize(Enemy.Location - Location) 
+		if ( (VSize(Enemy.Location - Location)
 				<= (MeleeRange + Enemy.CollisionRadius + CollisionRadius))
-			|| ((Weapon != None) && !Weapon.bMeleeWeapon && (FRand() > 0.7 + 0.1 * skill)) ) 
+			|| ((Weapon != None) && !Weapon.bMeleeWeapon && (FRand() > 0.7 + 0.1 * skill)) )
 			GotoState('RangedAttack');
 	}
-	
+
 	function EnemyNotVisible()
 	{
-		GotoState('Hunting'); 
+		GotoState('Hunting');
 	}
 
 	function BeginState()
@@ -4983,7 +4984,7 @@ ignores SeePlayer, HearNoise;
 	}
 
 AdjustFromWall:
-	StrafeTo(Destination, Focus); 
+	StrafeTo(Destination, Focus);
 	Goto('CloseIn');
 
 ResumeCharge:
@@ -4995,7 +4996,7 @@ Begin:
 
 Charge:
 	bFromWall = false;
-	
+
 CloseIn:
 	if ( (Enemy == None) || (Enemy.Health <=0) )
 		GotoState('Attacking');
@@ -5075,7 +5076,7 @@ Moving:
 			else
 			{
 				bCanFire = true;
-				StrafeFacing(MoveTarget.Location, Enemy);	
+				StrafeFacing(MoveTarget.Location, Enemy);
 			}
 		}
 	}
@@ -5084,7 +5085,7 @@ Moving:
 
 GotThere:
 	Target = Enemy;
-	if ( !Weapon.bMeleeWeapon )
+	if ( (Weapon != None) && !Weapon.bMeleeWeapon )
 		GotoState('RangedAttack');
 	Sleep(0.1 - 0.02 * Skill );
 	Goto('Charge');
@@ -5096,7 +5097,7 @@ TakeHit:
 		bCanFire = true;
 		MoveToward(MoveTarget);
 	}
-	
+
 	Goto('Charge');
 }
 
@@ -5105,8 +5106,8 @@ state TacticalMove
 ignores SeePlayer, HearNoise;
 
 	function WarnTarget(Pawn shooter, float projSpeed, vector FireDir)
-	{	
-		if ( bCanFire && (FRand() < 0.4) ) 
+	{
+		if ( bCanFire && (FRand() < 0.4) )
 			return;
 
 		Super.WarnTarget(shooter, projSpeed, FireDir);
@@ -5116,13 +5117,13 @@ ignores SeePlayer, HearNoise;
 	{
 		Acceleration = vect(0,0,0);
 		Destination = Location;
-		NextState = 'Attacking'; 
+		NextState = 'Attacking';
 		NextLabel = 'Begin';
 		NextAnim = 'Fighter';
 		GotoState('FallingState');
 	}
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 						Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -5130,9 +5131,9 @@ ignores SeePlayer, HearNoise;
 			return;
 		if ( NextState == 'TakeHit' )
 		{
-			NextState = 'TacticalMove'; 
+			NextState = 'TacticalMove';
 			NextLabel = 'TakeHit';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 	}
 
@@ -5148,7 +5149,7 @@ ignores SeePlayer, HearNoise;
 		}
 		//if (PickWallAdjust())
 		//	GotoState('TacticalMove', 'AdjustFromWall');
-		if ( bChangeDir || (FRand() < 0.5) 
+		if ( bChangeDir || (FRand() < 0.5)
 			|| (((Enemy.Location - Location) Dot HitNormal) < 0) )
 		{
 			DesiredRotation = Rotator(Enemy.Location - location);
@@ -5163,10 +5164,10 @@ ignores SeePlayer, HearNoise;
 
 	function FearThisSpot(Actor aSpot)
 	{
-		Destination = Location + 120 * Normal(Location - aSpot.Location); 
+		Destination = Location + 120 * Normal(Location - aSpot.Location);
 	}
 
-	function AnimEnd() 
+	function AnimEnd()
 	{
 		if ( bCanFire && LineOfSightTo(Enemy) )
 			PlayCombatMove();
@@ -5178,23 +5179,23 @@ ignores SeePlayer, HearNoise;
 
 	function Timer()
 	{
-	
+
 		bReadyToAttack = True;
 		Enable('Bump');
 		Target = Enemy;
 		if ( Enemy == None )
 			return;
-		if (VSize(Enemy.Location - Location) 
+		if (VSize(Enemy.Location - Location)
 				<= (MeleeRange + Enemy.CollisionRadius + CollisionRadius))
-			GotoState('RangedAttack');		 
-		else if ( !Weapon.bMeleeWeapon && ((Enemy.Weapon == None) || !Enemy.Weapon.bMeleeWeapon) )
+			GotoState('RangedAttack');
+		else if ( (Weapon != None) && !Weapon.bMeleeWeapon && ((Enemy.Weapon == None) || !Enemy.Weapon.bMeleeWeapon) )
 		{
 			if ( bNovice )
 			{
-				if ( FRand() > 0.4 + 0.18 * skill ) 
+				if ( FRand() > 0.4 + 0.18 * skill )
 					GotoState('RangedAttack');
 			}
-			else if ( FRand() > 0.5 + 0.17 * skill ) 
+			else if ( FRand() > 0.5 + 0.17 * skill )
 				GotoState('RangedAttack');
 		}
 	}
@@ -5213,24 +5214,24 @@ ignores SeePlayer, HearNoise;
 		}
 		Disable('EnemyNotVisible');
 	}
-		
+
 	function GiveUpTactical(bool bNoCharge)
-	{	
+	{
 		if ( !bNoCharge && (Weapon.bMeleeWeapon || (2 * CombatStyle + 0.1 * Skill > FRand())) )
 			GotoState('Charging');
 		else if ( bReadyToAttack && !Weapon.bMeleeWeapon && !bNovice )
 			GotoState('RangedAttack');
 		else
-			GotoState('RangedAttack', 'Challenge'); 
-	}		
+			GotoState('RangedAttack', 'Challenge');
+	}
 
 	function bool TryToward(inventory Inv, float Weight)
 	{
-		local bool success; 
+		local bool success;
 		local vector pickdir, collSpec, minDest, HitLocation, HitNormal;
 		local Actor HitActor;
 
-		if ( (Weight < 0.0008) && ((Weight < 0.0008 - 0.0002 * skill) 
+		if ( (Weight < 0.0008) && ((Weight < 0.0008 - 0.0002 * skill)
 				|| !Enemy.LineOfSightTo(Inv)) )
 			return false;
 
@@ -5242,7 +5243,7 @@ ignores SeePlayer, HearNoise;
 		collSpec.X = CollisionRadius;
 		collSpec.Y = CollisionRadius;
 		collSpec.Z = FMax(6, CollisionHeight - 18);
-		
+
 		minDest = Location + FMin(160.0, 3*CollisionRadius) * pickDir;
 		HitActor = Trace(HitLocation, HitNormal, minDest, Location, false, collSpec);
 		if (HitActor == None)
@@ -5355,7 +5356,7 @@ situation. Make sure destination is reachable
 		local vector HitLocation, HitNormal, collSpec;
 		local float Aggression, enemydist, minDist, strafeSize, optDist;
 		local bool success, bNoReach;
-	
+
 		if ( Orders == 'Hold' )
 			bNoCharge = true;
 
@@ -5368,22 +5369,22 @@ situation. Make sure destination is reachable
 		}
 		if ( Enemy.Region.Zone.bWaterZone )
 			bNoCharge = bNoCharge || !bCanSwim;
-		else 
+		else
 			bNoCharge = bNoCharge || (!bCanFly && !bCanWalk);
-		
-		if( Weapon.bMeleeWeapon && !bNoCharge )
+
+		if( (Weapon != None) && Weapon.bMeleeWeapon && !bNoCharge )
 		{
 			GotoState('Charging');
 			return;
 		}
 		enemyDist = VSize(Location - Enemy.Location);
-		if ( (bNovice && (FRand() > 0.3 + 0.15 * skill)) || (FRand() > 0.7 + 0.15 * skill) 
-			&& ((EnemyDist > 900) || (Enemy.Weapon == None) || !Enemy.Weapon.bMeleeWeapon) 
+		if ( (bNovice && (FRand() > 0.3 + 0.15 * skill)) || (FRand() > 0.7 + 0.15 * skill)
+			&& ((EnemyDist > 900) || (Enemy.Weapon == None) || !Enemy.Weapon.bMeleeWeapon)
 			&& (!Level.Game.IsA('TeamGamePlus') || (TeamGamePlus(Level.Game).PriorityObjective(self) == 0)) )
 			GiveUpTactical(true);
 
 		success = false;
-		if ( (bSniping || (Orders == 'Hold'))  
+		if ( (bSniping || (Orders == 'Hold'))
 			&& (!Level.Game.IsA('TeamGamePlus') || (TeamGamePlus(Level.Game).PriorityObjective(self) == 0)) )
 			bNoCharge = true;
 		if ( bSniping && Weapon.IsA('SniperRifle') )
@@ -5392,7 +5393,7 @@ situation. Make sure destination is reachable
 			GotoState('RangedAttack');
 			return;
 		}
-						
+
 		Aggression = 2 * (CombatStyle + FRand()) - 1.1;
 		if ( Enemy.bIsPlayer && (AttitudeTo(Enemy) == ATTITUDE_Fear) && (CombatStyle > 0) )
 			Aggression = Aggression - 2 - 2 * CombatStyle;
@@ -5417,15 +5418,15 @@ situation. Make sure destination is reachable
 					GotoState('Charging');
 					return;
 				}
-				else if ( (enemyDist < 1.1 * (Enemy.Location.Z - Location.Z)) 
-						&& !actorReachable(Enemy) ) 
+				else if ( (enemyDist < 1.1 * (Enemy.Location.Z - Location.Z))
+						&& !actorReachable(Enemy) )
 				{
 					bNoReach = true;
 					aggression = -1.5 * FRand();
 				}
 			}
 		}
-	
+
 		if (!bNoCharge && (Aggression > 2 * FRand()))
 		{
 			if ( bNoReach && (Physics != PHYS_Falling) )
@@ -5452,25 +5453,25 @@ situation. Make sure destination is reachable
 			if ( !IsInState('TacticalMove') )
 				return;
 		}
-			
+
 		if (enemyDist > FMax(VSize(OldLocation - Enemy.OldLocation), 240))
 			Aggression += 0.4 * FRand();
-			 
+
 		enemydir = (Enemy.Location - Location)/enemyDist;
 		if ( bJumpy )
 			minDist = 160;
 		else
 			minDist = FMin(160.0, 3*CollisionRadius);
-		optDist = 80 + FMin(EnemyDist, 250 * (FRand() + FRand()));  
+		optDist = 80 + FMin(EnemyDist, 250 * (FRand() + FRand()));
 		Y = (enemydir Cross vect(0,0,1));
 		if ( Physics == PHYS_Walking )
 		{
 			Y.Z = 0;
 			enemydir.Z = 0;
 		}
-		else 
+		else
 			enemydir.Z = FMax(0,enemydir.Z);
-			
+
 		strafeSize = FMax(-0.7, FMin(0.85, (2 * Aggression * FRand() - 0.3)));
 		enemyPart = enemydir * strafeSize;
 		strafeSize = FMax(0.0, 1 - Abs(strafeSize));
@@ -5481,7 +5482,7 @@ situation. Make sure destination is reachable
 		collSpec.X = CollisionRadius;
 		collSpec.Y = CollisionRadius;
 		collSpec.Z = FMax(6, CollisionHeight - 18);
-		
+
 		minDest = Location + minDist * (pickdir + enemyPart);
 		HitActor = Trace(HitLocation, HitNormal, minDest, Location, false, collSpec);
 		if (HitActor == None)
@@ -5497,12 +5498,12 @@ situation. Make sure destination is reachable
 			if (success)
 				Destination = minDest + (pickdir + enemyPart) * optDist;
 		}
-	
+
 		if ( !success )
-		{					
+		{
 			collSpec.X = CollisionRadius;
 			collSpec.Y = CollisionRadius;
-			minDest = Location + minDist * (enemyPart - pickdir); 
+			minDest = Location + minDist * (enemyPart - pickdir);
 			HitActor = Trace(HitLocation, HitNormal, minDest, Location, false, collSpec);
 			if (HitActor == None)
 			{
@@ -5517,7 +5518,7 @@ situation. Make sure destination is reachable
 				if (success)
 					Destination = minDest + (enemyPart - pickdir) * optDist;
 			}
-			else 
+			else
 			{
 				if ( (CombatStyle <= 0) || (Enemy.bIsPlayer && (AttitudeTo(Enemy) == ATTITUDE_Fear)) )
 					enemypart = vect(0,0,0);
@@ -5541,26 +5542,26 @@ situation. Make sure destination is reachable
 					if (success)
 						Destination = minDest + pickDir * optDist;
 				}
-			}	
+			}
 		}
-					
+
 		if ( !success )
 			GiveUpTactical(bNoCharge);
-		else 
+		else
 		{
-			if ( bJumpy || (Weapon.bRecommendSplashDamage && !bNovice 
+			if ( bJumpy || ((Weapon != None) && Weapon.bRecommendSplashDamage && !bNovice
 				&& (FRand() < 0.2 + 0.2 * Skill)
-				&& (Enemy.Location.Z - Enemy.CollisionHeight <= Location.Z + MaxStepHeight - CollisionHeight)) 
+				&& (Enemy.Location.Z - Enemy.CollisionHeight <= Location.Z + MaxStepHeight - CollisionHeight))
 				&& !NeedToTurn(Enemy.Location) )
 			{
 				FireWeapon();
-				if ( (bJumpy && (FRand() < 0.75)) || Weapon.SplashJump() )
+				if ( (bJumpy && (FRand() < 0.75)) || (Weapon != None && Weapon.SplashJump()) )
 				{
 					// try jump move
 					SetPhysics(PHYS_Falling);
 					Acceleration = vect(0,0,0);
 					Destination = minDest;
-					NextState = 'Attacking'; 
+					NextState = 'Attacking';
 					NextLabel = 'Begin';
 					NextAnim = 'Fighter';
 					GotoState('FallingState');
@@ -5581,7 +5582,7 @@ situation. Make sure destination is reachable
 
 	function BeginState()
 	{
-		if ( bNovice ) 
+		if ( bNovice )
 			MaxDesiredSpeed = 0.4 + 0.08 * skill;
 		MinHitWall += 0.15;
 		bAvoidLedges = true;
@@ -5589,10 +5590,10 @@ situation. Make sure destination is reachable
 		bCanJump = false;
 		bCanFire = false;
 	}
-	
+
 	function EndState()
 	{
-		if ( bNovice ) 
+		if ( bNovice )
 			MaxDesiredSpeed = 0.5 + 0.1 * skill;
 		bAvoidLedges = false;
 		bStopAtLedges = false;
@@ -5603,7 +5604,7 @@ situation. Make sure destination is reachable
 	}
 
 TacticalTick:
-	Sleep(0.02);	
+	Sleep(0.02);
 Begin:
 	TweenToRunning(0.15);
 	Enable('AnimEnd');
@@ -5618,7 +5619,7 @@ Begin:
 
 DoMove:
 	if ( !bCanStrafe )
-	{ 
+	{
 DoDirectMove:
 		Enable('AnimEnd');
 		if ( GetAnimGroup(AnimSequence) == 'MovingAttack' )
@@ -5634,7 +5635,7 @@ DoDirectMove:
 DoStrafeMove:
 		Enable('AnimEnd');
 		bCanFire = true;
-		StrafeFacing(Destination, Enemy);	
+		StrafeFacing(Destination, Enemy);
 	}
 
 	if ( (Enemy != None) && !LineOfSightTo(Enemy) && FastTrace(Enemy.Location, LastSeeingPos) )
@@ -5644,7 +5645,7 @@ DoStrafeMove:
 		bReadyToAttack = true;
 		GotoState('Attacking');
 	}
-	
+
 NoCharge:
 	TweenToRunning(0.1);
 	Enable('AnimEnd');
@@ -5657,11 +5658,11 @@ NoCharge:
 	}
 	PickDestination(true);
 	Goto('DoMove');
-	
+
 AdjustFromWall:
 	Enable('AnimEnd');
-	StrafeTo(Destination, Focus); 
-	Destination = Focus; 
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
 	Goto('DoMove');
 
 TakeHit:
@@ -5676,7 +5677,7 @@ RecoverEnemy:
 	Destination = LastSeeingPos + 4 * CollisionRadius * Normal(LastSeeingPos - Location);
 	StrafeFacing(Destination, Enemy);
 
-	if ( !Weapon.bMeleeWeapon && LineOfSightTo(Enemy) && CanFireAtEnemy() )
+	if ( (Weapon != None) && !Weapon.bMeleeWeapon && LineOfSightTo(Enemy) && CanFireAtEnemy() )
 	{
 		Disable('AnimEnd');
 		DesiredRotation = Rotator(Enemy.Location - Location);
@@ -5710,15 +5711,15 @@ RecoverEnemy:
 
 state Hunting
 {
-ignores EnemyNotVisible; 
+ignores EnemyNotVisible;
 
 	/* MayFall() called by engine physics if walking and bCanJump, and
-		is about to go off a ledge.  Pawn has opportunity (by setting 
+		is about to go off a ledge.  Pawn has opportunity (by setting
 		bCanJump to false) to avoid fall
 	*/
 	function MayFall()
 	{
-		bCanJump = ( ((MoveTarget != None) 
+		bCanJump = ( ((MoveTarget != None)
 					&& ((MoveTarget.Physics != PHYS_Falling) || !MoveTarget.IsA('Inventory')))
 					|| PointReachable(Destination) );
 	}
@@ -5736,15 +5737,15 @@ ignores EnemyNotVisible;
 		}
 		return false;
 	}
-	
+
 	function FearThisSpot(Actor aSpot)
 	{
-		Destination = Location + 120 * Normal(Normal(Destination - Location) + Normal(Location - aSpot.Location)); 
+		Destination = Location + 120 * Normal(Normal(Destination - Location) + Normal(Location - aSpot.Location));
 		MoveTarget = None;
 		GotoState('Hunting', 'SpecialNavig');
 	}
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -5763,7 +5764,7 @@ ignores EnemyNotVisible;
 				NextState = 'Hunting';
 				NextLabel = 'AfterFall';
 			}
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 	}
 
@@ -5774,10 +5775,10 @@ ignores EnemyNotVisible;
 
 	function SetFall()
 	{
-		NextState = 'Hunting'; 
+		NextState = 'Hunting';
 		NextLabel = 'AfterFall';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function bool SetEnemy(Pawn NewEnemy)
@@ -5792,13 +5793,13 @@ ignores EnemyNotVisible;
 			bReadyToAttack = true;
 			DesiredRotation = Rotator(Enemy.Location - Location);
 			if ( CombatStyle > FRand() )
-				GotoState('Charging'); 
+				GotoState('Charging');
 			else
 				GotoState('Attacking');
 			return true;
 		}
 		return false;
-	} 
+	}
 
 	function AnimEnd()
 	{
@@ -5813,7 +5814,7 @@ ignores EnemyNotVisible;
 			Disable('AnimEnd');
 		}
 	}
-	
+
 	function Timer()
 	{
 		bReadyToAttack = true;
@@ -5846,7 +5847,7 @@ ignores EnemyNotVisible;
 
 	function bool TryToward(inventory Inv, float Weight)
 	{
-		local bool success; 
+		local bool success;
 		local vector pickdir, collSpec, minDest, HitLocation, HitNormal;
 		local Actor HitActor;
 
@@ -5858,7 +5859,7 @@ ignores EnemyNotVisible;
 		collSpec.X = CollisionRadius;
 		collSpec.Y = CollisionRadius;
 		collSpec.Z = FMax(6, CollisionHeight - 18);
-		
+
 		minDest = Location + FMin(160.0, 3*CollisionRadius) * pickDir;
 		HitActor = Trace(HitLocation, HitNormal, minDest, Location, false, collSpec);
 		if (HitActor == None)
@@ -5886,13 +5887,12 @@ ignores EnemyNotVisible;
 		local inventory Inv, BestInv, SecondInv;
 		local float Bestweight, NewWeight, MaxDist, SecondWeight;
 		local NavigationPoint path;
-		local actor HitActor;
-		local vector HitNormal, HitLocation, nextSpot, ViewSpot;
+		local vector nextSpot, ViewSpot;
 		local float posZ;
 		local bool bCanSeeLastSeen;
 		local int i;
 
-		// If no enemy, or I should see him but don't, then give up		
+		// If no enemy, or I should see him but don't, then give up
 		if ( Level.TimeSeconds - LastSeenTime > 26 - Level.Game.NumPlayers - DeathMatchPlus(Level.Game).NumBots )
 			Enemy = None;
 		if ( (Enemy == None) || (Enemy.Health <= 0) )
@@ -5900,12 +5900,12 @@ ignores EnemyNotVisible;
 			WhatToDoNext('','');
 			return;
 		}
-	
+
 		bAvoidLedges = false;
 
 		if ( JumpZ > 0 )
 			bCanJump = true;
-		
+
 		if ( ActorReachable(Enemy) )
 		{
 			BlockedPath = None;
@@ -6014,7 +6014,7 @@ ignores EnemyNotVisible;
 			}
 			return;
 		}
-		
+
 		if ( (NumHuntPaths > 60) && (bNovice || !Level.Game.IsA('DeathMatchPlus') || !DeathMatchPlus(Level.Game).OneOnOne()) )
 		{
 			WhatToDoNext('', '');
@@ -6024,7 +6024,7 @@ ignores EnemyNotVisible;
 		if ( LastSeeingPos != vect(1000000,0,0) )
 		{
 			Destination = LastSeeingPos;
-			LastSeeingPos = vect(1000000,0,0);		
+			LastSeeingPos = vect(1000000,0,0);
 			if ( FastTrace(Enemy.Location, ViewSpot) )
 			{
 				If (VSize(Location - Destination) < 20)
@@ -6069,8 +6069,8 @@ ignores EnemyNotVisible;
 				}
 			}
 		}
-		LastSeenPos = Enemy.Location;				
-	}	
+		LastSeenPos = Enemy.Location;
+	}
 
 	function bool FindViewSpot()
 	{
@@ -6083,7 +6083,7 @@ ignores EnemyNotVisible;
 		// if frustrated, always move if possible
 		bAlwaysTry = bFrustrated;
 		bFrustrated = false;
-		
+
 		if ( FastTrace(Enemy.Location, Location + 2 * Y * CollisionRadius) )
 		{
 			Destination = Location + 2.5 * Y * CollisionRadius;
@@ -6127,8 +6127,8 @@ ignores EnemyNotVisible;
 
 AdjustFromWall:
 	Enable('AnimEnd');
-	StrafeTo(Destination, Focus); 
-	Destination = Focus; 
+	StrafeTo(Destination, Focus);
+	Destination = Focus;
 	if ( MoveTarget != None )
 		Goto('SpecialNavig');
 	else
@@ -6145,7 +6145,7 @@ Follow:
 		TeamGamePlus(Level.Game).FindSpecialAttractionFor(self);
 	if ( bSniping )
 		GotoState('StakeOut');
-	if ( (Orders == 'Hold') || (Orders == 'Follow') ) 
+	if ( (Orders == 'Hold') || (Orders == 'Follow') )
 	{
 		if ( !LineOfSightTo(OrderObject) )
 			GotoState('Fallback');
@@ -6180,16 +6180,16 @@ SpecialNavig:
 	if (MoveTarget == None)
 		MoveTo(Destination);
 	else
-		MoveToward(MoveTarget); 
+		MoveToward(MoveTarget);
 
 	Goto('Follow');
 }
 
 state StakeOut
 {
-ignores EnemyNotVisible; 
+ignores EnemyNotVisible;
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -6209,7 +6209,7 @@ ignores EnemyNotVisible;
 				NextState = 'Attacking';
 				NextLabel = 'Begin';
 			}
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else
 			GotoState('Attacking');
@@ -6218,15 +6218,15 @@ ignores EnemyNotVisible;
 	singular function HearNoise(float Loudness, Actor NoiseMaker)
 	{
 		if ( SetEnemy(NoiseMaker.instigator) )
-			LastSeenPos = Enemy.Location; 
+			LastSeenPos = Enemy.Location;
 	}
 
 	function SetFall()
 	{
-		NextState = 'StakeOut'; 
+		NextState = 'StakeOut';
 		NextLabel = 'Begin';
 		NextAnim = AnimSequence;
-		GotoState('FallingState'); 
+		GotoState('FallingState');
 	}
 
 	function bool SetEnemy(Pawn NewEnemy)
@@ -6239,8 +6239,8 @@ ignores EnemyNotVisible;
 			return true;
 		}
 		return false;
-	} 
-	
+	}
+
 	function Timer()
 	{
 		bReadyToAttack = true;
@@ -6250,16 +6250,17 @@ ignores EnemyNotVisible;
 
 	function rotator AdjustAim(float projSpeed, vector projStart, int aimerror, bool leadTarget, bool warnTarget)
 	{
-		local vector FireSpot, X,Y,Z;
+		local vector FireSpot;
 		local actor HitActor;
 		local vector HitLocation, HitNormal;
-				
+
 		FireSpot = LastSeenPos;
-			 
+
 		HitActor = Trace(HitLocation, HitNormal, FireSpot, ProjStart, false);
-		if( HitActor != None ) 
+		if( HitActor != None )
 		{
-			FireSpot += 2 * Enemy.CollisionHeight * HitNormal;
+			if ( Enemy != None )
+				FireSpot += 2 * Enemy.CollisionHeight * HitNormal;
 			bClearShot = FastTrace(FireSpot, ProjStart);
 			if ( !bClearShot )
 			{
@@ -6268,14 +6269,14 @@ ignores EnemyNotVisible;
 				bAltFire = 0;
 			}
 		}
-		
+
 		ViewRotation = Rotator(FireSpot - ProjStart);
 		return ViewRotation;
 	}
-	
+
 	function bool ClearShot()
 	{
-		if ( Weapon.bSplashDamage && (VSize(Location - LastSeenPos) < 300) )
+		if ( (Weapon != None) && Weapon.bSplashDamage && (VSize(Location - LastSeenPos) < 300) )
 			return false;
 
 		if ( !FastTrace(LastSeenPos + vect(0,0,0.9) * Enemy.CollisionHeight, Location) )
@@ -6286,7 +6287,7 @@ ignores EnemyNotVisible;
 		}
 		return true;
 	}
-	
+
 	function FindNewStakeOutDir()
 	{
 		local NavigationPoint N, Best;
@@ -6312,9 +6313,9 @@ ignores EnemyNotVisible;
 		}
 
 		if ( Best != None )
-			LastSeenPos = Best.Location + 0.5 * CollisionHeight * vect(0,0,1);			
+			LastSeenPos = Best.Location + 0.5 * CollisionHeight * vect(0,0,1);
 	}
-		
+
 	function bool ContinueStakeOut()
 	{
 		local float relstr;
@@ -6352,7 +6353,7 @@ ignores EnemyNotVisible;
 Begin:
 	if ( AmbushSpot == None )
 		bSniping = false;
-	if ( (bSniping && (VSize(Location - AmbushSpot.Location) > 3 * CollisionRadius)) 
+	if ( (bSniping && (VSize(Location - AmbushSpot.Location) > 3 * CollisionRadius))
 		|| (Level.Game.IsA('DeathMatchPlus') && DeathMatchPlus(Level.Game).NeverStakeOut(self)) )
 	{
 		Enemy = None;
@@ -6364,7 +6365,7 @@ Begin:
 	TurnTo(LastSeenPos);
 	if ( Enemy == None )
 		WhatToDoNext('','');
-	if ( (Weapon != None) && !Weapon.bMeleeWeapon && (FRand() < 0.5) && (VSize(Enemy.Location - LastSeenPos) < 150) 
+	if ( (Weapon != None) && !Weapon.bMeleeWeapon && (FRand() < 0.5) && (VSize(Enemy.Location - LastSeenPos) < 150)
 		 && ClearShot() && CanStakeOut() )
 		PlayRangedAttack();
 	else
@@ -6392,18 +6393,18 @@ Begin:
 	{
 		if ( bSniping )
 			WhatToDoNext('','');
-		BlockedPath = None;	
-		bDevious = ( !bNovice && !Level.Game.bTeamGame && Level.Game.IsA('DeathMatchPlus') 
+		BlockedPath = None;
+		bDevious = ( !bNovice && !Level.Game.bTeamGame && Level.Game.IsA('DeathMatchPlus')
 					&& (FRand() < 0.75 - 0.15 * DeathMatchPlus(Level.Game).NumBots) );
 		GotoState('Hunting', 'AfterFall');
 	}
 }
 
-state TakeHit 
+state TakeHit
 {
 ignores seeplayer, hearnoise, bump, hitwall;
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 						Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -6428,8 +6429,8 @@ ignores seeplayer, hearnoise, bump, hitwall;
 			PlayTakeHit(0.1, hitLocation, Damage);
 			BeginState();
 			GotoState('TakeHit', 'Begin');
-		} 
-	}	
+		}
+	}
 
 	function BeginState()
 	{
@@ -6438,7 +6439,7 @@ ignores seeplayer, hearnoise, bump, hitwall;
 		if ( (NextState == 'TacticalMove') && (Region.Zone.ZoneGravity.Z > Region.Zone.Default.ZoneGravity.Z) )
 			Destination = location;
 	}
-		
+
 Begin:
 	if ( bFireFalling )
 	{
@@ -6461,7 +6462,7 @@ Begin:
 
 state ImpactJumping
 {
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		local name RealState, RealLabel;
@@ -6487,19 +6488,19 @@ state ImpactJumping
 	function vector ImpactLook()
 	{
 		local vector result;
-		
+
 		result = 1000 * Normal(ImpactTarget.Location - Location);
 		result.Z = Location.Z - 400;
 		return Result;
 	}
-	
+
 	function AnimEnd()
 	{
 		bFire = 1;
 		PlayWaiting();
 		bFire = 0;
 	}
-				
+
 	function ChangeToHammer()
 	{
 		local Inventory MyHammer;
@@ -6530,9 +6531,9 @@ state ImpactJumping
 
 Begin:
 	Acceleration = vect(0,0,0);
-	if ( !Weapon.IsA('ImpactHammer') )
+	if ( ImpactHammer(Weapon) == None )
 		ChangeToHammer();
-	else
+	else if ( Weapon != None )
 	{
 		Weapon.SetLocation(Location);
 		Weapon.AmbientSound = ImpactHammer(Weapon).TensionSound;
@@ -6540,11 +6541,11 @@ Begin:
 	TweenToWaiting(0.2);
 	TurnTo(ImpactLook());
 	CampTime = Level.TimeSeconds;
-	While ( !Weapon.IsA('ImpactHammer') && (Level.TimeSeconds - Camptime < 2.0) )
+	while ( (ImpactHammer(Weapon) == None) && (Level.TimeSeconds - Camptime < 2.0) )
 		Sleep(0.1);
 	CampTime = 1.0;
 	Sleep(0.5);
-	MakeNoise(1.0);	
+	MakeNoise(1.0);
 	if ( Physics != PHYS_Falling )
 	{
 		Velocity = ImpactTarget.Location - Location;
@@ -6555,22 +6556,21 @@ Begin:
 	GotoState(NextState, NextLabel);
 }
 
-state FallingState 
+state FallingState
 {
 ignores Bump, Hitwall, WarnTarget;
 
 	singular event BaseChange()
 	{
-		local actor HitActor;
-		local vector HitNormal, HitLocation;
+		local Actor HitActor;
 
 		if ( (Base != None) && Base.IsA('Mover')
-			&& ((MoveTarget == Base) 
+			&& ((MoveTarget == Base)
 				|| ((MoveTarget != None) && (MoveTarget == Mover(Base).myMarker))) )
 		{
 			MoveTimer = -1.0;
 			MoveTarget = None;
-			acceleration = vect(0,0,0);
+			Acceleration = vect(0,0,0);
 		}
 		else
 			Super.BaseChange();
@@ -6590,7 +6590,7 @@ ignores Bump, Hitwall, WarnTarget;
 			GotoState('FallingState', 'Splash');
 		}
 	}
-	
+
 	//choose a jump velocity
 	function adjustJump()
 	{
@@ -6619,7 +6619,7 @@ ignores Bump, Hitwall, WarnTarget;
 		Velocity = EAdjustJump();
 	}
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -6628,8 +6628,8 @@ ignores Bump, Hitwall, WarnTarget;
 		{
 			SetEnemy(instigatedBy);
 			if ( Enemy != None )
-			{ 
-				NextState = 'Attacking'; 
+			{
+				NextState = 'Attacking';
 				NextLabel = 'Begin';
 			}
 		}
@@ -6640,9 +6640,9 @@ ignores Bump, Hitwall, WarnTarget;
 		}
 		if (NextState == 'TakeHit')
 		{
-			NextState = 'Attacking'; 
+			NextState = 'Attacking';
 			NextLabel = 'Begin';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 	}
 
@@ -6653,11 +6653,11 @@ ignores Bump, Hitwall, WarnTarget;
 		if ( Global.SetEnemy(NewEnemy))
 		{
 			result = true;
-			NextState = 'Attacking'; 
+			NextState = 'Attacking';
 			NextLabel = 'Begin';
 		}
 		return result;
-	} 
+	}
 
 	function Timer()
 	{
@@ -6688,10 +6688,10 @@ ignores Bump, Hitwall, WarnTarget;
 			if ( health > 0 )
 				GotoState('FallingState', 'Landed');
 		}
-		else 
+		else
 			GotoState('FallingState', 'Done');
 	}
-	
+
 	function SeePlayer(Actor SeenPlayer)
 	{
 		Global.SeePlayer(SeenPlayer);
@@ -6710,7 +6710,7 @@ ignores Bump, Hitwall, WarnTarget;
 		if (!bUpAndOut)
 			GotoState('FallingState');
 	}
-	
+
 	function EnemyAcquired()
 	{
 		NextState = 'Acquisition';
@@ -6729,14 +6729,14 @@ ignores Bump, Hitwall, WarnTarget;
 			if ( N.Location.Z + 100 < Location.Z )
 			{
 				Dist = Location - N.Location;
-				Rating = Dist.Z * Dist.Z/(Dist.X * Dist.X + Dist.Y * Dist.Y); 
+				Rating = Dist.Z * Dist.Z/(Dist.X * Dist.X + Dist.Y * Dist.Y);
 				if ( (Rating > BestRating) && FastTrace(N.Location, Location) )
 				{
 					BestRating = Rating;
 					Best = N;
 				}
 			}
-				
+
 
 		if ( Best != None )
 			Destination = Best.Location;
@@ -6783,21 +6783,21 @@ FireWhileFalling:
 	if ( Region.Zone.ZoneGravity.Z > Region.Zone.Default.ZoneGravity.Z )
 	{
 		if ( (Velocity.Z < 0) && (Destination.Z > Location.Z + MaxStepHeight + CollisionHeight) )
-			FindNewJumpDest();			
+			FindNewJumpDest();
 		StrafeFacing(Destination, Enemy);
 	}
 	else
 		Sleep(0.5 + 0.2 * FRand());
 	if ( LineOfSightTo(Enemy) )
 		Goto('FireWhileFalling');
- 			
+
 LongFall:
 	if ( (Region.Zone.ZoneGravity.Z > Region.Zone.Default.ZoneGravity.Z)
 		&& (Velocity.Z < 0) && (Destination.Z > Location.Z + MaxStepHeight + CollisionHeight) )
 	{
 		FindNewJumpDest();
 		MoveTo(Destination);
-	}			
+	}
 	if ( bCanFly )
 	{
 		SetPhysics(PHYS_Flying);
@@ -6822,7 +6822,7 @@ LongFall:
 
 		Velocity.Z = FMax(JumpZ, 250);
 	}
-	Goto('LongFall');	
+	Goto('LongFall');
 
 Landed:
 	//log("Playing"@animsequence@"at"@animframe);
@@ -6836,7 +6836,7 @@ Done:
 		bUpAndOut = false;
 		if ( (NextState != '') && (NextState != 'FallingState') )
 			GotoState(NextState, NextLabel);
-		else 
+		else
 			GotoState('Attacking');
 	}
 	if ( !bUpAndOut )
@@ -6845,15 +6845,15 @@ Done:
 			TweenToFighter(0.2);
 		else
 			TweenAnim(NextAnim, 0.12);
-	} 
+	}
 
 Splash:
 	bUpAndOut = false;
 	if ( NextState != '' )
 		GotoState(NextState, NextLabel);
-	else 
+	else
 		GotoState('Attacking');
-			
+
 Begin:
 	if (Enemy == None)
 		Disable('EnemyNotVisible');
@@ -6863,12 +6863,12 @@ Begin:
 		Disable('SeePlayer');
 	}
 	if ( !bUpAndOut ) // not water jump
-	{	
+	{
 		if ( Region.Zone.bWaterZone )
 		{
 			SetPhysics(PHYS_Swimming);
 			GotoState(NextState, NextLabel);
-		}	
+		}
 		if ( !bJumpOffPawn )
 			AdjustJump();
 PlayFall:
@@ -6930,7 +6930,7 @@ state RangedAttack
 {
 ignores SeePlayer, HearNoise, Bump;
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 						Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -6990,7 +6990,7 @@ ignores SeePlayer, HearNoise, Bump;
 			if ( (Enemy == None) || (Enemy.Health <= 0) || !LineOfSightTo(Enemy) )
 			{
 				bFire = 0;
-				bAltFire = 0; 
+				bAltFire = 0;
 				TweenToRunning(0.12);
 				GotoState(NextState, NextLabel);
 			}
@@ -6998,7 +6998,7 @@ ignores SeePlayer, HearNoise, Bump;
 		if ( (Enemy == None) || (Enemy.Health <= 0) || !LineOfSightTo(Enemy) )
 		{
 			bFire = 0;
-			bAltFire = 0; 
+			bAltFire = 0;
 			GotoState('Attacking');
 			return;
 		}
@@ -7011,7 +7011,7 @@ ignores SeePlayer, HearNoise, Bump;
 		BaseSkill = Skill;
 		if ( !bNovice )
 			BaseSkill += 3;
-		if ( (Enemy.Weapon != None) && Enemy.Weapon.bMeleeWeapon 
+		if ( (Enemy.Weapon != None) && Enemy.Weapon.bMeleeWeapon
 			&& (VSize(Enemy.Location - Location) < 500) )
 			BaseSkill += 3;
 		if ( (BaseSkill > 3 * FRand() + 2)
@@ -7052,7 +7052,7 @@ ignores SeePlayer, HearNoise, Bump;
 			FireWeapon();
 		}
 	}
-	
+
 	// ASMD combo move
 	function SpecialFire()
 	{
@@ -7062,9 +7062,9 @@ ignores SeePlayer, HearNoise, Bump;
 		SetTimer(0.75 + VSize(Enemy.Location - Location)/Weapon.AltProjectileSpeed, false);
 		SpecialPause = 0.0;
 		NextState = 'Attacking';
-		NextLabel = 'Begin'; 
+		NextLabel = 'Begin';
 	}
-	
+
 	function BeginState()
 	{
 		Disable('AnimEnd');
@@ -7076,7 +7076,7 @@ ignores SeePlayer, HearNoise, Bump;
 		else
 			Target = Enemy;
 	}
-	
+
 	function EndState()
 	{
 		bFiringPaused = false;
@@ -7102,7 +7102,7 @@ Begin:
 	Acceleration = vect(0,0,0); //stop
 	DesiredRotation = Rotator(Target.Location - Location);
 	TweenToFighter(0.16 - 0.2 * Skill);
-	
+
 FaceTarget:
 	Disable('AnimEnd');
 	if ( NeedToTurn(Target.Location) )
@@ -7126,15 +7126,15 @@ Firing:
 	Goto('Firing');
 DoneFiring:
 	Disable('AnimEnd');
-	KeepAttacking();  
+	KeepAttacking();
 	Goto('FaceTarget');
 }
 
 state VictoryDance
 {
-ignores EnemyNotVisible; 
+ignores EnemyNotVisible;
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -7147,7 +7147,7 @@ ignores EnemyNotVisible;
 		{
 			NextState = 'Attacking'; //default
 			NextLabel = 'Begin';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 		else if (health > 0)
 			GotoState('Attacking');
@@ -7157,7 +7157,7 @@ ignores EnemyNotVisible;
 	{
 		GotoState('Acquisition');
 	}
-	
+
 	function BeginState()
 	{
 		SpecialGoal = None;
@@ -7177,7 +7177,7 @@ Begin:
 	TweenToFighter(0.2);
 	FinishAnim();
 	PlayVictoryDance();
-	FinishAnim(); 
+	FinishAnim();
 	WhatToDoNext('Waiting','TurnFromWall');
 }
 
@@ -7239,17 +7239,17 @@ ignores SeePlayer, EnemyNotVisible, HearNoise, Died, Bump, Trigger, HitWall, Hea
 		else if ( !IsInState('GameEnded') )
 			GotoState('Dying', 'TryAgain');
 	}
-	
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 							Vector momentum, name damageType)
 	{
 		if ( !bHidden )
 			Super.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
 	}
-	
+
 	function BeginState()
 	{
-		if ( (Level.NetMode != NM_Standalone) 
+		if ( (Level.NetMode != NM_Standalone)
 			&& Level.Game.IsA('DeathMatchPlus')
 			&& DeathMatchPlus(Level.Game).TooManyBots() )
 		{
@@ -7301,7 +7301,7 @@ ignores SeePlayer, HearNoise, Bump;
 			GotoState('Attacking');
 	}
 
-	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
+	function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation,
 						Vector momentum, name damageType)
 	{
 		Super.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
@@ -7309,9 +7309,9 @@ ignores SeePlayer, HearNoise, Bump;
 			return;
 		if ( NextState == 'TakeHit' )
 		{
-			NextState = 'FindAir'; 
+			NextState = 'FindAir';
 			NextLabel = 'TakeHit';
-			GotoState('TakeHit'); 
+			GotoState('TakeHit');
 		}
 	}
 
@@ -7321,7 +7321,7 @@ ignores SeePlayer, HearNoise, Bump;
 		Destination = 200 * (Normal(Destination - Location) + HitNormal);
 	}
 
-	function AnimEnd() 
+	function AnimEnd()
 	{
 		if (Enemy != None)
 			PlayCombatMove();
@@ -7349,7 +7349,7 @@ ignores SeePlayer, HearNoise, Bump;
 	{
 		Destination = VRand();
 		Destination.Z = 1;
-		Destination = Location + 200 * Destination;				
+		Destination = Location + 200 * Destination;
 	}
 
 Begin:
@@ -7358,13 +7358,13 @@ Begin:
 	Enable('AnimEnd');
 	PickDestination(false);
 
-DoMove:	
+DoMove:
 	if ( Enemy == None )
 		MoveTo(Destination);
 	else
 	{
 		bCanFire = true;
-		StrafeFacing(Destination, Enemy);	
+		StrafeFacing(Destination, Enemy);
 	}
 	GotoState('Attacking');
 
@@ -7442,45 +7442,145 @@ static function SetMultiSkin(Actor SkinActor, string SkinName, string FaceName, 
 
 defaultproperties
 {
-     CarcassType=Class'Engine.Carcass'
-     TimeBetweenAttacks=0.600000
-     Aggressiveness=0.300000
-     BaseAggressiveness=0.300000
-     WalkingSpeed=0.350000
-     RefireRate=0.900000
-     bLeadTarget=True
-     PointDied=-1000.000000
-     StatusDoll=Texture'Botpack.Icons.Man'
-     StatusBelt=Texture'Botpack.Icons.ManBelt'
-     VoicePackMetaClass="BotPack.ChallengeVoicePack"
-     bIsPlayer=True
-     bCanStrafe=True
-     bAutoActivate=True
-     bIsMultiSkinned=True
-     MeleeRange=40.000000
-     GroundSpeed=400.000000
-     AirSpeed=400.000000
-     AccelRate=2048.000000
-     AirControl=0.350000
-     SightRadius=5000.000000
-     HearingThreshold=0.300000
-     BaseEyeHeight=23.000000
-     EyeHeight=23.000000
-     UnderWaterTime=20.000000
-     Intelligence=BRAINS_HUMAN
-     Land=Sound'UnrealShare.Generic.Land1'
-     WaterStep=Sound'UnrealShare.Generic.LSplash'
-     CombatStyle=0.100000
-     VoiceType="BotPack.VoiceMaleTwo"
-     PlayerReplicationInfoClass=Class'Botpack.BotReplicationInfo'
-     bStasis=False
-     DrawType=DT_Mesh
-     AmbientGlow=17
-     LightBrightness=70
-     LightHue=40
-     LightSaturation=128
-     LightRadius=6
-     Buoyancy=100.000000
-     RotationRate=(Pitch=3072,Yaw=30000,Roll=2048)
-     NetPriority=3.000000
+      CarcassType=Class'Engine.Carcass'
+      Orders="None"
+      OrderTag="None"
+      OrderObject=None
+      TimeBetweenAttacks=0.600000
+      NextAnim="None"
+      Aggressiveness=0.300000
+      BaseAggressiveness=0.300000
+      OldEnemy=None
+      numHuntPaths=0
+      HidingSpot=(X=0.000000,Y=0.000000,Z=0.000000)
+      WalkingSpeed=0.350000
+      RefireRate=0.900000
+      StrafingAbility=0.000000
+      bReadyToAttack=False
+      bCanFire=False
+      bCanDuck=False
+      bStrafeDir=False
+      bLeadTarget=True
+      bSpecialGoal=False
+      bChangeDir=False
+      bFiringPaused=False
+      bComboPaused=False
+      bSpecialPausing=False
+      bGreenBlood=False
+      bFrustrated=False
+      bNoShootDecor=False
+      bGathering=False
+      bCamping=False
+      bVerbose=False
+      bWantsToCamp=False
+      bWallAdjust=False
+      bCanTranslocate=False
+      bInitLifeMessage=False
+      bNoClearSpecial=False
+      bStayFreelance=False
+      bNovice=False
+      bThreePlus=False
+      bKamikaze=False
+      bClearShot=False
+      bQuickFire=False
+      bDevious=False
+      bDumbDown=False
+      bJumpy=False
+      bHasImpactHammer=False
+      bImpactJumping=False
+      bSniping=False
+      bFireFalling=False
+      bLeading=False
+      bSpecialAmbush=False
+      bCampOnlyOnce=False
+      bPowerPlay=False
+      bBigJump=False
+      bTacticalDir=False
+      bNoTact=False
+      bMustHunt=False
+      bIsCrouching=False
+      EnemyDropped=None
+      LastInvFind=0.000000
+      FavoriteWeapon=None
+      Accuracy=0.000000
+      WanderDir=(X=0.000000,Y=0.000000,Z=0.000000)
+      LastPainAnim="None"
+      LastPainTime=0.000000
+      LastAcquireTime=0.000000
+      drown=None
+      breathagain=None
+      Footstep1=None
+      Footstep2=None
+      Footstep3=None
+      HitSound3=None
+      HitSound4=None
+      Deaths(0)=None
+      Deaths(1)=None
+      Deaths(2)=None
+      Deaths(3)=None
+      Deaths(4)=None
+      Deaths(5)=None
+      GaspSound=None
+      UWHit1=None
+      UWHit2=None
+      LandGrunt=None
+      JumpSound=None
+      OldMessageType="None"
+      OldMessageID=0
+      PointDied=-1000.000000
+      CampTime=0.000000
+      CampingRate=0.000000
+      LastCampCheck=0.000000
+      LastAttractCheck=0.000000
+      AmbushSpot=None
+      AlternatePath=None
+      RoamTarget=None
+      ImpactTarget=None
+      rating=0.000000
+      FaceSkin=0
+      FixedSkin=0
+      TeamSkin1=0
+      TeamSkin2=0
+      DefaultSkinName=""
+      DefaultPackage=""
+      BaseAlertness=0.000000
+      MyTranslocator=None
+      SupportingPlayer=None
+      BlockedPath=None
+      RealLastSeenPos=(X=0.000000,Y=0.000000,Z=0.000000)
+      TacticalOffset=0.000000
+      GoalString=""
+      StatusDoll=Texture'Botpack.Icons.Man'
+      StatusBelt=Texture'Botpack.Icons.ManBelt'
+      VoicePackMetaClass="BotPack.ChallengeVoicePack"
+      bIsPlayer=True
+      bCanStrafe=True
+      bAutoActivate=True
+      bIsMultiSkinned=True
+      MeleeRange=40.000000
+      GroundSpeed=400.000000
+      AirSpeed=400.000000
+      AccelRate=2048.000000
+      AirControl=0.350000
+      SightRadius=5000.000000
+      HearingThreshold=0.300000
+      BaseEyeHeight=23.000000
+      EyeHeight=23.000000
+      UnderWaterTime=20.000000
+      Intelligence=BRAINS_HUMAN
+      Land=Sound'UnrealShare.Generic.Land1'
+      WaterStep=Sound'UnrealShare.Generic.LSplash'
+      CombatStyle=0.100000
+      VoiceType="BotPack.VoiceMaleTwo"
+      PlayerReplicationInfoClass=Class'Botpack.BotReplicationInfo'
+      bStasis=False
+      DrawType=DT_Mesh
+      AmbientGlow=17
+      LightBrightness=70
+      LightHue=40
+      LightSaturation=128
+      LightRadius=6
+      Buoyancy=100.000000
+      RotationRate=(Pitch=3072,Yaw=30000,Roll=2048)
+      NetPriority=3.000000
 }

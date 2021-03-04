@@ -106,7 +106,7 @@ var float FlashTime;
 function Created()
 {
 	local string MeshName, SkinDesc, Temp;
-	local int i;
+	local int i, NumTeams;
 	local int W, H;
 	local float XWidth, YHeight, XMod, YMod, XPos, YPos;
 	local color TextColor;
@@ -154,12 +154,12 @@ function Created()
 	 */
 
 	if (class'UTLadderStub'.Static.GetStubClass().Static.IsDemo())
-		PreferredTeam = class'Ladder'.Default.NumTeams;
+		PreferredTeam = class'Ladder'.Default.NumTeams + 2;
 
-	MaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.MaleClass;
+	MaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].static.GetMaleClass();
 	MaleSkin = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.MaleSkin;
 
-	FemaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.FemaleClass;
+	FemaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].static.GetFemaleClass();
 	FemaleSkin = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.FemaleSkin;
 
 	IterateFaces(MaleSkin, GetPlayerOwner().GetItemName(string(MaleClass.Default.Mesh)));
@@ -175,7 +175,7 @@ function Created()
 	MeshWindow.SetMeshString(MaleClass.Default.SelectionMesh);
 	MeshWindow.ClearSkins();
 	MaleClass.static.SetMultiSkin(MeshWindow.MeshActor, MaleSkin, MaleFace, 255);
-	GetPlayerOwner().UpdateURL("Class", "Botpack."$string(MaleClass.Name), True);
+	GetPlayerOwner().UpdateURL("Class", string(MaleClass), True);
 	GetPlayerOwner().UpdateURL("Skin", MaleSkin, True);
 	GetPlayerOwner().UpdateURL("Face", Faces[PreferredFace], True);
 	GetPlayerOwner().UpdateURL("Team", "255", True);
@@ -321,7 +321,8 @@ function Created()
 	TeamButton.LabelWidth = 178.0/1024 * XMod;
 	TeamButton.LabelHeight = 49.0/768 * YMod;
 	TeamButton.bIgnoreLDoubleclick = True;
-	if ((PreferredTeam == class'Ladder'.Default.NumTeams) && (!class'UTLadderStub'.Static.GetStubClass().Static.IsDemo()))
+	NumTeams = class'Ladder'.default.NumTeams + int(class'Ladder'.default.HasBeatenGame) * 2;
+	if ((PreferredTeam == NumTeams) && (!class'UTLadderStub'.Static.GetStubClass().Static.IsDemo()))
 		PreferredTeam = 0;
 	TeamButton.Text = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.TeamName;
 	LadderObj.Team = class'Ladder'.Default.LadderTeams[PreferredTeam];
@@ -885,7 +886,7 @@ function SexPressed()
 		MeshName = FemaleClass.Default.SelectionMesh;
 		MeshWindow.SetMeshString(MeshName);
 		FemaleClass.static.SetMultiSkin(MeshWindow.MeshActor, FemaleSkin, Faces[PreferredFace], 255);
-		GetPlayerOwner().UpdateURL("Class", "Botpack."$string(FemaleClass.Name), True);
+		GetPlayerOwner().UpdateURL("Class", string(FemaleClass), True);
 		GetPlayerOwner().UpdateURL("Skin", FemaleSkin, True);
 		GetPlayerOwner().UpdateURL("Voice", FemaleClass.Default.VoiceType, True);
 		CurrentSex = 1;
@@ -908,7 +909,7 @@ function SexPressed()
 		MeshName = MaleClass.Default.SelectionMesh;
 		MeshWindow.SetMeshString(MeshName);
 		MaleClass.static.SetMultiSkin(MeshWindow.MeshActor, MaleSkin, Faces[PreferredFace], 255);
-		GetPlayerOwner().UpdateURL("Class", "Botpack."$string(MaleClass.Name), True);
+		GetPlayerOwner().UpdateURL("Class", string(MaleClass), True);
 		GetPlayerOwner().UpdateURL("Skin", MaleSkin, True);
 		GetPlayerOwner().UpdateURL("Voice", MaleClass.Default.VoiceType, True);
 		GetPlayerOwner().UpdateURL("Face", Faces[PreferredFace], True);
@@ -943,21 +944,23 @@ function FacePressed()
 
 function TeamPressed()
 {
+	local int NumTeams;
 	local string MeshName;
 
 	if (!class'UTLadderStub'.Static.GetStubClass().Static.IsDemo())
 	{
+		NumTeams = class'Ladder'.default.NumTeams + int(class'Ladder'.default.HasBeatenGame) * 2;
 		PreferredTeam++;
-		if (PreferredTeam == class'Ladder'.Default.NumTeams)
+		if (PreferredTeam == NumTeams)
 			PreferredTeam = 0;
 	}
 	TeamButton.Text = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.TeamName;
 	LadderObj.Team = class'Ladder'.Default.LadderTeams[PreferredTeam];
 
 	// Update mesh
-	MaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.MaleClass;
+	MaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].static.GetMaleClass();
 	MaleSkin = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.MaleSkin;
-	FemaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.FemaleClass;
+	FemaleClass = class'Ladder'.Default.LadderTeams[PreferredTeam].static.GetFemaleClass();
 	FemaleSkin = class'Ladder'.Default.LadderTeams[PreferredTeam].Default.FemaleSkin;
 
 	if ((MaleClass == None) && (SexButton.Text ~= MaleText))
@@ -1116,35 +1119,110 @@ function IterateFaces(string InSkinName, string MeshName)
 
 defaultproperties
 {
-     BGName1(0)="UTMenu.CC11"
-     BGName1(1)="UTMenu.CC12"
-     BGName1(2)="UTMenu.CC13"
-     BGName1(3)="UTMenu.CC14"
-     BGName2(0)="UTMenu.CC21"
-     BGName2(1)="UTMenu.CC22"
-     BGName2(2)="UTMenu.CC23"
-     BGName2(3)="UTMenu.CC24"
-     BGName3(0)="UTMenu.CC31"
-     BGName3(1)="UTMenu.CC32"
-     BGName3(2)="UTMenu.CC33"
-     BGName3(3)="UTMenu.CC34"
-     NameText="Name"
-     SexText="Gender"
-     MaleText="Male"
-     FemaleText="Female"
-     TeamText="Team"
-     FaceText="Face"
-     SkillsText="Skill"
-     SkillText(0)="Novice"
-     SkillText(1)="Average"
-     SkillText(2)="Experienced"
-     SkillText(3)="Skilled"
-     SkillText(4)="Adept"
-     SkillText(5)="Masterful"
-     SkillText(6)="Inhuman"
-     SkillText(7)="Godlike"
-     CCText="   Character Creation"
-     TeamNameString="Team Name:"
-     PreferredSkill=1
-     PreferredTeam=5
+      BG1(0)=None
+      BG1(1)=None
+      BG1(2)=None
+      BG1(3)=None
+      BG2(0)=None
+      BG2(1)=None
+      BG2(2)=None
+      BG2(3)=None
+      BG3(0)=None
+      BG3(1)=None
+      BG3(2)=None
+      BG3(3)=None
+      BGName1(0)="UTMenu.CC11"
+      BGName1(1)="UTMenu.CC12"
+      BGName1(2)="UTMenu.CC13"
+      BGName1(3)="UTMenu.CC14"
+      BGName2(0)="UTMenu.CC21"
+      BGName2(1)="UTMenu.CC22"
+      BGName2(2)="UTMenu.CC23"
+      BGName2(3)="UTMenu.CC24"
+      BGName3(0)="UTMenu.CC31"
+      BGName3(1)="UTMenu.CC32"
+      BGName3(2)="UTMenu.CC33"
+      BGName3(3)="UTMenu.CC34"
+      MeshWindow=None
+      MaleClass=None
+      MaleSkin=""
+      MaleFace=""
+      FemaleClass=None
+      FemaleSkin=""
+      FemaleFace=""
+      NameLabel=None
+      NameText="Name"
+      NameButton=None
+      NameEdit=None
+      SexLabel=None
+      SexText="Gender"
+      SexButton=None
+      MaleText="Male"
+      FemaleText="Female"
+      TeamLabel=None
+      TeamText="Team"
+      TeamButton=None
+      FaceLabel=None
+      FaceText="Face"
+      FaceButton=None
+      SkillLabel=None
+      SkillsText="Skill"
+      SkillButton=None
+      SkillText(0)="Novice"
+      SkillText(1)="Average"
+      SkillText(2)="Experienced"
+      SkillText(3)="Skilled"
+      SkillText(4)="Adept"
+      SkillText(5)="Masterful"
+      SkillText(6)="Inhuman"
+      SkillText(7)="Godlike"
+      CurrentSkill=0
+      BackButton=None
+      NextButton=None
+      TitleButton=None
+      CCText="   Character Creation"
+      Initialized=False
+      FaceDescs(0)=""
+      FaceDescs(1)=""
+      FaceDescs(2)=""
+      FaceDescs(3)=""
+      FaceDescs(4)=""
+      FaceDescs(5)=""
+      FaceDescs(6)=""
+      FaceDescs(7)=""
+      FaceDescs(8)=""
+      FaceDescs(9)=""
+      FaceDescs(10)=""
+      FaceDescs(11)=""
+      FaceDescs(12)=""
+      FaceDescs(13)=""
+      FaceDescs(14)=""
+      FaceDescs(15)=""
+      Faces(0)=""
+      Faces(1)=""
+      Faces(2)=""
+      Faces(3)=""
+      Faces(4)=""
+      Faces(5)=""
+      Faces(6)=""
+      Faces(7)=""
+      Faces(8)=""
+      Faces(9)=""
+      Faces(10)=""
+      Faces(11)=""
+      Faces(12)=""
+      Faces(13)=""
+      Faces(14)=""
+      Faces(15)=""
+      TeamDescArea=None
+      Descscrollup=None
+      Descscrolldown=None
+      TeamNameString="Team Name:"
+      LadderObj=None
+      PreferredSkill=0
+      PreferredSex=0
+      PreferredTeam=5
+      PreferredFace=0
+      bFlashOn=False
+      FlashTime=0.000000
 }

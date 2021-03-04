@@ -127,14 +127,14 @@ function PlayFearSound()
 		PlaySound(Fear, SLOT_Talk,, true); 
 }
 
-function bool AdjustHitLocation(out vector HitLocation, vector TraceDir)
+simulated function bool AdjustHitLocation(out vector HitLocation, vector TraceDir)
 {
 	local float adjZ, maxZ;
 
 	TraceDir = Normal(TraceDir);
 	HitLocation = HitLocation + 0.5 * CollisionRadius * TraceDir;
 
-	if ( (GetAnimGroup(AnimSequence) == 'Ducking') && (AnimFrame > -0.03) )
+	if ( Mesh != None && (GetAnimGroup(AnimSequence) == 'Ducking') && (AnimFrame > -0.03) )
 	{
 		if ( AnimSequence == 'Bowing' )
 			maxZ = Location.Z - 0.2 * CollisionHeight;
@@ -157,7 +157,7 @@ function bool AdjustHitLocation(out vector HitLocation, vector TraceDir)
 
 function Killed(pawn Killer, pawn Other, name damageType)
 {
-	if ( (Nali(Other) != None) && Killer.bIsPlayer )
+	if ( (Nali(Other) != None) && Killer != None && Killer.bIsPlayer )
 		AttitudeToPlayer = ATTITUDE_Fear;
 	Super.Killed(Killer, Other, damageType);
 }
@@ -877,7 +877,7 @@ state FadeOut
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-		if ( health <= 0 )
+		if ( health <= 0 || bDeleteMe )
 			return;
 		if (NextState == 'TakeHit')
 		{
@@ -981,47 +981,53 @@ state Wandering
 
 defaultproperties
 {
-     syllable1=Sound'UnrealShare.Nali.syl1n'
-     syllable2=Sound'UnrealShare.Nali.syl2n'
-     syllable3=Sound'UnrealShare.Nali.syl3n'
-     syllable4=Sound'UnrealShare.Nali.syl4n'
-     syllable5=Sound'UnrealShare.Nali.syl5n'
-     syllable6=Sound'UnrealShare.Nali.syl6n'
-     urgefollow=Sound'UnrealShare.Nali.follow1n'
-     Cringe=Sound'UnrealShare.Nali.cringe2n'
-     Cough=Sound'UnrealShare.Nali.cough1n'
-     Sweat=Sound'UnrealShare.Nali.sweat1n'
-     Bowing=Sound'UnrealShare.Nali.bowing1n'
-     Backup=Sound'UnrealShare.Nali.backup2n'
-     pray=Sound'UnrealShare.Nali.pray1n'
-     Breath=Sound'UnrealShare.Nali.breath1n'
-     CarcassType=Class'UnrealShare.NaliCarcass'
-     TimeBetweenAttacks=0.500000
-     Aggressiveness=-10.000000
-     RefireRate=0.500000
-     bHasRangedAttack=True
-     bIsWuss=True
-     Acquire=Sound'UnrealShare.Nali.contct1n'
-     Fear=Sound'UnrealShare.Nali.fear1n'
-     Roam=Sound'UnrealShare.Nali.breath1n'
-     Threaten=Sound'UnrealShare.Nali.contct3n'
-     MeleeRange=40.000000
-     GroundSpeed=300.000000
-     WaterSpeed=100.000000
-     AccelRate=900.000000
-     JumpZ=-1.000000
-     SightRadius=1500.000000
-     Health=40
-     UnderWaterTime=6.000000
-     AttitudeToPlayer=ATTITUDE_Friendly
-     Intelligence=BRAINS_HUMAN
-     HitSound1=Sound'UnrealShare.Nali.injur1n'
-     HitSound2=Sound'UnrealShare.Nali.injur2n'
-     Die=Sound'UnrealShare.Nali.death1n'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Nali1'
-     CollisionRadius=24.000000
-     CollisionHeight=48.000000
-     Buoyancy=95.000000
-     RotationRate=(Pitch=2048,Yaw=40000,Roll=0)
+      bNeverBow=False
+      bCringing=False
+      bGesture=False
+      bFading=False
+      bHasWandered=False
+      syllable1=Sound'UnrealShare.Nali.syl1n'
+      syllable2=Sound'UnrealShare.Nali.syl2n'
+      syllable3=Sound'UnrealShare.Nali.syl3n'
+      syllable4=Sound'UnrealShare.Nali.syl4n'
+      syllable5=Sound'UnrealShare.Nali.syl5n'
+      syllable6=Sound'UnrealShare.Nali.syl6n'
+      urgefollow=Sound'UnrealShare.Nali.follow1n'
+      Cringe=Sound'UnrealShare.Nali.cringe2n'
+      Cough=Sound'UnrealShare.Nali.cough1n'
+      Sweat=Sound'UnrealShare.Nali.sweat1n'
+      Bowing=Sound'UnrealShare.Nali.bowing1n'
+      Backup=Sound'UnrealShare.Nali.backup2n'
+      pray=Sound'UnrealShare.Nali.pray1n'
+      Breath=Sound'UnrealShare.Nali.breath1n'
+      Tool=None
+      CarcassType=Class'UnrealShare.NaliCarcass'
+      TimeBetweenAttacks=0.500000
+      Aggressiveness=-10.000000
+      RefireRate=0.500000
+      bHasRangedAttack=True
+      bIsWuss=True
+      Acquire=Sound'UnrealShare.Nali.contct1n'
+      Fear=Sound'UnrealShare.Nali.fear1n'
+      Roam=Sound'UnrealShare.Nali.breath1n'
+      Threaten=Sound'UnrealShare.Nali.contct3n'
+      MeleeRange=40.000000
+      GroundSpeed=300.000000
+      WaterSpeed=100.000000
+      AccelRate=900.000000
+      JumpZ=-1.000000
+      SightRadius=1500.000000
+      Health=40
+      UnderWaterTime=6.000000
+      AttitudeToPlayer=ATTITUDE_Friendly
+      Intelligence=BRAINS_HUMAN
+      HitSound1=Sound'UnrealShare.Nali.injur1n'
+      HitSound2=Sound'UnrealShare.Nali.injur2n'
+      Die=Sound'UnrealShare.Nali.death1n'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Nali1'
+      CollisionRadius=24.000000
+      CollisionHeight=48.000000
+      Buoyancy=95.000000
+      RotationRate=(Pitch=2048,Yaw=40000,Roll=0)
 }

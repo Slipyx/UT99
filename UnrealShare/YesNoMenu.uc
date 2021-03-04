@@ -57,6 +57,7 @@ function bool ProcessSelection()
 
 defaultproperties
 {
-     YesSelString="[YES]  No"
-     NoSelString=" Yes  [NO]"
+      YesSelString="[YES]  No"
+      NoSelString=" Yes  [NO]"
+      bResponse=False
 }

@@ -301,7 +301,17 @@ function UnTouch( actor Other )
 
 defaultproperties
 {
-     bInitiallyActive=True
-     InitialState=NormalTrigger
-     Texture=Texture'Engine.S_Trigger'
+      TriggerType=TT_PlayerProximity
+      Message=""
+      bTriggerOnceOnly=False
+      bInitiallyActive=True
+      ClassProximityType=None
+      RepeatTriggerTime=0.000000
+      ReTriggerDelay=0.000000
+      TriggerTime=0.000000
+      DamageThreshold=0.000000
+      TriggerActor=None
+      TriggerActor2=None
+      InitialState="NormalTrigger"
+      Texture=Texture'Engine.S_Trigger'
 }

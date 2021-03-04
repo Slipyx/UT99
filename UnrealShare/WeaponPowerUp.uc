@@ -57,14 +57,14 @@ auto state Pickup
 
 defaultproperties
 {
-     PowerUpSounds(0)=Sound'UnrealShare.Dispersion.number1'
-     PowerUpSounds(1)=Sound'UnrealShare.Dispersion.number2'
-     PowerUpSounds(2)=Sound'UnrealShare.Dispersion.number3'
-     PowerUpSounds(3)=Sound'UnrealShare.Dispersion.number4'
-     PickupMessage="You got the Dispersion Pistol Powerup"
-     RespawnTime=30.000000
-     PickupViewMesh=Mesh'UnrealShare.WeaponPowerUpMesh'
-     AnimSequence=AnimEnergy
-     Mesh=Mesh'UnrealShare.WeaponPowerUpMesh'
-     CollisionRadius=12.000000
+      PowerUpSounds(0)=Sound'UnrealShare.Dispersion.number1'
+      PowerUpSounds(1)=Sound'UnrealShare.Dispersion.number2'
+      PowerUpSounds(2)=Sound'UnrealShare.Dispersion.number3'
+      PowerUpSounds(3)=Sound'UnrealShare.Dispersion.number4'
+      PickupMessage="You got the Dispersion Pistol Powerup"
+      RespawnTime=30.000000
+      PickupViewMesh=Mesh'UnrealShare.WeaponPowerUpMesh'
+      AnimSequence="AnimEnergy"
+      Mesh=Mesh'UnrealShare.WeaponPowerUpMesh'
+      CollisionRadius=12.000000
 }

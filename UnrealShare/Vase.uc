@@ -23,6 +23,8 @@ auto state active
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+	    if (bStatic || bDeleteMe)
+		    return;
 		skinnedFrag(class'Fragment1',texture'JVase1', Momentum,0.7,7);
 		Instigator = InstigatedBy;
 		if ( Instigator != None )
@@ -34,16 +36,16 @@ Begin:
 
 defaultproperties
 {
-     bPushable=True
-     PushSound=Sound'UnrealShare.General.ObjectPush'
-     EndPushSound=Sound'UnrealShare.General.Endpush'
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.vaseM'
-     CollisionHeight=28.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     Mass=100.000000
+      bPushable=True
+      PushSound=Sound'UnrealShare.General.ObjectPush'
+      EndPushSound=Sound'UnrealShare.General.Endpush'
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.vaseM'
+      CollisionHeight=28.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      Mass=100.000000
 }

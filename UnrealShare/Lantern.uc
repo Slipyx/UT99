@@ -14,12 +14,12 @@ class Lantern extends Decoration;
 
 defaultproperties
 {
-     bDirectional=True
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.LanternM'
-     LightType=LT_Steady
-     LightBrightness=203
-     LightHue=35
-     LightSaturation=59
-     LightRadius=32
+      bDirectional=True
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.LanternM'
+      LightType=LT_Steady
+      LightBrightness=203
+      LightHue=35
+      LightSaturation=59
+      LightRadius=32
 }

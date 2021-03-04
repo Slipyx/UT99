@@ -15,22 +15,22 @@ class SmokeExplo extends AnimSpriteEffect;
 
 defaultproperties
 {
-     SpriteAnim(0)=Texture'UnrealShare.Effects.SmokeE1'
-     SpriteAnim(1)=Texture'UnrealShare.Effects.SmokeE2'
-     SpriteAnim(2)=Texture'UnrealShare.Effects.SmokeE3'
-     SpriteAnim(3)=Texture'UnrealShare.Effects.SmokeE4'
-     SpriteAnim(4)=Texture'UnrealShare.Effects.SmokeE5'
-     SpriteAnim(5)=Texture'UnrealShare.Effects.SmokeE6'
-     SpriteAnim(6)=Texture'UnrealShare.Effects.SmokeE7'
-     SpriteAnim(7)=Texture'UnrealShare.Effects.SmokeE8'
-     SpriteAnim(8)=Texture'UnrealShare.Effects.SmokeE9'
-     NumFrames=9
-     Pause=0.050000
-     LifeSpan=1.000000
-     DrawScale=0.200000
-     LightType=LT_None
-     LightBrightness=68
-     LightHue=0
-     LightSaturation=255
-     LightRadius=3
+      SpriteAnim(0)=Texture'UnrealShare.Effects.SmokeE1'
+      SpriteAnim(1)=Texture'UnrealShare.Effects.SmokeE2'
+      SpriteAnim(2)=Texture'UnrealShare.Effects.SmokeE3'
+      SpriteAnim(3)=Texture'UnrealShare.Effects.SmokeE4'
+      SpriteAnim(4)=Texture'UnrealShare.Effects.SmokeE5'
+      SpriteAnim(5)=Texture'UnrealShare.Effects.SmokeE6'
+      SpriteAnim(6)=Texture'UnrealShare.Effects.SmokeE7'
+      SpriteAnim(7)=Texture'UnrealShare.Effects.SmokeE8'
+      SpriteAnim(8)=Texture'UnrealShare.Effects.SmokeE9'
+      NumFrames=9
+      Pause=0.050000
+      LifeSpan=1.000000
+      DrawScale=0.200000
+      LightType=LT_None
+      LightBrightness=68
+      LightHue=0
+      LightSaturation=255
+      LightRadius=3
 }

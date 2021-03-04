@@ -63,5 +63,10 @@ function Close(optional bool bByParent)
 
 defaultproperties
 {
-     ClientClass=Class'UWindow.UWindowMessageBoxCW'
+      Result=MR_None
+      TimeOutTime=0.000000
+      TimeOut=0
+      bSetupSize=False
+      FrameCount=0
+      ClientClass=Class'UWindow.UWindowMessageBoxCW'
 }

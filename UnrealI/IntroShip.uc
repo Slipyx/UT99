@@ -15,14 +15,16 @@ var() float Speed;
 
 function Trigger( actor Other, pawn EventInstigator )
 {
+	if (bStatic || bDeleteMe)
+	    return;
 	SetPHysics(PHYS_Projectile);
 	Velocity = Vector(Rotation) * Speed;
 }
 
 defaultproperties
 {
-     speed=100.000000
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.IntroShipM'
+      speed=100.000000
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.IntroShipM'
 }

@@ -46,12 +46,12 @@ function DrawValues(canvas Canvas, int StartX, int StartY, int Spacing)
 
 defaultproperties
 {
-     Difficulties(0)="Easy"
-     Difficulties(1)="Medium"
-     Difficulties(2)="Hard"
-     Difficulties(3)="Unreal"
-     GameClass=Class'UnrealShare.CoopGame'
-     MenuLength=3
-     HelpMessage(3)="Skill level setting."
-     MenuList(3)="Difficulty"
+      Difficulties(0)="Easy"
+      Difficulties(1)="Medium"
+      Difficulties(2)="Hard"
+      Difficulties(3)="Unreal"
+      GameClass=Class'UnrealShare.CoopGame'
+      MenuLength=3
+      HelpMessage(3)="Skill level setting."
+      MenuList(3)="Difficulty"
 }

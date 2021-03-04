@@ -63,18 +63,18 @@ function inventory SpawnCopy( pawn Other )
 
 defaultproperties
 {
-     bDisplayableInv=True
-     PickupMessage="You got the Body Armor."
-     ItemName="Body Armor"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'Botpack.Armor2M'
-     Charge=100
-     ArmorAbsorption=75
-     bIsAnArmor=True
-     AbsorptionPriority=7
-     MaxDesireability=2.000000
-     PickupSound=Sound'Botpack.Pickups.ArmorUT'
-     Mesh=LodMesh'Botpack.Armor2M'
-     AmbientGlow=64
-     CollisionHeight=11.000000
+      bDisplayableInv=True
+      PickupMessage="You got the Body Armor."
+      ItemName="Body Armor"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'Botpack.Armor2M'
+      Charge=100
+      ArmorAbsorption=75
+      bIsAnArmor=True
+      AbsorptionPriority=7
+      MaxDesireability=2.000000
+      PickupSound=Sound'Botpack.Pickups.ArmorUT'
+      Mesh=LodMesh'Botpack.Armor2M'
+      AmbientGlow=64
+      CollisionHeight=11.000000
 }

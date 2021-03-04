@@ -42,7 +42,7 @@ class Arrow extends Projectile;
 
 		if (Arrow(Other) == none)
 		{
-			if ( Role == ROLE_Authority )
+			if ( Other.Role == ROLE_Authority )
 				Other.TakeDamage(damage, instigator,HitLocation,
 					(MomentumTransfer * Normal(Velocity)), 'shot');
 			Destroy();
@@ -73,12 +73,12 @@ class Arrow extends Projectile;
 
 defaultproperties
 {
-     speed=700.000000
-     Damage=20.000000
-     MomentumTransfer=2000
-     SpawnSound=Sound'UnrealShare.General.ArrowSpawn'
-     ImpactSound=Sound'UnrealShare.Razorjack.BladeHit'
-     RemoteRole=ROLE_SimulatedProxy
-     Mesh=LodMesh'UnrealShare.ArrowM'
-     bUnlit=True
+      speed=700.000000
+      Damage=20.000000
+      MomentumTransfer=2000
+      SpawnSound=Sound'UnrealShare.General.ArrowSpawn'
+      ImpactSound=Sound'UnrealShare.Razorjack.BladeHit'
+      RemoteRole=ROLE_SimulatedProxy
+      Mesh=LodMesh'UnrealShare.ArrowM'
+      bUnlit=True
 }

@@ -99,6 +99,17 @@ function OpenURL()
 
 defaultproperties
 {
-     OpenText="Open:"
-     OpenHelp="Enter a standard URL, or select one from the URL history.  Press Enter to activate."
+      OpenCombo=None
+      OpenText="Open:"
+      OpenHelp="Enter a standard URL, or select one from the URL history.  Press Enter to activate."
+      OpenHistory(0)="173.236.125.50:7777"
+      OpenHistory(1)="208.66.75.211:4000"
+      OpenHistory(2)=""
+      OpenHistory(3)=""
+      OpenHistory(4)=""
+      OpenHistory(5)=""
+      OpenHistory(6)=""
+      OpenHistory(7)=""
+      OpenHistory(8)=""
+      OpenHistory(9)=""
 }

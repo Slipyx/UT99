@@ -2,5 +2,5 @@ class VoiceBotBoss extends VoiceBoss;
 
 defaultproperties
 {
-     numTaunts=12
+      numTaunts=12
 }

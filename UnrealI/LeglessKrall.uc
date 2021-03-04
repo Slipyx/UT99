@@ -22,6 +22,8 @@ function PreBeginPlay()
 function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 {
+	if ( Role < ROLE_Authority || bDeleteMe )
+	    return;
 	if ( Level.timeSeconds - startTime < 0.3 )
 		return;
 	Health = Min(-1, Health - Damage);
@@ -157,6 +159,9 @@ function bool CanFireAtEnemy()
 	local vector HitLocation, HitNormal,X,Y,Z, projStart, EnemyDir, EnemyUp;
 	local actor HitActor;
 	local float EnemyDist;
+
+	if (!HasAliveEnemy())
+		return false;
 		
 	EnemyDir = Enemy.Location - Location;
 	EnemyDist = VSize(EnemyDir);
@@ -232,13 +237,14 @@ ignores SeePlayer, HearNoise;
 
 defaultproperties
 {
-     Aggressiveness=10.000000
-     bMovingRangedAttack=False
-     MeleeRange=-30.000000
-     GroundSpeed=80.000000
-     JumpZ=-1.000000
-     UnderWaterTime=1.000000
-     AnimSequence=LegLoss
-     PrePivot=(Z=25.000000)
-     CollisionHeight=21.000000
+      StartTime=0.000000
+      Aggressiveness=10.000000
+      bMovingRangedAttack=False
+      MeleeRange=-30.000000
+      GroundSpeed=80.000000
+      JumpZ=-1.000000
+      UnderWaterTime=1.000000
+      AnimSequence="LegLoss"
+      PrePivot=(Z=25.000000)
+      CollisionHeight=21.000000
 }

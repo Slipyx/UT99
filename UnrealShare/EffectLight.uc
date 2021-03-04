@@ -7,7 +7,7 @@ class EffectLight extends WeaponLight;
 
 defaultproperties
 {
-     LifeSpan=0.500000
-     Skin=Texture'UnrealShare.Effects.BlueLightPal3'
-     LightRadius=2
+      LifeSpan=0.500000
+      Skin=Texture'UnrealShare.Effects.BlueLightPal3'
+      LightRadius=2
 }

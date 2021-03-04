@@ -281,20 +281,26 @@ state Dead
 
 defaultproperties
 {
-     TrailSize=3.000000
-     HitSounds(0)=Sound'UnrealShare.Gibs.gibP1'
-     HitSounds(1)=Sound'UnrealShare.Gibs.gibP4'
-     HitSounds(2)=Sound'UnrealShare.Gibs.gibP5'
-     HitSounds(3)=Sound'UnrealShare.Gibs.gibP6'
-     bNetTemporary=True
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=20.000000
-     Mesh=LodMesh'UnrealShare.CowBody1'
-     bUnlit=True
-     bCollideActors=False
-     bBounce=True
-     bFixedRotationDir=True
-     Mass=90.000000
-     Buoyancy=27.000000
-     RotationRate=(Pitch=30000,Roll=30000)
+      trail=None
+      TrailSize=3.000000
+      bGreenBlood=False
+      CarcassClass=None
+      CarcassAnim="None"
+      CarcLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      CarcHeight=0.000000
+      HitSounds(0)=Sound'UnrealShare.Gibs.gibP1'
+      HitSounds(1)=Sound'UnrealShare.Gibs.gibP4'
+      HitSounds(2)=Sound'UnrealShare.Gibs.gibP5'
+      HitSounds(3)=Sound'UnrealShare.Gibs.gibP6'
+      bNetTemporary=True
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=20.000000
+      Mesh=LodMesh'UnrealShare.CowBody1'
+      bUnlit=True
+      bCollideActors=False
+      bBounce=True
+      bFixedRotationDir=True
+      Mass=90.000000
+      Buoyancy=27.000000
+      RotationRate=(Pitch=30000,Roll=30000)
 }

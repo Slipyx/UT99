@@ -57,4 +57,6 @@ function Paint(Canvas C, float MouseX, float MouseY)
 
 defaultproperties
 {
+      Screenshot=None
+      MapName=""
 }

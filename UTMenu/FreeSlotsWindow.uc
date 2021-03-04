@@ -27,5 +27,5 @@ function Created()
 
 defaultproperties
 {
-     WindowTitle="All Slots Full"
+      WindowTitle="All Slots Full"
 }

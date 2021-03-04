@@ -643,4 +643,18 @@ function Clear()
 
 defaultproperties
 {
+      Next=None
+      Last=None
+      Prev=None
+      Sentinel=None
+      InternalCount=0
+      bItemOrderChanged=False
+      bSuspendableSort=False
+      CompareCount=0
+      bSortSuspended=False
+      CurrentSortItem=None
+      bTreeSort=False
+      BranchLeft=None
+      BranchRight=None
+      ParentNode=None
 }

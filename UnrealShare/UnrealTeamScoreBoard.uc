@@ -196,16 +196,20 @@ function ShowScores( canvas Canvas )
 
 defaultproperties
 {
-     TeamName(0)="Red Team: "
-     TeamName(1)="Blue Team: "
-     TeamName(2)="Green Team: "
-     TeamName(3)="Gold Team: "
-     TeamColor(0)=(R=255)
-     TeamColor(1)=(G=128,B=255)
-     TeamColor(2)=(G=255)
-     TeamColor(3)=(R=255,G=255)
-     AltTeamColor(0)=(R=200)
-     AltTeamColor(1)=(G=94,B=187)
-     AltTeamColor(2)=(G=128)
-     AltTeamColor(3)=(R=255,G=255,B=128)
+      PlayerCounts(0)=0
+      PlayerCounts(1)=0
+      PlayerCounts(2)=0
+      PlayerCounts(3)=0
+      TeamName(0)="Red Team: "
+      TeamName(1)="Blue Team: "
+      TeamName(2)="Green Team: "
+      TeamName(3)="Gold Team: "
+      TeamColor(0)=(R=255,G=0,B=0,A=0)
+      TeamColor(1)=(R=0,G=128,B=255,A=0)
+      TeamColor(2)=(R=0,G=255,B=0,A=0)
+      TeamColor(3)=(R=255,G=255,B=0,A=0)
+      AltTeamColor(0)=(R=200,G=0,B=0,A=0)
+      AltTeamColor(1)=(R=0,G=94,B=187,A=0)
+      AltTeamColor(2)=(R=0,G=128,B=0,A=0)
+      AltTeamColor(3)=(R=255,G=255,B=128,A=0)
 }

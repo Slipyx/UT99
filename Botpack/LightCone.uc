@@ -13,9 +13,9 @@ class LightCone expands Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Style=STY_Modulated
-     Mesh=LodMesh'Botpack.lightcone1'
-     ScaleGlow=0.300000
-     bUnlit=True
+      DrawType=DT_Mesh
+      Style=STY_Modulated
+      Mesh=LodMesh'Botpack.lightcone1'
+      ScaleGlow=0.300000
+      bUnlit=True
 }

@@ -9,8 +9,9 @@ class WetTexture extends WaterTexture
 
 var(WaterPaint)				texture     SourceTexture;
 var              transient  texture     OldSourceTex;
-var transient int LocalSourceBitmap;
+var transient pointer LocalSourceBitmap;
 
 defaultproperties
 {
+      SourceTexture=None
 }

@@ -81,11 +81,12 @@ function bool ProcessLeft()
 	Aliases[Selection-1] = "_";	
 	EditSelection = Selection - 1;	
 	PlayerOwner.Player.Console.GotoState('MenuTyping');
+	return true;
 }
 
 function bool ProcessRight()
 {
-	ProcessLeft();
+	return ProcessLeft();	
 }
 
 function DrawMenu(canvas Canvas)
@@ -151,41 +152,50 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     Favorites(0)="unreal://unreal.mplayer.com"
-     Favorites(1)="unreal://unreal.heat.net"
-     Favorites(2)="unreal://unreal.won.net"
-     Favorites(3)="unreal://unreal.gamespy.com"
-     Favorites(4)="unreal://unreal.gamehub.net"
-     Favorites(5)="unreal://unreal.vrgn.com"
-     Favorites(6)="unreal://nali.unrealserver.net"
-     Favorites(7)="unreal://krall.unreal.org"
-     Favorites(8)="unreal://server.unreal.com"
-     Aliases(0)="MPlayer.com"
-     Aliases(1)="Heat.net"
-     Aliases(2)="World Opponent Network"
-     Aliases(3)="GameSpy"
-     Aliases(4)="AT&T Worldnet"
-     Aliases(5)="VRGN Game Network"
-     Aliases(6)="Now OnLine"
-     Aliases(7)="The Unreal Org"
-     Aliases(8)="Epic MegaGames"
-     Aliases(9)="..Empty.."
-     Aliases(10)="..Empty.."
-     Aliases(11)="..Empty.."
-     EditList(0)="Name for Server:"
-     EditList(1)="Address:"
-     MenuLength=12
-     HelpMessage(1)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(2)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(3)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(4)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(5)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(6)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(7)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(8)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(9)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(10)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(11)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     HelpMessage(12)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
-     MenuTitle="FAVORITES"
+      Favorites(0)="unreal://unreal.mplayer.com"
+      Favorites(1)="unreal://unreal.heat.net"
+      Favorites(2)="unreal://unreal.won.net"
+      Favorites(3)="unreal://unreal.gamespy.com"
+      Favorites(4)="unreal://unreal.gamehub.net"
+      Favorites(5)="unreal://unreal.vrgn.com"
+      Favorites(6)="unreal://nali.unrealserver.net"
+      Favorites(7)="unreal://krall.unreal.org"
+      Favorites(8)="unreal://server.unreal.com"
+      Favorites(9)=""
+      Favorites(10)=""
+      Favorites(11)=""
+      Aliases(0)="MPlayer.com"
+      Aliases(1)="Heat.net"
+      Aliases(2)="World Opponent Network"
+      Aliases(3)="GameSpy"
+      Aliases(4)="AT&T Worldnet"
+      Aliases(5)="VRGN Game Network"
+      Aliases(6)="Now OnLine"
+      Aliases(7)="The Unreal Org"
+      Aliases(8)="Epic MegaGames"
+      Aliases(9)="..Empty.."
+      Aliases(10)="..Empty.."
+      Aliases(11)="..Empty.."
+      EditList(0)="Name for Server:"
+      EditList(1)="Address:"
+      bEditMode=False
+      bEditAlias=False
+      bEditFavorite=False
+      OldFavorite=""
+      OldAlias=""
+      EditSelection=0
+      MenuLength=12
+      HelpMessage(1)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(2)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(3)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(4)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(5)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(6)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(7)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(8)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(9)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(10)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(11)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      HelpMessage(12)="Hit enter to go to this server.  Hit the right arrow key to edit this entry."
+      MenuTitle="FAVORITES"
 }

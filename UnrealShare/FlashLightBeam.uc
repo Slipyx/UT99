@@ -16,14 +16,14 @@ function Timer()
 
 defaultproperties
 {
-     bStatic=False
-     bHidden=False
-     bNoDelete=False
-     bMovable=True
-     LightEffect=LE_NonIncidence
-     LightBrightness=250
-     LightHue=32
-     LightSaturation=142
-     LightRadius=7
-     LightPeriod=0
+      bStatic=False
+      bHidden=False
+      bNoDelete=False
+      bMovable=True
+      LightEffect=LE_NonIncidence
+      LightBrightness=250
+      LightHue=32
+      LightSaturation=142
+      LightRadius=7
+      LightPeriod=0
 }

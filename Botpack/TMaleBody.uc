@@ -91,13 +91,15 @@ function SpawnHead()
 
 defaultproperties
 {
-     Jerks(0)=GutHit
-     Jerks(1)=HeadHit
-     Jerks(2)=LeftHit
-     Jerks(3)=RightHit
-     MasterReplacement=Class'Botpack.TMaleMasterChunk'
-     AnimSequence=Dead1
-     bBlockActors=True
-     bBlockPlayers=True
-     Mass=100.000000
+      LastHit=0.000000
+      bJerking=False
+      Jerks(0)="GutHit"
+      Jerks(1)="HeadHit"
+      Jerks(2)="LeftHit"
+      Jerks(3)="RightHit"
+      MasterReplacement=Class'Botpack.TMaleMasterChunk'
+      AnimSequence="Dead1"
+      bBlockActors=True
+      bBlockPlayers=True
+      Mass=100.000000
 }

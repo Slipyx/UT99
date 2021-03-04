@@ -112,27 +112,57 @@ Begin:
 	}
 }
 
+// Fix for online games on 227:
+simulated function HitWall( vector HitNormal, actor Wall )
+{
+	Velocity = 0.6*(( Velocity dot HitNormal ) * HitNormal * (-2.0) + Velocity);   // Reflect off Wall w/damping
+	bRotatetoDesired=True;
+	bFixedRotationDir=False;
+	DesiredRotation.Pitch=0;
+	DesiredRotation.Yaw=FRand()*65536;
+	DesiredRotation.Roll=0;
+	RotationRate.Yaw = RotationRate.Yaw*0.75;
+	RotationRate.Roll = RotationRate.Roll*0.75;
+	RotationRate.Pitch = RotationRate.Pitch*0.75;
+	If (VSize(Velocity) < 5)
+	{
+		bBounce = False;
+		SetPhysics(PHYS_None);
+	}
+}
+simulated function SetInitialState()
+{
+	if ( Level.NetMode!=NM_Client )
+		Super.SetInitialState();
+}
+
 defaultproperties
 {
-     bCanHaveMultipleCopies=True
-     bActivatable=True
-     bDisplayableInv=True
-     PickupMessage="You got a flare"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'UnrealShare.FlareM'
-     Charge=10
-     PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
-     ActivateSound=Sound'UnrealShare.Pickups.flares1'
-     Icon=Texture'UnrealShare.Icons.I_Flare'
-     RemoteRole=ROLE_DumbProxy
-     Mesh=LodMesh'UnrealShare.FlareM'
-     bUnlit=True
-     CollisionRadius=13.000000
-     CollisionHeight=8.000000
-     bCollideWorld=True
-     bProjTarget=True
-     LightBrightness=199
-     LightHue=25
-     LightSaturation=89
-     LightRadius=33
+      X=(X=0.000000,Y=0.000000,Z=0.000000)
+      Y=(X=0.000000,Y=0.000000,Z=0.000000)
+      Z=(X=0.000000,Y=0.000000,Z=0.000000)
+      F=None
+      bFirstTick=False
+      bDamaged=False
+      bCanHaveMultipleCopies=True
+      bActivatable=True
+      bDisplayableInv=True
+      PickupMessage="You got a flare"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'UnrealShare.FlareM'
+      Charge=10
+      PickupSound=Sound'UnrealShare.Pickups.GenPickSnd'
+      ActivateSound=Sound'UnrealShare.Pickups.flares1'
+      Icon=Texture'UnrealShare.Icons.I_Flare'
+      RemoteRole=ROLE_DumbProxy
+      Mesh=LodMesh'UnrealShare.FlareM'
+      bUnlit=True
+      CollisionRadius=13.000000
+      CollisionHeight=8.000000
+      bCollideWorld=True
+      bProjTarget=True
+      LightBrightness=199
+      LightHue=25
+      LightSaturation=89
+      LightRadius=33
 }

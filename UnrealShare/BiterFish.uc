@@ -274,26 +274,30 @@ Begin:
 
 defaultproperties
 {
-     FishSkins(0)=Texture'UnrealShare.Skins.Jfish21'
-     FishSkins(1)=Texture'UnrealShare.Skins.Jfish22'
-     FishSkins(2)=Texture'UnrealShare.Skins.Jfish23'
-     FishSkins(3)=Texture'UnrealShare.Skins.Jfish24'
-     FishSkins(4)=Texture'UnrealShare.Skins.Jfish25'
-     FishSkins(5)=Texture'UnrealShare.Skins.Jfish26'
-     bCanStrafe=True
-     WaterSpeed=180.000000
-     AccelRate=700.000000
-     SightRadius=3000.000000
-     Health=5
-     ReducedDamageType=exploded
-     ReducedDamagePct=0.900000
-     UnderWaterTime=-1.000000
-     DrawType=DT_Mesh
-     Skin=Texture'UnrealShare.Skins.Jfish21'
-     Mesh=LodMesh'UnrealShare.AmbientFish'
-     CollisionRadius=8.000000
-     CollisionHeight=6.000000
-     bBlockPlayers=False
-     Buoyancy=5.000000
-     RotationRate=(Pitch=8192,Yaw=128000,Roll=16384)
+      BiteDamage=0
+      AirTime=0.000000
+      OldSchoolDestination=(X=0.000000,Y=0.000000,Z=0.000000)
+      School=None
+      FishSkins(0)=Texture'UnrealShare.Skins.Jfish21'
+      FishSkins(1)=Texture'UnrealShare.Skins.Jfish22'
+      FishSkins(2)=Texture'UnrealShare.Skins.Jfish23'
+      FishSkins(3)=Texture'UnrealShare.Skins.Jfish24'
+      FishSkins(4)=Texture'UnrealShare.Skins.Jfish25'
+      FishSkins(5)=Texture'UnrealShare.Skins.Jfish26'
+      bCanStrafe=True
+      WaterSpeed=180.000000
+      AccelRate=700.000000
+      SightRadius=3000.000000
+      Health=5
+      ReducedDamageType="exploded"
+      ReducedDamagePct=0.900000
+      UnderWaterTime=-1.000000
+      DrawType=DT_Mesh
+      Skin=Texture'UnrealShare.Skins.Jfish21'
+      Mesh=LodMesh'UnrealShare.AmbientFish'
+      CollisionRadius=8.000000
+      CollisionHeight=6.000000
+      bBlockPlayers=False
+      Buoyancy=5.000000
+      RotationRate=(Pitch=8192,Yaw=128000,Roll=16384)
 }

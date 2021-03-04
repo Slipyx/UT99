@@ -81,17 +81,20 @@ Begin:
 
 defaultproperties
 {
-     speed=1200.000000
-     MaxSpeed=1200.000000
-     Damage=60.000000
-     MomentumTransfer=50000
-     bNetTemporary=False
-     AmbientSound=Sound'UnrealI.General.BRocket'
-     Mesh=LodMesh'UnrealI.perock'
-     DrawScale=2.500000
-     AmbientGlow=1
-     bUnlit=True
-     SoundRadius=20
-     SoundVolume=255
-     bBounce=True
+      OriginalDirection=(X=0.000000,Y=0.000000,Z=0.000000)
+      Count=0.000000
+      SmokeRate=0.000000
+      speed=1200.000000
+      MaxSpeed=1200.000000
+      Damage=60.000000
+      MomentumTransfer=50000
+      bNetTemporary=False
+      AmbientSound=Sound'UnrealI.General.BRocket'
+      Mesh=LodMesh'UnrealI.perock'
+      DrawScale=2.500000
+      AmbientGlow=1
+      bUnlit=True
+      SoundRadius=20
+      SoundVolume=255
+      bBounce=True
 }

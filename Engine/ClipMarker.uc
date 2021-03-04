@@ -18,6 +18,6 @@ class ClipMarker extends Keypoint
 
 defaultproperties
 {
-     bEdShouldSnap=True
-     Texture=Texture'Engine.S_ClipMarker'
+      bEdShouldSnap=True
+      Texture=Texture'Engine.S_ClipMarker'
 }

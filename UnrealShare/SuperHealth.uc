@@ -20,14 +20,14 @@ function PlayPickupMessage(Pawn Other)
 
 defaultproperties
 {
-     HealingAmount=100
-     bSuperHeal=True
-     PickupMessage="You picked up the Super Health Pack"
-     RespawnTime=100.000000
-     PickupViewMesh=LodMesh'UnrealShare.SuperHealthMesh'
-     MaxDesireability=1.000000
-     Texture=None
-     Mesh=LodMesh'UnrealShare.SuperHealthMesh'
-     CollisionRadius=16.000000
-     CollisionHeight=19.500000
+      HealingAmount=100
+      bSuperHeal=True
+      PickupMessage="You picked up the Super Health Pack"
+      RespawnTime=100.000000
+      PickupViewMesh=LodMesh'UnrealShare.SuperHealthMesh'
+      MaxDesireability=1.000000
+      Texture=None
+      Mesh=LodMesh'UnrealShare.SuperHealthMesh'
+      CollisionRadius=16.000000
+      CollisionHeight=19.500000
 }

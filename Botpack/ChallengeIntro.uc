@@ -48,5 +48,5 @@ function Timer()
 
 defaultproperties
 {
-     HUDType=Class'Botpack.CHSpectatorHUD'
+      HUDType=Class'Botpack.CHSpectatorHUD'
 }

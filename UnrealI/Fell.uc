@@ -3,6 +3,6 @@ class Fell extends UnrealDamageType
 
 defaultproperties
 {
-     AltName="Fell"
-     DamageEffect=None
+      AltName="Fell"
+      DamageEffect=None
 }

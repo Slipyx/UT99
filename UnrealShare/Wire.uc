@@ -56,12 +56,12 @@ Begin:
 
 defaultproperties
 {
-     WireType=E_WireWiggle
-     bStatic=False
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.WireM'
-     CollisionRadius=5.000000
-     CollisionHeight=60.000000
-     bCollideActors=True
-     bProjTarget=True
+      WireType=E_WireWiggle
+      bStatic=False
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.WireM'
+      CollisionRadius=5.000000
+      CollisionHeight=60.000000
+      bCollideActors=True
+      bProjTarget=True
 }

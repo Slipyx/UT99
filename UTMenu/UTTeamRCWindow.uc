@@ -232,12 +232,17 @@ function FFChanged()
 
 defaultproperties
 {
-     TeamScoreText="Max Team Score"
-     TeamScoreHelp="When a team obtains this score, the game will end."
-     MaxTeamsText="Max Teams"
-     MaxTeamsHelp="The maximum number of different teams players are allowed to join, for this game."
-     BalancePlayersText="Force Team Balance"
-     BalancePlayersHelp="If checked, this option forces players joining the game to be placed on the team which best keeps teams balanced."
-     FFText="Friendly Fire:"
-     FFHelp="Slide to adjust the amount of damage friendly fire imparts to other teammates."
+      TeamScoreEdit=None
+      TeamScoreText="Max Team Score"
+      TeamScoreHelp="When a team obtains this score, the game will end."
+      MaxTeamsEdit=None
+      MaxTeamsText="Max Teams"
+      MaxTeamsHelp="The maximum number of different teams players are allowed to join, for this game."
+      BalancePlayersCheck=None
+      BalancePlayersText="Force Team Balance"
+      BalancePlayersHelp="If checked, this option forces players joining the game to be placed on the team which best keeps teams balanced."
+      MaxAllowedTeams=0
+      FFSlider=None
+      FFText="Friendly Fire:"
+      FFHelp="Slide to adjust the amount of damage friendly fire imparts to other teammates."
 }

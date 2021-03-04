@@ -102,7 +102,7 @@ function SelectRow(int Row)
 
 defaultproperties
 {
-     RuleText="Rule"
-     ValueText="Value"
-     bNoKeyboard=True
+      RuleText="Rule"
+      ValueText="Value"
+      bNoKeyboard=True
 }

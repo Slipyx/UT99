@@ -64,12 +64,13 @@ function bool Build()
 
 defaultproperties
 {
-     Height=256.000000
-     OuterRadius=512.000000
-     InnerRadius=384.000000
-     Sides=8
-     GroupName=Cylinder
-     AlignToSide=True
-     BitmapFilename="BBCylinder"
-     ToolTip="Cylinder"
+      Height=256.000000
+      OuterRadius=512.000000
+      InnerRadius=384.000000
+      Sides=8
+      GroupName="Cylinder"
+      AlignToSide=True
+      Hollow=False
+      BitmapFilename="BBCylinder"
+      ToolTip="Cylinder"
 }

@@ -41,4 +41,5 @@ function Tick(float Delta)
 
 defaultproperties
 {
+      NextClickTime=0.000000
 }

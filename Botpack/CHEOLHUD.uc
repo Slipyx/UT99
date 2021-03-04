@@ -48,5 +48,6 @@ simulated function bool DisplayMessages( canvas C )
 
 defaultproperties
 {
-     ESCMessage="Press ESC to continue..."
+      ESCMessage="Press ESC to continue..."
+      ESCFadeTime=0.000000
 }

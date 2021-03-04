@@ -16,18 +16,18 @@ class Armor extends Pickup;
 
 defaultproperties
 {
-     bDisplayableInv=True
-     PickupMessage="You got the Assault Vest"
-     RespawnTime=30.000000
-     PickupViewMesh=LodMesh'UnrealShare.ArmorM'
-     Charge=100
-     ArmorAbsorption=90
-     bIsAnArmor=True
-     AbsorptionPriority=7
-     MaxDesireability=1.800000
-     PickupSound=Sound'UnrealShare.Pickups.ArmorSnd'
-     Icon=Texture'UnrealShare.Icons.I_Armor'
-     Mesh=LodMesh'UnrealShare.ArmorM'
-     AmbientGlow=64
-     CollisionHeight=11.000000
+      bDisplayableInv=True
+      PickupMessage="You got the Assault Vest"
+      RespawnTime=30.000000
+      PickupViewMesh=LodMesh'UnrealShare.ArmorM'
+      Charge=100
+      ArmorAbsorption=90
+      bIsAnArmor=True
+      AbsorptionPriority=7
+      MaxDesireability=1.800000
+      PickupSound=Sound'UnrealShare.Pickups.ArmorSnd'
+      Icon=Texture'UnrealShare.Icons.I_Armor'
+      Mesh=LodMesh'UnrealShare.ArmorM'
+      AmbientGlow=64
+      CollisionHeight=11.000000
 }

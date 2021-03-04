@@ -71,6 +71,6 @@ function DrawVictoryConditions(Canvas Canvas)
 
 defaultproperties
 {
-     VictoryGoal="Be the last one alive!"
-     FragsString="Lives"
+      VictoryGoal="Be the last one alive!"
+      FragsString="Lives"
 }

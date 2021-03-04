@@ -34,21 +34,21 @@ auto state Explode
 
 defaultproperties
 {
-     EffectSound1=Sound'UnrealShare.Generic.RespawnSound'
-     bNetOptional=True
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=1.000000
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.DBEffect.de_A00'
-     Mesh=LodMesh'UnrealShare.TeleEffect2'
-     DrawScale=0.250000
-     bUnlit=True
-     bParticles=True
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=210
-     LightHue=30
-     LightSaturation=224
-     LightRadius=8
+      EffectSound1=Sound'UnrealShare.Generic.RespawnSound'
+      bNetOptional=True
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=1.000000
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.DBEffect.de_A00'
+      Mesh=LodMesh'UnrealShare.TeleEffect2'
+      DrawScale=0.250000
+      bUnlit=True
+      bParticles=True
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=210
+      LightHue=30
+      LightSaturation=224
+      LightRadius=8
 }

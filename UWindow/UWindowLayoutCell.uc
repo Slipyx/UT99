@@ -11,4 +11,9 @@ var UWindowDialogControl C;
 
 defaultproperties
 {
+      RowSpan=0
+      ColSpan=0
+      HAlign=HA_Center
+      VAlign=VA_Middle
+      C=None
 }

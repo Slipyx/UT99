@@ -89,4 +89,8 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      FadeFactor=0.000000
+      bHighlightButton=False
+      SelectedTexture=None
+      Type=0
 }

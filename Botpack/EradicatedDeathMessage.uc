@@ -22,5 +22,5 @@ static function string GetString(
 
 defaultproperties
 {
-     EradicatedMessage="was eradicated by the unholy power of"
+      EradicatedMessage="was eradicated by the unholy power of"
 }

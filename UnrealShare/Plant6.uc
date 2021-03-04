@@ -15,6 +15,6 @@ class Plant6 extends Decoration;
 
 defaultproperties
 {
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Plant6M'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Plant6M'
 }

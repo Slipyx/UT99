@@ -61,11 +61,14 @@ function bool CheckMousePassThrough(float X, float Y)
 
 defaultproperties
 {
-     HStaticOffset=-32.000000
-     HStaticScale=1.000000
-     HStaticTexture=Texture'UTMenu.Skins.HScreenStatic1'
-     HStaticWidth=32.000000
-     VStaticOffset=-32.000000
-     VStaticScale=1.000000
-     VStaticTexture=Texture'UTMenu.Skins.VScreenStatic'
+      HStaticOffset=-32.000000
+      HStaticScale=1.000000
+      bHPanStatic=False
+      HStaticTexture=Texture'UTMenu.Skins.HScreenStatic1'
+      HStaticLoop=False
+      HStaticWidth=32.000000
+      VStaticOffset=-32.000000
+      VStaticScale=1.000000
+      bVPanStatic=False
+      VStaticTexture=Texture'UTMenu.Skins.VScreenStatic'
 }

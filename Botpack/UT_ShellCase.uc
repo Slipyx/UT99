@@ -106,22 +106,24 @@ function Eject(Vector Vel)
 
 defaultproperties
 {
-     MaxSpeed=1000.000000
-     bNetOptional=True
-     bReplicateInstigator=False
-     Physics=PHYS_Falling
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=3.000000
-     Mesh=LodMesh'Botpack.Shellc'
-     bUnlit=True
-     bCollideActors=False
-     LightType=LT_Steady
-     LightEffect=LE_NonIncidence
-     LightBrightness=250
-     LightHue=28
-     LightSaturation=128
-     LightRadius=7
-     bBounce=True
-     bFixedRotationDir=True
-     NetPriority=1.400000
+      bHasBounced=False
+      numBounces=0
+      MaxSpeed=1000.000000
+      bNetOptional=True
+      bReplicateInstigator=False
+      Physics=PHYS_Falling
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=3.000000
+      Mesh=LodMesh'Botpack.Shellc'
+      bUnlit=True
+      bCollideActors=False
+      LightType=LT_Steady
+      LightEffect=LE_NonIncidence
+      LightBrightness=250
+      LightHue=28
+      LightSaturation=128
+      LightRadius=7
+      bBounce=True
+      bFixedRotationDir=True
+      NetPriority=1.400000
 }

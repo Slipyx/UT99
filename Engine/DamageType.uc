@@ -22,5 +22,9 @@ static function string DeathMessage()
 
 defaultproperties
 {
-     AltName="killed"
+      Name=""
+      AltName="killed"
+      ViewFlash=0.000000
+      ViewFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      DamageEffect=None
 }

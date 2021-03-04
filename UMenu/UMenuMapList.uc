@@ -25,4 +25,6 @@ function UMenuMapList FindMap(string FindMapName)
 
 defaultproperties
 {
+      MapName=""
+      DisplayName=""
 }

@@ -16,5 +16,5 @@ auto state Flying
 
 defaultproperties
 {
-     speed=300.000000
+      speed=300.000000
 }

@@ -42,17 +42,18 @@ Begin:
 
 defaultproperties
 {
-     bNetTemporary=False
-     Physics=PHYS_None
-     RemoteRole=ROLE_SimulatedProxy
-     AmbientSound=Sound'UnrealI.Pickups.ffieldl2'
-     Mesh=LodMesh'UnrealI.ForceFieldM'
-     bUnlit=True
-     bCollideWhenPlacing=True
-     SoundRadius=29
-     SoundVolume=67
-     CollisionRadius=30.000000
-     CollisionHeight=50.000000
-     bBlockActors=True
-     bBlockPlayers=True
+      Charge=0
+      bNetTemporary=False
+      Physics=PHYS_None
+      RemoteRole=ROLE_SimulatedProxy
+      AmbientSound=Sound'UnrealI.Pickups.ffieldl2'
+      Mesh=LodMesh'UnrealI.ForceFieldM'
+      bUnlit=True
+      bCollideWhenPlacing=True
+      SoundRadius=29
+      SoundVolume=67
+      CollisionRadius=30.000000
+      CollisionHeight=50.000000
+      bBlockActors=True
+      bBlockPlayers=True
 }

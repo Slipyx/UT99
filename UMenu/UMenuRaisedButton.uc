@@ -20,7 +20,7 @@ function BeforePaint(Canvas C, float X, float Y)
 
 	Super.BeforePaint(C, X, Y);
 
-	WinHeight = 18;
+	WinHeight = 20;
 
 	TextSize(C, Text, W, H);
 
@@ -29,10 +29,10 @@ function BeforePaint(Canvas C, float X, float Y)
 	switch(Align)
 	{
 	case TA_Left:
-		TextX = 3;
+		TextX = 5;
 		break;
 	case TA_Right:
-		TextX = WinWidth - W - 3;
+		TextX = WinWidth - W - 5;
 		break;
 	case TA_Center:	
 		TextX = (WinWidth - W) / 2;
@@ -56,4 +56,5 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      Index=0
 }

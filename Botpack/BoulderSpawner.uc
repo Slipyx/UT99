@@ -19,8 +19,13 @@ function Trigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
-     bOnlyTriggerable=True
-     bHidden=True
-     bDirectional=True
-     DrawType=DT_Sprite
+      TriggerDelay=0.000000
+      RepeatDelay=0.000000
+      BouldersTothrowAfterDeactivated=0
+      BoulderSpeed=0
+      BoulderCount=0
+      bOnlyTriggerable=True
+      bHidden=True
+      bDirectional=True
+      DrawType=DT_Sprite
 }

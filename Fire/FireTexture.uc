@@ -108,4 +108,18 @@ var transient   byte    PenDownY;
 
 defaultproperties
 {
+      SparkType=SPARK_Burn
+      RenderHeat=0
+      bRising=False
+      FX_Heat=0
+      FX_Size=0
+      FX_AuxSize=0
+      FX_Area=0
+      FX_Frequency=0
+      FX_Phase=0
+      FX_HorizSpeed=0
+      FX_VertSpeed=0
+      DrawMode=DRAW_Normal
+      SparksLimit=0
+      NumSparks=0
 }

@@ -10,7 +10,7 @@ class Object
 // UObject variables.
 
 // Internal variables.
-var native private const int ObjectInternal[6];
+var native private const pointer ObjectInternal[6]; // vtable ptr, index + padding, hashnext ptr, stateframe ptr, _linker ptr, linkerindex + padding
 var native const object Outer;
 var native const int ObjectFlags;
 var(Object) native const editconst name Name;
@@ -246,6 +246,11 @@ native(121) static final operator(24) bool   >= ( string A, string B );
 native(122) static final operator(24) bool   == ( string A, string B );
 native(123) static final operator(26) bool   != ( string A, string B );
 native(124) static final operator(24) bool   ~= ( string A, string B );
+// rjp --
+native(322) static final operator(44) string $= ( out	 string A, coerce string B );
+native(323) static final operator(44) string @= ( out    string A, coerce string B );
+native(324) static final operator(45) string -= ( out    string A, coerce string B );
+// -- rjp
 
 // String functions.
 native(125) static final function int    Len    ( coerce string S );
@@ -256,6 +261,8 @@ native(234) static final function string Right  ( coerce string S, int i );
 native(235) static final function string Caps   ( coerce string S );
 native(236) static final function string Chr    ( int i );
 native(237) static final function int    Asc    ( string S );
+native(238)	static final function string Locs	( coerce string S); // -- rjp
+native(239)	static final function string Repl	( coerce string Src, coerce string Match, coerce string With, optional bool bCaseSensitive );
 
 // Object operators.
 native(114) static final operator(24) bool == ( Object A, Object B );
@@ -288,15 +295,16 @@ native(118) final function Disable( name ProbeFunc );
 
 // Properties.
 native final function string GetPropertyText( string PropName );
-native final function SetPropertyText( string PropName, string PropValue );
+native final function bool   SetPropertyText( string PropName, string PropValue );
 native static final function name GetEnum( object E, int i );
 native static final function object DynamicLoadObject( string ObjectName, class ObjectClass, optional bool MayFail );
 
 // Configuration.
 native(536) final function SaveConfig();
+native(537) final function ClearConfig( optional string PropName );	// -- rjp
 native static final function StaticSaveConfig();
-native static final function ResetConfig();
-native final function ClearConfig();
+native static final function ResetConfig( optional string PropName );	// -- rjp
+native static final function StaticClearConfig( optional string PropName );	// -- rjp
 
 // Return a random number within the given range.
 //#if 1 //Fix added by Legend on 4/12/2000
@@ -323,7 +331,6 @@ event BeginState();
 // 
 event EndState();
 
-
 //==============================================================================
 //	UTracing
 native static final function SetUTracing( bool bNewUTracing );
@@ -331,4 +338,5 @@ native static final function bool IsUTracing();
 
 defaultproperties
 {
+      Name="None"
 }

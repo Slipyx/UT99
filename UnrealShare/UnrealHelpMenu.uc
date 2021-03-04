@@ -38,8 +38,8 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     MenuLength=1
-     HelpMessage(1)="Open the troubleshooting document."
-     MenuList(1)="TroubleShooting"
-     MenuTitle="HELP"
+      MenuLength=1
+      HelpMessage(1)="Open the troubleshooting document."
+      MenuList(1)="TroubleShooting"
+      MenuTitle="HELP"
 }

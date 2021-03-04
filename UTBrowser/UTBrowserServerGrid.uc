@@ -142,13 +142,7 @@ function JoinServer(UBrowserServerList Server)
 {
 	if(Server != None && Server.GamePort != 0) 
 	{
-		if(!GetPlayerOwner().ngSecretSet && (UTBrowserServerList(Server).bNGWorldStats || UTBrowserServerList(Server).bNGWorldStatsActive) )
-		{
-			ConnectToServer = Server;
-			AskNgStats = MessageBox(AskNgStatsTitle, AskNgStatsText, MB_YesNoCancel, MR_Yes);
-		}
-		else
-			ReallyJoinServer(Server);
+		ReallyJoinServer(Server);
 	}
 }
 
@@ -171,11 +165,16 @@ function ReallyJoinServer(UBrowserServerList Server)
 
 defaultproperties
 {
-     ngStatsName="ngWorldStats"
-     VersionName="Version"
-     EnabledText="Enabled"
-     AskNgStatsTitle="Use ngWorldStats?"
-     AskNgStatsText="This server has stat accumulation enabled. Your ngWorldStats password has not been set. If you set a new ngWorldStats password, you can record all of your gameplay stats (Kills, Suicides, etc) online! If you do not set a password you will opt out of stat accumulation.\n\nDo you want to set an ngWorldStats password?"
-     ActiveText="Active"
-     InactiveText="Inactive"
+      ngStats=None
+      Ver=None
+      ngStatsName="Stats Logging"
+      VersionName="Version"
+      EnabledText="Enabled"
+      ConnectToServer=None
+      bWaitingForNgStats=False
+      AskNgStats=None
+      AskNgStatsTitle="Use ngWorldStats?"
+      AskNgStatsText="This server has stat accumulation enabled. Your ngWorldStats password has not been set. If you set a new ngWorldStats password, you can record all of your gameplay stats (Kills, Suicides, etc) online! If you do not set a password you will opt out of stat accumulation.\n\nDo you want to set an ngWorldStats password?"
+      ActiveText="Active"
+      InactiveText="Inactive"
 }

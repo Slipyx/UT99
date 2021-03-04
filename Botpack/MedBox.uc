@@ -18,9 +18,9 @@ class MedBox extends TournamentHealth;
 
 defaultproperties
 {
-     PlayerViewMesh=LodMesh'Botpack.MedBox'
-     PickupViewMesh=LodMesh'Botpack.MedBox'
-     PickupSound=Sound'Botpack.Pickups.UTHealth'
-     Mesh=LodMesh'Botpack.MedBox'
-     CollisionRadius=32.000000
+      PlayerViewMesh=LodMesh'Botpack.MedBox'
+      PickupViewMesh=LodMesh'Botpack.MedBox'
+      PickupSound=Sound'Botpack.Pickups.UTHealth'
+      Mesh=LodMesh'Botpack.MedBox'
+      CollisionRadius=32.000000
 }

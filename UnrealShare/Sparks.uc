@@ -67,23 +67,28 @@ Loop:
 
 defaultproperties
 {
-     MinBetweenTime=0.400000
-     MaxBetweenTime=1.000000
-     MinSpawnedAtOnce=1
-     MaxSpawnedAtOnce=3
-     MinSpawnSpeed=200.000000
-     MaxSpawnSpeed=300.000000
-     MinBurnTime=0.400000
-     MaxBurnTime=1.000000
-     MinBrightness=0.700000
-     MaxBrightness=1.000000
-     bHidden=True
-     bNetTemporary=False
-     LifeSpan=1000.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.bolt1'
-     LightBrightness=78
-     LightHue=96
-     LightSaturation=224
-     LightRadius=4
+      MinBetweenTime=0.400000
+      MaxBetweenTime=1.000000
+      MinSpawnedAtOnce=1
+      MaxSpawnedAtOnce=3
+      MinSpawnSpeed=200.000000
+      MaxSpawnSpeed=300.000000
+      MinBurnTime=0.400000
+      MaxBurnTime=1.000000
+      MinBrightness=0.700000
+      MaxBrightness=1.000000
+      SpawnCenterDir=(Pitch=0,Yaw=0,Roll=0)
+      AngularDeviation=0
+      NextSparkTime=0.000000
+      NumSpawnedNow=0
+      i=0
+      bHidden=True
+      bNetTemporary=False
+      LifeSpan=1000.000000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.bolt1'
+      LightBrightness=78
+      LightHue=96
+      LightSaturation=224
+      LightRadius=4
 }

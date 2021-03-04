@@ -7,7 +7,7 @@ var Texture LowDetailTexture;
 
 simulated function Destroyed()
 {
-	if ( bHidden && (Owner != None) )
+	if ( Level.NetMode!=NM_Client && Owner!=None && !Owner.bDeleteMe )
 		Owner.SetDefaultDisplayProperties();
 	Super.Destroyed();
 }
@@ -30,28 +30,36 @@ simulated function Timer()
 
 simulated function Tick(float DeltaTime)
 {
-	if ( (Fatness > Default.Fatness) && (Level.NetMode != NM_DedicatedServer) )
+	if ( Level.NetMode==NM_DedicatedServer )
+	{
+		Disable('Tick');
+		Return;
+	}
+	if ( Fatness>Default.Fatness )
 		Fatness = Max(Default.Fatness, Fatness - 130 * DeltaTime );
-	if ( Owner != None )
-		if ( (bHidden != Owner.bHidden) && (Level.NetMode != NM_DedicatedServer) )
-			bHidden = Owner.bHidden;
+	if ( Owner!=None )
+	{
+		bHidden = Owner.bHidden;
+		PrePivot = Owner.PrePivot;
+		DrawScale = Owner.DrawScale;
+	}
 }
 
 defaultproperties
 {
-     LowDetailTexture=Texture'UnrealShare.GoldSkin'
-     bAnimByOwner=True
-     bOwnerNoSee=True
-     bNetTemporary=False
-     bTrailerSameRotation=True
-     Physics=PHYS_Trailer
-     RemoteRole=ROLE_SimulatedProxy
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=None
-     ScaleGlow=0.500000
-     AmbientGlow=64
-     Fatness=157
-     bUnlit=True
-     bMeshEnviroMap=True
+      LowDetailTexture=Texture'UnrealShare.GoldSkin'
+      bAnimByOwner=True
+      bOwnerNoSee=True
+      bNetTemporary=False
+      bTrailerSameRotation=True
+      Physics=PHYS_Trailer
+      RemoteRole=ROLE_SimulatedProxy
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=None
+      ScaleGlow=0.500000
+      AmbientGlow=64
+      Fatness=157
+      bUnlit=True
+      bMeshEnviroMap=True
 }

@@ -25,5 +25,6 @@ function Resized()
 
 defaultproperties
 {
-     PlayerSetupClass=Class'UMenu.UMenuPlayerSetupScrollClient'
+      Splitter=None
+      PlayerSetupClass=Class'UMenu.UMenuPlayerSetupScrollClient'
 }

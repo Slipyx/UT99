@@ -41,7 +41,7 @@ simulated function Timer()
 
 		if ( Level.NetMode == NM_Client )
 		{
-			foreach VisibleCollidingActors( class 'Actor', Victims, ShockSize*29, Location )
+			foreach VisibleCollidingActors( class 'Actor', Victims, ShockSize*29, Location,, true)
 				if ( Victims.Role == ROLE_Authority )
 				{
 					dir = Victims.Location - Location;
@@ -65,7 +65,7 @@ simulated function Timer()
 		}
 	}
 
-	foreach VisibleCollidingActors( class 'Actor', Victims, ShockSize*29, Location )
+	foreach VisibleCollidingActors( class 'Actor', Victims, ShockSize*29, Location,, true)
 	{
 		dir = Victims.Location - Location;
 		dist = FMax(1,VSize(dir));
@@ -114,22 +114,22 @@ simulated function SpawnEffects()
 {
 	 local WarExplosion W;
 
-	 PlaySound(Sound'Expl03', SLOT_Interface, 16.0);
-	 PlaySound(Sound'Expl03', SLOT_None, 16.0);
-	 PlaySound(Sound'Expl03', SLOT_Misc, 16.0);
-	 PlaySound(Sound'Expl03', SLOT_Talk, 16.0);
+	 PlaySound( Sound'Expl03', SLOT_None, 64.0 );
 	 W = spawn(class'WarExplosion',,,Location);
 	 W.RemoteRole = ROLE_None;
 }
 
 defaultproperties
 {
-     bAlwaysRelevant=True
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=1.500000
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Mesh=LodMesh'Botpack.ShockWavem'
-     AmbientGlow=255
-     bUnlit=True
+      OldShockDistance=0.000000
+      ShockSize=0.000000
+      ICount=0
+      bAlwaysRelevant=True
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=1.500000
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Mesh=LodMesh'Botpack.ShockWavem'
+      AmbientGlow=255
+      bUnlit=True
 }

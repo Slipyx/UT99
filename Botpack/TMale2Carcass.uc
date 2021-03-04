@@ -6,5 +6,5 @@ class TMale2Carcass extends TMaleBody;
 
 defaultproperties
 {
-     Mesh=LodMesh'Botpack.Soldier'
+      Mesh=LodMesh'Botpack.Soldier'
 }

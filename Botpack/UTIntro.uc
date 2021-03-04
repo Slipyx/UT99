@@ -18,12 +18,12 @@ event PreBeginPlay()
 	Super.PreBeginPlay();
 }
 
-event playerpawn Login
+event PlayerPawn Login
 (
 	string Portal,
 	string Options,
 	out string Error,
-	class<playerpawn> SpawnClass
+	class<PlayerPawn> SpawnClass
 )
 {
 	local PlayerPawn NewPlayer;
@@ -39,9 +39,24 @@ event playerpawn Login
 	NewPlayer.bHidden = True;
 
 	foreach AllActors(class'SpectatorCam', Cam) 
+	{
 		NewPlayer.ViewTarget = Cam;
+		if ( string(Level.Outer.Name) ~= "UT-Logo-Map"
+			|| string(Level.Outer.Name) ~= "Entry" )
+		{
+			NewPlayer.PlayerRestartState = 'PlayerFlying';
+			NewPlayer.GotoState('PlayerFlying');
+		}
+	}
 
 	return NewPlayer;
+}
+
+event PostLogin( PlayerPawn NewPlayer )
+{
+	Super.PostLogin(NewPlayer);
+	if ( NewPlayer.PlayerRestartState == 'PlayerFlying' )
+		NewPlayer.SetPhysics( PHYS_Flying );
 }
 
 /* AcceptInventory()
@@ -80,6 +95,7 @@ function PlayTeleportEffect( actor Incoming, bool bOut, bool bSound)
 
 function float PlaySpawnEffect(inventory Inv)
 {
+	return 0.0;
 }
 
 function bool SetPause( BOOL bPause, PlayerPawn P )
@@ -127,13 +143,16 @@ function bool CanSpectate( pawn Viewer, actor ViewTarget )
 
 defaultproperties
 {
-     bGameEnded=True
-     bCanViewOthers=False
-     DefaultWeapon=None
-     RulesMenuType="UTMenu.UTRulesSClient"
-     SettingsMenuType="UTMenu.UTRulesSClient"
-     GameUMenuType="UTMenu.UTGameMenu"
-     MultiplayerUMenuType="UTMenu.UTMultiplayerMenu"
-     GameOptionsMenuType="UTMenu.UTOptionsMenu"
-     HUDType=Class'Botpack.CHNullHUD'
+      bOpened=False
+      TickCount=0
+      CityIntroHUDClass=""
+      bGameEnded=True
+      bCanViewOthers=False
+      DefaultWeapon=None
+      RulesMenuType="UTMenu.UTRulesSClient"
+      SettingsMenuType="UTMenu.UTRulesSClient"
+      GameUMenuType="UTMenu.UTGameMenu"
+      MultiplayerUMenuType="UTMenu.UTMultiplayerMenu"
+      GameOptionsMenuType="UTMenu.UTOptionsMenu"
+      HUDType=Class'Botpack.CHNullHUD'
 }

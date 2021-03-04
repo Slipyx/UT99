@@ -80,7 +80,7 @@ state Restart
 
 defaultproperties
 {
-     RestartString="Restart "
-     MenuLength=10
-     MenuTitle="LOAD GAME"
+      RestartString="Restart "
+      MenuLength=10
+      MenuTitle="LOAD GAME"
 }

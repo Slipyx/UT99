@@ -22,8 +22,8 @@ Begin:
 
 defaultproperties
 {
-     bStatic=False
-     Physics=PHYS_Walking
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.Tap'
+      bStatic=False
+      Physics=PHYS_Walking
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.Tap'
 }

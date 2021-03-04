@@ -79,16 +79,18 @@ function UnTrigger( actor Other, pawn EventInstigator )
 
 defaultproperties
 {
-     bInitiallyActive=True
-     SmokeSpeed=100.000000
-     SmokeAccel=(Z=90.000000)
-     SmokeDelay=0.100000
-     SmokeDelayVariance=0.150000
-     SpeedVariance=20.000000
-     BasePuffSize=1.000000
-     SizeVariance=0.200000
-     TotalNumPuffs=10000
-     bHidden=True
-     bNetTemporary=False
-     DrawType=DT_Sprite
+      bInitiallyActive=True
+      SmokeSpeed=100.000000
+      SmokeAccel=(X=0.000000,Y=0.000000,Z=90.000000)
+      SmokeDelay=0.100000
+      SmokeDelayVariance=0.150000
+      SpeedVariance=20.000000
+      BasePuffSize=1.000000
+      SizeVariance=0.200000
+      TotalNumPuffs=10000
+      SmokeDestObj=None
+      NumPuffsSpawned=0
+      bHidden=True
+      bNetTemporary=False
+      DrawType=DT_Sprite
 }

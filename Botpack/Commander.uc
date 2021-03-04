@@ -331,18 +331,18 @@ ignores SeePlayer, HearNoise, Bump, TakeDamage;
 
 defaultproperties
 {
-     bChaseCam=True
-     bIsMultiSkinned=False
-     AirSpeed=600.000000
-     Visibility=0
-     AttitudeToPlayer=ATTITUDE_Friendly
-     PlayerReStartState=CheatFlying
-     MenuName="Commander"
-     bHidden=True
-     DrawType=DT_None
-     bCollideActors=False
-     bCollideWorld=False
-     bBlockActors=False
-     bBlockPlayers=False
-     bProjTarget=False
+      bChaseCam=True
+      bIsMultiSkinned=False
+      AirSpeed=600.000000
+      Visibility=0
+      AttitudeToPlayer=ATTITUDE_Friendly
+      PlayerReStartState="CheatFlying"
+      MenuName="Commander"
+      bHidden=True
+      DrawType=DT_None
+      bCollideActors=False
+      bCollideWorld=False
+      bBlockActors=False
+      bBlockPlayers=False
+      bProjTarget=False
 }

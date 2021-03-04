@@ -20,33 +20,35 @@ simulated function PostBeginPlay()
 	Super.PostBeginPlay();
 	if ( Level.NetMode != NM_DedicatedServer )
 	{
-		if (!Level.bHighDetailMode) Drawscale = 1.4;
+		if (!Level.bHighDetailMode || Level.bDropDetail) Drawscale = 1.4;
 		else 
 		{	
 			a = Spawn(class'ShortSmokeGen');
-			a.RemoteRole = ROLE_None;	
+			if (a != none)
+			    a.RemoteRole = ROLE_None;	
 		}
 	}
-	MakeSound();
+	if (Level.NetMode != NM_Client)
+	    MakeSound();
 }
 
 defaultproperties
 {
-     NumFrames=8
-     Pause=0.050000
-     EffectSound1=Sound'UnrealShare.General.Expl04'
-     RemoteRole=ROLE_SimulatedProxy
-     LifeSpan=0.500000
-     DrawType=DT_SpriteAnimOnce
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.FlameEffect.e_a01'
-     Skin=Texture'UnrealShare.Effects.ExplosionPal2'
-     DrawScale=2.800000
-     LightType=LT_TexturePaletteOnce
-     LightEffect=LE_NonIncidence
-     LightBrightness=159
-     LightHue=32
-     LightSaturation=79
-     LightRadius=8
-     bCorona=False
+      NumFrames=8
+      Pause=0.050000
+      EffectSound1=Sound'UnrealShare.General.Expl04'
+      RemoteRole=ROLE_SimulatedProxy
+      LifeSpan=0.500000
+      DrawType=DT_SpriteAnimOnce
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.FlameEffect.e_a01'
+      Skin=Texture'UnrealShare.Effects.ExplosionPal2'
+      DrawScale=2.800000
+      LightType=LT_TexturePaletteOnce
+      LightEffect=LE_NonIncidence
+      LightBrightness=159
+      LightHue=32
+      LightSaturation=79
+      LightRadius=8
+      bCorona=False
 }

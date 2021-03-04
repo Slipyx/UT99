@@ -13,9 +13,9 @@ function ForceMeshToExist()
 
 defaultproperties
 {
-     CarcassType=Class'UnrealShare.MaleThreeCarcass'
-     LandGrunt=Sound'UnrealShare.Male.MLand3'
-     JumpSound=Sound'UnrealShare.Male.MJump3'
-     Skin=Texture'UnrealShare.Skins.Dante'
-     Mesh=LodMesh'UnrealShare.Male3'
+      CarcassType=Class'UnrealShare.MaleThreeCarcass'
+      LandGrunt=Sound'UnrealShare.Male.MLand3'
+      JumpSound=Sound'UnrealShare.Male.MJump3'
+      Skin=Texture'UnrealShare.Skins.Dante'
+      Mesh=LodMesh'UnrealShare.Male3'
 }

@@ -23,9 +23,10 @@ function UWindowLayoutCell AddCell(optional int ColSpan, optional int RowSpan)
 
 function float CalcMinHeight()
 {
-
+	return 0.0;
 }
 
 defaultproperties
 {
+      CellList=None
 }

@@ -45,5 +45,8 @@ function int Compare(UWindowList T, UWindowList B)
 
 defaultproperties
 {
-     SortColumn=1
+      Rule=""
+      Value=""
+      SortColumn=1
+      bDescending=False
 }

@@ -87,6 +87,26 @@ function Destroyed()
 
 defaultproperties
 {
-     TournamentDifficulty=1
-     bHidden=True
+      Slot=0
+      TournamentDifficulty=1
+      PendingChange=0
+      PendingRank=0
+      PendingPosition=0
+      LastMatchType=0
+      CurrentLadder=None
+      DMRank=0
+      DMPosition=0
+      CTFRank=0
+      CTFPosition=0
+      DOMRank=0
+      DOMPosition=0
+      ASRank=0
+      ASPosition=0
+      ChalRank=0
+      ChalPosition=0
+      Team=None
+      Face=0
+      Sex=""
+      SkillText=""
+      bHidden=True
 }

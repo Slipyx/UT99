@@ -474,13 +474,21 @@ function CTCP(string Channel, string Nick, string Message)
 
 defaultproperties
 {
-     NickName="Slipyx"
-     FullName="Slipyx"
-     OldPlayerName="Slipyx"
-     UserIdent="u7467277"
-     NotInAChannelText="Not in a channel!"
-     KickedFromText="You were kicked from"
-     ByText="by"
-     IsAwayText="is away"
-     RightClickMenuClass=Class'UBrowser.UBrowserIRCSystemMenu'
+      Link=None
+      PageParent=None
+      Server=""
+      DefaultChannel=""
+      NickName="Slipyx"
+      FullName="Slipyx"
+      OldPlayerName="Slipyx"
+      UserIdent="u7467277"
+      Splitter=None
+      SetupClient=None
+      bConnected=False
+      bAway=False
+      NotInAChannelText="Not in a channel!"
+      KickedFromText="You were kicked from"
+      ByText="by"
+      IsAwayText="is away"
+      RightClickMenuClass=Class'UBrowser.UBrowserIRCSystemMenu'
 }

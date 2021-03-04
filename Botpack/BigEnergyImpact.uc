@@ -4,7 +4,7 @@ class BigEnergyImpact expands Scorch;
 
 defaultproperties
 {
-     MultiDecalLevel=3
-     Texture=Texture'Botpack.bigshockmark'
-     DrawScale=1.500000
+      MultiDecalLevel=3
+      Texture=Texture'Botpack.bigshockmark'
+      DrawScale=1.500000
 }

@@ -16,16 +16,16 @@ class KevlarSuit extends Suits;
 
 defaultproperties
 {
-     PickupMessage="You picked up the Kevlar Suit"
-     PickupViewMesh=LodMesh'UnrealShare.KevSuit'
-     Charge=100
-     ArmorAbsorption=80
-     bIsAnArmor=True
-     AbsorptionPriority=6
-     PickupSound=Sound'UnrealShare.Pickups.suitsnd'
-     Icon=Texture'UnrealShare.Icons.I_kevlar'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.KevSuit'
-     CollisionRadius=20.000000
-     CollisionHeight=30.000000
+      PickupMessage="You picked up the Kevlar Suit"
+      PickupViewMesh=LodMesh'UnrealShare.KevSuit'
+      Charge=100
+      ArmorAbsorption=80
+      bIsAnArmor=True
+      AbsorptionPriority=6
+      PickupSound=Sound'UnrealShare.Pickups.suitsnd'
+      Icon=Texture'UnrealShare.Icons.I_kevlar'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.KevSuit'
+      CollisionRadius=20.000000
+      CollisionHeight=30.000000
 }

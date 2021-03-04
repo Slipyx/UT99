@@ -268,6 +268,12 @@ function PlayVictoryDance()
 function PlayMeleeAttack()
 {
 	local vector adjust;
+
+	if ( Target == None )
+	{
+		PlayRunning();
+		return;
+	}
 	adjust = vect(0,0,0);
 	adjust.Z = Target.CollisionHeight;
 	Acceleration = AccelRate * Normal(Target.Location - Location + adjust);
@@ -286,6 +292,12 @@ function PlayMeleeAttack()
 function PlayRangedAttack()
 {
 	local vector adjust;
+
+	if ( Target == None )
+	{
+		PlayThreatening();
+		return;
+	}	
 	adjust = vect(0,0,0);
 	adjust.Z = Target.CollisionHeight + 20;
 	Acceleration = AccelRate * Normal(Target.Location - Location + adjust);
@@ -299,12 +311,16 @@ function SpawnBelch()
 
 function PunchDamageTarget()
 {
+	if (Target==none)
+	    return;
 	if (MeleeDamageTarget(PunchDamage, (PunchDamage * 1300 * Normal(Target.Location - Location))))
 		PlaySound(PunchHit, SLOT_Interact);
 }
 
 function PoundDamageTarget()
 {
+	if (Target==none)
+	    return;
 	if (MeleeDamageTarget(PoundDamage, (PoundDamage * 800 * Normal(Target.Location - Location))))
 		PlaySound(PunchHit, SLOT_Interact);
 }
@@ -330,38 +346,40 @@ ignores SeePlayer, HearNoise;
 
 defaultproperties
 {
-     PunchDamage=12
-     PoundDamage=25
-     Punch=Sound'UnrealI.Gasbag.twopunch1g'
-     Pound=Sound'UnrealI.Gasbag.twopunch1g'
-     PunchHit=Sound'UnrealI.Gasbag.hit1g'
-     CarcassType=Class'UnrealI.GassiusCarcass'
-     Aggressiveness=0.700000
-     RefireRate=0.500000
-     bHasRangedAttack=True
-     bMovingRangedAttack=True
-     RangedProjectile=Class'UnrealI.GasBagBelch'
-     ProjectileSpeed=600.000000
-     Acquire=Sound'UnrealI.Gasbag.yell2g'
-     Fear=Sound'UnrealI.Gasbag.injur2g'
-     Roam=Sound'UnrealI.Gasbag.nearby1g'
-     Threaten=Sound'UnrealI.Gasbag.yell3g'
-     bCanStrafe=True
-     MeleeRange=50.000000
-     AirSpeed=200.000000
-     JumpZ=10.000000
-     SightRadius=2000.000000
-     FovAngle=120.000000
-     Health=200
-     HitSound1=Sound'UnrealI.Gasbag.injur1g'
-     HitSound2=Sound'UnrealI.Gasbag.injur2g'
-     Die=Sound'UnrealI.Gasbag.death1g'
-     CombatStyle=0.400000
-     AmbientSound=Sound'UnrealI.Gasbag.amb2g'
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealI.GasBagM'
-     CollisionRadius=56.000000
-     CollisionHeight=36.000000
-     Mass=120.000000
-     RotationRate=(Pitch=8192,Yaw=65000,Roll=2048)
+      PunchDamage=12
+      PoundDamage=25
+      Punch=Sound'UnrealI.Gasbag.twopunch1g'
+      Pound=Sound'UnrealI.Gasbag.twopunch1g'
+      PunchHit=Sound'UnrealI.Gasbag.hit1g'
+      ParentBag=None
+      numChildren=0
+      CarcassType=Class'UnrealI.GassiusCarcass'
+      Aggressiveness=0.700000
+      RefireRate=0.500000
+      bHasRangedAttack=True
+      bMovingRangedAttack=True
+      RangedProjectile=Class'UnrealI.GasBagBelch'
+      ProjectileSpeed=600.000000
+      Acquire=Sound'UnrealI.Gasbag.yell2g'
+      Fear=Sound'UnrealI.Gasbag.injur2g'
+      Roam=Sound'UnrealI.Gasbag.nearby1g'
+      Threaten=Sound'UnrealI.Gasbag.yell3g'
+      bCanStrafe=True
+      MeleeRange=50.000000
+      AirSpeed=200.000000
+      JumpZ=10.000000
+      SightRadius=2000.000000
+      FovAngle=120.000000
+      Health=200
+      HitSound1=Sound'UnrealI.Gasbag.injur1g'
+      HitSound2=Sound'UnrealI.Gasbag.injur2g'
+      Die=Sound'UnrealI.Gasbag.death1g'
+      CombatStyle=0.400000
+      AmbientSound=Sound'UnrealI.Gasbag.amb2g'
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealI.GasBagM'
+      CollisionRadius=56.000000
+      CollisionHeight=36.000000
+      Mass=120.000000
+      RotationRate=(Pitch=8192,Yaw=65000,Roll=2048)
 }

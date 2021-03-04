@@ -23,16 +23,16 @@ Begin:
 
 defaultproperties
 {
-     AmmoAmount=25
-     MaxAmmo=100
-     UsedInWeaponSlot(8)=1
-     PickupMessage="You picked up 25 Kilos of Tarydium Sludge"
-     PickupViewMesh=LodMesh'UnrealI.sludgemesh'
-     MaxDesireability=0.220000
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Icon=Texture'UnrealI.Icons.I_SludgeAmmo'
-     Mesh=LodMesh'UnrealI.sludgemesh'
-     CollisionRadius=22.000000
-     CollisionHeight=15.000000
-     bCollideActors=True
+      AmmoAmount=25
+      MaxAmmo=100
+      UsedInWeaponSlot(8)=1
+      PickupMessage="You picked up 25 Kilos of Tarydium Sludge"
+      PickupViewMesh=LodMesh'UnrealI.sludgemesh'
+      MaxDesireability=0.220000
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Icon=Texture'UnrealI.Icons.I_SludgeAmmo'
+      Mesh=LodMesh'UnrealI.sludgemesh'
+      CollisionRadius=22.000000
+      CollisionHeight=15.000000
+      bCollideActors=True
 }

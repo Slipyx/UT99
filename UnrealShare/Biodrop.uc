@@ -36,15 +36,15 @@ Begin:
 
 defaultproperties
 {
-     speed=0.000000
-     MaxSpeed=900.000000
-     Damage=60.000000
-     ImpactSound=None
-     RemoteRole=ROLE_DumbProxy
-     LifeSpan=140.000000
-     CollisionRadius=3.000000
-     CollisionHeight=3.000000
-     bProjTarget=False
-     LightRadius=2
-     Buoyancy=0.000000
+      speed=0.000000
+      MaxSpeed=900.000000
+      Damage=60.000000
+      ImpactSound=None
+      RemoteRole=ROLE_DumbProxy
+      LifeSpan=140.000000
+      CollisionRadius=3.000000
+      CollisionHeight=3.000000
+      bProjTarget=False
+      LightRadius=2
+      Buoyancy=0.000000
 }

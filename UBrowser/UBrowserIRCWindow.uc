@@ -46,5 +46,7 @@ function Close(optional bool bByParent)
 
 defaultproperties
 {
-     SystemName="System"
+      PageControl=None
+      SystemPage=None
+      SystemName="System"
 }

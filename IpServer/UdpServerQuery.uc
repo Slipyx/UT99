@@ -516,7 +516,13 @@ function bool SendTeams(IpAddr Addr, int QueryNum, out int PacketNum, int bFinal
 
 defaultproperties
 {
-     QueryName=MasterUplink
-     GameName="ut"
-     RemoteRole=ROLE_None
+      QueryName="MasterUplink"
+      CurrentQueryNum=0
+      GameName="ut"
+      ReplyData=""
+      MinNetVer=0
+      OldQueryPortNumber=0
+      bRestartServerOnPortSwap=False
+      bTeamInfo=False
+      RemoteRole=ROLE_None
 }

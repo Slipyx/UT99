@@ -7,6 +7,6 @@ class WarExplosion2 extends WarExplosion;
 
 defaultproperties
 {
-     Texture=Texture'Botpack.WarExplosionS2.ne_a00'
-     DrawScale=3.200000
+      Texture=Texture'Botpack.WarExplosionS2.ne_a00'
+      DrawScale=3.200000
 }

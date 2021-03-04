@@ -70,4 +70,12 @@ function UWindowLayoutCell AddCell(optional int ColSpan, optional int RowSpan)
 
 defaultproperties
 {
+      OwnerWindow=None
+      WinTop=0.000000
+      WinLeft=0.000000
+      WinWidth=0.000000
+      WinHeight=0.000000
+      MinimumWidth=0.000000
+      MinimumHeight=0.000000
+      RowList=None
 }

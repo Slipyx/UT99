@@ -204,18 +204,23 @@ Wander:
 
 defaultproperties
 {
-     schoolsize=12
-     schoolradius=120.000000
-     fishcolor=8
-     WaterSpeed=800.000000
-     AirSpeed=800.000000
-     AccelRate=4000.000000
-     PeripheralVision=-5.000000
-     UnderWaterTime=-1.000000
-     bHidden=True
-     CollisionRadius=50.000000
-     CollisionHeight=100.000000
-     Mass=10.000000
-     Buoyancy=10.000000
-     NetPriority=1.400000
+      schoolsize=12
+      activeFish=0
+      schoolradius=120.000000
+      bNonAggressive=False
+      validDest=False
+      bSawPlayer=False
+      StartLocation=(X=0.000000,Y=0.000000,Z=0.000000)
+      fishcolor=8
+      WaterSpeed=800.000000
+      AirSpeed=800.000000
+      AccelRate=4000.000000
+      PeripheralVision=-5.000000
+      UnderWaterTime=-1.000000
+      bHidden=True
+      CollisionRadius=50.000000
+      CollisionHeight=100.000000
+      Mass=10.000000
+      Buoyancy=10.000000
+      NetPriority=1.400000
 }

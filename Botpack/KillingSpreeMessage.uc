@@ -68,18 +68,30 @@ static simulated function ClientReceive(
 
 defaultproperties
 {
-     EndSpreeNote="'s killing spree was ended by"
-     EndSelfSpree="was looking good till he killed himself!"
-     EndFemaleSpree="was looking good till she killed herself!"
-     spreenote(0)="is on a killing spree!"
-     spreenote(1)="is on a rampage!"
-     spreenote(2)="is dominating!"
-     spreenote(3)="is unstoppable!"
-     spreenote(4)="is Godlike!"
-     SpreeSound(0)=Sound'Announcer.(All).killingspree'
-     SpreeSound(1)=Sound'Announcer.(All).rampage'
-     SpreeSound(2)=Sound'Announcer.(All).dominating'
-     SpreeSound(3)=Sound'Announcer.(All).unstoppable'
-     SpreeSound(4)=Sound'Announcer.(All).godlike'
-     bBeep=False
+      EndSpreeNote="'s killing spree was ended by"
+      EndSelfSpree="was looking good till he killed himself!"
+      EndFemaleSpree="was looking good till she killed herself!"
+      MultiKillString=""
+      spreenote(0)="is on a killing spree!"
+      spreenote(1)="is on a rampage!"
+      spreenote(2)="is dominating!"
+      spreenote(3)="is unstoppable!"
+      spreenote(4)="is Godlike!"
+      spreenote(5)=""
+      spreenote(6)=""
+      spreenote(7)=""
+      spreenote(8)=""
+      spreenote(9)=""
+      SpreeSound(0)=Sound'Announcer.(All).killingspree'
+      SpreeSound(1)=Sound'Announcer.(All).rampage'
+      SpreeSound(2)=Sound'Announcer.(All).dominating'
+      SpreeSound(3)=Sound'Announcer.(All).unstoppable'
+      SpreeSound(4)=Sound'Announcer.(All).godlike'
+      SpreeSound(5)=None
+      SpreeSound(6)=None
+      SpreeSound(7)=None
+      SpreeSound(8)=None
+      SpreeSound(9)=None
+      EndSpreeNoteTrailer=""
+      bBeep=False
 }

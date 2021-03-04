@@ -7,6 +7,6 @@ class Info extends Actor
 
 defaultproperties
 {
-     bHidden=True
-     NetUpdateFrequency=4.000000
+      bHidden=True
+      NetUpdateFrequency=4.000000
 }

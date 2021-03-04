@@ -32,6 +32,8 @@ auto state active
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if (bStatic || bDeleteme)
+			return;	
 		bChainedExplosion = False;
 		bDestroy=True;
 		if (DamageType=='destroyed') {
@@ -49,6 +51,8 @@ Begin:
 
 defaultproperties
 {
-     Health=1
-     Skin=Texture'UnrealShare.Skins.Jsteelbarrel2'
+      bChainedExplosion=False
+      bDestroy=False
+      Health=1
+      Skin=Texture'UnrealShare.Skins.Jsteelbarrel2'
 }

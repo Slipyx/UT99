@@ -65,4 +65,5 @@ function Paint(Canvas C, float X, float Y)
 
 defaultproperties
 {
+      Percent=0.000000
 }

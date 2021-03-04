@@ -42,7 +42,11 @@ Auto State Waiting
 
 defaultproperties
 {
-     Orders=Attacking
-     capacity=1
-     bCovert=True
+      Orders="Attacking"
+      OrderTag="None"
+      Enemy=None
+      AlarmTag="None"
+      AddedCoopCapacity=0
+      capacity=1
+      bCovert=True
 }

@@ -5,5 +5,5 @@ class GuardPoint extends Keypoint;
 
 defaultproperties
 {
-     bStatic=False
+      bStatic=False
 }

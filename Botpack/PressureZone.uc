@@ -137,7 +137,18 @@ event ActorLeaving( actor Other )
 
 defaultproperties
 {
-     DamageType=SpecialDamage
-     DamageString="%o was depressurized by %k."
-     bStatic=False
+      KillTime=0.000000
+      StartFlashScale=0.000000
+      StartFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      EndFlashScale=0.000000
+      EndFlashFog=(X=0.000000,Y=0.000000,Z=0.000000)
+      DieFOV=0.000000
+      DieDrawScale=0.000000
+      TimePassed=0.000000
+      DieFatness=0
+      bTriggered=False
+      bScreamed=False
+      DamageType="SpecialDamage"
+      DamageString="%o was depressurized by %k."
+      bStatic=False
 }

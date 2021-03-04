@@ -4,6 +4,6 @@ class EnergyImpact expands Scorch;
 
 defaultproperties
 {
-     MultiDecalLevel=2
-     Texture=Texture'Botpack.shockmark'
+      MultiDecalLevel=2
+      Texture=Texture'Botpack.shockmark'
 }

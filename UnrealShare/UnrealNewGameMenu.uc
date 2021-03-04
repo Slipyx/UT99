@@ -51,13 +51,14 @@ function DrawMenu(canvas Canvas)
 
 defaultproperties
 {
-     MenuLength=4
-     HelpMessage(1)="Tourist mode."
-     HelpMessage(2)="Ready for some action!"
-     HelpMessage(3)="Not for the faint of heart."
-     HelpMessage(4)="Death wish."
-     MenuList(1)="EASY"
-     MenuList(2)="MEDIUM"
-     MenuList(3)="HARD"
-     MenuList(4)="UNREAL"
+      StartMap=""
+      MenuLength=4
+      HelpMessage(1)="Tourist mode."
+      HelpMessage(2)="Ready for some action!"
+      HelpMessage(3)="Not for the faint of heart."
+      HelpMessage(4)="Death wish."
+      MenuList(1)="EASY"
+      MenuList(2)="MEDIUM"
+      MenuList(3)="HARD"
+      MenuList(4)="UNREAL"
 }

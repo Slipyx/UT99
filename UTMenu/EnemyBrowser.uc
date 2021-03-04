@@ -177,21 +177,22 @@ function TitleClicked()
 
 defaultproperties
 {
-     BGName1(0)="UTMenu.CC11"
-     BGName1(1)="UTMenu.CC12"
-     BGName1(2)="UTMenu.CC13"
-     BGName1(3)="UTMenu.CC14"
-     BGName2(0)="UTMenu.CC21"
-     BGName2(1)="UTMenu.CC22"
-     BGName2(2)="UTMenu.CC23"
-     BGName2(3)="UTMenu.CC24"
-     BGName3(0)="UTMenu.CC31"
-     BGName3(1)="UTMenu.CC32"
-     BGName3(2)="UTMenu.CC33"
-     BGName3(3)="UTMenu.CC34"
-     NameString="Name:"
-     ClassString="Classification:"
-     TeamMesh="Botpack.DomB"
-     TeamTex=Texture'Botpack.Skins.BlueSkin2'
-     BrowserName="Enemy Roster"
+      TeamWindow=None
+      BGName1(0)="UTMenu.CC11"
+      BGName1(1)="UTMenu.CC12"
+      BGName1(2)="UTMenu.CC13"
+      BGName1(3)="UTMenu.CC14"
+      BGName2(0)="UTMenu.CC21"
+      BGName2(1)="UTMenu.CC22"
+      BGName2(2)="UTMenu.CC23"
+      BGName2(3)="UTMenu.CC24"
+      BGName3(0)="UTMenu.CC31"
+      BGName3(1)="UTMenu.CC32"
+      BGName3(2)="UTMenu.CC33"
+      BGName3(3)="UTMenu.CC34"
+      NameString="Name:"
+      ClassString="Classification:"
+      TeamMesh="Botpack.DomB"
+      TeamTex=Texture'Botpack.Skins.BlueSkin2'
+      BrowserName="Enemy Roster"
 }

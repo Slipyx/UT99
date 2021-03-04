@@ -16,15 +16,15 @@ class StingerAmmo extends Ammo;
 
 defaultproperties
 {
-     AmmoAmount=40
-     MaxAmmo=200
-     UsedInWeaponSlot(3)=1
-     PickupMessage="You picked up 40 Tarydium Shards"
-     PickupViewMesh=LodMesh'UnrealShare.TarydiumPickup'
-     PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
-     Icon=Texture'UnrealShare.Icons.I_StingerAmmo'
-     Mesh=LodMesh'UnrealShare.TarydiumPickup'
-     CollisionRadius=22.000000
-     CollisionHeight=6.000000
-     bCollideActors=True
+      AmmoAmount=40
+      MaxAmmo=200
+      UsedInWeaponSlot(3)=1
+      PickupMessage="You picked up 40 Tarydium Shards"
+      PickupViewMesh=LodMesh'UnrealShare.TarydiumPickup'
+      PickupSound=Sound'UnrealShare.Pickups.AmmoSnd'
+      Icon=Texture'UnrealShare.Icons.I_StingerAmmo'
+      Mesh=LodMesh'UnrealShare.TarydiumPickup'
+      CollisionRadius=22.000000
+      CollisionHeight=6.000000
+      bCollideActors=True
 }

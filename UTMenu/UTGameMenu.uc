@@ -120,17 +120,23 @@ function Select(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-     NewGameName="&Start Unreal Tournament"
-     NewGameHelp="Select to start a new Unreal Tournament game!"
-     LoadGameName="&Resume Saved Tournament"
-     LoadGameHelp="Select to resume a saved Unreal Tournament game."
-     BotmatchName="Start &Practice Session"
-     BotmatchHelp="Select to begin a practice game against bots."
-     ReturnToGameName="Return to &Current Game"
-     ReturnToGameHelp="Leave the menus and return to your current game.  Pressing the ESC key also returns you to the current game."
-     QuitName="&Quit"
-     QuitHelp="Select to save preferences and exit Unreal."
-     QuitTitle="Confirm Quit"
-     QuitText="Are you sure you want to Quit?"
-     DemoQuitText="Thank you for playing the Unreal Tournament Demo.  Visit our website for information on the full version of the game, which contains 7 unique game types and over 50 levels!\n\nWould you like to visit the Unreal Tournament website now?"
+      NewGame=None
+      LoadGame=None
+      Botmatch=None
+      Quit=None
+      ReturnToGame=None
+      NewGameName="&Start Unreal Tournament"
+      NewGameHelp="Select to start a new Unreal Tournament game!"
+      LoadGameName="&Resume Saved Tournament"
+      LoadGameHelp="Select to resume a saved Unreal Tournament game."
+      BotmatchName="Start &Practice Session"
+      BotmatchHelp="Select to begin a practice game against bots."
+      ReturnToGameName="Return to &Current Game"
+      ReturnToGameHelp="Leave the menus and return to your current game.  Pressing the ESC key also returns you to the current game."
+      QuitName="&Quit"
+      QuitHelp="Select to save preferences and exit Unreal."
+      QuitTitle="Confirm Quit"
+      QuitText="Are you sure you want to Quit?"
+      DemoQuitText="Thank you for playing the Unreal Tournament Demo.  Visit our website for information on the full version of the game, which contains 7 unique game types and over 50 levels!\n\nWould you like to visit the Unreal Tournament website now?"
+      ConfirmQuit=None
 }

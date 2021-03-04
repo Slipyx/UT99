@@ -253,15 +253,20 @@ Begin:
 
 defaultproperties
 {
-     CircleRadius=500.000000
-     AirSpeed=300.000000
-     AccelRate=800.000000
-     SightRadius=2000.000000
-     Health=17
-     Land=None
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Bird'
-     bUnlit=True
-     CollisionHeight=6.000000
-     RotationRate=(Pitch=12000,Yaw=20000,Roll=12000)
+      GoalTag="None"
+      GoalActor=None
+      CircleRadius=500.000000
+      Angle=0.000000
+      CircleCenter=(X=0.000000,Y=0.000000,Z=0.000000)
+      bCircle=False
+      AirSpeed=300.000000
+      AccelRate=800.000000
+      SightRadius=2000.000000
+      Health=17
+      Land=None
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Bird'
+      bUnlit=True
+      CollisionHeight=6.000000
+      RotationRate=(Pitch=12000,Yaw=20000,Roll=12000)
 }

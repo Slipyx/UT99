@@ -371,7 +371,7 @@ function Notify(UWindowWindow B, byte E)
 	switch (E)
 	{
 		case DE_Click:
-			GetPlayerOwner().PlaySound(sound'SpeechWindowClick', SLOT_Interact);
+			GetPlayerOwner().PlaySound( Sound'SpeechWindowClick', SLOT_Interface );
 			switch (B)
 			{
 				case OptionButtons[0]:
@@ -448,16 +448,85 @@ function SetButtonTextures(int i, optional bool bLeft, optional bool bRight, opt
 
 defaultproperties
 {
-     Options(0)="Acknowledge"
-     Options(1)="Friendly Fire"
-     Options(2)="Orders"
-     Options(3)="Taunts"
-     Options(4)="Other/Misc"
-     Options(5)="Gesture"
-     Options(6)="Order This Bot"
-     NumOptions=7
-     ButtonClass=Class'UTMenu.SpeechButton'
-     TopTexture=Texture'UTMenu.Skins.OrdersTop'
-     BottomTexture=Texture'UTMenu.Skins.OrdersBtm'
-     WindowTitle="Orders"
+      TopButton=None
+      OptionButtons(0)=None
+      OptionButtons(1)=None
+      OptionButtons(2)=None
+      OptionButtons(3)=None
+      OptionButtons(4)=None
+      OptionButtons(5)=None
+      OptionButtons(6)=None
+      OptionButtons(7)=None
+      OptionButtons(8)=None
+      OptionButtons(9)=None
+      OptionButtons(10)=None
+      OptionButtons(11)=None
+      OptionButtons(12)=None
+      OptionButtons(13)=None
+      OptionButtons(14)=None
+      OptionButtons(15)=None
+      OptionButtons(16)=None
+      OptionButtons(17)=None
+      OptionButtons(18)=None
+      OptionButtons(19)=None
+      OptionButtons(20)=None
+      OptionButtons(21)=None
+      OptionButtons(22)=None
+      OptionButtons(23)=None
+      OptionButtons(24)=None
+      OptionButtons(25)=None
+      OptionButtons(26)=None
+      OptionButtons(27)=None
+      OptionButtons(28)=None
+      OptionButtons(29)=None
+      OptionButtons(30)=None
+      OptionButtons(31)=None
+      BottomButton=None
+      Options(0)="Acknowledge"
+      Options(1)="Friendly Fire"
+      Options(2)="Orders"
+      Options(3)="Taunts"
+      Options(4)="Other/Misc"
+      Options(5)="Gesture"
+      Options(6)="Order This Bot"
+      Options(7)=""
+      Options(8)=""
+      Options(9)=""
+      Options(10)=""
+      Options(11)=""
+      Options(12)=""
+      Options(13)=""
+      Options(14)=""
+      Options(15)=""
+      Options(16)=""
+      Options(17)=""
+      Options(18)=""
+      Options(19)=""
+      Options(20)=""
+      Options(21)=""
+      Options(22)=""
+      Options(23)=""
+      Options(24)=""
+      Options(25)=""
+      Options(26)=""
+      Options(27)=""
+      Options(28)=""
+      Options(29)=""
+      Options(30)=""
+      Options(31)=""
+      NumOptions=7
+      ButtonClass=Class'UTMenu.SpeechButton'
+      CurrentType=0
+      TopTexture=Texture'UTMenu.Skins.OrdersTop'
+      BottomTexture=Texture'UTMenu.Skins.OrdersBtm'
+      XOffset=0.000000
+      bSlideIn=False
+      bSlideOut=False
+      WindowTitle="Orders"
+      SpeechChild=None
+      IdentifyTarget=None
+      FadeFactor=0.000000
+      bFadeIn=False
+      bFadeOut=False
+      currentkey=0
 }

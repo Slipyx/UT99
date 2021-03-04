@@ -47,8 +47,8 @@ Begin:
 
 defaultproperties
 {
-     LifeSpan=90.000000
-     bBounce=False
-     bFixedRotationDir=False
-     RotationRate=(Pitch=75000,Roll=0)
+      LifeSpan=90.000000
+      bBounce=False
+      bFixedRotationDir=False
+      RotationRate=(Pitch=75000,Roll=0)
 }

@@ -22,6 +22,15 @@ Auto State Animate
 {
 	function HitWall (vector HitNormal, actor Wall)
 	{
+		if ( bDeleteme )
+			return;
+		if (bStatic )
+		{
+			SetPhysics(PHYS_None);
+			bBounce = False;
+			return;
+		}
+
 		if (Velocity.Z<-200) TakeDamage(100,Pawn(Owner),HitNormal,HitNormal*10000,'shattered');	
 		bBounce = False;
 		Velocity = vect(0,0,0);
@@ -31,6 +40,9 @@ Auto State Animate
 	function TakeDamage( int NDamage, Pawn instigatedBy, Vector hitlocation, 
 						Vector momentum, name damageType)
 	{
+		if ( bStatic || bDeleteme )
+			return;
+			
 		Instigator = InstigatedBy;
 		bBobbing = false;
 		if (Health<0) Return;
@@ -53,20 +65,20 @@ Begin:
 
 defaultproperties
 {
-     Health=10
-     bPushable=True
-     PushSound=Sound'UnrealShare.General.ObjectPush'
-     EndPushSound=Sound'UnrealShare.General.Endpush'
-     bStatic=False
-     DrawType=DT_Mesh
-     Skin=Texture'UnrealShare.Skins.JBarrel1'
-     Mesh=LodMesh'UnrealShare.BarrelM'
-     CollisionRadius=24.000000
-     CollisionHeight=29.000000
-     bCollideActors=True
-     bCollideWorld=True
-     bBlockActors=True
-     bBlockPlayers=True
-     Mass=50.000000
-     Buoyancy=60.000000
+      Health=10
+      bPushable=True
+      PushSound=Sound'UnrealShare.General.ObjectPush'
+      EndPushSound=Sound'UnrealShare.General.Endpush'
+      bStatic=False
+      DrawType=DT_Mesh
+      Skin=Texture'UnrealShare.Skins.JBarrel1'
+      Mesh=LodMesh'UnrealShare.BarrelM'
+      CollisionRadius=24.000000
+      CollisionHeight=29.000000
+      bCollideActors=True
+      bCollideWorld=True
+      bBlockActors=True
+      bBlockPlayers=True
+      Mass=50.000000
+      Buoyancy=60.000000
 }

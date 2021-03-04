@@ -31,15 +31,15 @@ auto state Explode
 
 defaultproperties
 {
-     Physics=PHYS_Rotating
-     LifeSpan=0.600000
-     DrawType=DT_Mesh
-     Style=STY_Translucent
-     Texture=Texture'UnrealShare.Effects.T_PBurst'
-     Mesh=LodMesh'UnrealShare.PartBurst'
-     DrawScale=0.700000
-     bUnlit=True
-     bParticles=True
-     bFixedRotationDir=True
-     RotationRate=(Pitch=100,Yaw=100,Roll=-200)
+      Physics=PHYS_Rotating
+      LifeSpan=0.600000
+      DrawType=DT_Mesh
+      Style=STY_Translucent
+      Texture=Texture'UnrealShare.Effects.T_PBurst'
+      Mesh=LodMesh'UnrealShare.PartBurst'
+      DrawScale=0.700000
+      bUnlit=True
+      bParticles=True
+      bFixedRotationDir=True
+      RotationRate=(Pitch=100,Yaw=100,Roll=-200)
 }

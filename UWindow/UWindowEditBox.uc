@@ -570,4 +570,25 @@ function KeyFocusExit()
 
 defaultproperties
 {
+      Value=""
+      Value2=""
+      CaretOffset=0
+      MaxLength=0
+      LastDrawTime=0.000000
+      bShowCaret=False
+      Offset=0.000000
+      NotifyOwner=None
+      bNumericOnly=False
+      bNumericFloat=False
+      bCanEdit=False
+      bAllSelected=False
+      bSelectOnFocus=False
+      bDelayedNotify=False
+      bChangePending=False
+      bControlDown=False
+      bShiftDown=False
+      bHistory=False
+      bKeyDown=False
+      HistoryList=None
+      CurrentHistory=None
 }

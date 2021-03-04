@@ -205,6 +205,13 @@ function PlayVictoryDance()
 function PlayMeleeAttack()
 {
 	local vector adjust;
+
+	if ( Target == None )
+	{
+		PlayRunning();
+		return;
+	}
+
 	adjust = vect(0,0,0.8) * Target.CollisionHeight;
 	Acceleration = AccelRate * Normal(Target.Location - Location + adjust);
 	Enable('Bump');
@@ -228,23 +235,24 @@ ignores SeePlayer, HearNoise;
 
 	singular function Bump(actor Other)
 	{
-		Disable('Bump');
-		if (AnimSequence == 'Whip')
-			MeleeDamageTarget(WhipDamage, (WhipDamage * 1000.0 * Normal(Target.Location - Location)));
-		else if (AnimSequence == 'Sting')
-			MeleeDamageTarget(StingDamage, (StingDamage * 1000.0 * Normal(Target.Location - Location)));
-		bAttackBump = true;
-		Velocity *= -0.5;
-		Acceleration *= -1;
-		if (Acceleration.Z < 0)
-			Acceleration.Z *= -1;
+		if ( Enemy!=none && Other==Enemy )
+		{
+			Disable('Bump');  ///enabled in PlayMeleeAttack
+			if (AnimSequence == 'Whip')
+				MeleeDamageTarget(WhipDamage, (WhipDamage * 1000.0 * Normal(Enemy.Location - Location)));
+			else if (AnimSequence == 'Sting')
+				MeleeDamageTarget(StingDamage, (StingDamage * 1000.0 * Normal(Enemy.Location - Location)));
+			bAttackBump = true;
+			Velocity *= -0.5;
+			Acceleration *= -1;
+			if (Acceleration.Z < 0)
+				Acceleration.Z *= -1;
+		}
 	}
 
 	function KeepAttacking()
 	{
-		if (Target == None) 
-			GotoState('Attacking');
-		else if ( (Pawn(Target) != None) && (Pawn(Target).Health == 0) )
+		if (!HasAliveEnemy())
 			GotoState('Attacking');
 		else if (bAttackBump)
 		{
@@ -262,7 +270,7 @@ ignores SeePlayer, HearNoise;
 							Vector momentum, name damageType)
 	{
 		Global.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-		if ( health <= 0 )
+		if ( health <= 0 || bDeleteMe )
 			return;
 		if (NextState == 'TakeHit')
 		{
@@ -297,6 +305,12 @@ ignores SeePlayer, HearNoise;
 		local actor HitActor;
 		local vector HitLocation, HitNormal, collSpec;
 		local float Aggression, enemydist, minDist, strafeSize, MaxMove;
+
+		if (!HasAliveEnemy())
+		{
+			GotoState('Attacking');
+			return;
+		}
 
 		if ( bAvoidHit && (FRand() < 0.7) )
 			MaxMove = 300;
@@ -387,39 +401,41 @@ ignores SeePlayer, HearNoise;
 
 defaultproperties
 {
-     StingDamage=20
-     WhipDamage=20
-     Whip=Sound'UnrealShare.Manta.whip1m'
-     wingBeat=Sound'UnrealShare.Manta.fly1m'
-     Sting=Sound'UnrealShare.Manta.sting1m'
-     CarcassType=Class'UnrealShare.MantaCarcass'
-     Aggressiveness=0.200000
-     RefireRate=0.500000
-     WalkingSpeed=0.600000
-     bIsWuss=True
-     Acquire=Sound'UnrealShare.Manta.call1m'
-     Fear=Sound'UnrealShare.Manta.injur2m'
-     Roam=Sound'UnrealShare.Manta.call2m'
-     Threaten=Sound'UnrealShare.Manta.call2m'
-     MeleeRange=120.000000
-     WaterSpeed=300.000000
-     AirSpeed=400.000000
-     AccelRate=800.000000
-     JumpZ=10.000000
-     SightRadius=1500.000000
-     Health=78
-     UnderWaterTime=-1.000000
-     HitSound1=Sound'UnrealShare.Manta.injur1m'
-     HitSound2=Sound'UnrealShare.Manta.injur2m'
-     Land=Sound'UnrealShare.Manta.land1mt'
-     Die=Sound'UnrealShare.Manta.death2m'
-     WaterStep=None
-     CombatStyle=-0.300000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'UnrealShare.Manta1'
-     CollisionRadius=27.000000
-     CollisionHeight=12.000000
-     Mass=80.000000
-     Buoyancy=80.000000
-     RotationRate=(Pitch=16384,Yaw=55000,Roll=15000)
+      StingDamage=20
+      WhipDamage=20
+      bAttackBump=False
+      bAvoidHit=False
+      Whip=Sound'UnrealShare.Manta.whip1m'
+      wingBeat=Sound'UnrealShare.Manta.fly1m'
+      Sting=Sound'UnrealShare.Manta.sting1m'
+      CarcassType=Class'UnrealShare.MantaCarcass'
+      Aggressiveness=0.200000
+      RefireRate=0.500000
+      WalkingSpeed=0.600000
+      bIsWuss=True
+      Acquire=Sound'UnrealShare.Manta.call1m'
+      Fear=Sound'UnrealShare.Manta.injur2m'
+      Roam=Sound'UnrealShare.Manta.call2m'
+      Threaten=Sound'UnrealShare.Manta.call2m'
+      MeleeRange=120.000000
+      WaterSpeed=300.000000
+      AirSpeed=400.000000
+      AccelRate=800.000000
+      JumpZ=10.000000
+      SightRadius=1500.000000
+      Health=78
+      UnderWaterTime=-1.000000
+      HitSound1=Sound'UnrealShare.Manta.injur1m'
+      HitSound2=Sound'UnrealShare.Manta.injur2m'
+      Land=Sound'UnrealShare.Manta.land1mt'
+      Die=Sound'UnrealShare.Manta.death2m'
+      WaterStep=None
+      CombatStyle=-0.300000
+      DrawType=DT_Mesh
+      Mesh=LodMesh'UnrealShare.Manta1'
+      CollisionRadius=27.000000
+      CollisionHeight=12.000000
+      Mass=80.000000
+      Buoyancy=80.000000
+      RotationRate=(Pitch=16384,Yaw=55000,Roll=15000)
 }

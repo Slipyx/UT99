@@ -37,5 +37,6 @@ simulated function Timer()
 
 defaultproperties
 {
-     numBlobs=3
+      numBlobs=3
+      SurfaceNormal=(X=0.000000,Y=0.000000,Z=0.000000)
 }

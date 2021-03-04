@@ -63,6 +63,6 @@ function bool PickupQuery(Pawn Other, Inventory item)
 
 defaultproperties
 {
-     bHumansOnly=True
-     DefaultWeapon=None
+      bHumansOnly=True
+      DefaultWeapon=None
 }

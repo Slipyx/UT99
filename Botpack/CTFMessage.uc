@@ -140,14 +140,14 @@ static function string GetString(
 
 defaultproperties
 {
-     ReturnBlue="returns the blue flag!"
-     ReturnRed="returns the red flag!"
-     ReturnedBlue="The blue flag was returned!"
-     ReturnedRed="The red flag was returned!"
-     CaptureBlue="captured the blue flag!  The red team scores!"
-     CaptureRed="captured the red flag!  The blue team scores!"
-     DroppedBlue="dropped the blue flag!"
-     DroppedRed="dropped the red flag!"
-     HasBlue="has the blue flag!"
-     HasRed="has the red flag!"
+      ReturnBlue="returns the blue flag!"
+      ReturnRed="returns the red flag!"
+      ReturnedBlue="The blue flag was returned!"
+      ReturnedRed="The red flag was returned!"
+      CaptureBlue="captured the blue flag!  The red team scores!"
+      CaptureRed="captured the red flag!  The blue team scores!"
+      DroppedBlue="dropped the blue flag!"
+      DroppedRed="dropped the red flag!"
+      HasBlue="has the blue flag!"
+      HasRed="has the red flag!"
 }
