@@ -27,6 +27,7 @@ var(DeathMessage) localized string MaleSuicideMessage;
 var(DeathMessage) localized string FemaleSuicideMessage;
 
 var bool bRatedGame;
+var bool bRatedGameSuccess;
 
 var class<Weapon> RedeemerClass;
 var class<EndStats> EndStatsClass;
@@ -391,6 +392,28 @@ function GetTimeStamp(out string AbsoluteTime)
 		AbsoluteTime = AbsoluteTime$":"$Level.Second;
 }
 
+// Added in v469, used to facilitate multiplayer level switching.
+function LadderTransition( optional string NextURL)
+{
+	local PlayerPawn P;
+
+	if ( NextURL == "" )
+		NextURL = "UT-Logo-Map.unr"$"?Game=Botpack.LadderTransition";
+		
+	if ( Level.NetMode == NM_Standalone )
+	{
+		ForEach AllActors( class'PlayerPawn', P)
+			if ( Viewport(P.Player) != None )
+			{
+				P.ClientTravel( NextURL, TRAVEL_Absolute, True);
+				return;
+			}
+	}
+
+	Level.ServerTravel( NextURL, True);
+	Level.NextSwitchCountdown = FMin( 0.5 * Level.TimeDilation, Level.NextSwitchCountdown);
+}
+
 defaultproperties
 {
       DeathMessage(0)="killed"
@@ -454,6 +477,7 @@ defaultproperties
       MaleSuicideMessage=" killed his own dumb self."
       FemaleSuicideMessage=" killed her own dumb self."
       bRatedGame=False
+      bRatedGameSuccess=False
       RedeemerClass=None
       EndStatsClass=Class'Botpack.EndStats'
       TotalGames=0

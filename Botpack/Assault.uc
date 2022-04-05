@@ -216,7 +216,7 @@ function RestartGame()
 	SavedTime  = TimeLimit * 60 - RemainingTime;
 
 	SaveConfig();
-	Level.ServerTravel( "?Restart", false );
+	Level.ServerTravel( "?Restart", bRatedGame );
 }
 
 function PlayStartUpMessage(PlayerPawn NewPlayer)
@@ -1106,7 +1106,7 @@ defaultproperties
       bDefenseSet=False
       bTiePartOne=False
       GameCode=""
-      Part=1
+      Part=0
       bAssaultWon=False
       bFortDown=False
       DefenderSuccess="defended the base"
@@ -1117,9 +1117,6 @@ defaultproperties
       bSpawnInTeamArea=True
       bScoreTeamKills=False
       MaxAllowedTeams=2
-      GoalTeamScore=0.000000
-      FragLimit=0
-      TimeLimit=10
       StartUpMessage=""
       GameEndedMessage="conquered the base in"
       LadderTypeIndex=4

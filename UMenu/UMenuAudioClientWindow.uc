@@ -9,9 +9,17 @@ var localized string DriverHelp;
 var localized string DriverButtonText;
 var localized string DriverButtonHelp;
 
-var UWindowMessageBox ConfirmDriver;
+// Output Selection.
+var UWindowComboControl OutputDeviceCombo;
+var localized string OutputDeviceText;
+var localized string OutputDeviceHelp;
+var localized string OutputDeviceDefault;
+
+var UWindowMessageBox ConfirmDriver, ConfirmSettingsRestart;
 var localized string ConfirmDriverTitle;
 var localized string ConfirmDriverText;
+var localized string ConfirmSettingsRestartTitle;
+var localized string ConfirmSettingsRestartText;
 
 // Sound Quality
 var UWindowComboControl SoundQualityCombo;
@@ -50,6 +58,7 @@ var localized string MessageBeepText;
 var localized string MessageBeepHelp;
 
 var float ControlOffset;
+var bool Initialized;
 
 function Created()
 {
@@ -57,8 +66,8 @@ function Created()
 	local int MusicVolume, SoundVolume, SpeechVolume;
 	local int ControlWidth, ControlLeft, ControlRight;
 	local int CenterWidth, CenterPos;
-	local string AudioDriverClassName, ClassLeft, ClassRight, AudioDriverDesc;
-	local int i;
+	local string AudioDriverClassName, ClassLeft, ClassRight, AudioDriverDesc, Tmp;
+	local int i, NumDevices;
 
 	Super.Created();
 
@@ -105,6 +114,39 @@ function Created()
 	    DriverButton.SetHelpText(DriverButtonHelp);
 	    ControlOffset += 25;
 	}
+	else
+	{
+	    ControlOffset += 8;
+    }
+
+	// Output Selection.
+	Tmp = GetPlayerOwner().ConsoleCommand("audiooutput getnumdevices");
+	if (Tmp != "" && Left(Tmp, 12) != "Unrecognized")
+	{
+	    NumDevices = int(Tmp);
+		
+		OutputDeviceCombo = UWindowComboControl(CreateControl(class'UWindowComboControl', CenterPos, ControlOffset, CenterWidth, 1));
+		OutputDeviceCombo.SetText(OutputDeviceText);
+		OutputDeviceCombo.SetHelpText(OutputDeviceHelp);
+		OutputDeviceCombo.SetFont(F_Normal);
+		OutputDeviceCombo.SetEditable(False);
+		OutputDeviceCombo.AddItem(OutputDeviceDefault);
+
+		for (i = 0; i < NumDevices; ++i)
+		{
+            Tmp = GetPlayerOwner().ConsoleCommand("audiooutput getdevicename " $ i);
+			if (Tmp != "" && Tmp != "Unknown Device")
+			    OutputDeviceCombo.AddItem(Tmp);
+        }
+
+		Tmp = GetPlayerOwner().ConsoleCommand("audiooutput getdevice");
+		if (Tmp != "")
+		{
+		    i = int(Tmp);
+			OutputDeviceCombo.SetSelectedIndex(i + 1);
+		}
+		ControlOffset += 25;
+    }
 
 	// Voice Messages
 	VoiceMessagesCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', CenterPos, ControlOffset, CenterWidth, 1));
@@ -197,6 +239,8 @@ function Created()
 		SpeechVolumeSlider.SetFont(F_Normal);
 		ControlOffset += 25;
 	}
+
+    Initialized = true;
 }
 
 function AfterCreate()
@@ -235,6 +279,13 @@ function BeforePaint(Canvas C, float X, float Y)
 	{
 	    DriverButton.AutoWidth(C);
 	    DriverButton.WinLeft = CenterPos + CenterWidth - 90;
+	}
+
+	if ( OutputDeviceCombo != None )
+	{
+		OutputDeviceCombo.SetSize(CenterWidth, 1);
+		OutputDeviceCombo.WinLeft = CenterPos;
+		OutputDeviceCombo.EditBoxWidth = 90;
 	}
 
 	VoiceMessagesCheck.SetSize(CenterWidth-90+16, 1);
@@ -311,6 +362,9 @@ function Notify(UWindowDialogControl C, byte E)
 		case SpeechVolumeSlider:
 			SpeechVolumeChanged();
 			break;
+		case OutputDeviceCombo:
+		    OutputDeviceChanged();
+			break;
 		}
 	}
 }
@@ -377,6 +431,19 @@ function SpeechVolumeChanged()
 		GetPlayerOwner().ConsoleCommand("set ini:Engine.Engine.AudioDevice SpeechVolume "$SpeechVolumeSlider.Value);
 }
 
+function OutputDeviceChanged()
+{
+    local string Tmp;
+	
+    if ( Initialized && OutputDeviceCombo != None )
+	{
+        Tmp = GetPlayerOwner().ConsoleCommand("audiooutput setdevice " $ (OutputDeviceCombo.GetSelectedIndex() - 1));
+
+		if (Tmp ~= "Restart")
+            MessageBox(ConfirmSettingsRestartTitle, ConfirmSettingsRestartText, MB_OK, MR_OK, MR_OK);
+    }
+}
+
 function MessageBoxDone(UWindowMessageBox W, MessageBoxResult Result)
 {
 	if (W == ConfirmDriver)
@@ -406,9 +473,16 @@ defaultproperties
       DriverHelp="This is the current audio driver.  Use the Change button to change audio drivers."
       DriverButtonText="Change"
       DriverButtonHelp="Press this button to change your audio driver."
+      OutputDeviceCombo=None
+      OutputDeviceText="Output Device"
+      OutputDeviceHelp="This is your current audio output device."
+      OutputDeviceDefault="System Default"
       ConfirmDriver=None
+      ConfirmSettingsRestart=None
       ConfirmDriverTitle="Change Audio Driver"
       ConfirmDriverText="This option will restart Unreal now, and enable you to change your audio driver.  Do you want to do this?"
+      ConfirmSettingsRestartTitle="Audio Settings Changed"
+      ConfirmSettingsRestartText="Your updated audio settings will take effect after restarting the game."
       SoundQualityCombo=None
       SoundQualityText="Sound Quality"
       SoundQualityHelp="Use low sound quality to improve game performance on machines with less than 32 Mb memory."
@@ -432,5 +506,6 @@ defaultproperties
       MessageBeepCheck=None
       MessageBeepText="Message Beep"
       MessageBeepHelp="If checked, you will hear a beep sound when chat message received."
-      ControlOffset=25.000000
+      ControlOffset=20.000000
+      Initialized=False
 }

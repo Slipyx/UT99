@@ -112,9 +112,11 @@ simulated function ActorEntered( actor Other )
 	local rotator R;
 	local Pawn P;
 
-	//if ( Other.Role == ROLE_AutonomousProxy )
-	//	return; // don't simulate for client players
 	Super.ActorEntered( Other );
+
+	if ( (Level.NetMode == NM_Client) && !SimulateWarp(Other) )
+		return;
+
 	if( !Other.bJustTeleported )
 	{
 		Generate();
@@ -153,7 +155,7 @@ simulated function ActorEntered( actor Other )
 					}
 					R.Roll = 0;
 					Pawn(Other).ViewRotation = R;
-					Pawn(Other).ClientSetLocation(L, R );
+//					Pawn(Other).ClientSetLocation(L, R ); // Causes desync on client
 					Pawn(Other).MoveTimer = -1.0;
 				}
 				else
@@ -198,6 +200,18 @@ State DelayedWarp
 		If ( !bFound )
 			GotoState('');
 	}
+}
+
+// Added in v469
+static function bool SimulateWarp( Actor Other)
+{
+	if ( Other.Role == ROLE_DumbProxy ) //Location is updated by server
+		return false;
+
+	if ( (PlayerPawn(Other) != None) && (Other.Role == ROLE_AutonomousProxy) ) //Local Player (Viewport may be detached during DemoPlay!!)
+		return Other.bCanTeleport;
+
+	return Other.Physics != PHYS_None;
 }
 
 defaultproperties

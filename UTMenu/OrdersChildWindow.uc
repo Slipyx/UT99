@@ -42,7 +42,7 @@ function Created()
 	Super.Created();
 
 	for (i=0; i<NumOptions; i++)
-		OptionButtons[i].Text = V.Static.GetOrderString(OtherOffset[i], GetPlayerOwner().GameReplicationInfo.GameName);
+		OptionButtons[i].Text = int((i + 1) % 10) @ V.Static.GetOrderString(OtherOffset[i], GetPlayerOwner().GameReplicationInfo.GameName);
 
 	TopButton.OverTexture = texture'OrdersTopArrow';
 	TopButton.UpTexture = texture'OrdersTopArrow';
@@ -53,7 +53,7 @@ function Created()
 	BottomButton.DownTexture = texture'OrdersBtmArrow';
 	BottomButton.WinLeft = 0;
 
-	MinOptions = Min(8,NumOptions);
+	MinOptions = Min(10,NumOptions);
 
 	WinTop = (196.0/768.0 * YMod) + (32.0/768.0 * YMod)*(CurrentType-1);
 	WinLeft = 256.0/1024.0 * XMod;
@@ -112,7 +112,7 @@ function BeforePaint(Canvas C, float X, float Y)
 	}
 
 	BottomButton.SetSize(XWidth, YHeight);
-	BottomButton.WinTop = (32.0/768.0*YMod)*(MinOptions+1);
+	BottomButton.WinTop = (32.0/768.0*YMod)*(Min(MinOptions, NumOptions - OptionOffset)+1);
 	BottomButton.MyFont = class'UTLadderStub'.Static.GetBigFont(Root);
 	if (NumOptions > MinOptions+OptionOffset)
 		BottomButton.bDisabled = False;
@@ -223,19 +223,11 @@ function Notify(UWindowWindow B, byte E)
 			}
 			if (B == TopButton)
 			{
-				if (NumOptions > 8)
-				{
-					if (OptionOffset > 0)
-						OptionOffset--;
-				}
+				if (OptionOffset >= 10) OptionOffset -= 10;
 			}
 			if (B == BottomButton)
 			{
-				if (NumOptions > 8)
-				{
-					if (NumOptions - OptionOffset > 8)
-						OptionOffset++;
-				}
+				if (NumOptions - OptionOffset > 10) OptionOffset += 10;
 			}
 			break;
 	}

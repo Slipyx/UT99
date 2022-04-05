@@ -240,22 +240,54 @@ function class<bot> GetBotClass(int n, optional bool bTeamGame, optional bool bE
 		} else {
 			LadderObj = LadderInventory(RatedPlayer.FindInventoryType(class'LadderInventory'));
 
-			return class<bot>( DynamicLoadObject(LadderObj.Team.Default.BotClasses[n], class'Class') );
+			return LadderObj.Team.static.GetBotClass(n);
 		}
 	}
 }
 
 function int ChooseBotInfo(optional bool bTeamGame, optional bool bEnemy)
 {
-	if (!bTeamGame)
-	{
+	if ( !bTeamGame )
 		return CurrentNum++;
-	} else {
+	else
+	{
 		if (bEnemy)
 			return CurrentNum++;
 		else
 			return CurrentAlly++;
 	}
+}
+
+// Added in version 469, attempts to select an unused bot name for the player's team.
+function int ChooseAlliedBotInfo( PlayerPawn RatedPlayer)
+{
+	local int i, BotCount, Taken[8]; // 1=taken by bot, 2=taken by player
+	local PlayerReplicationInfo PRI;
+	local LadderInventory LadderObj;
+	
+	LadderObj = LadderInventory( RatedPlayer.FindInventoryType(class'LadderInventory'));
+	BotCount = LadderObj.Team.static.GetBotCount();
+	
+	ForEach AllActors( class'PlayerReplicationInfo', PRI)
+		if ( (PRI.Owner != None) && (PRI.Team == RatedPlayer.PlayerReplicationInfo.Team) )
+		{
+			for ( i=0; i<BotCount; i++)
+				if ( LadderObj.Team.static.GetBotName(i) ~= PRI.PlayerName )
+				{
+					Taken[i] = 1 + int(PRI.Owner.IsA('PlayerPawn'));
+					break;
+				}
+		}
+		
+	for ( i=0; i<BotCount; i++) // Try unused names
+		if ( Taken[i] == 0 )
+			return i;
+	
+	for ( i=0; i<BotCount; i++) // Try name used by player (will join as 'Bot')
+		if ( Taken[i] == 2 )
+			return i;
+			
+	return 0; //!!
 }
 
 function Individualize(bot NewBot, int n, int NumBots, optional bool bTeamGame, optional bool bEnemy)

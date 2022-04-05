@@ -117,7 +117,5 @@ defaultproperties
       ConfirmTitle=""
       ConfirmText=""
       ServerTab=None
-      Map="DM-Turbine.unr"
-      GameType="BotPack.DeathMatchPlus"
       bNetworkGame=True
 }

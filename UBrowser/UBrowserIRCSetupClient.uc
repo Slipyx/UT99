@@ -198,7 +198,7 @@ defaultproperties
       ServerCombo=None
       ChannelCombo=None
       ConnectButton=None
-      IRCServerHistory(0)="irc.utchat.com"
+      IRCServerHistory(0)="irc.gameslink.net"
       IRCServerHistory(1)=""
       IRCServerHistory(2)=""
       IRCServerHistory(3)=""
@@ -218,7 +218,7 @@ defaultproperties
       IRCChannelHistory(7)=""
       IRCChannelHistory(8)=""
       IRCChannelHistory(9)=""
-      bHasReadWarning=True
+      bHasReadWarning=False
       ServerText="IRC Server"
       ChannelText="Default Channel"
       ServerHelp="Choose an IRC server from the list or type in your own IRC server name or IP address."

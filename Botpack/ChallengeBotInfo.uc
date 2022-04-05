@@ -337,7 +337,7 @@ defaultproperties
       BotFaces(31)="FCommandoSkins.Jayce"
       bAdjustSkill=False
       bRandomOrder=True
-      Difficulty=0
+      Difficulty=1
       BotNames(0)="Archon"
       BotNames(1)="Aryss"
       BotNames(2)="Alarik"

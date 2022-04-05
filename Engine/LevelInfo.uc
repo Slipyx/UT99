@@ -101,7 +101,32 @@ var enum ENetMode
 var string ComputerName;  		// Machine's name according to the OS.
 var string EngineVersion; 		// Engine version. 
 var string MinNetVersion; 		// Min engine version that is net compatible.
-var int    ServerMoveVersion;	// Max supported ServerMove protocol
+//
+// OldUnreal: Max supported ServerMove protocol
+//
+// Version 1:
+// * Original v400-451b movement
+//
+// Version 2:
+// * Used in 469 betas + 469a
+// * Added missing replay of the current pending move after getting a ClientAdjustPosition call. This caused constant desync at 90+ fps
+// * Added mergecount to movement packets. This allows the server to replay client movement with roughly the same steps the client used prior to merging
+// * Send uncompressed acceleration components
+// * Do not force client resync if the position error is small
+// * Account for gamespeed when calculating resync interval
+// * Use a minimum netspeed of 10000 when calculating resync interval
+// * Smooth position adjustments for minor desync errors
+// * Replicate pending move immediately if (a) updated accel is significantly different from accel in pending move, (b) player has just (alt)fired, jumped, or started a dodge.
+// * Fixed dodgedir/dodgeclicktimer not resetting when receiving a position adjustment in the middle of an active dodge move
+// * Implemented invisible collision fix for PHYS_Falling
+// * Fixed APawn::physLedgeAdjust bugs that caused bots to fail at walking over certain ledges
+// * APawn::stepUp no longer applies an absolute adjustment. This fixes ridiculous acceleration boosts at high fps
+//
+// Version 3:
+// * Rewrote the invisible collision fix because it still failed due to substantial floating point rounding errors that occured on slopes that were far away from the center of the map
+//
+var int    ServerMoveVersion;	
+var string EngineRevision;      // Revision of this engine version.
 
 //-----------------------------------------------------------------------------
 // Gameplay rules
@@ -170,7 +195,7 @@ event ServerTravel( string URL, bool bItems )
 
 event BeginPlay()
 {
-	ServerMoveVersion = 2;
+	ServerMoveVersion = 3;
 	if (NetMode == NM_DedicatedServer || NetMode == NM_ListenServer)
 		SetTimer(TimeDilation,True);
 }
@@ -229,6 +254,7 @@ defaultproperties
       EngineVersion=""
       MinNetVersion=""
       ServerMoveVersion=0
+      EngineRevision=""
       DefaultGameType=None
       Game=None
       NavigationPointList=None

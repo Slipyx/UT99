@@ -1,15 +1,15 @@
 class SpeechWindow extends NotifyWindow;
 
-#exec TEXTURE IMPORT NAME=OrdersTop FILE=TEXTURES\Orders\OrdersTop.PCX GROUP=Skins MIPS=OFF
-#exec TEXTURE IMPORT NAME=OrdersTop2 FILE=TEXTURES\Orders\OrdersTop2.PCX GROUP=Skins MIPS=OFF
-#exec TEXTURE IMPORT NAME=OrdersMid FILE=TEXTURES\Orders\OrdersMid.PCX GROUP=Skins MIPS=OFF
-#exec TEXTURE IMPORT NAME=OrdersMidL FILE=TEXTURES\Orders\OrdersMidL.PCX GROUP=Skins MIPS=OFF
-#exec TEXTURE IMPORT NAME=OrdersMidLR FILE=TEXTURES\Orders\OrdersMidLR.PCX GROUP=Skins MIPS=OFF
-#exec TEXTURE IMPORT NAME=OrdersMidR FILE=TEXTURES\Orders\OrdersMidR.PCX GROUP=Skins MIPS=OFF
-#exec TEXTURE IMPORT NAME=OrdersBtm FILE=TEXTURES\Orders\OrdersBtm.PCX GROUP=Skins MIPS=OFF
+#exec TEXTURE IMPORT NAME=OrdersTop FILE=TEXTURES\Orders\OrdersTop.PCX GROUP=Skins MIPS=OFF FLAGS=2
+#exec TEXTURE IMPORT NAME=OrdersTop2 FILE=TEXTURES\Orders\OrdersTop2.PCX GROUP=Skins MIPS=OFF FLAGS=2
+#exec TEXTURE IMPORT NAME=OrdersMid FILE=TEXTURES\Orders\OrdersMid.PCX GROUP=Skins MIPS=OFF FLAGS=2
+#exec TEXTURE IMPORT NAME=OrdersMidL FILE=TEXTURES\Orders\OrdersMidL.PCX GROUP=Skins MIPS=OFF FLAGS=2
+#exec TEXTURE IMPORT NAME=OrdersMidLR FILE=TEXTURES\Orders\OrdersMidLR.PCX GROUP=Skins MIPS=OFF FLAGS=2
+#exec TEXTURE IMPORT NAME=OrdersMidR FILE=TEXTURES\Orders\OrdersMidR.PCX GROUP=Skins MIPS=OFF FLAGS=2
+#exec TEXTURE IMPORT NAME=OrdersBtm FILE=TEXTURES\Orders\OrdersBtm.PCX GROUP=Skins MIPS=OFF FLAGS=2
 
-#exec TEXTURE IMPORT NAME=OrdersTopArrow FILE=TEXTURES\Orders\OrdersTopArow.PCX GROUP=Skins MIPS=OFF
-#exec TEXTURE IMPORT NAME=OrdersBtmArrow FILE=TEXTURES\Orders\OrdersBtmArow.PCX GROUP=Skins MIPS=OFF
+#exec TEXTURE IMPORT NAME=OrdersTopArrow FILE=TEXTURES\Orders\OrdersTopArow.PCX GROUP=Skins MIPS=OFF FLAGS=2
+#exec TEXTURE IMPORT NAME=OrdersBtmArrow FILE=TEXTURES\Orders\OrdersBtmArow.PCX GROUP=Skins MIPS=OFF FLAGS=2
 
 #exec AUDIO IMPORT NAME=SpeechWindowClick FILE=SOUNDS\click4.wav GROUP=SpeechWindow
 
@@ -92,7 +92,7 @@ function Created()
 	{
 		OptionButtons[i] = SpeechButton(CreateWindow(ButtonClass, 100, 100, 100, 100));
 		OptionButtons[i].NotifyWindow = Self;
-		OptionButtons[i].Text = Options[i];
+		OptionButtons[i].Text = int((i + 1) % 10) @ Options[i];
 		OptionButtons[i].MyFont = class'UTLadderStub'.Static.GetStubClass().Static.GetBigFont(Root);
 		OptionButtons[i].bLeftJustify = True;
 		OptionButtons[i].TextColor.R = 255;

@@ -146,7 +146,7 @@ defaultproperties
       ApplicationPaths(7)=""
       ApplicationPaths(8)=""
       ApplicationPaths(9)=""
-      ListenPort=80
+      ListenPort=8080
       MaxConnections=30
       ServerName=""
       bEnabled=False

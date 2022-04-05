@@ -649,7 +649,7 @@ defaultproperties
       GoButton(3)=None
       GoButton(4)=None
       Saves(0)=""
-      Saves(1)="1\5\6\15\6\9\5\9\0\1\0\0\M\0\Slipyx"
+      Saves(1)=""
       Saves(2)=""
       Saves(3)=""
       Saves(4)=""

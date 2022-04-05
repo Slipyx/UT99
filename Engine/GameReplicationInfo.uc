@@ -116,7 +116,7 @@ defaultproperties
       NumPlayers=0
       SumFrags=0
       UpdateTimer=0.000000
-      ServerName="Ganymede"
+      ServerName="Another UT Server"
       ShortName="UT Server"
       AdminName=""
       AdminEmail=""

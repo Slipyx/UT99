@@ -105,7 +105,10 @@ state UWindow
 		Super.Tick( Delta );
 		if (Root == None)
 			return;
-		if (Root.GetPlayerOwner().Song == None)
+		if (Root.GetPlayerOwner().Song == None &&
+			( Left(Viewport.Actor.Level.GetLocalURL(), 9) ~= "cityintro" || 
+			  Left(Viewport.Actor.Level.GetLocalURL(), 9) ~= "utcredits" ||
+			  Left(Viewport.Actor.Level.GetLocalURL(), 5) ~= "entry") )
 		{
 			MenuSong = Music(DynamicLoadObject("utmenu23.utmenu23", class'Music'));
 			Root.GetPlayerOwner().ClientSetMusic( MenuSong, 0, 255, MTRAN_Fade );

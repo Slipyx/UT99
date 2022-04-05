@@ -41,6 +41,12 @@ var localized string MouseSmoothText;
 var localized string MouseSmoothHelp;
 var localized string MouseSmoothDetail[3];
 
+// stijn: retained for compatibility purposes but no longer used
+var UWindowCheckBox MouseSmoothCheck;
+var UWindowCheckBox DirectInputCheck;
+var localized string DirectInputText;
+var localized string DirectInputHelp;
+
 // Mouse Input
 var UWindowComboControl MouseInputCombo;
 var bool MouseInputComboEnabled;
@@ -401,6 +407,10 @@ defaultproperties
       MouseSmoothDetail(0)="Disable"
       MouseSmoothDetail(1)="Normal"
       MouseSmoothDetail(2)="Full"
+      MouseSmoothCheck=None
+      DirectInputCheck=None
+      DirectInputText=""
+      DirectInputHelp=""
       MouseInputCombo=None
       MouseInputComboEnabled=False
       MouseInputText="Mouse Input"

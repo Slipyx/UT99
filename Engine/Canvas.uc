@@ -40,6 +40,7 @@ var font LargeFont;          // Large system font.
 var const viewport Viewport; // Viewport that owns the canvas.
 var const pointer FramePtr;      // Scene frame pointer.
 var const pointer RenderPtr;	 // Render device pointer, only valid during UGameEngine::Draw
+var int     UglyFontScaling; // Scale applied to font glyphs. For internal use only. Mod authors should use Botpack.FontInfo to get appropriately scaled glyphs instead
 
 // These font families should be available on all of the platforms we support
 enum FontFamily
@@ -74,19 +75,20 @@ native static final function int GetDesktopDPI();
 // UnrealScript functions.
 event Reset()
 {
-	Font        = Default.Font;
-	SpaceX      = Default.SpaceX;
-	SpaceY      = Default.SpaceY;
-	OrgX        = Default.OrgX;
-	OrgY        = Default.OrgY;
-	CurX        = Default.CurX;
-	CurY        = Default.CurY;
-	Style       = Default.Style;
-	DrawColor   = Default.DrawColor;
-	CurYL       = Default.CurYL;
-	bCenter     = false;
-	bNoSmooth   = false;
-	Z           = 1.0;
+	Font            = Default.Font;
+	UglyFontScaling = Default.UglyFontScaling;
+	SpaceX          = Default.SpaceX;
+	SpaceY          = Default.SpaceY;
+	OrgX            = Default.OrgX;
+	OrgY            = Default.OrgY;
+	CurX            = Default.CurX;
+	CurY            = Default.CurY;
+	Style           = Default.Style;
+	DrawColor       = Default.DrawColor;
+	CurYL           = Default.CurYL;
+	bCenter         = false;
+	bNoSmooth       = false;
+	Z               = 1.0;
 }
 final function SetPos( float X, float Y )
 {
@@ -143,4 +145,5 @@ defaultproperties
       Viewport=None
       FramePtr=
       RenderPtr=
+      UglyFontScaling=1
 }

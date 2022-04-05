@@ -102,8 +102,8 @@ defaultproperties
       OpenCombo=None
       OpenText="Open:"
       OpenHelp="Enter a standard URL, or select one from the URL history.  Press Enter to activate."
-      OpenHistory(0)="173.236.125.50:7777"
-      OpenHistory(1)="208.66.75.211:4000"
+      OpenHistory(0)=""
+      OpenHistory(1)=""
       OpenHistory(2)=""
       OpenHistory(3)=""
       OpenHistory(4)=""

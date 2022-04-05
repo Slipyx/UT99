@@ -683,7 +683,8 @@ event string GetBeaconText()
 //
 function ProcessServerTravel( string URL, bool bItems )
 {
-	local playerpawn P, LocalPlayer;
+	local string ClientURL;
+	local PlayerPawn P, LocalPlayer;
 
 	if (LocalLog != None)
 	{
@@ -703,10 +704,12 @@ function ProcessServerTravel( string URL, bool bItems )
 
 	// Notify clients we're switching level and give them time to receive.
 	// We call PreClientTravel directly on any local PlayerPawns (ie listen server)
+	// Higor: also sanitize the client URL to prevent problems.
 	log("ProcessServerTravel:"@URL);
+	ClientURL = Repl( URL, "?listen", "", false);
 	foreach AllActors( class'PlayerPawn', P )
 		if( NetConnection(P.Player)!=None )
-			P.ClientTravel( URL, TRAVEL_Relative, bItems );
+			P.ClientTravel( ClientURL, TRAVEL_Relative, bItems );
 		else
 		{
 			LocalPlayer = P;
@@ -1642,7 +1645,7 @@ defaultproperties
       bTeamGame=False
       bVeryLowGore=False
       bNoCheating=True
-      bAllowFOV=True
+      bAllowFOV=False
       bDeathMatch=False
       bGameEnded=False
       bOverTime=False
@@ -1701,8 +1704,8 @@ defaultproperties
       ServerLogName="server.log"
       LocalLog=None
       WorldLog=None
-      bLocalLog=False
-      bWorldLog=False
+      bLocalLog=True
+      bWorldLog=True
       bBatchLocal=False
       bLoggingGame=False
       LocalLogFileName=""

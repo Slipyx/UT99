@@ -127,7 +127,14 @@ var(Movement)	name	  AttachTag;
 var const byte            StandingCount; // Count of actors standing on this actor.
 var const byte            MiscNumber;    // Internal use.
 var const byte            LatentByte;    // Internal latent function use.
-var byte                  TransientSoundPriority; // OldUnreal sound priority control. We squeezed this variable into the 1 byte padding zone between LatentByte and LatentInt to preserve binary compatibility
+
+// OldUnreal: Sound priority multiplier for regular sounds. 1=Lowest Prio, 255=Highest Prio.
+// You can set this property's value in defaultproperties and still be compatible with UT v436.
+// Setting this value programatically will break your actor in UT v436, however.
+// We squeezed this variable into the 1 byte padding zone between LatentByte and
+// LatentInt to preserve binary compatibility with native mods
+var(Sound) byte           TransientSoundPriority; 
+
 var const int             LatentInt;     // Internal latent function use.
 var const float           LatentFloat;   // Internal latent function use.
 var const actor           LatentActor;   // Internal latent function use.
@@ -246,12 +253,18 @@ var(Display) texture MultiSkins[8];
 
 // Ambient sound.
 var(Sound) byte         SoundRadius;	 // Radius of ambient sound.
-var(Sound) byte         SoundVolume;	 // Volume of amient sound.
+var(Sound) byte         SoundVolume;	 // Volume of ambient sound.
 var(Sound) byte         SoundPitch;	     // Sound pitch shift, 64.0=none.
+
+// OldUnreal: Sound priority multiplier for ambient sound. 1=Lowest Prio, 255=Highest Prio.
+// You can set this property's value in defaultproperties and still be compatible with UT v436.
+// Setting this value programatically will break your actor in UT v436, however.
+var(Sound) byte         SoundPriority;   
 
 // Regular sounds.
 var(Sound) float TransientSoundVolume;
 var(Sound) float TransientSoundRadius;
+// OldUnreal: TransientSoundPriority is declared above
 
 // Sound slots for actors.
 enum ESoundSlot
@@ -1080,7 +1093,7 @@ defaultproperties
       StandingCount=0
       MiscNumber=0
       LatentByte=0
-      TransientSoundPriority=0
+      TransientSoundPriority=16
       LatentInt=0
       LatentFloat=0.000000
       LatentActor=None
@@ -1156,6 +1169,7 @@ defaultproperties
       SoundRadius=32
       SoundVolume=128
       SoundPitch=64
+      SoundPriority=16
       TransientSoundVolume=1.000000
       TransientSoundRadius=0.000000
       CollisionRadius=22.000000

@@ -758,6 +758,7 @@ simulated event RenderOverlays(canvas Canvas)
 {
 	local PlayerPawn PlayerOwner;
 	local int realhand;
+	local bool bSlaveCalcDrawOffsetFOV;
 
 	if ( (bMuzzleFlash > 0) && !Level.bDropDetail )
 		MFTexture = MuzzleFlashVariations[Rand(5)];
@@ -816,7 +817,10 @@ simulated event RenderOverlays(canvas Canvas)
 				SlaveEnforcer.bBringingUp = false;
 				SlaveEnforcer.PlaySelect();
 			}
+			bSlaveCalcDrawOffsetFOV = SlaveEnforcer.bCalcDrawOffsetFOV;
+			SlaveEnforcer.bCalcDrawOffsetFOV = bCalcDrawOffsetFOV;
 			SlaveEnforcer.RenderOverlays(Canvas);
+			SlaveEnforcer.bCalcDrawOffsetFOV = bSlaveCalcDrawOffsetFOV;
 		}
 	}
 	else

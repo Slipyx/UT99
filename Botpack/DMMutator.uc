@@ -53,7 +53,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
 		return true;
 	}
 
-	if ( MyGame.bNoviceMode && MyGame.bRatedGame && (Level.NetMode == NM_Standalone) )
+	if ( MyGame.bNoviceMode && MyGame.bRatedGame /*&& (Level.NetMode == NM_Standalone)*/ )
 		Inv.RespawnTime *= (0.5 + 0.1 * MyGame.Difficulty);
 
 	if ( Other.IsA('Weapon') )

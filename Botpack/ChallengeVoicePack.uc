@@ -345,7 +345,7 @@ function Timer()
 			&& (Level.TimeSeconds - PlayerPawn(Owner).LastPlaySound > 2)  ) 
 		{
 			OldPlaySound = PlayerPawn(Owner).LastPlaySound;
-			PlayerPawn(Owner).ClientPlaySound(Phrase[PhraseNum],, true);
+			PlayerPawn(Owner).ClientPlaySound(Phrase[PhraseNum]);
 			PlayerPawn(Owner).LastPlaySound = OldPlaySound;
 		}
 		if ( PhraseTime[PhraseNum] == 0 )

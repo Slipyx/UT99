@@ -543,7 +543,6 @@ defaultproperties
       DomScoreEvent=0
       bScoreTeamKills=False
       GoalTeamScore=100.000000
-      TimeLimit=0
       bUseTranslocator=True
       bRatedTranslocator=True
       StartUpMessage="Capture and hold control points to win."

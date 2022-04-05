@@ -1,5 +1,7 @@
 class LadderTransition extends UTIntro;
 
+var bool bTransitionInit;
+
 event playerpawn Login
 (
 	string Portal,
@@ -11,31 +13,17 @@ event playerpawn Login
 	return Super.Login(Portal, Options, Error, SpawnClass);
 }
 
-function AcceptInventory(pawn PlayerPawn)
+function AcceptInventory( Pawn PlayerPawn)
 {
-	local inventory Inv, Next;
-	local LadderInventory LadderObj;
-
-	// DeathMatchPlus accepts LadderInventory
-	for( Inv=PlayerPawn.Inventory; Inv!=None; Inv=Next )
+	Super.AcceptInventory(PlayerPawn);
+	if ( (LadderObj != None) && !bTransitionInit )
 	{
-		Next = Inv.Inventory;
-		if (Inv.IsA('LadderInventory'))
-		{
-			LadderObj = LadderInventory(Inv);
-			if (LadderObj != None) 
-			{
-				if (LadderObj.PendingChange > 0)
-					TournamentConsole(PlayerPawn(PlayerPawn).Player.Console).EvaluateMatch(LadderObj.PendingChange, True);
-				else
-					TournamentConsole(PlayerPawn(PlayerPawn).Player.Console).EvaluateMatch(LadderObj.LastMatchType, False);
-			}
-		} else {	
-			Inv.Destroy();
-		}
+		bTransitionInit = true;
+		if (LadderObj.PendingChange > 0)
+			TournamentConsole(PlayerPawn(PlayerPawn).Player.Console).EvaluateMatch(LadderObj.PendingChange, True);
+		else
+			TournamentConsole(PlayerPawn(PlayerPawn).Player.Console).EvaluateMatch(LadderObj.LastMatchType, False);
 	}
-	PlayerPawn.Weapon = None;
-	PlayerPawn.SelectedItem = None;
 }
 
 function PlayTeleportEffect( actor Incoming, bool bOut, bool bSound)
@@ -44,4 +32,5 @@ function PlayTeleportEffect( actor Incoming, bool bOut, bool bSound)
 
 defaultproperties
 {
+      bTransitionInit=False
 }

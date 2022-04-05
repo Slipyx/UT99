@@ -66,7 +66,7 @@ var class<CriticalEventPlus> TimeMessageClass;
 var class<Actor> BossRef;
 
 // OldUnreal additions
-var PlayerPawn Announcers[10];
+var Actor Announcers[10];
 var int NextAnnouncerSoundIndex;
 
 replication
@@ -130,6 +130,7 @@ function DoJump( optional float F )
 		SetPhysics(PHYS_Falling);
 	}
 }
+
 // Play a sound client side (so only client will hear it)
 //
 // stijn: This was one of the weirdest bits of Unreal Engine 1 code out there.
@@ -141,14 +142,14 @@ function DoJump( optional float F )
 // bVolumeControl should have been called bAnnouncerSound or bUseAnnouncerVolume. These names
 // would have given the caller a much better idea of what the parameter was going to get used for.
 //
-// OldUnreal did not change these paramter names as doing so might break network compatibility.
+// OldUnreal did not change these parameter names as doing so might break network compatibility.
 //
 // 2) ClientPlaySound tried to play the sound in up to 4 different slots simultaneously, depending on "volume".
 // The volume was calculated using the following rules (in order of priority):
 //
-// Volume = 0 if bVolumeControl and AnnouncerVolume == 0
+// Volume = 0 if bVolumeControl == true and AnnouncerVolume == 0
 //        = 1 if b3DSound
-//        = AnnouncerVolume if bVolumeControl
+//        = AnnouncerVolume if bVolumeControl == true
 //        = 4 if no other conditions were met
 //
 // Then:
@@ -178,22 +179,30 @@ function DoJump( optional float F )
 // time. This could lead to distortion and lower performance.
 //
 // OldUnreal now plays the sound in only one slot, but spawns dedicated AnnouncerSpectator objects
-// which allow us to play certain SLOT_Interface sounds simultaneously.
+// which allow us to play multiple (different) SLOT_Interface sounds simultaneously.
 //
 // 3) ClientPlaySound played all sounds at extremely high volumes. While other game sounds were seldom
 // played at volumes higher than 2.0, all sounds in this function were played at a volume of 16.0.
-// We assume (but cannot confirm) that this was done to artificially boost the priority of the sounds
-// played through this function. However, playing sounds at such high volumes has the unfortunate side
-// effect that audio drivers that attempt to do faithful playback can "blow out your speakers" when
-// playing announcer sounds.
+// After lots of experimentation, we discovered that the sole purpose of this ridiculous volume was
+// to artificially boost the priority of sounds played through this function.
 //
-// OldUnreal adjusted the volumes as follows:
+// UT's original sound driver (Galaxy) internally clamped all volumes between 0.0 and 1.0. Thus, a
+// PlaySound request with a volume of 16.0 would just start a playback at a volume level of 1.0.
+// However, Galaxy did mix the overlapping sounds the game tried to play through this function, and the
+// mixed sound would have a higher volume than any of its subcomponents. In practice, ClientPlaySound
+// sounds that played back in 4 different channels would sound roughly 4 times louder than sounds
+// that played only in a single channel.
+//
+// This behavior does not translate well to other sound drivers such as ALAudio and FMOD, as they handle
+// mixed sounds differently than Galaxy did. During the development of 469, we often struggled with
+// sounds that were either distorted or that were much too loud.
+//
+// For this reason, we got rid of the duplicated PlaySound calls, and we adjusted the volumes as follows:
 //
 // for bVolumeControl sounds -> use AnnouncerVolume instead of 16.0
 // for other sounds -> use 4.0 instead of 16.0
 //
-// To deal with sound priorities, we multiply the priority of incoming SLOT_Interface sound requests
-// by 16.0.
+// To deal with sound priorities, we use the new TransientSoundPriority property.
 //
 simulated function ClientPlaySound(sound ASound, optional bool bInterrupt, optional bool bVolumeControl )
 {	
@@ -202,53 +211,29 @@ simulated function ClientPlaySound(sound ASound, optional bool bInterrupt, optio
 	local ESoundSlot Slot;
 	local int AnnouncerIndex;
 	local SpawnNotify OldSpawnNotify;
+	local float OldPrio;
 
 	LastPlaySound = Level.TimeSeconds;	// so voice messages won't overlap
-	
+
 	if ( bVolumeControl )
-	{
-		Volume = AnnouncerVolume;
-		Slot = SLOT_Interface;
-
-		AnnouncerIndex = NextAnnouncerSoundIndex++;
-		if (NextAnnouncerSoundIndex >= ArrayCount(Announcers))
-		    NextAnnouncerSoundIndex = 0;
-
-		if (Announcers[AnnouncerIndex] == none)
-		{
-			// stijn: hack. Make this invisible to spawnnotify objects
-			OldSpawnNotify = Level.SpawnNotify;
-			Level.SpawnNotify = None;
-			Announcers[AnnouncerIndex] = Level.Spawn(class'AnnouncerSpectator');
-			Level.SpawnNotify = OldSpawnNotify;
-
-			// stijn: UTPure hax...
-			SoundPlayer = Announcers[AnnouncerIndex];
-			if (SoundPlayer != None)
-			{
-				SoundPlayer.LightType = LT_Steady;
-				SoundPlayer.bHidden = True;
-				SoundPlayer.AmbientGlow = 254;
-				SoundPlayer.LightRadius = 0;
-				PlayerPawn(SoundPlayer).PlayerReplicationInfo = None;
-			}
-		}
-
-		SoundPlayer = Announcers[AnnouncerIndex];
-	}
+	    Volume = AnnouncerVolume;
 	else
-	{
-		Volume = 4.0;
-		Slot = SLOT_None;
+	    Volume = 4.0;
 
-		if ( ViewTarget != None )
-		    SoundPlayer = ViewTarget;
-		else
-			SoundPlayer = self;
-	}
+	// SLOT_Interface sounds play without spatialization/attenuation in 469
+	Slot = SLOT_Interface;
+
+	AnnouncerIndex = NextAnnouncerSoundIndex++;
+	if (NextAnnouncerSoundIndex >= ArrayCount(Announcers))
+	    NextAnnouncerSoundIndex = 0;
+
+	if (Announcers[AnnouncerIndex] == none)
+		Announcers[AnnouncerIndex] = Level.Spawn(class'AnnouncerSpectator');
+
+	SoundPlayer = Announcers[AnnouncerIndex];
 
 	if (SoundPlayer != none)
-        SoundPlayer.PlaySound(ASound, Slot, Volume, bInterrupt);
+        SoundPlayer.PlaySound(ASound, Slot, Volume, bInterrupt, 0.f);
 }
 
 //==============
@@ -646,7 +631,7 @@ function PlayDyingSound()
 
 simulated function PlayBeepSound()
 {
-	PlaySound(sound'NewBeep', SLOT_Interface, 2.0, true);
+	ClientPlaySound(sound'NewBeep', true);
 }
 
 function PlayChatting()

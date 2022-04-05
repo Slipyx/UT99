@@ -22,15 +22,10 @@ class FlagBase extends NavigationPoint;
 var() byte Team;
 var() Sound TakenSound;
 
-function PostBeginPlay()
+function SpawnFlag()
 {
 	local CTFFlag myFlag;
-
-	Super.PostBeginPlay();
-	LoopAnim('newflag');
-	if ( !Level.Game.IsA('CTFGame') )
-		return;
-
+	
 	bHidden = false;
 	if ( Team == 0 )
 	{
@@ -45,6 +40,16 @@ function PostBeginPlay()
 	CTFReplicationInfo(Level.Game.GameReplicationInfo).FlagList[Team] = myFlag;
 }
 
+function PostBeginPlay()
+{
+	Super.PostBeginPlay();
+	LoopAnim('newflag');
+	if ( !Level.Game.IsA('CTFGame') )
+		return;
+
+	SpawnFlag();
+}
+
 function PlayAlarm()
 {
 	SetTimer(5.0, false);
@@ -56,6 +61,24 @@ function Timer()
 	AmbientSound = None;
 }
 
+auto state Checker
+{
+Begin:
+    if (!Level.Game.IsA('CTFGame'))
+	    GotoState('');
+		
+	if (CTFGame(Level.Game).bAutoRespawnFlags &&
+        (CTFReplicationInfo(Level.Game.GameReplicationInfo).FlagList[Team] == None || 
+         CTFReplicationInfo(Level.Game.GameReplicationInfo).FlagList[Team].bDeleteMe))
+    {
+        SpawnFlag();
+		CTFReplicationInfo(Level.Game.GameReplicationInfo).FlagList[Team].GotoState('Dropped');
+		CTFReplicationInfo(Level.Game.GameReplicationInfo).FlagList[Team].SetTimer(0.1, false);
+    }
+    Sleep(1.0);
+    Goto('Begin');
+}
+
 defaultproperties
 {
       Team=0
@@ -63,13 +86,13 @@ defaultproperties
       bStatic=False
       bNoDelete=True
       bAlwaysRelevant=True
-      TransientSoundPriority=255
       DrawType=DT_Mesh
       Skin=Texture'Botpack.Skins.JpflagB'
       Mesh=LodMesh'Botpack.newflag'
       DrawScale=1.300000
       SoundRadius=255
       SoundVolume=255
+      SoundPriority=255
       CollisionRadius=60.000000
       CollisionHeight=60.000000
       bCollideActors=True

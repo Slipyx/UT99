@@ -5,6 +5,7 @@ class UTIntro extends TournamentGameInfo;
 
 var bool bOpened;
 var int TickCount;
+var LadderInventory LadderObj;
 
 var config string CityIntroHUDClass;
 
@@ -73,15 +74,12 @@ applicable weapon/item as current).
 function AcceptInventory(pawn PlayerPawn)
 {
 	local inventory Inv;
-	local LadderInventory LadderObj;
 
 	// DeathMatchPlus accepts LadderInventory
 	for( Inv=PlayerPawn.Inventory; Inv!=None; Inv=Inv.Inventory )
 	{
-		if (Inv.IsA('LadderInventory'))
-		{
+		if ( (LadderObj == None) && Inv.IsA('LadderInventory'))
 			LadderObj = LadderInventory(Inv);
-		} 
 		else 	
 			Inv.Destroy();
 	}
@@ -145,6 +143,7 @@ defaultproperties
 {
       bOpened=False
       TickCount=0
+      LadderObj=None
       CityIntroHUDClass=""
       bGameEnded=True
       bCanViewOthers=False

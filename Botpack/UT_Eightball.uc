@@ -152,16 +152,26 @@ simulated event RenderOverlays( canvas Canvas )
 simulated function PostRender( canvas Canvas )
 {
 	local float XScale;
+	local ChallengeHUD CH;
 
 	Super.PostRender(Canvas);
 	bOwnsCrossHair = bLockedOn;
 	if ( bOwnsCrossHair )
 	{
 		// if locked on, draw special crosshair
-		XScale = FMax(1.0, Canvas.ClipX/640.0);
+		XScale = 1.0;
+		CH = ChallengeHUD(PlayerPawn(Owner).MyHud);
+		if (CH != none)
+		{
+			if (CH.bAutoCrosshairScale)
+				XScale = Clamp(int(0.1 + Canvas.ClipX/640.0), 1, 2);
+			else
+				XScale = CH.CrosshairScale;
+		}
+		
 		Canvas.SetPos(0.5 * (Canvas.ClipX - Texture'Crosshair6'.USize * XScale), 0.5 * (Canvas.ClipY - Texture'Crosshair6'.VSize * XScale));
 		Canvas.Style = ERenderStyle.STY_Normal;
-		Canvas.DrawIcon(Texture'Crosshair6', 1.0);
+		Canvas.DrawIcon(Texture'Crosshair6', XScale);
 		Canvas.Style = 1;	
 	}
 }

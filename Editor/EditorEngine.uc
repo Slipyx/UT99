@@ -40,7 +40,7 @@ var const texture LiteOn, LiteOff;
 var const texture Bad, Bkgnd, BkgndHi;
 
 // Toggles.
-var const bool bFastRebuild, bBootstrapping;
+var const bool bFastRebuild, bBootstrapping, bDeletingActors;
 
 // Other variables.
 var const config int AutoSaveIndex;
@@ -111,6 +111,9 @@ var Font ScaledSmallFont, ScaledMedFont, ScaledBigFont, ScaledLargeFont;
 
 var const native pointer VertexEditingInternal[7];
 
+// Brush Builders
+var const array<BrushBuilder> BrushBuilders;
+
 defaultproperties
 {
       NotifyVtbl=
@@ -141,6 +144,7 @@ defaultproperties
       BkgndHi=Texture'Editor.BkgndHi'
       bFastRebuild=False
       bBootstrapping=False
+      bDeletingActors=False
       AutoSaveIndex=6
       AutoSaveCount=0
       Mode=0
@@ -166,38 +170,39 @@ defaultproperties
       AutoSave=False
       AutosaveTimeMinutes=5
       GameCommandLine="-log"
-      EditPackages=("Core","Engine","Editor","UWindow","Fire","IpDrv","UWeb","UBrowser","UnrealShare","UnrealI","UMenu","IpServer","Botpack","UTServerAdmin","UTMenu","UTBrowser","SlMod")
-      C_WorldBox=(R=0,G=0,B=107,A=0)
-      C_GroundPlane=(R=0,G=0,B=63,A=0)
-      C_GroundHighlight=(R=0,G=0,B=127,A=0)
-      C_BrushWire=(R=255,G=63,B=63,A=0)
-      C_Pivot=(R=0,G=255,B=0,A=0)
-      C_Select=(R=0,G=0,B=127,A=0)
-      C_Current=(R=0,G=0,B=0,A=0)
-      C_AddWire=(R=127,G=127,B=255,A=0)
-      C_SubtractWire=(R=255,G=192,B=63,A=0)
-      C_GreyWire=(R=163,G=163,B=163,A=0)
-      C_BrushVertex=(R=0,G=0,B=0,A=0)
-      C_BrushSnap=(R=0,G=0,B=0,A=0)
-      C_Invalid=(R=163,G=163,B=163,A=0)
-      C_ActorWire=(R=127,G=63,B=0,A=0)
-      C_ActorHiWire=(R=255,G=127,B=0,A=0)
-      C_Black=(R=0,G=0,B=0,A=0)
-      C_White=(R=255,G=255,B=255,A=0)
-      C_Mask=(R=0,G=0,B=0,A=0)
-      C_SemiSolidWire=(R=127,G=255,B=0,A=0)
-      C_NonSolidWire=(R=63,G=192,B=32,A=0)
-      C_WireBackground=(R=0,G=0,B=0,A=0)
-      C_WireGridAxis=(R=119,G=119,B=119,A=0)
-      C_ActorArrow=(R=163,G=0,B=0,A=0)
-      C_ScaleBox=(R=151,G=67,B=11,A=0)
-      C_ScaleBoxHi=(R=223,G=149,B=157,A=0)
-      C_ZoneWire=(R=0,G=0,B=0,A=0)
-      C_Mover=(R=255,G=0,B=255,A=0)
-      C_OrthoBackground=(R=163,G=163,B=163,A=0)
+      EditPackages=("Core","Engine","Editor","UWindow","Fire","IpDrv","UWeb","UBrowser","UnrealShare","UnrealI","UMenu","Botpack","IpServer","UTServerAdmin","UTMenu","UTBrowser")
+      C_WorldBox=(R=0,G=0,B=107,A=255)
+      C_GroundPlane=(R=0,G=0,B=63,A=255)
+      C_GroundHighlight=(R=0,G=0,B=127,A=255)
+      C_BrushWire=(R=255,G=63,B=63,A=255)
+      C_Pivot=(R=0,G=255,B=0,A=255)
+      C_Select=(R=0,G=0,B=127,A=255)
+      C_Current=(R=0,G=0,B=0,A=255)
+      C_AddWire=(R=127,G=127,B=255,A=255)
+      C_SubtractWire=(R=255,G=192,B=63,A=255)
+      C_GreyWire=(R=163,G=163,B=163,A=255)
+      C_BrushVertex=(R=0,G=0,B=0,A=255)
+      C_BrushSnap=(R=0,G=0,B=0,A=255)
+      C_Invalid=(R=163,G=163,B=163,A=255)
+      C_ActorWire=(R=127,G=63,B=0,A=255)
+      C_ActorHiWire=(R=255,G=127,B=0,A=255)
+      C_Black=(R=0,G=0,B=0,A=255)
+      C_White=(R=255,G=255,B=255,A=255)
+      C_Mask=(R=0,G=0,B=0,A=255)
+      C_SemiSolidWire=(R=127,G=255,B=0,A=255)
+      C_NonSolidWire=(R=63,G=192,B=32,A=255)
+      C_WireBackground=(R=0,G=0,B=0,A=255)
+      C_WireGridAxis=(R=119,G=119,B=119,A=255)
+      C_ActorArrow=(R=163,G=0,B=0,A=255)
+      C_ScaleBox=(R=151,G=67,B=11,A=255)
+      C_ScaleBoxHi=(R=223,G=149,B=157,A=255)
+      C_ZoneWire=(R=0,G=0,B=0,A=255)
+      C_Mover=(R=255,G=0,B=255,A=255)
+      C_OrthoBackground=(R=163,G=163,B=163,A=255)
       ScaledSmallFont=None
       ScaledMedFont=None
       ScaledBigFont=None
       ScaledLargeFont=None
+      BrushBuilders=()
       CacheSizeMegs=6
 }

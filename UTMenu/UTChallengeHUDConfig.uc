@@ -100,6 +100,14 @@ var UWindowHSliderControl CrosshairScaleSlider;
 var localized string CrosshairScaleText;
 var localized string CrosshairScaleHelp;
 
+var UWindowCheckbox CrosshairSmoothCheck;
+var localized string CrosshairSmoothText;
+var localized string CrosshairSmoothHelp;
+
+var UWindowCheckbox CrosshairAlwaysCenterCheck;
+var localized string CrosshairAlwaysCenterText;
+var localized string CrosshairAlwaysCenterHelp;
+
 var UWindowSmallButton DefaultsButton;
 var localized string DefaultsText;
 var localized string DefaultsHelp;
@@ -283,6 +291,20 @@ function Created()
 	CrosshairSlider.SetFont(F_Normal);
 	ControlOffset += 20;
 
+	CrosshairSmoothCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', CenterPos, ControlOffset, CenterWidth, 1));
+	CrosshairSmoothCheck.SetText(CrosshairSmoothText);
+	CrosshairSmoothCheck.SetHelpText(CrosshairSmoothHelp);
+	CrosshairSmoothCheck.SetFont(F_Normal);
+	CrosshairSmoothCheck.Align = TA_Left;
+	ControlOffset += 20;
+
+	CrosshairAlwaysCenterCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', CenterPos, ControlOffset, CenterWidth, 1));
+	CrosshairAlwaysCenterCheck.SetText(CrosshairAlwaysCenterText);
+	CrosshairAlwaysCenterCheck.SetHelpText(CrosshairAlwaysCenterHelp);
+	CrosshairAlwaysCenterCheck.SetFont(F_Normal);
+	CrosshairAlwaysCenterCheck.Align = TA_Left;
+	ControlOffset += 20;
+
 	CrosshairScaleAutoCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', CenterPos, ControlOffset, CenterWidth, 1));
 	CrosshairScaleAutoCheck.SetText(CrosshairScaleAutoText);
 	CrosshairScaleAutoCheck.SetHelpText(CrosshairScaleAutoHelp);
@@ -354,7 +376,9 @@ function LoadCurrentValues()
 	UseTeamColorCheck.bDisabled = !ShowHUDCheck.bChecked;
 	
 	CrosshairScaleAutoCheck.bChecked = H.bAutoCrosshairScale;
-	CrosshairScaleSlider.SetValue(H.CrosshairScale * 10);	
+	CrosshairScaleSlider.SetValue(H.CrosshairScale * 10);
+	CrosshairSmoothCheck.bChecked = H.bSmoothCrosshair;
+	CrosshairAlwaysCenterCheck.bChecked = H.bAlwaysCenterCrosshair;
 
 	bInitialized = True;
 }
@@ -386,6 +410,8 @@ function LoadDefaultValues()
 	H.CrosshairColor.B = class'ChallengeHUD'.default.CrosshairColor.B;
 	H.bAutoCrosshairScale = class'ChallengeHUD'.default.bAutoCrosshairScale;
 	H.CrosshairScale = class'ChallengeHUD'.default.CrosshairScale;
+	H.bSmoothCrosshair = class'ChallengeHUD'.default.bSmoothCrosshair;
+	H.bAlwaysCenterCrosshair = class'ChallengeHUD'.default.bAlwaysCenterCrosshair;
 }
 
 function BeforePaint(Canvas C, float X, float Y)
@@ -462,6 +488,10 @@ function BeforePaint(Canvas C, float X, float Y)
 	CrosshairScaleSlider.SetSize(CenterWidth, 1);
 	CrosshairScaleSlider.SliderWidth = 90;
 	CrosshairScaleSlider.WinLeft = CenterPos;
+	CrosshairSmoothCheck.SetSize(CenterWidth, 1);
+	CrosshairSmoothCheck.WinLeft = CenterPos;
+	CrosshairAlwaysCenterCheck.SetSize(CenterWidth, 1);
+	CrosshairAlwaysCenterCheck.WinLeft = CenterPos;
 }
 
 function Paint(Canvas C, float X, float Y)
@@ -472,6 +502,7 @@ function Paint(Canvas C, float X, float Y)
 	local Texture CrossHair, T;
 	local float XScale;
 	local byte OldStyle;
+	local bool bOldNoSmooth;
 
 	if (CrosshairScaleAutoCheck.bChecked)
 	{
@@ -502,6 +533,8 @@ function Paint(Canvas C, float X, float Y)
 	CrosshairX = (WinWidth - Crosshair.USize) / 2;
 	T = GetLookAndFeelTexture();
 	DrawUpBevel(C, CrosshairX - 3, CrosshairScaleSlider.WinTop + 20 - 3, CrossHair.USize + 6, CrossHair.VSize + 6, T);
+	bOldNoSmooth = C.bNoSmooth;
+    C.bNoSmooth = !CrosshairSmoothCheck.bChecked;
 	DrawStretchedTexture(C, CrosshairX, CrosshairScaleSlider.WinTop + 20, CrossHair.USize, CrossHair.VSize, Texture'BlackTexture');
 
 	C.DrawColor.R = 15 * H.CrosshairColor.R;
@@ -517,6 +550,7 @@ function Paint(Canvas C, float X, float Y)
 		Crosshair.VSize * XScale,
 		CrossHair);
 	C.Style = OldStyle;
+	C.bNoSmooth = bOldNoSmooth;
 
 	HUDX = (WinWidth - Texture'HudPreview'.USize) / 2;
 	C.DrawColor.R = 255;
@@ -559,6 +593,8 @@ function Notify(UWindowDialogControl C, byte E)
 		case CrosshairScaleSlider:
 		case CrosshairScaleAutoCheck:
 		case CrosshairSlider:
+		case CrosshairSmoothCheck:
+		case CrosshairAlwaysCenterCheck:
 			CrosshairChanged();
 			break;
 		case HUDRSlider:
@@ -711,6 +747,8 @@ function CrosshairChanged()
 	H.Crosshair = int(CrosshairSlider.Value);
 	H.bAutoCrosshairScale=CrosshairScaleAutoCheck.bChecked;
 	H.CrosshairScale = CrosshairScaleSlider.GetValue() / 10.0;
+	H.bSmoothCrosshair = CrosshairSmoothCheck.bChecked;
+	H.bAlwaysCenterCrosshair = CrosshairAlwaysCenterCheck.bChecked;
 }
 
 function SaveConfigs()
@@ -831,6 +869,12 @@ defaultproperties
       CrosshairScaleSlider=None
       CrosshairScaleText="Crosshair Scale"
       CrosshairScaleHelp="Adjust the size of your crosshair."
+      CrosshairSmoothCheck=None
+      CrosshairSmoothText="Smooth Crosshair"
+      CrosshairSmoothHelp="Enable to apply smoothing to your crosshair."
+      CrosshairAlwaysCenterCheck=None
+      CrosshairAlwaysCenterText="Always Center Crosshair"
+      CrosshairAlwaysCenterHelp="Enable to always center the crosshair, even if you hold your weapon in your left or right hand."
       DefaultsButton=None
       DefaultsText="Reset"
       DefaultsHelp="Reset HUD settings to default values."

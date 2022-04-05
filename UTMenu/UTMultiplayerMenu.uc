@@ -123,9 +123,9 @@ function Select(UWindowPulldownMenuItem I)
 
 defaultproperties
 {
-      OnlineServices(0)="LOCALIZE,MPlayer"
-      OnlineServices(1)="LOCALIZE,Heat"
-      OnlineServices(2)="LOCALIZE,WON"
+      OnlineServices(0)=""
+      OnlineServices(1)=""
+      OnlineServices(2)=""
       OnlineServices(3)=""
       OnlineServices(4)=""
       OnlineServices(5)=""

@@ -85,6 +85,9 @@ var private native pointer SourceMip;
 // OldUnreal bindless texture support
 var private native pointer TextureHandle;	
 
+// UT v469b texture changes tracker
+var transient  int     RealtimeChangeCount;
+
 defaultproperties
 {
       BumpMap=None

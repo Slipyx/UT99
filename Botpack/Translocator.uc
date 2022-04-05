@@ -74,6 +74,8 @@ var bool bBotMoveFire, bTTargetOut;
 // switched to your previous weapon if you simultaneously pressed fire+altfire while
 // holding the translocator. This config var allows you to override the default behavior.
 var config bool bEnableDualButtonSwitch;
+var bool bCurrentEnableDualButtonSwitch;
+var bool bClientDualButtonSwitch;
 
 replication
 {
@@ -172,6 +174,14 @@ simulated function ClientWeaponEvent(name EventType)
 		PlayIdleAnim();
 }
 
+function ServerWeaponEvent(name EventType)
+{
+	if ( EventType == 'TranslocatorEnableDualButtonSwitch' )
+		bClientDualButtonSwitch = true;
+	else if ( EventType == 'TranslocatorDisableDualButtonSwitch' )
+		bClientDualButtonSwitch = false;
+}
+
 function Fire( float Value )
 {
 	if ( bBotMoveFire )
@@ -213,6 +223,7 @@ function Fire( float Value )
 
 simulated function bool ClientFire(float Value)
 {
+	CheckDualButtonSetting();
 	if ( !bTTargetOut && bCanClientFire && (Level.TimeSeconds - 0.5 > FireDelay) )
 	{
 		PlayFiring();
@@ -224,6 +235,7 @@ simulated function bool ClientFire(float Value)
 
 simulated function bool ClientAltFire( float Value )
 {
+	CheckDualButtonSetting();
 	return true;
 }
 
@@ -258,7 +270,8 @@ function Translocate()
 	TTarget.SetCollision(false,false,false);
 	if ( Pawn(Owner).SetLocation(Dest) )
 	{
-		if ( !Owner.Region.Zone.bWaterZone )
+		// stijn: added PHYS_Flying check
+		if ( !Owner.Region.Zone.bWaterZone && Owner.Physics != PHYS_Flying )
 			Owner.SetPhysics(PHYS_Falling);
 		if ( TTarget.Disrupted() )
 		{
@@ -343,6 +356,10 @@ function AltFire( float Value )
 
 function ReturnToPreviousWeapon()
 {
+	CheckDualButtonSetting();
+	if ( !bClientDualButtonSwitch )
+		return;
+	
 	if ( (PreviousWeapon == None)
 		|| ((PreviousWeapon.AmmoType != None) && (PreviousWeapon.AmmoType.AmmoAmount <=0)) )
 		Pawn(Owner).SwitchToBestWeapon();
@@ -399,7 +416,7 @@ Begin:
 	if ( Owner.IsA('Bot') )
 		Bot(Owner).SwitchToBestWeapon();
 	Sleep(0.1);
-	if ( bEnableDualButtonSwitch && (Pawn(Owner).bFire != 0) && (Pawn(Owner).bAltFire != 0) )
+	if ( (Pawn(Owner).bFire != 0) && (Pawn(Owner).bAltFire != 0) )
 	 	ReturnToPreviousWeapon();
 	GotoState('Idle');
 }
@@ -466,6 +483,7 @@ simulated function PlayPostSelect()
 {
 	local actor RealTarget;
 
+	CheckDualButtonSetting(true);
 	if ( Level.NetMode == NM_Client )
 	{
 		Super.PlayPostSelect();
@@ -486,6 +504,24 @@ simulated function PlayPostSelect()
 	}	
 }
 
+simulated function CheckDualButtonSetting( optional bool bForce)
+{
+	local PlayerPawn P;
+
+	// Higor: if config has changed since last check,
+	// have the local PlayerPawn tell the server about this.
+	P = PlayerPawn(Owner);
+	if ( (P != None) && (P.Weapon == self) && (Viewport(P.Player) != None) 
+	&& (bForce || (bCurrentEnableDualButtonSwitch != bEnableDualButtonSwitch)) )
+	{
+		if ( bEnableDualButtonSwitch )
+			P.ServerWeaponEvent('TranslocatorEnableDualButtonSwitch');
+		else
+			P.ServerWeaponEvent('TranslocatorDisableDualButtonSwitch');
+		bCurrentEnableDualButtonSwitch = bEnableDualButtonSwitch;
+	}
+}
+
 defaultproperties
 {
       TTarget=None
@@ -497,6 +533,8 @@ defaultproperties
       bBotMoveFire=False
       bTTargetOut=False
       bEnableDualButtonSwitch=True
+      bCurrentEnableDualButtonSwitch=True
+      bClientDualButtonSwitch=True
       WeaponDescription="Classification: Personal Teleportation Device\n\nPrimary Fire: Launches the destination module.  Throw the module to the location you would like to teleport to.\n\nSecondary Fire: Activates the translocator and teleports the user to the destination module.\n\nTechniques: Throw your destination module at another player and then activate the secondary fire, and you will telefrag your opponent!  If you press your primary fire button when activating your translocator with the secondary fire, the last weapon you had selected will automatically return once you have translocated."
       PickupAmmoCount=1
       bCanThrow=False

@@ -143,7 +143,10 @@ function StartMap(string StartMap, int Rung, string GameType)
 
 	Root.SetMousePos((Root.WinWidth*Root.GUIScale)/2, (Root.WinHeight*Root.GUIScale)/2);
 	Root.Console.CloseUWindow();
-	GetPlayerOwner().ClientTravel(StartMap, TRAVEL_Absolute, True);
+	if ( TournamentGameInfo(GetPlayerOwner().Level.Game) != None )
+		TournamentGameInfo(GetPlayerOwner().Level.Game).LadderTransition(StartMap);
+	else
+		GetPlayerOwner().ClientTravel(StartMap, TRAVEL_Absolute, True);
 }
 
 function Close(optional bool bByParent)

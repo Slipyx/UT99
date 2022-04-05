@@ -44,12 +44,17 @@ event playerpawn Login
 	class<playerpawn> SpawnClass
 )
 {
-	Trainee = Super.Login(Portal, Options, Error, SpawnClass);
-	//Trainee.PlayerReplicationInfo.TeamName = "Red";
-	//Trainee.PlayerReplicationInfo.Team = 0;
-	Trainee.ReducedDamageType = 'All';
+	local PlayerPawn NewPlayer;
+	
+	NewPlayer = Super.Login(Portal, Options, Error, SpawnClass);
+//	NewPlayer.PlayerReplicationInfo.TeamName = "Red";
+//	NewPlayer.PlayerReplicationInfo.Team = 0;
+	NewPlayer.ReducedDamageType = 'All';
 
-	return Trainee;
+	if ( RatedPlayer == None ) RatedPlayer = NewPlayer;
+	if ( Trainee == None )     Trainee = NewPlayer;
+
+	return NewPlayer;
 }
 
 function TutorialSound( string NewSound )
@@ -58,7 +63,7 @@ function TutorialSound( string NewSound )
 
 	MySound = sound( DynamicLoadObject(NewSound, class'Sound') );
 	EventTimer = GetSoundDuration( MySound ) + 2;
-	Trainee.PlaySound(MySound, SLOT_Interface, 2.0);
+	Trainee.PlaySound( MySound, SLOT_Interface, 2.0, false, 99999);
 }
 
 function Timer()
@@ -256,12 +261,7 @@ state ServerTravel
 {
 	function Timer()
 	{
-		local string StartMap;
-
-		StartMap = "UT-Logo-Map.unr"
-			$"?Game=Botpack.LadderTransition";
-
-		Trainee.ClientTravel(StartMap, TRAVEL_Absolute, True);
+		LadderTransition();
 	}
 
 	function BeginState()
@@ -314,7 +314,6 @@ defaultproperties
       EventTimer=0
       LastEvent=13
       EventIndex=0
-      TimeLimit=20
       SingleWaitingMessage=""
       bTutorialGame=True
       Difficulty=0

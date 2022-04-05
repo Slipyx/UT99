@@ -68,7 +68,7 @@ function PreBeginPlay()
 
 	// Resolve the Address.
 	if( MasterServerAddress=="" )
-		MasterServerAddress = "master"$Region$".gamespy.com";
+		MasterServerAddress = "master.epicgames.com";
 	Resolve( MasterServerAddress );
 }
 

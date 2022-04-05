@@ -3,13 +3,15 @@ class TrophyGame extends UTIntro;
 var Class<Trophy> NewTrophyClass;
 var int TrophyTime;
 var rotator CorrectRotation;
+var LadderInventory LadderObj;
+var bool bTrophyInit;
 
-event playerpawn Login
+event PlayerPawn Login
 (
 	string Portal,
 	string Options,
 	out string Error,
-	class<playerpawn> SpawnClass
+	class<PlayerPawn> SpawnClass
 )
 {
 	local PlayerPawn NewPlayer;
@@ -29,112 +31,100 @@ event playerpawn Login
 	return NewPlayer;
 }
 
-function AcceptInventory(pawn PlayerPawn)
+function AcceptInventory( Pawn PlayerPawn)
 {
-	local inventory Inv, Next;
-	local LadderInventory LadderObj;
 	local DeathMatchTrophy DMT;
 	local DominationTrophy DOMT;
 	local CTFTrophy CTFT;
 	local AssaultTrophy AT;
 	local Challenge ChalT;
 
-	// DeathMatchPlus accepts LadderInventory
-	for( Inv=PlayerPawn.Inventory; Inv!=None; Inv=Next )
+	Super.AcceptInventory(PlayerPawn);
+	if ( (LadderObj != None) && !bTrophyInit )
 	{
-		Next = Inv.Inventory;
-		if (Inv.IsA('LadderInventory'))
+		bTrophyInit = true;
+		
+		// Hide trophies.
+		foreach AllActors(class'DeathMatchTrophy', DMT)
 		{
-			LadderObj = LadderInventory(Inv);
-			if (LadderObj != None) 
+			CorrectRotation = DMT.Rotation;
+			if (LadderObj.DMRank != 6)
 			{
-				// Hide trophies.
-				foreach AllActors(class'DeathMatchTrophy', DMT)
+				DMT.bHidden = True;
+			} else {
+				if (LadderObj.LastMatchType == 1)
 				{
-					CorrectRotation = DMT.Rotation;
-					if (LadderObj.DMRank != 6)
-					{
-						DMT.bHidden = True;
-					} else {
-						if (LadderObj.LastMatchType == 1)
-						{
-							NewTrophyClass = DMT.Class;
-							TrophyTime = 28;
-							DMT.bHidden = True;
-						}
-					}
-				}
-				foreach AllActors(class'DominationTrophy', DOMT)
-				{
-					if (LadderObj.DOMRank != 6)
-					{
-						DOMT.bHidden = True;
-					} else {
-						if (LadderObj.LastMatchType == 3)
-						{
-							NewTrophyClass = DOMT.Class;
-							TrophyTime = 30;
-							DOMT.bHidden = True;
-						}
-					}
-				}
-				foreach AllActors(class'CTFTrophy', CTFT)
-				{
-					if (LadderObj.CTFRank != 6)
-					{
-						CTFT.bHidden = True;
-					} else {
-						if (LadderObj.LastMatchType == 2)
-						{
-							NewTrophyClass = CTFT.Class;
-							TrophyTime = 30;
-							CTFT.bHidden = True;
-						}
-					}
-				}
-				foreach AllActors(class'AssaultTrophy', AT)
-				{
-					if (LadderObj.ASRank != 6)
-					{
-						AT.bHidden = True;
-					} else {
-						if (LadderObj.LastMatchType == 4)
-						{
-							NewTrophyClass = AT.Class;
-							TrophyTime = 29;
-							AT.bHidden = True;
-						}
-					}
-				}
-				foreach AllActors(class'Challenge', ChalT)
-				{
-					if (LadderObj.ChalRank != 6)
-					{
-						ChalT.bHidden = True;
-					} else {
-						if (LadderObj.LastMatchType == 5)
-						{
-							NewTrophyClass = ChalT.Class;
-							TrophyTime = 30;
-							ChalT.bHidden = True;
-						}
-					}
-				}
-				// Award this dude the SECRET ROBOT BOSS MESH!!!
-				if ((LadderObj.DMRank == 6) && (LadderObj.DOMRank == 6) &&
-					(LadderObj.CTFRank == 6) && (LadderObj.ASRank == 6) &&
-					(LadderObj.ChalRank == 6))
-				{
-					class'Ladder'.Default.HasBeatenGame = True;
-					class'Ladder'.Static.StaticSaveConfig();
+					NewTrophyClass = DMT.Class;
+					TrophyTime = 28;
+					DMT.bHidden = True;
 				}
 			}
-		} else {	
-			Inv.Destroy();
+		}
+		foreach AllActors(class'DominationTrophy', DOMT)
+		{
+			if (LadderObj.DOMRank != 6)
+			{
+				DOMT.bHidden = True;
+			} else {
+				if (LadderObj.LastMatchType == 3)
+				{
+					NewTrophyClass = DOMT.Class;
+					TrophyTime = 30;
+					DOMT.bHidden = True;
+				}
+			}
+		}
+		foreach AllActors(class'CTFTrophy', CTFT)
+		{
+			if (LadderObj.CTFRank != 6)
+			{
+				CTFT.bHidden = True;
+				} else {
+				if (LadderObj.LastMatchType == 2)
+				{
+					NewTrophyClass = CTFT.Class;
+					TrophyTime = 30;
+					CTFT.bHidden = True;
+				}
+			}
+		}
+		foreach AllActors(class'AssaultTrophy', AT)
+		{
+			if (LadderObj.ASRank != 6)
+			{
+				AT.bHidden = True;
+			} else {
+				if (LadderObj.LastMatchType == 4)
+				{
+					NewTrophyClass = AT.Class;
+					TrophyTime = 29;
+					AT.bHidden = True;
+				}
+			}
+		}
+		foreach AllActors(class'Challenge', ChalT)
+		{
+			if (LadderObj.ChalRank != 6)
+			{
+				ChalT.bHidden = True;
+			} else {
+				if (LadderObj.LastMatchType == 5)
+				{
+					NewTrophyClass = ChalT.Class;
+					TrophyTime = 30;
+					ChalT.bHidden = True;
+				}
+			}
+		}
+		// Award this dude the SECRET ROBOT BOSS MESH!!!
+		if ((LadderObj.DMRank == 6) && (LadderObj.DOMRank == 6) &&
+			(LadderObj.CTFRank == 6) && (LadderObj.ASRank == 6) &&
+			(LadderObj.ChalRank == 6))
+		{
+			class'Ladder'.Default.HasBeatenGame = True;
+			class'Ladder'.Static.StaticSaveConfig();
 		}
 	}
-	PlayerPawn.Weapon = None;
-	PlayerPawn.SelectedItem = None;
 }
 
 function Timer()
@@ -173,5 +163,7 @@ defaultproperties
       NewTrophyClass=None
       TrophyTime=0
       CorrectRotation=(Pitch=0,Yaw=0,Roll=0)
+      LadderObj=None
+      bTrophyInit=False
       HUDType=Class'Botpack.CHEOLHUD'
 }

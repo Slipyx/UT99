@@ -459,7 +459,7 @@ function SendVoiceMessage(PlayerReplicationInfo Sender, PlayerReplicationInfo Re
 			{
 				if ( (broadcasttype == 'GLOBAL') || !Level.Game.bTeamGame )
 					P.ClientVoiceMessage(Sender, Recipient, messagetype, messageID);
-				else if ( Sender.Team == P.PlayerReplicationInfo.Team )
+				else if ( P.PlayerReplicationInfo != None && Sender.Team == P.PlayerReplicationInfo.Team )
 					P.ClientVoiceMessage(Sender, Recipient, messagetype, messageID);
 			}
 		}

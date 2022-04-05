@@ -13,6 +13,9 @@ var() sound CaptureSound[4];
 var() sound ReturnSound;
 var float LastGotFlag;
 var float LastSeeFlagCarrier;
+// stijn: if true, destroyed flags will automatically respawn and be sent back to their base.
+// This makes flags work in CloudZones or with TriggeredDeath triggers.
+var config bool bAutoRespawnFlags;
 
 function Logout(pawn Exiting)
 {
@@ -153,7 +156,7 @@ function ScoreFlag(Pawn Scorer, CTFFlag theFlag)
 		for ( TeamMate=Level.PawnList; TeamMate!=None; TeamMate=TeamMate.NextPawn )
 		{
 			if ( TeamMate.IsA('PlayerPawn') )
-				PlayerPawn(TeamMate).ClientPlaySound(ReturnSound,,true);
+				PlayerPawn(TeamMate).ClientPlaySound(ReturnSound);
 			else if ( TeamMate.IsA('Bot') )
 				Bot(TeamMate).SetOrders(BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrders, BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrderGiver, true);
 		}
@@ -168,7 +171,7 @@ function ScoreFlag(Pawn Scorer, CTFFlag theFlag)
 	for ( TeamMate=Level.PawnList; TeamMate!=None; TeamMate=TeamMate.NextPawn )
 	{
 		if ( TeamMate.IsA('PlayerPawn') )
-			PlayerPawn(TeamMate).ClientPlaySound(CaptureSound[Scorer.PlayerReplicationInfo.Team],,true);
+			PlayerPawn(TeamMate).ClientPlaySound(CaptureSound[Scorer.PlayerReplicationInfo.Team]);
 		else if ( TeamMate.IsA('Bot') )
 			Bot(TeamMate).SetOrders(BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrders, BotReplicationInfo(TeamMate.PlayerReplicationInfo).RealOrderGiver, true);
 	}
@@ -736,6 +739,7 @@ defaultproperties
       ReturnSound=Sound'Botpack.CTF.ReturnSound'
       LastGotFlag=0.000000
       LastSeeFlagCarrier=0.000000
+      bAutoRespawnFlags=True
       bSpawnInTeamArea=True
       bScoreTeamKills=False
       MaxAllowedTeams=2
@@ -744,13 +748,13 @@ defaultproperties
       CurrentOrders(1)="Freelance"
       CurrentOrders(2)="Freelance"
       CurrentOrders(3)="Freelance"
-      FragLimit=0
-      TimeLimit=0
       bUseTranslocator=True
       bRatedTranslocator=True
       StartUpMessage=""
       gamegoal="captures wins the match!"
       LadderTypeIndex=2
+      bNoMonsters=False
+      bHumansOnly=True
       bCoopWeaponMode=True
       ScoreBoardType=Class'Botpack.UnrealCTFScoreboard'
       HUDType=Class'Botpack.ChallengeCTFHUD'

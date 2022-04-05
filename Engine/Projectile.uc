@@ -118,6 +118,7 @@ defaultproperties
       bReplicateInstigator=True
       Physics=PHYS_Projectile
       LifeSpan=140.000000
+      TransientSoundPriority=32
       bDirectional=True
       DrawType=DT_Mesh
       Texture=Texture'Engine.S_Camera'

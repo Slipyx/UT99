@@ -83,6 +83,10 @@ var texture CrossHairTextures[20];
 var globalconfig bool bAutoCrosshairScale;
 var globalconfig float CrosshairScale;
 
+// additional oldunreal crosshair options
+var globalconfig bool bSmoothCrosshair;
+var globalconfig bool bAlwaysCenterCrosshair;
+
 var texture GrayWeapons[11];
 var texture FP1[3], FP2[3], FP3[3];
 var int LastReportedTime;
@@ -820,7 +824,7 @@ simulated function DrawWeapons(Canvas Canvas)
 				Canvas.CurX = WeaponX;
 				Canvas.CurY = BaseY + 52 * WeapScale;
 				Canvas.DrawColor = BaseColor;
-				AmmoScale = FClamp(88.0 * WeapScale * WeaponSlot[i].AmmoType.AmmoAmount/WeaponSlot[i].AmmoType.MaxAmmo, 0, 88);
+				AmmoScale = FClamp(88.0 * WeapScale * WeaponSlot[i].AmmoType.AmmoAmount/WeaponSlot[i].AmmoType.MaxAmmo, 0, 88 * WeapScale);
 				Canvas.DrawTile(Texture'BotPack.HudElements1', AmmoScale, 8 * WeapScale,64,64,128.0,8.0);
 			}
 		}
@@ -955,7 +959,8 @@ simulated function PostRender( canvas Canvas )
 	Canvas.SetClip(768*Scale - 10, Canvas.ClipY);
 	bDrawFaceArea = false;
 	if ( !bHideFaces && !PlayerOwner.bShowScores && !bForceScores && !bHideHUD 
-			&& !PawnOwner.PlayerReplicationInfo.bIsSpectator && (Scale >= 0.4) )
+			&& (PawnOwner.PlayerReplicationInfo != None && !PawnOwner.PlayerReplicationInfo.bIsSpectator) 
+			&& (Scale >= 0.4) )
 	{
 		DrawSpeechArea(Canvas, XL, YL);
 		bDrawFaceArea = (FaceTexture != None) && (FaceTime > Level.TimeSeconds);
@@ -1112,7 +1117,7 @@ simulated function PostRender( canvas Canvas )
 			DrawCrossHair(Canvas, 0,0 );
 	}
 
-	if ( (PawnOwner != Owner) && PawnOwner.bIsPlayer )
+	if ( (PawnOwner != Owner) && PawnOwner.bIsPlayer && (PawnOwner.PlayerReplicationInfo != None) )
 	{
 		Canvas.Font = MyFonts.GetSmallFont( Canvas.ClipX );
 		Canvas.bCenter = true;
@@ -1139,7 +1144,7 @@ simulated function PostRender( canvas Canvas )
 		 
 	if( !bHideHUD )
 	{
-		if ( !PawnOwner.PlayerReplicationInfo.bIsSpectator )
+		if ( (PawnOwner.PlayerReplicationInfo == None) || !PawnOwner.PlayerReplicationInfo.bIsSpectator )
 		{
 			Canvas.Style = Style;
 
@@ -1431,7 +1436,7 @@ simulated function DrawMOTD(Canvas Canvas)
 simulated function DrawCrossHair( canvas Canvas, int X, int Y)
 {
 	local float XScale, PickDiff;
-	local float XLength;
+	local float XLength, YLength;
 	local texture T;
 
  	if (Crosshair>=CrosshairCount) Return;
@@ -1447,6 +1452,10 @@ simulated function DrawCrossHair( canvas Canvas, int X, int Y)
 	{
 		XScale = CrosshairScale;
 	}
+
+	T = CrossHairTextures[Crosshair];
+	if( T == None )
+		T = LoadCrosshair(Crosshair);
 	
 	PickDiff = Level.TimeSeconds - PickupTime;
 	if ( PickDiff < 0.4 )
@@ -1456,23 +1465,21 @@ simulated function DrawCrossHair( canvas Canvas, int X, int Y)
 		else
 			XScale *= (3 - 5 * PickDiff);
 	}
-	XLength = XScale * 64.0;
+	XLength = XScale * T.USize;
+	YLength = XScale * T.VSize;
 
-	Canvas.bNoSmooth = False;
-	if ( PlayerOwner.Handedness == -1 )
-		Canvas.SetPos(0.503 * (Canvas.ClipX - XLength), 0.504 * (Canvas.ClipY - XLength));
+	Canvas.bNoSmooth = !bSmoothCrosshair;
+	if ( bAlwaysCenterCrosshair || (PlayerOwner.Handedness != 1 && PlayerOwner.HandedNess != -1) )
+		Canvas.SetPos(0.5 * (Canvas.ClipX - XLength), 0.5 * (Canvas.ClipY - YLength));
+	else if ( PlayerOwner.Handedness == -1 )
+		Canvas.SetPos(0.503 * (Canvas.ClipX - XLength), 0.504 * (Canvas.ClipY - YLength));
 	else if ( PlayerOwner.Handedness == 1 )
-		Canvas.SetPos(0.497 * (Canvas.ClipX - XLength), 0.496 * (Canvas.ClipY - XLength));
-	else
-		Canvas.SetPos(0.5 * (Canvas.ClipX - XLength), 0.5 * (Canvas.ClipY - XLength));
+		Canvas.SetPos(0.497 * (Canvas.ClipX - XLength), 0.496 * (Canvas.ClipY - YLength));
+		
 	Canvas.Style = ERenderStyle.STY_Translucent;
 	Canvas.DrawColor = 15 * CrosshairColor;
 
-	T = CrossHairTextures[Crosshair];
-	if( T == None )
-		T = LoadCrosshair(Crosshair);
-
-	Canvas.DrawTile(T, XLength, XLength, 0, 0, 64, 64);
+	Canvas.DrawTile(T, XLength, YLength, 0, 0, T.USize, T.VSize);
 	Canvas.bNoSmooth = True;
 	Canvas.Style = Style;
 }
@@ -1657,7 +1664,7 @@ simulated function bool DrawIdentifyInfo(canvas Canvas)
 	if ( !TraceIdentify(Canvas))
 		return false;
 
-	if( IdentifyTarget.PlayerName != "" )
+	if( (IdentifyTarget != None) && IdentifyTarget.PlayerName != "" )
 	{
 		Canvas.Font = MyFonts.GetBigFont(Canvas.ClipX);
 		DrawTwoColorID(Canvas,IdentifyName, IdentifyTarget.PlayerName, Canvas.ClipY - 256 * Scale);
@@ -1866,7 +1873,9 @@ defaultproperties
       CrossHairTextures(18)=None
       CrossHairTextures(19)=None
       bAutoCrosshairScale=True
-      CrosshairScale=1.600000
+      CrosshairScale=1.000000
+      bSmoothCrosshair=True
+      bAlwaysCenterCrosshair=False
       GrayWeapons(0)=None
       GrayWeapons(1)=None
       GrayWeapons(2)=None

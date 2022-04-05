@@ -34,7 +34,7 @@ function PlayDyingSound()
 
 simulated function PlayBeepSound()
 {
-	PlaySound(sound'NewBeep',SLOT_Interface, 2.0);
+	ClientPlaySound(sound'NewBeep', true);
 }
 
 function PlayChatting()

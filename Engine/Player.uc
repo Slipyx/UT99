@@ -40,7 +40,7 @@ defaultproperties
       bShowWindowsMouse=False
       bSuspendPrecaching=False
       CurrentNetSpeed=0
-      ConfiguredInternetSpeed=10000
+      ConfiguredInternetSpeed=20000
       ConfiguredLanSpeed=20000
       SelectedCursor=0
 }

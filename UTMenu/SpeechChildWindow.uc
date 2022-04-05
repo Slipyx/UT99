@@ -30,28 +30,34 @@ function Created()
 	YMod = 3*H;
 
 	CurrentType = SpeechWindow(ParentWindow).CurrentType;
-
-	switch (CurrentType)
+	
+	if ( V != None )
 	{
-		case 0: // Acknowledgements
-			NumOptions = V.Default.numAcks;
-			break;
-		case 1: // Friendly Fire
-			NumOptions = V.Default.numFFires;
-			break;
-		case 3: // Taunts
-			NumOptions = V.Default.numTaunts;
-			break;
-		case 4: // Other
-			j = 0;
-			for (i=0; i<32; i++)
-			{
-				if (V.Static.GetOtherString(i) != "")
-					OtherOffset[j++] = i;
-			}
-			NumOptions = j;
-			break;
+		switch (CurrentType)
+		{
+			case 0: // Acknowledgements
+				NumOptions = V.Default.numAcks;
+				break;
+			case 1: // Friendly Fire
+				NumOptions = V.Default.numFFires;
+				break;
+			case 3: // Taunts
+				NumOptions = V.Default.numTaunts;
+				break;
+			case 4: // Other
+				j = 0;
+				for (i=0; i<32; i++)
+				{
+					if (V.Static.GetOtherString(i) != "")
+						OtherOffset[j++] = i;
+				}
+				NumOptions = j;
+				break;
+		}
 	}
+	else
+		NumOptions = 0;
+
 	
 	Super.Created();
 
@@ -60,16 +66,16 @@ function Created()
 		switch (CurrentType)
 		{
 			case 0: // Acknowledgements
-				OptionButtons[i].Text = V.Static.GetAckString(i);
+				OptionButtons[i].Text = int((i + 1) % 10) @ V.Static.GetAckString(i);
 				break;
 			case 1: // Friendly Fire
-				OptionButtons[i].Text = V.Static.GetFFireString(i);
+				OptionButtons[i].Text = int((i + 1) % 10) @ V.Static.GetFFireString(i);
 				break;
 			case 3: // Taunts
-				OptionButtons[i].Text = V.Static.GetTauntString(i);
+				OptionButtons[i].Text = int((i + 1) % 10) @ V.Static.GetTauntString(i);
 				break;
 			case 4: // Other
-				OptionButtons[i].Text = V.Static.GetOtherString(OtherOffset[i]);
+				OptionButtons[i].Text = int((i + 1) % 10) @ V.Static.GetOtherString(OtherOffset[i]);
 				break;
 		}
 	}
@@ -83,7 +89,7 @@ function Created()
 	BottomButton.DownTexture = texture'OrdersBtmArrow';
 	BottomButton.WinLeft = 0;
 
-	MinOptions = Min(8,NumOptions);
+	MinOptions = Min(10,NumOptions);
 
 	WinTop = (196.0/768.0 * YMod) + (32.0/768.0 * YMod)*(CurrentType-1);
 	WinLeft = 256.0/1024.0 * XMod;
@@ -142,7 +148,7 @@ function BeforePaint(Canvas C, float X, float Y)
 	}
 
 	BottomButton.SetSize(XWidth, YHeight);
-	BottomButton.WinTop = (32.0/768.0*YMod)*(MinOptions+1);
+	BottomButton.WinTop = (32.0/768.0*YMod)*(Min(MinOptions, NumOptions - OptionOffset)+1);
 	BottomButton.MyFont = class'UTLadderStub'.Static.GetStubClass().Static.GetBigFont(Root);
 	if (NumOptions > MinOptions+OptionOffset)
 		BottomButton.bDisabled = False;
@@ -229,19 +235,11 @@ function Notify(UWindowWindow B, byte E)
 			}
 			if (B == TopButton)
 			{
-				if (NumOptions > 8)
-				{
-					if (OptionOffset > 0)
-						OptionOffset--;
-				}
+				if (OptionOffset >= 10) OptionOffset -= 10;
 			}
 			if (B == BottomButton)
 			{
-				if (NumOptions > 8)
-				{
-					if (NumOptions - OptionOffset > 8)
-						OptionOffset++;
-				}
+				if (NumOptions - OptionOffset > 10) OptionOffset += 10;
 			}
 			SetButtonTextures(OptionOffset, True, False);
 			break;

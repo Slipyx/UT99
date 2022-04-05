@@ -405,14 +405,14 @@ defaultproperties
       GameCreator="Epic Games, Inc."
       GameCreatorURL="http://www.epicgames.com/"
       DecoderRingURL=""
-      LocalBatcherURL="../NetGamesUSA.com/ngStats/ngStatsUT.exe"
+      LocalBatcherURL=""
       LocalBatcherParams=""
-      LocalStatsURL="../NetGamesUSA.com/ngStats/html/ngStats_Main.html"
-      WorldBatcherURL="../NetGamesUSA.com/ngWorldStats/bin/ngWorldStats.exe"
-      WorldBatcherParams="-d ../NetGamesUSA.com/ngWorldStats/logs -g UT"
-      WorldStatsURL="http://www.netgamesusa.com"
+      LocalStatsURL=""
+      WorldBatcherURL=""
+      WorldBatcherParams=""
+      WorldStatsURL=""
       LocalLogDir="../Logs"
-      WorldLogDir="../NetGamesUSA.com/ngWorldStats/logs"
+      WorldLogDir=""
       bLogTypingEvents=False
       bWorldBatcherError=False
 }

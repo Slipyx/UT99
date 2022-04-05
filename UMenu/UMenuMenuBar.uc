@@ -217,7 +217,7 @@ function DrawMenuBar(Canvas C)
 {
 	local float W, H;
 
-	VersionText = VersionName@GetLevel().EngineVersion;
+	VersionText = VersionName@GetLevel().EngineVersion$GetLevel().EngineRevision;
 
 	LookAndFeel.Menu_DrawMenuBar(Self, C);
 

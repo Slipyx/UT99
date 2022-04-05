@@ -53,9 +53,20 @@ static function string GetBotClassName(int n)
 	return Default.BotClasses[n];
 }
 
-function class<bot> GetBotClass(int n)
+static function class<bot> GetBotClass(int n)
 {
-	return class<bot>( DynamicLoadObject(BotClasses[n], class'Class') );
+	return class<bot>( DynamicLoadObject(Default.BotClasses[n], class'Class') );
+}
+
+static function int GetBotCount()
+{
+	local int i;
+	
+	for ( i=0; i<8; i++)
+		if ( Default.BotClasses[i] == "" || Default.BotNames[i] == "" )
+			break;
+			
+	return i;
 }
 
 static function string GetTeamName()
@@ -83,7 +94,7 @@ static function class<TournamentPlayer> GetFemaleClass()
 	return Default.FemaleClass;
 }
 
-function Individualize(bot NewBot, int n, int NumBots, bool bEnemy, float BaseDifficulty)
+function Individualize( Bot NewBot, int n, int NumBots, bool bEnemy, float BaseDifficulty)
 {
 	if ( (n<0) || (n>7) )
 	{

@@ -12,17 +12,17 @@ var globalconfig string BestRecordDate[3];
 
 defaultproperties
 {
-      TotalGames=118
-      TotalFrags=29
-      TotalDeaths=31
-      TotalFlags=33
-      BestPlayers(0)="Slipyx"
-      BestPlayers(1)="Slipyx"
-      BestPlayers(2)="Loque"
-      BestFPHs(0)=570
-      BestFPHs(1)=673
-      BestFPHs(2)=706
-      BestRecordDate(0)="02/10/2021 20:34:54"
-      BestRecordDate(1)="02/10/2021 20:19:23"
-      BestRecordDate(2)="05/31/2014 20:04:31"
+      TotalGames=13
+      TotalFrags=258
+      TotalDeaths=262
+      TotalFlags=0
+      BestPlayers(0)="slipyx"
+      BestPlayers(1)="slipyx"
+      BestPlayers(2)="slipyx"
+      BestFPHs(0)=603
+      BestFPHs(1)=624
+      BestFPHs(2)=742
+      BestRecordDate(0)="04/04/2022 18:02:33"
+      BestRecordDate(1)="04/04/2022 18:12:07"
+      BestRecordDate(2)="04/04/2022 15:23:46"
 }

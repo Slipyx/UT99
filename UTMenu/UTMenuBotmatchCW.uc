@@ -23,6 +23,6 @@ function CreatePages()
 
 defaultproperties
 {
-      Map="DM-ArcaneTemple.unr"
-      GameType="BotPack.TeamGamePlus"
+      Map="DM-HealPod][.unr"
+      GameType="Botpack.DeathMatchPlus"
 }

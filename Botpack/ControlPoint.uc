@@ -4,8 +4,8 @@
 class ControlPoint extends NavigationPoint;
 
 #exec TEXTURE IMPORT NAME=GoldSkin2 FILE=..\unrealshare\models\gold.PCX GROUP="None"
-#exec TEXTURE IMPORT NAME=RedSkin2 FILE=..\unrealshare\MODELS\ChromR.PCX GROUP=Skins 
-#exec TEXTURE IMPORT NAME=BlueSkin2 FILE=..\unrealshare\MODELS\ChromB.PCX GROUP=Skins 
+#exec TEXTURE IMPORT NAME=RedSkin2 FILE=..\unrealshare\MODELS\ChromR.PCX GROUP=Skins
+#exec TEXTURE IMPORT NAME=BlueSkin2 FILE=..\unrealshare\MODELS\ChromB.PCX GROUP=Skins
 
 // Red Team
 #exec MESH IMPORT MESH=DomR ANIVFILE=MODELS\DomR_a.3d DATAFILE=MODELS\DomR_d.3d X=0 Y=0 Z=0

@@ -15,5 +15,4 @@ defaultproperties
       Maps(5)="DOM-Olden.unr"
       Maps(6)="DOM-Sesmar.unr"
       Maps(7)="DOM-MetalDream.unr"
-      MapNum=1
 }

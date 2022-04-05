@@ -290,6 +290,7 @@ simulated function PreRender( canvas Canvas );
 simulated function PostRender( canvas Canvas );
 
 function ClientWeaponEvent(name EventType);
+function ServerWeaponEvent(name EventType);
 
 function bool HandlePickupQuery( inventory Item )
 {

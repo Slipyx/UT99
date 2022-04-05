@@ -326,5 +326,5 @@ defaultproperties
       CategoryText="Category:"
       CategoryHelp="Select a category of gametype!"
       GeneralText="Unreal Tournament"
-      LastCategory="Unreal Tournament"
+      LastCategory=""
 }

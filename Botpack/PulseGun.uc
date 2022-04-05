@@ -135,22 +135,39 @@ simulated function AnimEnd()
 // set which hand is holding weapon
 function setHand(float Hand)
 {
-	if ( Hand != 2 ) //Not center
+	if ( Hand == 2 )
 	{
-		if ( Hand == 1 ) //Left
-			Mesh = Mesh(DynamicLoadObject("Botpack.PulseGunL", class'Mesh'));
-		else
+		FireOffset.Y = 0;
+		bHideWeapon = true;
+		if ( PlasmaBeam != None )
+			PlasmaBeam.bCenter = true;
+		return;
+	}
+	else
+		bHideWeapon = false;
+
+	Hand = fClamp( Hand, -1.0, 1.0); // v469 weapon hand exploit fix
+	PlayerViewOffset = Default.PlayerViewOffset * 100;
+	if ( Hand == 1 )
+	{
+		if ( PlasmaBeam != None )
 		{
-			Hand = -1; //Force right
-			Mesh = Mesh'PulseGunR';
+			PlasmaBeam.bCenter = false;
+			PlasmaBeam.bRight = false;
 		}
+		FireOffset.Y = Default.FireOffset.Y;
+		Mesh = mesh(DynamicLoadObject("Botpack.PulseGunL", class'Mesh'));
 	}
-	if ( PlasmaBeam != None )
+	else
 	{
-		PlasmaBeam.bCenter = (Hand == 2);
-		PlasmaBeam.bRight = (Hand == -1);
+		if ( PlasmaBeam != None )
+		{
+			PlasmaBeam.bCenter = false;
+			PlasmaBeam.bRight = true;
+		}
+		FireOffset.Y = -1 * Default.FireOffset.Y;
+		Mesh = mesh'PulseGunR';
 	}
-	Super.SetHand( Hand );
 }
 
 // return delta to combat style
@@ -461,6 +478,10 @@ state AltFiring
 			if ( !AmmoType.UseAmmo(1) )
 				Finish();
 		}
+
+		// stijn: Prevent PBolt from disappearing if altfire is held for over 60 sec		
+		if (PlasmaBeam != None)
+		    PlasmaBeam.LifeSpan = PlasmaBeam.Default.LifeSpan;
 	}
 	
 	function EndState()

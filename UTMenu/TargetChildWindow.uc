@@ -59,7 +59,7 @@ function Created()
 	{
 		if (Names[i] != "")
 		{
-			OptionButtons[j].Text = Names[i];
+			OptionButtons[j].Text = int((j + 1) % 10) @ Names[i];
 			OptionTeamIDs[j] = i;
 			j++;
 		}
@@ -78,7 +78,7 @@ function Created()
 	BottomButton.DownTexture = texture'OrdersBtm';
 	BottomButton.WinLeft = 0;
 
-	MinOptions = Min(8,NumOptions);
+	MinOptions = Min(10,NumOptions);
 
 	WinTop = (196.0/768.0 * YMod) + (32.0/768.0 * YMod)*(CurrentType-1);
 	WinLeft = 512.0/1024.0 * XMod;
@@ -133,7 +133,7 @@ function BeforePaint(Canvas C, float X, float Y)
 	}
 
 	BottomButton.SetSize(XWidth, YHeight);
-	BottomButton.WinTop = (32.0/768.0*YMod)*(NumOptions+1);
+	BottomButton.WinTop = (32.0/768.0*YMod)*(Min(MinOptions, NumOptions - OptionOffset)+1);
 	BottomButton.MyFont = class'UTLadderStub'.Static.GetStubClass().Static.GetBigFont(Root);
 	BottomButton.bDisabled = True;
 }

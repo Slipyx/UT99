@@ -233,7 +233,8 @@ replication
 		ChangeName, ChangeTeam, God, Suicide, ViewClass, ViewPlayerNum, ViewSelf, ViewPlayer, ServerSetSloMo, ServerAddBots,
 		PlayersOnly, ThrowWeapon, ServerRestartPlayer, NeverSwitchOnPickup, BehindView, ServerNeverSwitchOnPickup,
 		PrevWeapon, NextWeapon, GetWeapon, ServerReStartGame, ServerUpdateWeapons, ServerTaunt, ServerChangeSkin,
-		SwitchLevel, SwitchCoopLevel, Kick, KickBan, KillAll, Summon, ActivateTranslator, Admin, AdminLogin, AdminLogout, Typing, Mutate, ServerUTrace;
+		SwitchLevel, SwitchCoopLevel, Kick, KickBan, KillAll, Summon, ActivateTranslator, Admin, AdminLogin, AdminLogout,
+		Typing, Mutate, ServerUTrace, ServerWeaponEvent;
 	unreliable if( Role<ROLE_Authority )
 		ServerMove, ServerMove_v2, Fly, Walk, Ghost;
 
@@ -305,6 +306,12 @@ function ClientWeaponEvent(name EventType)
 {
 	if ( Weapon != None )
 		Weapon.ClientWeaponEvent(EventType);
+}
+
+function ServerWeaponEvent(name EventType)
+{
+	if ( Weapon != None )
+		Weapon.ServerWeaponEvent(EventType);
 }
 
 simulated event RenderOverlays( canvas Canvas )
@@ -551,7 +558,7 @@ function SendServerMove( SavedMove Move, optional SavedMove OldMove)
 	local EDodgeDir DodgeMove;
 
 	ClientRoll = (Rotation.Roll >> 8) & 255;
-	View = (32767 & (ViewRotation.Pitch/2)) * 32768 + (32767 & (ViewRotation.Yaw/2));
+	View = (32767 & (Move.SavedViewRotation.Pitch/2)) * 32768 + (32767 & (Move.SavedViewRotation.Yaw/2));
 	
 	// check if need to redundantly send previous move
 	if ( OldMove != None )
@@ -936,7 +943,40 @@ event CheckClientError()
 	}
 	LastClientTimestamp = 0;
 }
+/* Higor: (TODO) Find out why this causes PackageMap problems!!
+function ClientSetLocation( vector NewLocation, rotator NewRotation )
+{
+	local vector ClientLocation;
 
+	ClientLocation = Location;
+	Super.ClientSetLocation( NewLocation, NewRotation);
+
+	// Higor: force movement reconstruction post ClientSetLocation.
+	if ( (ClientLocation != Location) && (Role == ROLE_Authority) && (LastClientTimeStamp != 0) )
+	{
+		if ( Mover(Base) != None )
+			ClientLocation = Location - Base.Location;
+		else
+			ClientLocation = Location;
+
+		LastUpdateTime = Level.TimeSeconds;
+		ClientAdjustPosition
+		(
+			LastClientTimeStamp,
+			GetStateName(),
+			Physics,
+			ClientLocation.X,
+			ClientLocation.Y,
+			ClientLocation.Z,
+			Velocity.X,
+			Velocity.Y,
+		    Velocity.Z,
+			Base
+		);
+		LastClientTimeStamp = 0;
+	}
+}
+*/
 
 //
 // Process a lost move.
@@ -3895,8 +3935,8 @@ function ViewShake(float DeltaTime)
 		}
 		else
 		{
-			ViewRotation.Roll += ((65536 - Max(500,ViewRotation.Roll)) * 10 * FMin(0.1,DeltaTime));
-			if ( ViewRotation.Roll > 65534 )
+			ViewRotation.Roll += (Max(500, 65536 - ViewRotation.Roll) * 10 * FMin(0.1,DeltaTime));
+			if ( ViewRotation.Roll > 65535 )
 				ViewRotation.Roll = 0;
 		}
 	}
@@ -4937,6 +4977,10 @@ ignores SeePlayer, HearNoise, Bump, TakeDamage, Died, ZoneChange, FootZoneChange
 		// Prevent AdminLogout from allowing a waiting player to
 		// interact with the Level.
 	}
+Begin:
+	// Prevent starting the game if Fire is pressed in the loading screen.
+	if ( Level.TimeSeconds < 1 ) // Higor: this could go away
+		bReadyToPlay = false;
 }
 
 state PlayerSpectating
@@ -5553,7 +5597,7 @@ defaultproperties
       Player=None
       Password=""
       DodgeClickTimer=0.000000
-      DodgeClickTime=0.250000
+      DodgeClickTime=-1.000000
       Bob=0.016000
       LandBob=0.000000
       AppliedBob=0.000000
@@ -5636,7 +5680,7 @@ defaultproperties
       bJumpStatus=False
       bUpdating=False
       bCheatsEnabled=False
-      bNoMouseSmoothing=False
+      bNoMouseSmoothing=True
       ZoomLevel=0.000000
       SpecialMenu=None
       DelayedCommand=""
@@ -5644,44 +5688,44 @@ defaultproperties
       WeaponPriority(0)="Translocator"
       WeaponPriority(1)="ChainSaw"
       WeaponPriority(2)="ImpactHammer"
-      WeaponPriority(3)="RT"
-      WeaponPriority(4)="TheExecutioner"
-      WeaponPriority(5)="enforcer"
-      WeaponPriority(6)="FlakCannon"
-      WeaponPriority(7)="WRE"
-      WeaponPriority(8)="GESBioRifle"
-      WeaponPriority(9)="ut_biorifle"
-      WeaponPriority(10)="Minigun"
-      WeaponPriority(11)="FlameTracker"
-      WeaponPriority(12)="ShockRifle"
-      WeaponPriority(13)="SuperShockRifle"
-      WeaponPriority(14)="BoltRifle"
-      WeaponPriority(15)="PulseGun"
-      WeaponPriority(16)="SniperRifle"
-      WeaponPriority(17)="Graviton"
-      WeaponPriority(18)="ripper"
-      WeaponPriority(19)="Freezer"
-      WeaponPriority(20)="minigun2"
-      WeaponPriority(21)="Vulcan"
-      WeaponPriority(22)="UT_FlakCannon"
-      WeaponPriority(23)="TheMiner"
-      WeaponPriority(24)="UT_Eightball"
-      WeaponPriority(25)="MultiMissile"
-      WeaponPriority(26)="IRPR"
-      WeaponPriority(27)="WarheadLauncher"
-      WeaponPriority(28)="SuperBoltRifle"
-      WeaponPriority(29)="CybotLauncher"
-      WeaponPriority(30)="NuclearLauncherLevelA"
-      WeaponPriority(31)="NuclearLauncherLevelB"
-      WeaponPriority(32)="NuclearLauncherLevelC"
-      WeaponPriority(33)="Fist"
-      WeaponPriority(34)="Fusion"
-      WeaponPriority(35)="WSTEM"
-      WeaponPriority(36)="Magnum"
-      WeaponPriority(37)="MA75"
-      WeaponPriority(38)="SPNKR"
-      WeaponPriority(39)="AlienWeapon"
-      WeaponPriority(40)="doubleenforcer"
+      WeaponPriority(3)="enforcer"
+      WeaponPriority(4)="doubleenforcer"
+      WeaponPriority(5)="ShockRifle"
+      WeaponPriority(6)="ut_biorifle"
+      WeaponPriority(7)="PulseGun"
+      WeaponPriority(8)="SniperRifle"
+      WeaponPriority(9)="ripper"
+      WeaponPriority(10)="minigun2"
+      WeaponPriority(11)="UT_FlakCannon"
+      WeaponPriority(12)="UT_Eightball"
+      WeaponPriority(13)="WarheadLauncher"
+      WeaponPriority(14)="None"
+      WeaponPriority(15)="None"
+      WeaponPriority(16)="None"
+      WeaponPriority(17)="None"
+      WeaponPriority(18)="None"
+      WeaponPriority(19)="None"
+      WeaponPriority(20)="None"
+      WeaponPriority(21)="None"
+      WeaponPriority(22)="None"
+      WeaponPriority(23)="None"
+      WeaponPriority(24)="None"
+      WeaponPriority(25)="None"
+      WeaponPriority(26)="None"
+      WeaponPriority(27)="None"
+      WeaponPriority(28)="None"
+      WeaponPriority(29)="None"
+      WeaponPriority(30)="None"
+      WeaponPriority(31)="None"
+      WeaponPriority(32)="None"
+      WeaponPriority(33)="None"
+      WeaponPriority(34)="None"
+      WeaponPriority(35)="None"
+      WeaponPriority(36)="None"
+      WeaponPriority(37)="None"
+      WeaponPriority(38)="None"
+      WeaponPriority(39)="None"
+      WeaponPriority(40)="None"
       WeaponPriority(41)="None"
       WeaponPriority(42)="None"
       WeaponPriority(43)="None"
@@ -5745,7 +5789,7 @@ defaultproperties
       FailedView="Failed to change view."
       GameReplicationInfo=None
       ngWorldSecret=""
-      ngSecretSet=True
+      ngSecretSet=False
       ReceivedSecretChecksum=False
       TargetViewRotation=(Pitch=0,Yaw=0,Roll=0)
       TargetEyeHeight=0.000000

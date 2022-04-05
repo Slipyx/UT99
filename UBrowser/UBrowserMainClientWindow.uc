@@ -240,7 +240,7 @@ defaultproperties
       ServerListNames(47)="None"
       ServerListNames(48)="None"
       ServerListNames(49)="None"
-      bKeepMasterServer=True
+      bKeepMasterServer=False
       PageControl=None
       Favorites=None
       IRC=None

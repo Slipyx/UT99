@@ -427,22 +427,30 @@ function bool SendPlayers(IpAddr Addr, int QueryNum, out int PacketNum, int bFin
 {
 	local Pawn P;
 	local int i;
-	local bool Result, SendResult;
+	local bool Result, SendResult, SentFinalPacket;
 	
 	Result = false;
+	SentFinalPacket = false;
 
-  for ( P = Level.PawnList; P != none; P = P.nextPawn)
-  {
-		if (P.IsA('PlayerPawn') && !P.PlayerReplicationInfo.bIsSpectator)
+    for ( P = Level.PawnList; P != none; P = P.nextPawn)
+    {
+		if (P.IsA('PlayerPawn') && !P.IsA('Spectator'))
 		{
 			if( i==Level.Game.NumPlayers-1 && bFinalPacket==1)
+			{
 				SendResult = SendQueryPacket(Addr, GetPlayer(PlayerPawn(P), i), QueryNum, PacketNum, 1);
+				SentFinalPacket = true;
+			}
 			else
 				SendResult = SendQueryPacket(Addr, GetPlayer(PlayerPawn(P), i), QueryNum, PacketNum, 0);
 			Result = SendResult || Result;
 			i++;
 		}
 	}
+
+	// stijn: make sure we send the \final\ packet even if we didn't report all players
+	if (bFinalPacket == 1 && !SentFinalPacket)
+	    SendQueryPacket(Addr, "", QueryNum, PacketNum, 1);
 
 	return Result;
 }

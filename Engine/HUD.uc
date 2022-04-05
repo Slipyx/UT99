@@ -104,7 +104,7 @@ function bool ProcessKeyEvent( int Key, int Action, FLOAT Delta )
 defaultproperties
 {
       HudMode=0
-      Crosshair=0
+      Crosshair=7
       MainMenuType=None
       HUDConfigWindowType="UMenu.UMenuHUDConfigCW"
       WhiteColor=(R=0,G=128,B=255,A=0)

@@ -213,6 +213,10 @@ function InitRatedGame(LadderInventory LadderObj, PlayerPawn LadderPlayer)
 {
 	local class<RatedMatchInfo> RMI;
 	local Weapon W;
+	
+	// Ladder info already loaded into this game.
+	if ( RatedGameLadderObj != None )
+		return;
 
 	FragLimit = LadderObj.CurrentLadder.Default.FragLimits[IDnum];
 	RatedGameLadderObj = LadderObj;
@@ -221,8 +225,14 @@ function InitRatedGame(LadderInventory LadderObj, PlayerPawn LadderPlayer)
 	bJumpMatch = false;
 	bHardCoreMode = true;
 	bRequireReady = true;
+	if ( Level.NetMode != NM_Standalone )
+	{
+		bNetReady = false;
+		CountDown = 4;
+	}
+	else
+		CountDown = 1;
 	bMegaSpeed = false;
-	CountDown = 1;
 	bRatedGame = true;
 	bCoopWeaponMode = false;
 	bUseTranslocator = bRatedTranslocator;
@@ -288,7 +298,7 @@ function AcceptInventory(pawn PlayerPawn)
 	// DeathMatchPlus accepts LadderInventory
 	for( Inv=PlayerPawn.Inventory; Inv!=None; Inv=Inv.Inventory )
 	{
-		if (Inv.IsA('LadderInventory'))
+		if ( Inv.IsA('LadderInventory') && (RatedGameLadderObj == None) )
 		{
 			LadderObj = LadderInventory(Inv);
 		} 
@@ -338,6 +348,10 @@ function bool SetEndCams(string Reason)
 		P.GotoState('GameEnded');
 	}
 	CalcEndStats();
+	
+	if ( bRatedGame )
+		bRatedGameSuccess = SuccessfulGame();
+	
 	return true;
 }
 
@@ -499,7 +513,9 @@ event playerpawn Login
 	class<playerpawn> SpawnClass
 )
 {
-	local playerpawn NewPlayer;
+	local PlayerPawn NewPlayer;
+	local string InName, RatedBotReplaceName;
+	local Pawn P, RatedBotReplace;
 
 	if ( (Level.NetMode != NM_Standalone) && (NumCommanders >= MaxCommanders) && ClassIsChildOf(SpawnClass, class'Commander') )
 	{
@@ -507,14 +523,48 @@ event playerpawn Login
 		return None;
 	}
 
+	if ( bRatedGame && bTeamGame )
+	{
+		InName = Left( ParseOption( Options, "Name"), 20);
+		
+		// Try replacing a bot with a matching name
+		for ( P=Level.PawnList; P!=None; P=P.nextPawn)
+			if ( (P.PlayerReplicationInfo != None) && (PlayerPawn(P) == None)
+				&& (P.PlayerReplicationInfo.Team == 0) && (P.PlayerReplicationInfo.PlayerName ~= InName) )
+			{
+				RatedBotReplace = P;
+				RatedBotReplaceName = P.PlayerReplicationInfo.PlayerName;
+				P.PlayerReplicationInfo.PlayerName = "____"; //Temporary
+				break;
+			}
+			
+		// Try replacing most recently added bot
+		if ( RatedBotReplace == None )
+		{
+			for ( P=Level.PawnList; P!=None; P=P.nextPawn)
+				if ( (P.PlayerReplicationInfo != None) && (PlayerPawn(P) == None) && (P.PlayerReplicationInfo.Team == 0) )
+				{
+					RatedBotReplace = P;
+					break;
+				}
+		}
+	}
+	
 	NewPlayer = Super.Login(Portal, Options, Error, SpawnClass);
 
+	if ( (RatedBotReplace != None) && (RatedBotReplaceName != "") )
+		RatedBotReplace.PlayerReplicationInfo.PlayerName = RatedBotReplaceName;
+	
 	if ( NewPlayer != None )
 	{
 		if ( bRatedGame )
 			NewPlayer.AirControl = 0.35;
 		else
 			NewPlayer.AirControl = AirControl;
+		
+		if ( RatedBotReplace != None )
+			RatedBotReplace.Destroy();
+		
 		if ( Left(NewPlayer.PlayerReplicationInfo.PlayerName, 6) == DefaultPlayerName )
 		{
 			if (Level.Game.WorldLog != None)
@@ -533,6 +583,8 @@ event playerpawn Login
 			if ( NewPlayer.IsA('Commander') )
 				NumCommanders++;
 		}
+		
+		if ( RatedBotReplace != None )
 	}
 	return NewPlayer;
 }
@@ -540,7 +592,7 @@ event playerpawn Login
 event PostLogin( playerpawn NewPlayer )
 {
 	Super.PostLogin(NewPlayer);
-	if ( Level.NetMode == NM_Standalone )
+	if ( (Level.NetMode == NM_Standalone) || bRatedGame )
 	{
 		while ( (RemainingBots > 0) && AddBot() )
 			RemainingBots--;
@@ -675,7 +727,7 @@ function Timer()
 		for (P=Level.PawnList; P!=None; P=P.NextPawn )
 			if ( P.IsA('PlayerPawn') )
 				PlayerPawn(P).SetProgressTime(2);
-		if ( ((NumPlayers == MaxPlayers) || (Level.NetMode == NM_Standalone)) 
+		if ( ((NumPlayers == MaxPlayers) || (Level.NetMode == NM_Standalone) || bRatedGame) 
 				&& (RemainingBots <= 0) )
 		{	
 			bReady = true;
@@ -773,7 +825,7 @@ function Timer()
 
 function bool TooManyBots()
 {
-	return (NumBots + NumPlayers > MinPlayers);
+	return !bRatedGame && (NumBots + NumPlayers > MinPlayers);
 }
 
 function bool RestartPlayer( pawn aPlayer )	
@@ -897,7 +949,10 @@ function Bot SpawnRatedBot(out NavigationPoint StartSpot)
 	if (RemainingBots > RatedMatchConfig.NumAllies)
 		bEnemy = True;
 
-	BotN = RatedMatchConfig.ChooseBotInfo(bTeamGame, bEnemy);
+	if ( !bEnemy && (Level.NetMode != NM_Standalone) )
+		BotN = RatedMatchConfig.ChooseAlliedBotInfo(RatedPlayer);
+	else
+		BotN = RatedMatchConfig.ChooseBotInfo(bTeamGame, bEnemy);
 	
 	// Find a start spot.
 	StartSpot = FindPlayerStart(None, 255);
@@ -1183,16 +1238,21 @@ function RateVs(Pawn Other, Pawn Killer)
 
 function bool SuccessfulGame()
 {
-	local Pawn P;
+	local Pawn P, Best;
 
+	if ( bRatedGameSuccess ) //If player that won disconnected, still count as success.
+		return true;
+	
 	for ( P=Level.PawnList; P!=None; P=P.NextPawn )
-		if ( P.bIsPlayer && (P != RatedPlayer) )
-			if ( P.PlayerReplicationInfo.Score >= RatedPlayer.PlayerReplicationInfo.Score )
-				return false;
-
+		if ( P.bIsPlayer && (P.PlayerReplicationInfo != None) )
+			if ( (Best == None) || (P.PlayerReplicationInfo.Score > Best.PlayerReplicationInfo.Score) )
+				Best = P;
+	
+	if ( (PlayerPawn(Best) == None) || (PlayerPawn(Best).Player == None) )
+		return false;
+	
 	return true;
 }
-
 
 // Commented out for release version.
 function Skip()
@@ -1205,7 +1265,7 @@ function Skip()
 			RatedGameLadderObj.PendingPosition = IDnum+1;
 		RatedGameLadderObj.PendingRank = RatedGameLadderObj.CurrentLadder.Default.RankedGame[IDnum];
 
-		RatedPlayer.ClientTravel("UT-Logo-Map.unr"$"?Game=Botpack.LadderTransition", TRAVEL_Absolute, True);
+		LadderTransition();
 		return;
 	}
 }
@@ -1230,7 +1290,7 @@ function SkipAll()
 		RatedGameLadderObj.PendingPosition = 0;
 		RatedGameLadderObj.PendingRank = 0;
 
-		RatedPlayer.ClientTravel("UT-Logo-Map.unr"$"?Game=Botpack.LadderTransition", TRAVEL_Absolute, True);
+		LadderTransition();
 		return;
 	}
 }
@@ -1392,7 +1452,16 @@ function Logout(pawn Exiting)
 
 function bool NeedPlayers()
 {
-	return (!bGameEnded && (NumPlayers + NumBots < MinPlayers));
+	if ( bGameEnded )
+		return false;
+
+	if ( bRatedGame )
+	{
+		// In rated games all players are allies and their team size may
+		// exceed the player + allied bot count for this match.
+		return Min( NumPlayers, RatedMatchConfig.NumAllies+1) + NumBots < RatedMatchConfig.NumBots + 1;
+	}
+	return NumPlayers + NumBots < MinPlayers;
 }
 
 function RestartGame()
@@ -1426,7 +1495,7 @@ function RestartGame()
 		}
 
 		RatedPlayer.Health = RatedPlayer.Default.Health;
-		RatedPlayer.ClientTravel("UT-Logo-Map.unr"$"?Game=Botpack.LadderTransition", TRAVEL_Absolute, True);
+		LadderTransition();
 		return;
 	}
 
@@ -1550,7 +1619,7 @@ defaultproperties
 {
       MinPlayers=0
       AirControl=0.350000
-      FragLimit=20
+      FragLimit=30
       TimeLimit=0
       bChangeLevels=True
       bHardCoreMode=True

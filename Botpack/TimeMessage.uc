@@ -24,9 +24,9 @@ static simulated function ClientReceive(
 	Super.ClientReceive(P, Switch, RelatedPRI_1, RelatedPRI_2, OptionalObject);
 
 	if ( P.ViewTarget != None )
-		P.ViewTarget.PlaySound(Default.TimeSound[Switch],,4.0);
+		P.ViewTarget.PlaySound(Default.TimeSound[Switch]);
 	else
-		P.PlaySound(Default.TimeSound[Switch],,4.0);
+		P.ClientPlaySound(Default.TimeSound[Switch],,true);
 }
 
 defaultproperties

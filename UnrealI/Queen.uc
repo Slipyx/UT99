@@ -386,7 +386,7 @@ function bool CanTeleportInMap()
 	local NavigationPoint Nav;
 
 	for (Nav = Level.NavigationPointList; Nav != None; Nav = Nav.NextNavigationPoint)
-		if( QueenDest(Nav)!=None )
+		if ( (QueenDest(Nav) != None) && (VSize(Location-Nav.Location) > CollisionRadius * 2) )
 			return true;
 	return false;
 }

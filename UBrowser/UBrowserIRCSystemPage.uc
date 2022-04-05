@@ -478,10 +478,10 @@ defaultproperties
       PageParent=None
       Server=""
       DefaultChannel=""
-      NickName="Slipyx"
-      FullName="Slipyx"
-      OldPlayerName="Slipyx"
-      UserIdent="u7467277"
+      NickName=""
+      FullName=""
+      OldPlayerName=""
+      UserIdent=""
       Splitter=None
       SetupClient=None
       bConnected=False

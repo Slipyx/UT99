@@ -1219,9 +1219,9 @@ defaultproperties
       Descscrolldown=None
       TeamNameString="Team Name:"
       LadderObj=None
-      PreferredSkill=0
+      PreferredSkill=1
       PreferredSex=0
-      PreferredTeam=5
+      PreferredTeam=0
       PreferredFace=0
       bFlashOn=False
       FlashTime=0.000000

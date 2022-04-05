@@ -779,7 +779,10 @@ function Notify(UWindowWindow C, byte E)
 			Root.SetMousePos((Root.WinWidth*Root.GUIScale)/2, (Root.WinHeight*Root.GUIScale)/2);
 			Close();
 			Root.Console.CloseUWindow();
-			GetPlayerOwner().ClientTravel("EOL_Statues.unr?Game=Botpack.TrophyGame", TRAVEL_Absolute, True);			
+			if ( TournamentGameInfo(GetPlayerOwner().Level.Game) != None )
+				TournamentGameInfo(GetPlayerOwner().Level.Game).LadderTransition("EOL_Statues.unr?Game=Botpack.TrophyGame");
+			else
+				GetPlayerOwner().ClientTravel("EOL_Statues.unr?Game=Botpack.TrophyGame", TRAVEL_Absolute, True);
 			break;
 		case NextButton:
 			LadderWindow = Class<UWindowWindow>(DynamicLoadObject(LadderTypes[SelectedLadder], class'Class'));
@@ -1069,17 +1072,17 @@ defaultproperties
       RankString(3)="Assault Rank:"
       MatchesString="Matches Completed:"
       DOMDoorOpen(0)=0
-      DOMDoorOpen(1)=1
+      DOMDoorOpen(1)=0
       DOMDoorOpen(2)=0
       DOMDoorOpen(3)=0
       DOMDoorOpen(4)=0
       CTFDoorOpen(0)=0
-      CTFDoorOpen(1)=1
+      CTFDoorOpen(1)=0
       CTFDoorOpen(2)=0
       CTFDoorOpen(3)=0
       CTFDoorOpen(4)=0
       ASDoorOpen(0)=0
-      ASDoorOpen(1)=1
+      ASDoorOpen(1)=0
       ASDoorOpen(2)=0
       ASDoorOpen(3)=0
       ASDoorOpen(4)=0
@@ -1089,7 +1092,7 @@ defaultproperties
       ChalDoorOpen(3)=0
       ChalDoorOpen(4)=0
       TrophyDoorOpen(0)=0
-      TrophyDoorOpen(1)=1
+      TrophyDoorOpen(1)=0
       TrophyDoorOpen(2)=0
       TrophyDoorOpen(3)=0
       TrophyDoorOpen(4)=0

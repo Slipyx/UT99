@@ -905,7 +905,7 @@ defaultproperties
       Teams(1)=None
       Teams(2)=None
       Teams(3)=None
-      GoalTeamScore=20.000000
+      GoalTeamScore=30.000000
       MaxTeamSize=16
       StartUpTeamMessage="You are on"
       TeamChangeMessage="Use Options->Player Setup to change teams."
@@ -925,9 +925,8 @@ defaultproperties
       CurrentOrders(3)="Defend"
       PlayerTeamNum=0
       StartupTeamTralier="."
-      FragLimit=30
-      TimeLimit=20
       StartUpMessage="Work with your teammates against the other teams."
+      MaxCommanders=2
       bCanChangeSkin=False
       bTeamGame=True
       ScoreBoardType=Class'Botpack.TeamScoreBoard'
